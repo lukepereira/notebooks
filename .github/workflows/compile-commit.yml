@@ -9,7 +9,6 @@ jobs:
 
       - name: Get changed files 
         run: |
-          
           { git diff --name-only  master ; }| grep "\.tex" |  sort | uniq > changed-tex-files.txt
 
       # TODO: Simplify above step, follow up on error:https://github.com/lots0logs/gh-action-get-changed-files/issues/10
@@ -30,8 +29,8 @@ jobs:
           changed_files: changed-tex-files.txt
 
       - name: Clean up
-        with:
-          changed_files: changed-tex-files.txt
+        run: |
+          rm changed-tex-files.txt
 
       - name: Commit files
         run: |
