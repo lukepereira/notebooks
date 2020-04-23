@@ -9,7 +9,7 @@ jobs:
 
       - name: Get changed files 
         run: |
-          { git diff --name-only ; git diff --name-only --staged ; git ls-files --other --exclude-standard ; } | grep .tex | sort | uniq > changed-tex-files.txt
+          { git diff --name-only origin master ; }| grep "\.tex" |  sort | uniq
 
       # TODO: Simplify above step, follow up on error:https://github.com/lots0logs/gh-action-get-changed-files/issues/10
       # - name: Get changed files 
