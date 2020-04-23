@@ -1,0 +1,80 @@
+% Package providing macros and environments for LaTeX course materials
+% at the Department of Computer Science, University of Toronto.
+% Copyright 2016, David Liu
+% Version 1.3, August 29, 2016
+
+% Package Name
+\ProvidesPackage{dcs}
+
+% Dependencies
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{mathtools} % Piecewise functions
+\RequirePackage{amsthm}
+\RequirePackage{amssymb} % Required for "does not divide" symbol
+\RequirePackage{color}
+
+% Number sets
+\newcommand{\N}{\mathbb N}        % Naturals
+\newcommand{\Z}{\mathbb Z}        % Integers
+\newcommand{\Q}{\mathbb Q}        % Rationals
+\newcommand{\R}{\mathbb R}        % Reals
+\ifdefined\C
+	\renewcommand{\C}{\mathbb C}    % Complex numbers
+\else
+	\newcommand{\C}{\mathbb C}
+\fi
+
+% A script font
+\newcommand{\cA}{\mathcal A}
+\newcommand{\cB}{\mathcal B}
+\newcommand{\cC}{\mathcal C}
+\newcommand{\cD}{\mathcal D}
+\newcommand{\cE}{\mathcal E}
+\newcommand{\cF}{\mathcal F}
+\newcommand{\cH}{\mathcal H}
+\newcommand{\cI}{\mathcal I}
+\newcommand{\cJ}{\mathcal J}
+\newcommand{\cK}{\mathcal K}
+\newcommand{\cL}{\mathcal L}
+\newcommand{\cM}{\mathcal M}
+\newcommand{\cN}{\mathcal N}
+\newcommand{\cO}{\mathcal O}
+\newcommand{\cP}{\mathcal P}
+\newcommand{\cQ}{\mathcal Q}
+\newcommand{\cS}{\mathcal S}
+\newcommand{\cT}{\mathcal T}
+\newcommand{\cV}{\mathcal V}
+\newcommand{\cW}{\mathcal W}
+\newcommand{\cZ}{\mathcal Z}
+
+% Short forms for set notation
+\newcommand{\emp}{\emptyset}
+\newcommand{\bs}{\backslash}
+
+% Math functions
+\newcommand{\floor}[1]{\left \lfloor #1 \right \rfloor}  % Floor function
+\newcommand{\ceil}[1]{\left \lceil #1 \right \rceil}     % Ceiling function
+\newcommand{\abs}[1]{\left | #1 \right |}                % Absolute value
+\DeclareMathOperator{\lcm}{lcm}                          % lcm
+
+% Probability
+\def\Pr{\mathop{\rm Pr}\nolimits}  % "Pr" for probabilities
+\newcommand{\E}{\mathbb{E}}        % "E" for expected values
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% CSC165
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Semantic names for propositional connectives (and "logical True/False")
+\newcommand{\NOT}{\neg}
+\newcommand{\AND}{\wedge}
+\newcommand{\OR}{\vee}
+\newcommand{\IMP}{\Rightarrow}
+\newcommand{\IFF}{\Leftrightarrow}
+\newcommand{\TRUE}{\text{TRUE}}
+\newcommand{\FALSE}{\text{FALSE}}
+
+% Semantic name for a "divides" symbol.
+\newcommand{\DIV}{\mid}
+\newcommand{\NDIV}{\nmid}
