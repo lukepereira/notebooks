@@ -37,7 +37,7 @@ jobs:
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add *.pdf
-          git commit -m "Add changed latex pdfs"
+          git commit -m "Add changed latex pdfs" || echo "Nothing to update"
 
       - name: Extract branch name
         shell: bash
