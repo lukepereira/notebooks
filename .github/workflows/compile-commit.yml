@@ -1,28 +1,51 @@
 name: Compile and upload
-on: [push, pull_request]
+on: [push]
 jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
         uses: actions/checkout@v1
-      - name: Compile LaTeX document
-        uses: lukepereira/latex-action@master
-        with:
-          working_directory: performance-analysis/
-          root_file: main.tex
-      - name: upload artifact (debug)
+
+      - name: Get changed files 
+        run: |
+          git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep "\.tex" |  sort | uniq > changed-tex-files.txt
+
+      # TODO: Simplify above step, follow up on error:https://github.com/lots0logs/gh-action-get-changed-files/issues/10
+      # - name: Get changed files 
+      #   uses: lots0logs/gh-action-get-changed-files@2.0.6
+      #   with:
+      #     token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: upload artifact
         uses: actions/upload-artifact@v1
         with:
-          name: my-artifact
-          path: performance-analysis/main.pdf
+          name: changed-tex-files
+          path: changed-tex-files.txt
+
+      - name: Compile LaTeX document
+        uses: lukepereira/latex-action@modify
+        with:
+          changed_files: changed-tex-files.txt
+
+      - name: Clean up
+        run: |
+          rm changed-tex-files.txt
+
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add *.pdf
-          git commit -m "Add changed latex pdfs"
+          git commit -m "Add changed latex pdfs" || echo "Nothing to update"
+
+      - name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.extract_branch.outputs.branch }}
