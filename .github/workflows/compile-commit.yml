@@ -16,3 +16,12 @@ jobs:
         with:
           name: my-artifact
           path: performance-analysis/main.pdf
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -m "Add changed latex pdfs" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
