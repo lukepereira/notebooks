@@ -15,11 +15,15 @@ jobs:
         uses: lots0logs/gh-action-get-changed-files@2.0.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: upload artifact (debug)
-        uses: actions/upload-artifact@v1
-        with:
-          name: my-artifact
-          path: all.json
+      - name: Debug
+        run: |
+          ls -la .
+          ls -la ${HOME}
+      # - name: upload artifact (debug)
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: all-changed-files
+      #     path: all.json
       - name: Commit files
         run: |
           git config --local user.email "action@github.com"
