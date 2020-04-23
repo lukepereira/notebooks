@@ -9,10 +9,10 @@ jobs:
       - name: Compile LaTeX document
         uses: lukepereira/latex-action@master
         with:
-          working_directory: templates/
+          working_directory: performance-analysis/
           root_file: main.tex
       - name: upload artifact (debug)
         uses: actions/upload-artifact@v1
         with:
           name: my-artifact
-          path: templates/main.pdf
+          path: performance-analysis/main.pdf
