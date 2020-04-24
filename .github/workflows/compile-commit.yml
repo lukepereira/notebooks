@@ -24,7 +24,7 @@ jobs:
           path: changed-tex-files.txt
 
       - name: Compile LaTeX document
-        uses: lukepereira/latex-action@master
+        uses: lukepereira/latex-action@debug
         with:
           changed_files: changed-tex-files.txt
 
