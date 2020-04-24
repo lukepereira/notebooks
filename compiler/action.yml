@@ -1,0 +1,34 @@
+name: Github Action for LaTeX
+description: GitHub Action to compile LaTeX documents
+author: Cheng XU
+inputs:
+  root_file:
+    description: The root LaTeX file to be compiled
+  changed_files:
+    description: txt file with all modified files
+  working_directory:
+    description: The working directory for the LaTeX engine
+  compiler:
+    description: The LaTeX engine to be invoked
+    default: latexmk
+  args:
+    description: Extra arguments to be passed to the LaTeX engine
+    default: "-pdf -file-line-error -interaction=nonstopmode"
+  extra_packages:
+    description: "[Deprecated] Install extra packages by tlmgr"
+  extra_system_packages:
+    description: Install extra packages by apk
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.root_file }}
+    - ${{ inputs.working_directory }}
+    - ${{ inputs.compiler }}
+    - ${{ inputs.args }}
+    - ${{ inputs.extra_packages }}
+    - ${{ inputs.extra_system_packages }}
+    - ${{ inputs.changed_files }}
+branding:
+  icon: book
+  color: blue
