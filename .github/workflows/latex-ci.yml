@@ -32,6 +32,8 @@ jobs:
         uses: ./compiler
         with:
           changed_files: changed-tex-files.txt
+          compiler: "pdflatex"
+          args: "-file-line-error -interaction=nonstopmode"
 
       - name: Clean up
         run: |

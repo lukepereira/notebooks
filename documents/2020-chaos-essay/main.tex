@@ -14,35 +14,14 @@
 \author{Luke J. Pereira}
 \date{}
 
-\comment{
-Updates:
-- https://archive.org/details/OrderOutOfChoas/page/n17/mode/2up/search/chaos
-- add definition of chaos
-- remove ergodic systems / merge with local subsystems
-- simplify dissapitive structures (pg 18 / 380)
-}
-
 \begin{document}
 
 \maketitle
-Modifications:
-As suggested in the TA's comments, I added a more tangible description of chaos and included explanations of its defining expansive and transitive properties. I updated my definition of ergodicity from an equivalence to an implication. Even though it's an advanced topic of which I only have an entry-level understanding of, I wanted to keep it in because I feel really interested in learning more about it and I think other non-mathematicians would feel similar. I also added an image to better communicate the concept of the cascading local interactions in the Abelian sandpile model.
 
 \section{Prigogine's Goggles}
 Suppose that while clearing out the desk of the late physical chemist and Nobel laureate, Ilya Prigogine, we find a pair of strange looking goggles. On them, we see two dials which can be turned either left or right, with one having labels reading ``order'' and ``chaos'' on either side, while the labels of the other dial read ``simplicity'' and ``complexity''. An instruction manual beside the goggles tells us that when we put them on and turn the dials, we'll be able to change the parameters of any chunk of a dynamical system we're looking at, with the exception that the artificial changes we make will only be temporary before they return to their original state. We should ask ourselves: with full control of these parameters, what is it that we want to get out of our experiment? Perhaps we want to attempt to create novel tools or ideas in the field we're working in so that we can later write a paper about them and claim they were a product of our own imaginative genius. Or maybe we want to temporarily simplify some incomprehensibly complex phenomena, like the weather or stock markets, so that we can try to generate better predictions about them. What if we wanted to devise a clever way to modify a small part of a larger system so that our temporal changes propagate throughout the entire system making long-lasting changes? 
 
 \section{Creativity at the Edge of Chaos}
-% Before beginning our experiments, we read through the instruction manual and find a brief description of chaos,
-% \begin{displayquote}
-%     ``Chaotic systems are distinguished by sensitive dependence on initial conditions and by having evolution through phase space that appears to be quite random.''\cite{wa}
-% \end{displayquote}
-% \begin{displayquote}
-%     ``The threat lies in the realization that in our universe the security of stable, permanent rules are gone forever. We are living in a dangerous and uncertain world that inspires no blind confidence. Our hope arises from the knowledge that even small fluctuations may grow and change the overall structure. As a result, individual activity is not doomed to insignificance.'' \cite{oooc}
-% \end{displayquote}
-
-% \begin{displayquote}
-%     ``Whatever we call reality, it is revealed to us only through the active construction in which we participate.''\cite{oooc}
-% \end{displayquote}
 
 On a nearby shelf in the office, we find a microscope with a petri dish beneath the lens and decide that it's a safe place to conduct our first experiment -- we want to create an organism that has never existed before. We reason that we will need the system to send typically disparate parts into collisions with each other and maybe one of the combinations will produce something that's both novel and useful. To encourage this creativity, we turn the dials to their highest chaotic and complexity settings, but we soon see that the organic system is generating very large amounts of random and nonsensical combinations, preventing us from finding or preserving what might be valuable. To combat this mess, we turn the dials in their opposite directions, towards order and simplicity and see that our new system is now producing structural order with basic fractal, self-similar patterns. Increasing complexity makes the structure denser and more repetitive but unfortunately, its novelty is limited and the system appears neither particularly useful nor shows the ability to produce more sophisticated organisms \cite{eoc}.
 
@@ -51,12 +30,9 @@ It appears that for a complex structure to develop, we need some amount of order
 \section{Ergodicity and Predictability}
 This strategy of developing a belief about the entirety of a system by examining the measurements of one of its parts for a sufficiently large amount of time is closely related to a concept known as \emph{ergodicity}. Ergodic processes and systems have a property in which the averages measured for a subunit, known as its ensemble averages, are equivalent to the averages of the entire system, known as its time averages. This property is somewhat analogous to the self-similar geometry that can be found in fractals, but instead of involving structure, ergodic systems exhibit self-similarity of averaged measurements of processes. In our society, we often assume that our past localized measurements can be used to make predictions about future measurements which are actually dependent on a much larger global system of interactions. Although it can be useful and our models of the world tend to be fairly accurate at making short-term predictions, this is not generally how many of the dynamical systems around us truly behave. The states of these systems don't always change in the smooth and gradual ways which our short-term predictions suggest, but instead are prone to change in catastrophic ways. The \emph{avalanches} in the system are not properties of the local interactions but can only be seen when viewing the system holistically.
 
-% From mankind's earliest forms, a vital skill for our species survival has been our ability to make predictions. Out of necessity, our minds and our computation tools have developed methods for extrapolating new data out of a growing amount of past data, with natural intuitions of using averages to create reasonable expectations. The assumption that our local measurements can be used to make predictions about future states which are dependent on a much larger global system of interactions is useful to us and the models of the world that we create tend to be fairly accurate at making short-term predictions. However, this is not generally how many of the dynamical systems in the world around us truly behave. The states of these systems don't always change in the smooth and gradual ways which our short-term predictions suggest, but instead are prone to change in catastrophic ways. The \emph{avalanches} in the system are not properties of the local interactions but are properties of the whole system and we need to look at the system holistically if we want to foresee them.
-
 \section{Avalanches and Self-organization}
 
 \begin{wrapfigure}{r}{0.5\textwidth}
-%   \vspace*{-0.4cm}
   \begin{center}
     \includegraphics[width=0.43\textwidth]{abelian_sandpile.png}
     \caption{Cascading Abelian sandpile}
@@ -68,7 +44,6 @@ In the corner of the office, we see two piles of crumpled up balls of white pape
 Earlier, we saw how predictions about future local states are often fallible because of their dependence on the interactions of the system as a whole. We're now seeing an alternative perspective of this fact: the small interactions of parts of a system can cause large changes and disruptions to the system as whole. These same findings were put forward by a group of three physicists in what's known as a \emph{Bak–Tang–Wiesenfeld model}\cite{btw}, metaphorically explained as a sandpile with new grains of sand being randomly added until the slope exceeds a given threshold which will then cause an avalanche. Just as our experiment had shown, their model demonstrated how the emergence of complexity from simple local interactions could explain spontaneous natural complexity rather than something only possible in artificial situations where control parameters of the entire system are tuned to precise critical values. The general behaviour was named \emph{self-organized critically} and contributed to the theory of self-organization, which refers to any process where some form of overall order or pattern arises from local interactions between the parts of an initially chaotic system. A classic example of self-organization is the swarm behaviour displayed in a large flock of birds.
 
 \section{Dissapative Structures Outside the Office}
-% We might wonder if the same findings derived from stable systems could be applied to the unstable and even chaotic systems that are more commonly found in the real world. 
 Standing in his office, we're immediately reminded of the work of Illya Prigogine. In the 1960s, Prigogine conducted research in dynamical systems, mainly in the physical science of thermodynamics. Thermodynamics involves heat and its transformation into other forms of energy using statistical descriptions of atomic and molecular movements. Prigogine became interested in an unpopular area of irreversible thermodynamics, which analyses processes where it is impossible to restore an environment back to its initial conditions after their occurrence, causing entropy and disorder. All sufficiently complex natural processes are considered irreversible, usually as a result of \emph{dissipation} or loss of energy which can occur when heat is transferred through thermal resistance or during some other atomic or molecular transformation.
 
 His Nobel prize-winning theory had its origins in the realization that long before a state of balance is reached, irreversible processes could drive systems which were in thermal chaos to orderly and stable states\cite{ds}. This change could occur by artificially amplified fluctuations, similar to the effect of the goggles in our own experiments. Prigogine called these fluctuations \emph{dissipative structures} to emphasize the constructive role of these irreversible processes. Dissipation, which was previously considered a nuisance because of its creation of disorder was now causing self-organization, which we've learned creates a form of overall order in a chaotic system. Prigogine posited that this theory captured the key to understanding the origin of order and creativity we see in nature. The societal implications of the underlying philosophy of his experiments are expressed in his work Order out of Chaos\cite{oooc}
@@ -83,8 +58,6 @@ We've learned a great deal from the experiments we've performed in the confines 
 
 
 \begin{thebibliography}{9}
-% \bibitem{wa}
-% Weisstein, Eric W. "Chaos." From MathWorld--A Wolfram Web Resource. 
 
 \bibitem{eoc}
 Ranjit Kumar Upadhyay (2009). "Dynamics of an ecological model living on the edge of chaos". Applied Mathematics and Computation.
@@ -97,30 +70,6 @@ Prigogine, I. (1978). Time, Structure, and Fluctuations. Science, 201(4358), 777
 
 \bibitem{oooc}
 Prigogine, I., Stengers, I., & Prigogine, I. (1984). Order out of chaos: Man's new dialogue with nature. Boulder, CO: New Science Library.
-
-
-% \section{Rough}
-% - Self-adjusting/adaptive dynamic systems\\ 
-%     - parameters converge to edge of chaos \\
-% - ergodicity/self-similar measurements of dynamic processes\\
-%     - prediction\\
-% - self organization of local systems in chaotic systems\\
-%     - dissaptive systems\\
-% - chaos/disorder == unpredictable == creativity/novelty/complexity == unstable \\
-% - order == predictable == repetition/stagnation/simplicity == stable 
-
-
-% This assumption that we can make accurate predictions of our future states, which are the result of a much larger and more complex global system of interactions, solely based on observations of the average measurements of our local experiences over a long period of time, is only a characteristic of ergodic system. Ultimately, there's no strong evidence to believe that many of the natural chaotic systems we interact with must be ergodic.
-
-% We tend to believe that systems which display some tendency to be balanced, like economics or international relations, are stable overall and in a state of equilibrium. Sometimes they rise and other times they fall, but they never explode to infinity or crash to zero. 
-
-
-% Thermodynamics is about heat and its transformation into other forms of energy - basically involving statistical descriptions of atomic and molecular movements. Irreversible thermodynamic processes go in only one direction, usually toward more disorder. However, during the 1960s Ilya Prigogine developed a theory about dissipative structures, which maintains that long before a state of equilibrium is reached in irreversible processes, orderly and stable systems can arise from more disordered systems. 
-
-% introduction of the concept of dissipative structure was also to have other unexpected consequences. It was evident from start that the structures were evolving out of fluctuations. They appeared in fact as giant fluctuations, stabilized through matter and energy exchanges with the outer world.
-
-% In the late 1950s and early 1960s with the realization that nonequilibrium conditions could produce chemical oscillation, a new phase of activity began. It had its origins in the realization that, when far from thermodynamic equilibrium, irreversible processes can drive the system to organized states; the phenomenon of self-organization came to light. Irreversible processes generated entropy, which was thought of as disorder. Yet, the same irreversible processes also produced self-organization, thus began the study of dissipative structures. Here was the key to understand the origin of order and the vast diversity of form and function we see in nature. It also gave rise to new questions regarding the stability of nonequilibrium states, the consequences of nonlinearity of equations that described systems far from thermodynamics equilibrium and discovery of many self-organizing systems.
-
 
 \end{thebibliography}
 \end{document}
