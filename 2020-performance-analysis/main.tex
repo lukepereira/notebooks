@@ -36,16 +36,16 @@
 \setlength{\parskip}{0pt plus 0.5ex}
 % -----------------------------------------------------------------------
 
-\title{Performance Analysis CheatSheet}
+\title{CheatSheet}
 
 \begin{document}
 
 \raggedright
 \footnotesize
 
-\begin{center}
-     \Large{\textbf{Performance Analysis Formula Sheet }} \\
-\end{center}
+% \begin{center}
+%      \Large{\textbf{}} \\
+% \end{center}
 \begin{multicols*}{3}
 \setlength{\premulticols}{1pt}
 \setlength{\postmulticols}{1pt}
@@ -128,13 +128,13 @@
     & \rho_i(t) = \frac{B_i(t)}{t} \text{  [Utilization]} \\
     & S_i(t) = \frac{B_i(t)}{C_i(t)}
     \text{  [Avg process time]}
-    & S_i(t) = \mathbb{E}[S]  \\
+    & S_i(t) = \mathbb{E}[S]  \\[4pt]
     & D_i  \text{ [Processing time of cycle]} 
-    & \mathbb{E}[D_i] = \mathbb{E}[S_i]\mathbb{E}[Vi] \\
+    & \mathbb{E}[D_i] = \mathbb{E}[S_i]\mathbb{E}[Vi] \\[6pt]
     & V_i(t)  \text{  [Visits to device]} 
-    & V_{user} = V_0 = 1 \\ 
+    & V_{user} = V_0 = 1 \\[4pt]
     & \lim_{t \to \infty} \frac{A_i(t)}{t} = \lim_{t \to \infty} \frac{C_i(t)}{t} 
-    & \lambda_i = X_i \text{ [Steady state]} \\
+    & \lambda_i = X_i \text{ [Steady state]} \\[4pt]
     & N(t) = A(t) - C(t) 
     & \text{  [Number of jobs in system]} \\
     & R(t) \approx \int_0^t \frac{A(s) - C(s)}{A(t)}ds
@@ -150,15 +150,14 @@
  
 \subsection{Operation Laws}
 \begin{flalign*}
+    & \mathbb{E}[N] = \lambda \mathbb{E}[R]
+    & \text{[Little's Law]} \\
     & \rho_i = \mathbb{E}[S_i] X_i = \frac{\lambda_i}{\rho_i}
     & \text{[Utilization Law]} \\
     & \rho_i = \mathbb{E}[S_i]\mathbb{E}[Vi]X =  \mathbb{E}[D_i] X
-    & \text{[Bottleneck Law]} \\
+    & \text{[Bottleneck Law]} \\[4pt]
     & X_i = \mathbb{E}[V_i]X 
     & \text{[Forced Flow Law]}\\
-    & \mathbb{E}[N] = \lambda \mathbb{E}[R]
-    & \text{[Little's Law]} \\ 
-    & \mathbb{E}[N_i] = \lambda_i \mathbb{E}[R_i] \\
     & \mathbb{E}[R] = \frac{N}{X} - \mathbb{E}[Z] 
     & \text{[Closed System Response Time Law] } \\
 \end{flalign*}
@@ -179,7 +178,7 @@
 \columnbreak
 
 \section{Queuing Models}
-(Arrivals / Service Times / Number of servers / Room in system)
+(Arrivals / Service Times / Number of servers / Room in queue)
  
 \subsection{M/M/1}
 \begin{flalign*}
@@ -267,7 +266,81 @@ $T>0$, Arrival rate $s$, processing rate $s$. If $r > s, N \to 0$. If $s >r, N \
         \end{cases}
 \]
 
+\subsection{Jackson Networks}
+\begin{enumerate}
+    \item 
+    External arrivals form a Poisson process
+    \item
+    All service times are exponentially distributed and the service discipline at all queues is first-come, first-served
+    \item
+    internal routing of jobs between servers is probabilistic
+    \item
+    The utilization of all of the queues is less than one
+\end{enumerate}
+Solved via markov model
 
+\begin{enumerate}
+    \item \textbf{Markov Chain:} We may solve the corresponding Discrete Time Markov Chain to find its steady state distribution, $\mathbb{E}[N]$, and $\mathbb{E}[R]$. If there are $N$ jobs and $k$ nodes, we will have a lower bound of $\Omega(\binom{N+k-1}{k-1}^2)$ when solving the system of equations.
+    \item \textbf{Product form:} Using a temporary value for each node's arrival rate, $\bar \lambda$, determine the ratios between the balance equations and then recover the real values using the actual arrival rate, $\lambda$, finding the steady-state distribution, $\mathbb{E}[N]$, and $\mathbb{E}[R]$. Still suffers from a combinatorial explosion in complexity with a lower bound of $\Omega(\binom{N+k-1}{k-1})$.
+    \item \textbf{Mean Value Analysis:} Uses the Arrival Theorem in a recursive algorithm to analyse specific nodes when there are $N$ jobs in the system. We only have access to expectations and utilization of specific nodes, i.e. $\mathbb{E}[R_i]$, $\mathbb{E}[N_i]$, $\rho_i$ but is more performant with an upper bound of $\mathcal{O}(Nk)$. 
+\end{enumerate}
+
+\subsection{M/G/1}
+
+\begin{itemize}
+    \item Markovian (modulated by a Poisson process), service times have a General distribution and there is a single server
+    \item $\mathbb{E}[S] = \frac{1}{\mu}$
+    \item high variance in service distribution $\implies$ high response time
+    \item Has equal $\mathbb{E}[N]$ for all blind non-pre-emptive service policies
+\end{itemize}
+
+\subsection{Pollaczek–Khinchine formula}
+\[
+ \mathbb{E}[N] = \rho + \frac{\rho^2 + \lambda^2 \sigma_s^2}{2(1-\rho)}
+\]
+
+\section{Service Policies}
+Blind and non-blind policy relates to knowledge of job size on arrival. If service times that jobs require are known, then the optimal scheduling policy is shortest remaining processing time (SRPT).
+\begin{itemize}
+    \item first-come, first-served (FCFS) 
+    \item processor sharing (PS) where all jobs in the queue share the service capacity between them equally
+    \item last-come, first served (LCFS) with/without preemption where a job in service may or may not be interrupted with work being conserved
+    \item  generalized foreground-background (FB) scheduling also known as least-attained-service where the jobs which have received least processing time so far are served first and jobs which have received equal service time share service capacity using processor sharing
+    \item shortest job first (SJF) with/without preemption, where the job with the smallest size receives service
+    \item shortest remaining processing time (SRPT) where the next job to serve is that with the smallest remaining processing requirement
+\end{itemize}
+
+\section{Failure/Hazard Rate}
+\begin{itemize}
+    \item Increasing Failure Rate (IFR): h(t) is non-decreasing in t, the expected remaining work is decreasing, non pre-emptive is preferable.
+    \item Decreasing Failure Rate (DFR): h(t) is non-increasing in t, the expected remaining work is increasing, pre-emptive policy is preferable.
+\end{itemize}
+\begin{flalign*}
+    & \quad \quad h(t) = \frac{f(t)}{1 - F(t)}
+    & \mathbb{E}[\text{Remaining time}] = \frac{1}{h(t)} \qquad \\
+    & \quad \quad X \sim uniform(a,b) \text{ (IFR)} \implies
+    & h(t) = \frac{1}{b-t} \qquad \\
+    & \quad \quad X \sim exp(\lambda) \text{ (IFR and DFR)} \implies
+    & h(t) = \frac{\lambda e^{-\lambda t}}{1-(1-e^{-\lambda t})} \qquad
+\end{flalign*}
+\[
+\text{Time average Excess} = \mathbb{E}[S_c] = \frac{\mathbb{E}[S_c]}{2\mathbb{E}[S]}
+\]
+\[
+    \mathbb{E}[R_Q] = \frac{\rho}{1-\rho} \mathbb{E}[S_c]
+\]
+
+\section{Pareto Distribution}
+\begin{itemize}
+    \item popular DFR, "80-20 rule", pre-emptive policy is preferable
+    \item 50\% of the load on the system comes from 1\% of the jobs
+    \item $\alpha$ shape parameter, $\alpha =1, X > t \implies P(X>2t) = \frac{1}{2}$
+    \item $ 0 < alpha < 1$, $Var(X) = \infty$, $\mathbb{E}[X] = \infty$
+    \item Survival Function:
+\end{itemize}
+\[
+{\displaystyle {\overline {F}}(x)=\Pr(X>x)={\begin{cases}\left({\frac {x_{\mathrm {m} }}{x}}\right)^{\alpha }&x\geq x_{\mathrm {m} },\\1&x<x_{\mathrm {m} },\end{cases}}}
+\]
 \section{Misc}
 \begin{itemize}
     \item 
@@ -276,8 +349,6 @@ $T>0$, Arrival rate $s$, processing rate $s$. If $r > s, N \to 0$. If $s >r, N \
     \item
     $h = \frac{f}{g} \implies h' = \frac{f'g -fg'}{g^2}$
     
-    \item
-    Blocking system structure $\implies X_1 = X_2 = ... = X_n$
     
     \item
     Max system utilization $\implies$ only bottleneck utilization is 100\%
@@ -291,25 +362,6 @@ $T>0$, Arrival rate $s$, processing rate $s$. If $r > s, N \to 0$. If $s >r, N \
     \item
     exponential distributions are a very good assumption for modeling arrivals, but only moderately good for modelling processing times
 \end{itemize}
-
-% \section{Strategy/Notable Questions}
-
-
-
-
-
-% \section{Performance operational analysis}
-% \subsection{Operational Laws}
-% \begin{align*}
-%     \langle H \rangle(\lambda) &= 
-%     \frac{\langle \psi(x,\lambda)|H|\psi(x,\lambda) \rangle}{\langle \psi(x,\lambda)|\psi(x,\lambda) \rangle} \\
-%     \langle H \rangle(\lambda) &\geq E_{.g.s} \\
-%     \frac{d}{d\lambda} \langle H \rangle(\lambda_0) = 0 &\Rightarrow
-%     \langle H \rangle(\lambda_0) \approx E_{.g.s}
-% \end{align*}
-
-
-
 
 \end{multicols*}
 
