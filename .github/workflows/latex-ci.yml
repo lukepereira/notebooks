@@ -29,7 +29,7 @@ jobs:
           path: changed-tex-files.txt
 
       - name: Compile LaTeX document
-        uses: compiler/action
+        uses: ./compiler
         with:
           changed_files: changed-tex-files.txt
 
