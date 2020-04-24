@@ -1,8 +1,6 @@
-FROM fermiumlabs/latex-docker
+FROM schickling/latex
 
 COPY \
-  LICENSE \
-  README.md \
   entrypoint.sh \
   /root/
 
