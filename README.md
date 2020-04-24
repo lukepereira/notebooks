@@ -1,11 +1,8 @@
 # LaTex CI Compiler
 
-    This repo compiles any modified .tex files and will commit the rendered .pdfs on push to remote using GitHub actions.
+This repo compiles any modified .tex files and will commit the rendered .pdfs on push to remote using GitHub actions.
 
 ## Contents
-
----
-
 ### Notes
 - [Stochastic Modeling and Queuing Theory (2020)](documents/2020-performance-analysis)
 
