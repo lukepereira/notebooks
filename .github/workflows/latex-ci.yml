@@ -2,7 +2,9 @@ name: Compile and commit LaTex pdf
 on:
   push:
     branches:
-      - master
+      - '*'
+      - '*/*'
+      - '!master'
 jobs:
   build_latex:
     runs-on: ubuntu-latest
