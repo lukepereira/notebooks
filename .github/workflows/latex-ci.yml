@@ -1,5 +1,8 @@
-name: Compile and upload
-on: [push]
+name: Compile and commit LaTex pdf
+on:
+  push:
+    branches:
+      - master
 jobs:
   build_latex:
     runs-on: ubuntu-latest
