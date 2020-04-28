@@ -5,6 +5,7 @@ This repo compiles any modified .tex files and will commit the rendered .pdfs on
 ## Contents
 ### Notes
 - [Stochastic Modeling and Queuing Theory (2020)](documents/2020-performance-analysis/main.pdf)
+- [Ergodic Theory (2020)](documents/2020-ergodic-theory/main.pdf)
 
 ### Essays
 - [Dynamical Systems (2020)](documents/2020-dynamical-systems-essay/main.pdf)
