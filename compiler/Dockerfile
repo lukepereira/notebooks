@@ -1,4 +1,4 @@
-FROM schickling/latex
+FROM rigon/sharelatex-full
 
 COPY \
   entrypoint.sh \
