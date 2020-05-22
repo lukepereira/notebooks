@@ -1,4 +1,4 @@
-FROM quay.io/sharelatex/texlive-full:2017.1
+FROM rigon/sharelatex-full
 
 COPY \
   entrypoint.sh \
