@@ -26,7 +26,7 @@ fi
 if [ -z "$compiler" ] && [ -z "$args" ]; then
   warn "Input 'compiler' and 'args' are both empty. Reset them to default values."
   compiler="latexmk"
-  args="-file-line-error -interaction=nonstopmode"
+  args="-pdf -file-line-error -interaction=nonstopmode"
 fi
 
 if [ -n "$extra_system_packages" ]; then
@@ -54,6 +54,7 @@ if [ -n "$root_file" ];
     while IFS='' read -r LINE || [ -n "${LINE}" ]; do
       echo "processing line: ${LINE}"
       cd "$(dirname "${LINE}")";
+      "$compiler" $args "$(basename ${LINE})";
       "$compiler" $args "$(basename ${LINE})"; 
       cd -
     done <  $changed_files
