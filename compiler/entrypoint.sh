@@ -25,7 +25,7 @@ fi
 
 if [ -z "$compiler" ] && [ -z "$args" ]; then
   warn "Input 'compiler' and 'args' are both empty. Reset them to default values."
-  compiler="pdflatex"
+  compiler="latexmk"
   args="-file-line-error -interaction=nonstopmode"
 fi
 
