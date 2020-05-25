@@ -147,6 +147,23 @@ The number of lattice paths from $(0,0)$ to $(n,n)$ that do not go above the dia
 \[
     C(n) = \frac{1}{n+1} \binom{2n}{n}
 \]
+
+\subsection{Inclusion-Exclusion Principle}
+The inclusion–exclusion principle is a counting technique that generalizes the method of obtaining the number of elements in the union of two finite sets without double counting elements,
+\[
+    |A\cup B|=|A|+|B|-|A\cap B|.
+\]
+The principle is particularly useful in the case of three sets, i.e. for the sets $A$, $B$ and $C$, the count of the union is given by,
+\[
+|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|A\cap C|-|B\cap C|+|A\cap B\cap C|.
+\]
+
+\subsection{The Euler Totient Function}
+For a positive integer $n\geq2$, Euler's Totient function is defined by 
+\[
+\phi(n)=|\{m\in \mathbb N: m\le n,  \gcd(m,n)=1\}|.
+\]
+
 \section{Number Theory}
 
 \subsection{Well-Ordered Property}
@@ -173,21 +190,6 @@ The Euclidean algorithm is an efficient method for computing the greatest common
 
 Given $m = q_i n_i + r_i$ where $m_i,n_i \in \mathbb Z^+$ with $0 \leq r_i < n_i$ we see that $r_i$ represents the remainder and $q_i$ represents the quotient. We use the fact that $\gcd(m, n_i) = \gcd(n_i, r_i)$ to iteratively calculate the $\gcd$ on the decomposition of the $n_i$ term and the remainder $r_i$.
 
-\section{Inclusion-Exclusion Principle}
-The inclusion–exclusion principle is a counting technique that generalizes the method of obtaining the number of elements in the union of two finite sets without double counting elements,
-\[
-    |A\cup B|=|A|+|B|-|A\cap B|.
-\]
-The principle is particularly useful in the case of three sets, i.e. for the sets $A$, $B$ and $C$, the count of the union is given by,
-\[
-|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|A\cap C|-|B\cap C|+|A\cap B\cap C|.
-\]
-
-\subsection{The Euler Totient Function}
-For a positive integer $n\geq2$, Euler's Totient function is defined by 
-\[
-\phi(n)=|\{m\in \mathbb N: m\le n,  \gcd(m,n)=1\}|.
-\]
 
 \section{Graphs Theory}
 Let $G = (V, E)$ be a graph with $V$ verticies and $E$ edges. 
