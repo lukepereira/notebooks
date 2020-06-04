@@ -125,6 +125,19 @@ The number of combinations in which $k$ elements are chosen from subsets of $X$ 
     \binom{n}{k_1, k_2, \cdots, k_n} = \frac{n!}{k_1! k_2! \cdots k_n!}
 \]
 
+\subsection{Stars and Bars}
+Stars and bars is a graphical aid for deriving certain combinatorial theorems. It can be used to solve many simple counting problems, such as how many ways there are to put n indistinguishable balls into k distinguishable bins.
+
+\begin{theorem}
+For any pair of positive integers n and k, the number of k-tuples of positive integers whose sum is n is equal to the number of $(k - 1)$-element subsets of a set with $n - 1$ elements, i.e. $\binom{n - 1}{k-1}$.
+\end{theorem}
+
+\begin{theorem}
+For any pair of positive integers n and k, the number of k-tuples of non-negative integers whose sum is n is equal to the number of multisets of cardinality $k - 1$ taken from a set of size $n + 1$, i.e. $\binom{n+1}{k-1}$.
+
+\end{theorem}
+
+
 \subsection{Multinomial Theorem}
 Let $x_1,\cdots x_n \in \mathbb R^+$. Then $\forall n \in \mathbb N^+$,
 \[
@@ -147,6 +160,9 @@ The number of lattice paths from $(0,0)$ to $(n,n)$ that do not go above the dia
 \[
     C(n) = \frac{1}{n+1} \binom{2n}{n}
 \]
+
+\subsection{The Rule of Sum}
+The rule of sum or addition principle is a basic counting principle. Stated simply, it is the idea that if we have A ways of doing something and B ways of doing another thing and we can not do both at the same time, then there are A + B ways to choose one of the actions.
 
 \subsection{Inclusion-Exclusion Principle}
 The inclusion–exclusion principle is a counting technique that generalizes the method of obtaining the number of elements in the union of two finite sets without double counting elements,
