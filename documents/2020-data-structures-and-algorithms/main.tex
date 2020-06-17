@@ -81,73 +81,91 @@ Outline:
 \tableofcontents
 \newpage
 
-\section{Computational Analysis and Complexity}
+\section{Pre-requisite Concepts}
 
-\subsection{Asymptotic Runtime Analysis}
-\subsubsection{Big O}
-We can measure the growth rate of the time or space complexity of an algorithm using an upper bound ($\bigO(N)$), lower bound ($\Omega (N) $) or a tight bound ($\Theta (N)$) on the best, worse or average case run time. When analysing an algorithm we typically use an upper bound on the worst case. 
-\[
-\bigO(n!) \geq \bigO(2^n)  \geq \bigO( n^3)  \geq \bigO(n^2)  \geq \bigO(n \log n)  \geq \bigO(n)  \geq \bigO(\log n)  \geq \bigO(1)
-\]
-\begin{multicols}{2}
-\begin{itemize}
-    \item[] $\bigO(1)$ - constant time
-    \item[] $\bigO(\log(n))$ - logarithmic time
-    \item[] $\bigO((\log(n))c)$ - polylogarithmic time
-    \item[] $\bigO(n)$ - linear time
-    \item[] $\bigO(n^2)$ - quadratic time
-    \item[] $\bigO(n^c)$ - polynomial time
-    \item[] $\bigO(c^n)$ - exponential time
-    \item[] $\bigO(n!)$ - factorial time
-\end{itemize}
-\end{multicols}
+    \subsection{Asymptotic Runtime Analysis}
+    \subsubsection{Big O}
+    We can measure the growth rate of the time or space complexity of an algorithm using an upper bound ($\bigO(N)$), lower bound ($\Omega (N) $) or a tight bound ($\Theta (N)$) on the best, worse or average case run time. When analysing an algorithm we typically use an upper bound on the worst case. 
+    \[
+        \bigO(1) \leq \bigO(\log n) \leq \bigO(n) \leq \bigO(n \log n) \leq \bigO(n^2) \leq  \bigO(2^n)  \leq \bigO(n!)
+    \]
+    \begin{multicols}{2}
+    \begin{itemize}
+        \item[] $\bigO(1)$ - constant time
+        \item[] $\bigO(\log(n))$ - logarithmic time
+        \item[] $\bigO((\log(n))c)$ - polylogarithmic time
+        \item[] $\bigO(n)$ - linear time
+        \item[] $\bigO(n^2)$ - quadratic time
+        \item[] $\bigO(n^c)$ - polynomial time
+        \item[] $\bigO(c^n)$ - exponential time
+        \item[] $\bigO(n!)$ - factorial time
+    \end{itemize}
+    \end{multicols}
+    
+    \subsubsection{Amortized Analysis}
+    If the cost of an action has high variance, i.e. its computation is often inexpensive but is occasionally expensive, we can capture its expected behaviour using an amortized time value. If we let $T(n)$ represent the amount of work the algorithm does on an input of size $n$, An operation has amortized cost $T(n)$ if $k$ operations cost $\leq k \cdot T(n)$. $T(n)$ being amortized roughly means $T(n)$ is averaged over all possible operations. 
+    
+    For example, a dynamic array will copy over elements to an array of double its size whenever an insert is called on an already full instance, otherwise it will simply insert the new element. For $X$ insertions, this happens every $2, 4, 8, ..., X$ insertions.
+    \[
+        T(n) = \bigO ( c + \frac{c}{2} + \frac{c}{4} + \cdots) 
+        = \bigO(2c) 
+        = \bigO(1)
+    \]
+    
+    A data structure realizing an amortized complexity of $\bigO (f(n))$ is less performant than one with a worst-case complexity is $\bigO(f(n))$, since a very expensive operation might still occur, but it is better than an algorithm with an average-case complexity $\bigO(f(n))$, since the amortized bound will achieve this average on any input.
+    
+    \subsubsection{Logarithmic Runtime}
+    When encountering an algorithm in which the number of elements in the problem space is halved on each step, i.e. in a divide and conquer solution like binary search, the algorithm will likely have a $\bigO(\log n)$ or $\bigO(n \log n)$ run-time. We can think of $\bigO(n \log n)$ as doing $\log n$ work $n$ times. 
+    
+    Again, if we let $T(n)$ represent the amount of work the algorithm does on an input of size $n$,
+    \begin{align*}
+        T(n) &= T(n/2) + \Theta(1) \\
+        &=  T(n/4)+ \Theta(1) + \Theta(1) \\ 
+        &= \Theta(1) + \cdots + \Theta(1) \\
+        &= \Theta(\log n ) 
+    \end{align*}
+    
+    When using Python's standard library sort on an array, we can assume the running time will be $\bigO (n \log n)$. See section on Timsort for further details.
+    
+    \subsection{Computational Complexity}
+    \subsubsection{Complexity Classes}
+    \[
+        P \subseteq NP \subseteq EXP \subseteq R
+    \]
+    
+    \begin{enumerate}
+        \item $P$:  The set of problems that can be solved in polynomial time.
+        \item $NP$:  The set of decision problems that can be solved in non-deterministic polynomial time via a ``lucky'' algorithm.
+        \item $EXP$: The set of problems that can be solved in exponential time. 
+        \item $R$: The set of problems that can be solved in finite time.
+    \end{enumerate}
+    
+    \subsubsection{NP Problems}
+    Nondeterminsitic Polynomial (NP) problems follow a nondeterministic model in which an algorithm makes guesses and produce a binary output of YES or NO. These are the simplest interesting class of problems and are known as decision problems. A ``lucky” algorithm can make guesses which are always correct without having to attempt all options. In other words, $NP$ is the set of decision problems with solutions that can be verified in polynomial time. This means that when an answer is YES, it can be proved and a polynomial-time algorithm can verify the proof.
+    
+    P vs. NP asks whether generating proofs of solutions is harder than checking, i.e whether every problem whose solution can be quickly verified can also be solved quickly. NP-hard problems are those at least as hard as all NP problems. NP-hard problems need not be in NP; that is, they may not have solutions verifiable in polynomial time. NP-complete problems are a set of problems to each of which any other NP-problem can be reduced in polynomial time and whose solution may still be verified in polynomial time. In fact, NP-complete = NP $\cap$ NP-hard.
+    
+    \subsubsection{Reductions}
+    A reduction is an algorithm for transforming one problem into another problem for which a solution or analysis already exists (instead of solving it from scratch). A sufficiently efficient reduction from one problem to another may be used to show that the second problem is at least as difficult as the first. 
+    
+    NP-complete problems are all interreducible using polynomial-time reductions (same difficulty). This implies that we can use reductions to prove NP-hardness. A one-call reduction is a polynomial time algorithm that constructs an instance of $X$ from an instance $Y$ so that their optimal values are equal, i.e. $X$ problem $\implies$ $Y$ problem $\implies$ $Y$ solution $\implies$ $X$ solution. Multicall reductions instead solve $X$ using free calls to $Y$ — in this sense, every algorithm reduces the problem and model of computation.
+    
+    \newpage
+    
+    \subsection{Algorithm Design}
+    \subsubsection{In-place algorithm}
+        An in-place algorithm is an algorithm which transforms input using no auxiliary data structure, though a small amount of extra storage space is allowed for a constant number of auxiliary variables. The input is usually overwritten by the output (mutated) as the algorithm executes. An in-place algorithm updates input sequence only through replacement or swapping of elements.
+        
+    \subsubsection{Space–time tradeoff}
+        A space–time or time–memory trade-off is a case where an algorithm trades increased space usage with decreased time complexity. Here, space refers to the data storage consumed in performing a given task (RAM, HDD, etc), and time refers to the time consumed in performing a given task (computation time or response time).
+        
+    \subsubsection{Heuristics}
+        A heuristic is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution. This is achieved by trading optimality, completeness, accuracy, or precision for speed. In a way, it can be considered a shortcut.
+    
+    \subsubsection{Hash Functions}
+        A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes. 
+        A good hash function satisfies two basic properties: it should be very fast to compute; it should minimize duplication of output values (\textbf{collisions}). For many use cases, it is useful for every hash value in the output range to be generated with roughly the same probability. Two of the most common hash algorithms are the MD5 (Message-Digest algorithm 5) and the SHA-1 (Secure Hash Algorithm).
 
-\subsubsection{Amortized Analysis}
-If the cost of an action has high variance, i.e. its computation is often inexpensive but is occasionally expensive, we can capture its expected behaviour using an amortized time value. If we let $T(n)$ represent the amount of work the algorithm does on an input of size $n$, An operation has amortized cost $T(n)$ if $k$ operations cost $\leq k \cdot T(n)$. $T(n)$ being amortized roughly means $T(n)$ is averaged over all possible operations. 
-
-For example, a dynamic array will copy over elements to an array of double its size whenever an insert is called on an already full instance, otherwise it will simply insert the new element. For $X$ insertions, this happens every $2, 4, 8, ..., X$ insertions.
-\[
-    T(n) = \bigO ( c + \frac{c}{2} + \frac{c}{4} + \cdots) 
-    = \bigO(2c) 
-    = \bigO(1)
-\]
-
-A data structure realizing an amortized complexity of $\bigO (f(n))$ is less performant than one with a worst-case complexity is $\bigO(f(n))$, since a very expensive operation might still occur, but it is better than an algorithm with an average-case complexity $\bigO(f(n))$, since the amortized bound will achieve this average on any input.
-
-\subsubsection{Logarithmic Runtime}
-When encountering an algorithm in which the number of elements in the problem space is halved on each step, i.e. in a divide and conquer solution like binary search, the algorithm will likely have a $\bigO(\log N)$ or $\bigO(N \log N)$ run-time. We can think of $\bigO(n \log(n))$ as doing $\log(n)$ work $n$ times. Again, if we let $T(n)$ represent the amount of work the algorithm does on an input of size $n$,
-\begin{align*}
-    T(n) &= T(n/2) + \Theta(1) \\
-    &= \Theta(1) + \cdots + \Theta(1) \\
-    &= \Theta(\log n ) 
-\end{align*}
-
-When using Python's standard library sort on an array, we can assume the running time will be $\bigO (n \log n)$.
-
-\subsection{Computational Complexity}
-\subsubsection{Complexity Classes}
-\[
-    P \subseteq NP \subseteq EXP \subseteq R
-\]
-
-\begin{enumerate}
-    \item $P$:  The set of problems that can be solved in polynomial time.
-    \item $NP$:  The set of decision problems that can be solved in non-deterministic polynomial time via a ``lucky'' algorithm.
-    \item $EXP$: The set of problems that can be solved in exponential time. 
-    \item $R$: The set of problems that can be solved in finite time.
-\end{enumerate}
-
-\subsubsection{NP Problems}
-Nondeterminsitic Polynomial (NP) problems follow a nondeterministic model in which an algorithm makes guesses and produce a binary output of YES or NO. These are the simplest interesting class of problems and are known as decision problems. A ``lucky” algorithm can make guesses which are always correct without having to attempt all options. In other words, $NP$ is the set of decision problems with solutions that can be verified in polynomial time. This means that when an answer is YES, it can be proved and a polynomial-time algorithm can verify the proof.
-
-P vs. NP asks whether generating proofs of solutions is harder than checking, i.e whether every problem whose solution can be quickly verified can also be solved quickly. NP-hard problems are those at least as hard as all NP problems. NP-hard problems need not be in NP; that is, they may not have solutions verifiable in polynomial time. NP-complete problems are a set of problems to each of which any other NP-problem can be reduced in polynomial time and whose solution may still be verified in polynomial time. In fact, NP-complete = NP $\cap$ NP-hard.
-
-\subsubsection{Reductions}
-A reduction is an algorithm for transforming one problem into another problem for which a solution or analysis already exists (instead of solving it from scratch). A sufficiently efficient reduction from one problem to another may be used to show that the second problem is at least as difficult as the first. 
-
-NP-complete problems are all interreducible using polynomial-time reductions (same difficulty). This implies that we can use reductions to prove NP-hardness. A one-call reduction is a polynomial time algorithm that constructs an instance of $X$ from an instance $Y$ so that their optimal values are equal, i.e. $X$ problem $\implies$ $Y$ problem $\implies$ $Y$ solution $\implies$ $X$ solution. Multicall reductions instead solve $X$ using free calls to $Y$ — in this sense, every algorithm reduces the problem and model of computation.
-
-\newpage
 \section{Data Structures and ADTs}
     An \textbf{abstract data type (ADT)} is a theoretical model of an entity and the set of operations that can be performed on that entity
     
@@ -161,12 +179,12 @@ NP-complete problems are all interreducible using polynomial-time reductions (sa
     \subsubsection{List}
     A list is an abstract data type that represents a countable number of ordered values, where the same value may occur more than once. Lists are a basic example of containers, as they contain other values. Their operations include the following,
     \begin{itemize}
-        \item test whether or not the list is empty;
-        \item prepend an entity to the list
-        \item append an entity to the list
-        \item access the element at a given index.
-        \item determine the first component (head) of the list
-        \item refer to the list consisting of all the components of a list except for its first (tail).
+        \item \textbf{isEmpty(L)}: test whether or not the list is empty;
+        \item \textbf{prepend(L, item)}: prepend an entity to the list
+        \item \textbf{append(L, item)}: append an entity to the list
+        \item \textbf{get(L, i)}: access the element at a given index.
+        \item \textbf{head(L)}: determine the first component (head) of the list
+        \item \textbf{tail(L)}: refer to the list consisting of all the components of a list except for its first (tail).
     \end{itemize}
     
     \subsubsection{Arrays}
@@ -1573,10 +1591,10 @@ def backtracking(self, data, candidate):
         \item Add more subproblems to guess, remember more features of the solution variations.
     \end{itemize}
     
-    - combinatoric problems
-    - optimization problems
+    % - combinatoric problems
+    % - optimization problems
     
-    The function f is called an objective function, a loss function or cost function (minimization). A feasible solution that minimizes (or maximizes, if that is the goal) the objective function is called an optimal solution.
+    % The function f is called an objective function, a loss function or cost function (minimization). A feasible solution that minimizes (or maximizes, if that is the goal) the objective function is called an optimal solution.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1627,19 +1645,22 @@ def lengthOfLIS(nums):
 
     return max(dp)
 
-# Given a string containing just the characters '(' and ')', find the length of the longest valid (well-formed) parentheses substring.
+# Given two strings text1 and text2, return the length of their longest common subsequence.
 
-def longestValidParentheses(s):
-    # let dp[i] is the number of longest valid parentheses ended with the i - 1 position of s,
-    dp, stack = [0] * (len(s) + 1), []
-    for i in range(len(s)):
-        if s[i] == '(':
-            stack.append(i)
-        else:
-            if stack:
-                p = stack.pop()
-                dp[i + 1] = dp[p] + i - p + 1
-    return max(dp)
+import functools
+
+def longestCommonSubsequence(text1: str, text2: str) -> int:
+
+    ## similar to memoization, in recursive calls the decorator doesn't have to recompute but retrieves from the cache
+    @functools.lru_cache(None)
+    def helper(i,j):
+        if i<0 or j<0:
+            return 0
+        if text1[i]==text2[j]:
+            return helper(i-1,j-1)+1
+        return max(helper(i-1,j),helper(i,j-1))
+    return helper(len(text1)-1,len(text2)-1)
+
 \end{lstlisting}
 
     \subsection{Numerical Problems}
@@ -1805,19 +1826,6 @@ def stars_and_bars(n, k):
 
 %     The "distance" between two vectors is the angle between them. If x = (x1, x2, ..., xn) is the first vector (xi = freq of word i) and y = (y1, y2, ..., yn) is the second vector, then the angle between them is defined as: d(x,y) = arccos(inner_product(x,y) / (norm(x)*norm(y))) where: inner_product(x,y) = x1*y1 + x2*y2 + ... xn*yn norm(x) = sqrt(inner_product(x,x))
 
-\section{Notable Concepts}
-    \subsection{In-place algorithm}
-        An in-place algorithm is an algorithm which transforms input using no auxiliary data structure, though a small amount of extra storage space is allowed for auxiliary variables. The input is usually overwritten by the output as the algorithm executes. In-place algorithm updates input sequence only through replacement or swapping of elements.
-        
-    \subsection{Space–time tradeoff}
-        A space–time or time–memory trade-off in computer science is a case where an algorithm or program trades increased space usage with decreased time. Here, space refers to the data storage consumed in performing a given task (RAM, HDD, etc), and time refers to the time consumed in performing a given task (computation time or response time).
-        
-    \subsection{Heuristics}
-        A heuristic is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution. This is achieved by trading optimality, completeness, accuracy, or precision for speed. In a way, it can be considered a shortcut.
-    
-    \subsection{Hash Functions}
-        A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes. 
-        A good hash function satisfies two basic properties: 1) it should be very fast to compute; 2) it should minimize duplication of output values (collisions). For many use cases, it is useful for every hash value in the output range to be generated with roughly the same probability. Two of the most common hash algorithms are the MD5 (Message-Digest algorithm 5) and the SHA-1 (Secure Hash Algorithm).
 
 
 \begin{thebibliography}{}
