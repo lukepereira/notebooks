@@ -11,7 +11,7 @@ This repo compiles any modified .tex files and will commit the rendered .pdfs on
 - [RSA Encryption Essay (2017)](documents/2017-rsa-essay/main.pdf)
 - [Machine Learning Essay (2017)](documents/2017-machine-learning-essay/main.pdf)
 
-### Math
+### Mathematics
 
 - [Ergodic Theory (2020)](documents/2020-ergodic-theory/main.pdf)
 - [Combinatorics (2020)](documents/2020-combinatorics/main.pdf)
