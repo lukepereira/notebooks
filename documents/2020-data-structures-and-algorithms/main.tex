@@ -85,7 +85,7 @@ Outline:
 
     \subsection{Asymptotic Runtime Analysis}
     \subsubsection{Big O}
-    We can measure the growth rate of the time or space complexity of an algorithm using an upper bound ($\bigO(N)$), lower bound ($\Omega (N) $) or a tight bound ($\Theta (N)$) on the best, worse or average case run time. When analysing an algorithm we typically use an upper bound on the worst case. 
+    We can measure the growth rate of the time or space complexity of an algorithm using an upper bound ($\bigO(f)$), lower bound ($\Omega (f) $) or a tight bound ($\Theta (f)$) on the best, worse or average case run time. When analysing an algorithm we typically use an upper bound on the worst case. 
     \[
         \bigO(1) \leq \bigO(\log n) \leq \bigO(n) \leq \bigO(n \log n) \leq \bigO(n^2) \leq  \bigO(2^n)  \leq \bigO(n!)
     \]
@@ -224,10 +224,10 @@ class ListNode:
     \subsubsection{Queues}
     A queue is an ADT container that implements FIFO (first-in first-out) ordering, i.e. items are removed in the same order that they are added. It supports the following operations: 
     \begin{itemize}
-        \item \textbf{add(item)}: Add an item to the end of the list.
-        \item \textbf{remove()}: Remove the first item in the list.
+        \item \textbf{push(item)}: Add an item to the end of the queue.
+        \item \textbf{popLeft()}: Remove and return the first item in the queue.
         \item \textbf{peek()}: Return the top of the queue.
-        \item \textbf{isEmpty()}: Return true if and only if the queue is empty. 
+        \item \textbf{isEmpty()}: Return true if the queue is empty. 
     \end{itemize}
     
     One place where queues are often used is in breadth-first search or in implementing a cache. In breadth-first search we may use a queue to store a list of the nodes that we need to process. Each time we process a node, we add its adjacent nodes to the back of the queue. This allows us to process nodes in the order in which they are viewed. 
@@ -237,7 +237,7 @@ class ListNode:
     \subsubsection{Priority Queue}
     A priority queue is an ADT container that retrieves items not by the insertion time (as in a stack or queue), nor by a key match (as in a dictionary), but instead retrieves items with the highest priority value. Priority queues provide more flexibility than simple sorting because they allow new elements to enter a system at arbitrary intervals. It is much more cost-effective to insert a new job into a priority queue than to re-sort everything on each such arrival. The basic priority queue supports three primary operations:
     \begin{itemize}
-        \item \textbf{insert(Q,x)}: Given an item x with key k, insert it into the priority queue Q.
+        \item \textbf{insert(Q, x)}: Given an item x with key k, insert it into the priority queue Q.
         \item \textbf{findMinimum(Q)} or \textbf{findMaximum(Q)}: Return a pointer to the item whose key value is smaller (larger) than any other key in the priority queue Q.
         \item \textbf{deleteMinimum(Q)} or \textbf{deleteMaximum(Q)}: Remove the item from the priority queue Q whose key is minimum (maximum).
     \end{itemize}
@@ -313,7 +313,7 @@ class TreeNode:
         \item \textbf{findMin()} or \textbf{findMax()}: Finding the minimum element of a min-heap is inexpensive since it will always be at the top. The challenging part is how to remove it while maintaining the heap property. First, we remove the minimum element and swap it with the last element in the heap (the bottommost, rightmost element). Then, we bubble down this element, swapping it with one of its children until the minheap property is restored. This algorithm will also take $\bigO( \log n)$ time. 
     \end{itemize}
     
-    A heap will be better at findMin/findMax ($\bigO(1)$), while a BST is performant at all finds ($\bigO(\log N)$). A heap is especially good at basic ordering and keeping track of max and mins.
+    A heap will be better at findMin/findMax ($\bigO(1)$), while a BST is performant at all finds ($\bigO(\log n)$). A heap is especially good at basic ordering and keeping track of max and mins.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -708,7 +708,7 @@ class Graph:
         \item
         At this index, there is a linked list of keys and values. Store the key and value in this index. We must use a linked list because of collisions: you could have two different keys with the same hash code, or two different hash codes that map to the same index.
     \end{enumerate}
-    To retrieve the value pair by its key, you repeat this process. Compute the hash code from the key, and then compute the index from the hash code. Then, search through the linked list for the value with this key. If the number of collisions is very high, the worst case runtime is $\bigO(N)$, where $N$ is the number of keys. However, we generally assume a good implementation that keeps collisions to a minimum, in which case the lookup time is $\bigO(1)$. Alternatively, we can implement the hash table with a balanced binary search tree. This gives us an $\bigO(\log N)$ lookup time. The advantage of this is potentially using less space, since we no longer allocate a large array. We can also iterate through the keys in order, which can be useful sometimes.
+    To retrieve the value pair by its key, you repeat this process. Compute the hash code from the key, and then compute the index from the hash code. Then, search through the linked list for the value with this key. If the number of collisions is very high, the worst case runtime is $\bigO(n)$, where $n$ is the number of keys. However, we generally assume a good implementation that keeps collisions to a minimum, in which case the lookup time is $\bigO(1)$. Alternatively, we can implement the hash table with a balanced binary search tree. This gives us an $\bigO(\log n)$ lookup time. The advantage of this is potentially using less space, since we no longer allocate a large array. We can also iterate through the keys in order, which can be useful sometimes.
 
     The other strategy used to resolve collisions is to require each array element to contain only one key, but to allow keys to be mapped to alternate indices when their original spot is already occupied. This is known as open addressing. In this type of hashing, we have a parameterized hash function h that takes two arguments, a key and a positive integer. Searching for an item requires examining not just one spot, but many spots until either we find the key, or reach a None value. After we delete an item, we replace it with a special value Deleted, rather than simply None. This way, the Search algorithm will not halt when it reaches an index that belonged to a deleted key.
     
@@ -753,7 +753,9 @@ class Graph:
 \newpage    
 \section{Algorithms and Techniques}
     \subsection{String and Array Sorting}
-    \subsubsection{Binary Search} 
+    \subsubsection{Binary Search}
+    Time Complexity: $\bigO(\log n)$ average and worst case.  Space Complexity: $\bigO(1)$
+    
     In binary search, we look for an element x in a sorted array by first comparing x to the midpoint of the array. If x is less than the midpoint, then we search the left half of the array. If x is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subarrays. Again, we compare x to the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find x or the subarray has size O.
 
 \vspace{8pt} \emph{Python Implementation}
@@ -775,7 +777,7 @@ def binary_search(nums, target):
 \end{lstlisting}
     
     \subsubsection{Bubble Sort}
-    Time Complexity: $O(n^2)$ average and worst case. Space Complexity: $O(1)$
+    Time Complexity: $\bigO(n^2)$ average and worst case. Space Complexity: $\bigO(1)$
      
     In bubble sort, we start at the beginning of the array and swap the first two elements if the first is greater than the second. Then, we go to the next pair, and so on, continuously making sweeps of the array until it is
     sorted. In doing so, the smaller items slowly "bubble" up to the beginning of the list. 
@@ -791,7 +793,7 @@ def bubble_sort(A):
                 A[j + 1] = temp
 \end{lstlisting}
     \subsubsection{Selection Sort}
-    Time Complexity: $O( n^2)$ average and worst case. Space Complexity: $0 (1)$
+    Time Complexity: $\bigO(n^2)$ average and worst case. Space Complexity: $\bigO (1)$
     
     Selection sort is the child's algorithm: simple, but inefficient. Find the smallest element using a linear scan and move it to the front (swapping it with the front element). Then, find the second smallest and move it, again doing a linear scan. Continue doing this until all the elements are in place. 
 
@@ -809,7 +811,7 @@ def selection_sort(A):
 \end{lstlisting}
     
     \subsubsection{Insertion Sort}
-    Time Complexity: $O(n^2)$ Average and worst case. Space Complexity: $0 (1)$
+    Time Complexity: $\bigO(n^2)$ Average and worst case. Space Complexity: $\bigO(1)$
     
     Given an array $A$ of size $n$, iterate $i$ from $1$ to $n$ and insert $A[i]$ into a sorted sub array $A[0, i-1]$ until the entire array is sorted. Sorting occurs through pairwise swaps of elements down to their correct positions.
 
@@ -1106,7 +1108,7 @@ def sliding_window_with_counter(s, p):
 \end{lstlisting}
   
     \subsubsection{One-pass with Hash Table}
-    Time Complexity: $\bigO(N)$, Space Complexity: $\bigO(N)$
+    Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(n)$
     
     This technique is useful when searching an array for a pair of values, though the method can be extrapolated to triples and more. Given an array and a target we first initialize a lookup table. Next, we iterate over the array checking if the complement to the current value needed to satisfy the target exists in our lookup. If it exists, meaning we've visited it before, we retrieve the value from the pointer in the lookup and return it with the current index. Otherwise we add the current value to the lookup table with its index.
 
@@ -1121,6 +1123,32 @@ def one_pass_lookup(nums: List[int], target: int) -> Tuple[int, ...]:
         lookup[v] = i
     raise ValueError('Target not in list.')
 \end{lstlisting}
+    
+    \subsubsection{Range Operations on Array}
+    Time Complexity: $\bigO(Q + n)$, Space Complexity: $\bigO(1)$
+    
+    Given an array $A$ of 0's of size $n$, perform $Q$ operations or queries by incrementing values in the subarray $A[L: R]$ by 1. A naive brute force solution will result in time complexity of $\bigO(Q\cdot n)$. 
+    
+    Using a numerical method, we are able to reduce the time complexity to $\bigO(Q + n)$. The technique involves creating a secondary array $B$ and only incrementing the value at the left endpoint, $L$ by 1 and decrementing the value at index $R + 1$ by 1. After repeating this process for all queries, to find the true desired value of $A[i]$ we can find the prefix sum of $B$ from $B[0:i]$.
+    
+    We can find a maximum in the array in $\bigO(n)$ by storing the difference between the current element and the previous element. The means that we add the sum to $A[i]$ showing that $A[i]$ is greater than its previous element by the sum. We subtract sum from $A[j+1]$ to show that $a[j+1]$ is less than $a[j]$ by sum (since $a[j]$ was the last element that was added to sum). By the end of all this, we have an array that shows the difference between every successive element. By adding all the positive differences, we get the value of the maximum element
+    
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def arrayOperations(n, operations):
+    B = [0] * (n + 1)
+    for start, end, incr in operations:
+        B[start - 1] += incr
+        if stop <= len(B):
+            B[stop] -= incr;
+    max = cur = 0
+    for i in B:
+        cur = cur + i;
+        if max < cur: 
+            max = cur;
+    return max
+\end{lstlisting}
+    
     
     \subsubsection{Kadane's Algorithm}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(1)$
@@ -1180,7 +1208,7 @@ class KMP:
     The Rabin–Karp algorithm is a string-searching algorithm that uses hashing to find an exact match of a pattern string in a text. It uses a rolling hash to quickly filter out positions of the text that cannot match the pattern, and then checks for a match at the remaining positions.
     
     \subsection{Merge Intervals}
-    Time Complexity: $\bigO(N \log N)$, Space Complexity: $\bigO(N)$
+    Time Complexity: $\bigO(n \log n)$, Space Complexity: $\bigO(n)$
     
     An interval problem has an input of a 2d array in which each nested array represents a start and an end value. The interval can also be represented as an object with start and end attributes.
     
@@ -1281,7 +1309,7 @@ def findKthLargest(self, nums: List[int], k: int) -> int:
 \end{lstlisting}
 
     
-    \subsubsection{Median of Data Stream (Two Heaps)}
+    \subsubsection{Two Heaps (Median of Data Stream)}
     If we have two heaps, we can keep track of the bigger half and the smaller half of the elements. The bigger half is kept in a min heap, such that the smallest element in the bigger half is at the root. The smaller half is kept in a max heap, such that the biggest element of the smaller half is at the root. Now, with these data structures, we have the potential median elements at the roots. If the heaps are no longer the same size, we can quickly rebalance the heaps by popping an element off the one heap and pushing it onto the other.
 
 \vspace{8pt} \emph{Python Implementation}
@@ -1754,15 +1782,24 @@ comb = itertools.combinations_with_replacement([1, 2, 3])
 \end{lstlisting}
 
     \subsubsection{n-th Partial Sum}
+    This counting formula can be used to count the number of contiguous substrings in a a string or contiguous subarrays in an array.
     \[
-        1 +2 +3 + \cdots + n =  \sum_{k=1}^n k =  \frac{n(n+1)}{2} 
+        \sum_{k=1}^n k = 1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2} 
     \]
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
-n = 20
-count = sum([i for i in range(1, n + 1)])
-assert count == (n * (n + 1)) / 2 
+n = 10
+nth_partial_sum = (n * (n + 1)) / 2 
+iterative_sum_count = sum([i for i in range(1, n + 1)])
+contiguous_sublists = lambda l: [
+    l[m: n + 1] 
+    for m in range(len(l)) 
+    for n in range(m, len(l))
+]
+contiguous_sublist_count = len(contiguous_sublists([0] * n ))
+
+assert iterative_sum_count == nth_partial_sum == contiguous_sublist_count
 \end{lstlisting}
 
     \subsubsection{Lattice Paths}
