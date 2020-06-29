@@ -16,7 +16,6 @@ This repo compiles any modified .tex files and will commit the rendered .pdfs on
 
 - [Ergodic Theory (2020)](documents/2020-ergodic-theory/main.pdf)
 - [Combinatorics (2020)](documents/2020-combinatorics/main.pdf)
-- [Dynamical Systems Essay (2020)](documents/2020-dynamical-systems-essay/main.pdf)
 - [Chaos Essay (2020)](documents/2020-chaos-essay/main.pdf)
 - [Recursive Generating Functions HW (2020)](documents/2020-combinatorics-generating-function/main.pdf)
 - [Markov Chains & Chaotic Symbolic Dynamics HW (2020)](documents/2020-chaotic-systems/main.pdf)
