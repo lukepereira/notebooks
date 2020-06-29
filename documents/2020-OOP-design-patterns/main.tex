@@ -18,6 +18,7 @@
 \author{}
 \date{}
 
+
 \comment{
 TODO:
 - simplify OOD section by using defintions in appendix and remove unnecessary elaborations
@@ -120,36 +121,35 @@ Each design pattern lets some aspect of a system's structure vary independently 
 \begin{enumerate}
     \item \textbf{Creating an object by specifying a class explicitly}
     
-    Avoid with design patterns: Abstract Factory, Factory Method, Prototype. 
+    Avoid with: Abstract Factory, Factory Method, Prototype. 
     
     \item \textbf{Dependence on specific operations.}
     
-    Avoid with design patterns: Chain of Responsibility, Command.
+    Avoid with: Chain of Responsibility, Command.
     
     \item \textbf{Dependence on hardware and software platform.}
     
-    Avoid with design patterns: Abstract Factory, Bridge.
+    Avoid with: Abstract Factory, Bridge.
     
     \item \textbf{Dependence on object representations or implementations.}
     
-    Avoid with design patterns: Abstract Factory, Bridge, Memento, Proxy.
+    Avoid with: Abstract Factory, Bridge, Memento, Proxy.
     
     \item \textbf{Algorithmic dependencies}
     
-    Avoid with design patterns: Builder, Iterator, Strategy, Template Method , Visitor.
+    Avoid with: Builder, Iterator, Strategy, Template Method , Visitor.
     
     \item \textbf{Tight coupling}
     
-    Avoid with design patterns: Abstract Factory, Bridge, Chain of Responsibility, Command, Facade, Mediator, Observer.
-    
+    Avoid with: Abstract Factory, Bridge, Chain of Responsibility, Command, Facade, Mediator, Observer.
     
     \item \textbf{Extending functionality by subclassing.}
     
-    Avoid with design patterns: Bridge, Chain of Responsibility, Composite,  Decorator, Observer, Strategy.
+    Avoid with: Bridge, Chain of Responsibility, Composite,  Decorator, Observer, Strategy.
     
     \item \textbf{Inability to alter classes conveniently.}
     
-    Avoid with design patterns: Adapter, Decorator, Visitor.
+    Avoid with: Adapter, Decorator, Visitor.
 \end{enumerate}
 
 % \newpage
@@ -827,17 +827,17 @@ Represent an operation to be performed on the elements of an object structure. V
 
 \textbf{Applicability}
 
-Use the Visitorpattern when
+Use the Visitor pattern when
 
 \begin{itemize}
-    \item an object structure contains many classes of objectswith differing interfaces, and you want to perform operations on these objects that depend on their concrete classes.
+    \item an object structure contains many classes of objects with differing interfaces, and you want to perform operations on these objects that depend on their concrete classes.
     \item  many distinct and unrelated operations need to be performed on objects in an object structure, and you want to avoid ``polluting" their classes with these operations.
     \item the classes defining the object structure rarely change, but you often want to define new operations over the structure.
 \end{itemize}
 
 \textbf{Consequences}
 
-Some of the benefits and liabilities of the Visitor pattern are asfollows:
+Some of the benefits and liabilities of the Visitor pattern are as follows:
 \begin{itemize}
     \item Visitor makes adding new operations easy.
     \item A visitor gathers related operations and separates unrelated ones.
@@ -847,7 +847,7 @@ Some of the benefits and liabilities of the Visitor pattern are asfollows:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=14cm]{diagrams/pattern-23-visitor.png}
+    \includegraphics[width=11cm]{diagrams/pattern-23-visitor.png}
 \end{figure}
 
 \begin{thebibliography}{}
