@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Git repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
       - name: Get changed files
         run: |
@@ -21,15 +21,24 @@ jobs:
       #   uses: lots0logs/gh-action-get-changed-files@2.0.6
       #   with:
       #     token: ${{ secrets.GITHUB_TOKEN }}
-      - name: upload artifact
-        uses: actions/upload-artifact@v1
+      - name: Upload changed-tex-files artifact
+        uses: actions/upload-artifact@v2
         with:
           name: changed-tex-files
           path: changed-tex-files.txt
 
   build_latex:
+    runs-on: ubuntu-latest
     needs: get_changed_files
     steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Download changed-tex-files artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: changed-tex-files
+
       - name: Compile LaTeX documents
         uses: ./compilers/latex
         with:
@@ -37,20 +46,44 @@ jobs:
           compiler: "pdflatex"
           args: "-file-line-error -interaction=nonstopmode"
 
+      - name: Upload compiled-pdfs artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-pdfs
+          path: ./*.pdf
+
   build_markdown:
+    runs-on: ubuntu-latest
     needs: get_changed_files
     steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Download changed-tex-files artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: changed-tex-files
+
       - name: Compile Markdown documents
         uses: ./compilers/pandoc
         with:
           changed_files: changed-tex-files.txt
 
+      - name: Upload compiled-md artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-md
+          path: ./*.md
+
   commit:
+    runs-on: ubuntu-latest
     needs: [build_latex, build_markdown]
     steps:
-      - name: Clean up
-        run: |
-          rm changed-tex-files.txt
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v2
 
       - name: Commit files
         run: |
