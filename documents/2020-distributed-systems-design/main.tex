@@ -11,21 +11,15 @@
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{enumerate}
+\usepackage{multicol}
 
 \newcommand{\comment}[1]{}
 
-\title{\vspace{-3cm} Distributed Systems Concepts}
+\title{\vspace{-3cm} Distributed Systems Design and Concepts}
 \author{}
 \date{}
 
 \comment{
-TODO:
-- edit sections into concepts and restructure
-- consider adding specific technology write ups here
-- read docs:
-    - https://research.cs.cornell.edu/ladis2009/talks/dean-keynote-ladis2009.pdf
-    - https://en.wikipedia.org/wiki/Architectural_pattern
-    - https://en.wikipedia.org/wiki/List_of_software_architecture_styles_and_patterns
 }
 
 \begin{document}
@@ -155,7 +149,7 @@ TODO:
     \subsubsection{Extract–Transform–Load}
     Extract–Transform–Load (ETL) is the process of extracting data from a source database, transforming it into a form that is more suitable for analytic queries, and loading it into a data warehouse or batch processing system.
     
-    \subsubsection{Stored procedure}
+    \subsubsection{Stored Procedure}
     A way of encoding the logic of a transaction such that it can be entirely executed  on a database server, without communicating back and forth with a client during the transaction.
     
 \section{Concurrency}
@@ -325,7 +319,7 @@ TODO:
     
     By design, every partition operates mostly independently—that’s what allows a partitioned database to scale to multiple machines. However, operations that need to write to several partitions can be difficult to reason about: for example, what happens if the write to one partition succeeds, but another fails? 
 
-    \subsection{Fault tolerance }
+    \subsection{Fault Tolerance }
     
     \vspace{8pt}
     \[
@@ -394,6 +388,7 @@ TODO:
     Running on several nodes connected by a network. Characterized by partial failures: some part of the system may be broken  while other parts are still working, and it is often impossible for the software to know what exactly is broken.
     
     \subsubsection{Fallacies of Distributed Computing}
+    \begin{multicols}{2}
     \begin{enumerate}[i.]
         \item The network is reliable
         \item Latency is zero
@@ -404,6 +399,7 @@ TODO:
         \item Transport cost is zero
         \item The network is homogeneous
     \end{enumerate}
+    \end{multicols}
     
     \subsubsection{Partitioning}
     Partitioning involves splitting up a large dataset or computation that is too big for a single machine into smaller parts and spreading them across several machines. Also known as sharding.
@@ -602,7 +598,7 @@ TODO:
     
     For large enough problems, it’s more about disk and network performance than CPU \& DRAM.
     
-    \subsubsection{System of Record}
+    \subsubsection{Systems of Record}
     A system that holds the primary, authoritative version of some data, also known as  the source of truth. Changes are first written here, and other datasets may be derived from the system of record.
     
     \subsubsection{Hash Functions}
@@ -627,6 +623,8 @@ TODO:
     
     \subsubsection{Logs}
     An append-only file for storing data. A write-ahead log is used to make a storage engine resilient against crashes, a log structured storage engine uses logs as its primary storage format, a replication log is used to copy writes from a leader to followers, and an event log can represent a data stream.
+    
+    Metrics should be used alongside logs for more accurate analysis of system behaviours.
 
     \subsubsection{Multitier Architecture}
      Multilayered architecture is a client–server architecture in which presentation, application processing and data management functions are physically separated. 
@@ -646,7 +644,7 @@ TODO:
     
     The coordination costs of using a service is also much lower than a shared library when there are multiple client systems. Upgrading a library, even with no API changes needed, requires coordinating deploys of each client system.
 
-    \subsubsection{Back of the envelope calculations}
+    \subsubsection{Back of the Envelope Calculations}
     Ability to estimate performance of a system design without actually having to build it is an important skill.
     
     Given a basic problem definition, how do you choose the "best" solution? Best could be simplest, highest performance, easiest to extend, etc.
@@ -738,7 +736,7 @@ TODO:
     
     Asymmetric encryption is more expensive, should be used for smaller amounts of data
     
-    \subsubsection{Internet protocol suite and OSI}
+    \subsubsection{Internet Protocol Suite and OSI}
     
     The Internet protocol suite predates the OSI model, which a more comprehensive reference framework for general networking systems. The model partitions a communication system into the following abstraction layers:
     \begin{enumerate}[i.]
@@ -750,6 +748,7 @@ TODO:
     
     The Open Systems Interconnection model (OSI model) is a conceptual model that characterises and standardises the communication functions of a telecommunication or computing system. The model partitions a communication system into the following abstraction layers:
 
+    \begin{multicols}{2}
     \begin{enumerate}[i.]
         \item \textbf{Physical Layer}
         \item \textbf{Data Link Layer}
@@ -759,6 +758,7 @@ TODO:
         \item \textbf{Presentation Layer}
         \item \textbf{Application Layer}
     \end{enumerate}
+    \end{multicols}
     
     \subsubsection{L4 and L7 Load Balancers}
     A load balancer receives requests and delegates them to servers according to some policy, i.e. round robin, load average.
@@ -810,7 +810,7 @@ TODO:
 
     Without backpressure mechanisms in place, cascading failure or unintentional message loss become likely. When a system is not able to handle the failures of another, it tends to emit failures to another system that depends on it.
     
-    \subsubsection{The Two Generals' and Byzantine Generals' Problem}
+    \subsubsection{The Two Generals and Byzantine Generals Problem}
     The Two Generals' Problem is a thought experiment in which two generals are only able to communicate with one another by sending a messenger through enemy territory. The experiment asks how they might reach an agreement on the time to launch an attack, while knowing that any messenger they send could be captured. It is meant to illustrate the pitfalls and design challenges of attempting to coordinate an action by communicating over an unreliable link.
     
     It relates to Transmission Control Protocol, where it shows that TCP can't guarantee state consistency between endpoints.
