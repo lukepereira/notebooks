@@ -1,0 +1,26 @@
+name: Github Action for LaTeX
+description: GitHub Action to compile Markdown documents from .tex files
+inputs:
+  root_file:
+    description: The root LaTeX file to be compiled
+  working_directory:
+    description: The working directory for the pandoc command
+  args:
+    description: Extra arguments to be passed to the pandoc command
+    default: "-s"
+  extra_system_packages:
+    description: Install extra packages by apk
+  changed_files:
+    description: .txt file with all modified files
+runs:
+  using: docker
+  image: Dockerfile
+  args:
+    - ${{ inputs.root_file }}
+    - ${{ inputs.working_directory }}
+    - ${{ inputs.args }}
+    - ${{ inputs.extra_system_packages }}
+    - ${{ inputs.changed_files }}
+branding:
+  icon: book
+  color: blue
