@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<ul>
+<li><a href="#programming-problems">Programming Problems</a></li>
+</ul>
+<p><span> </span></p>
+<ol style="list-style-type: decimal">
+<li><p>For a dynamical system <span class="math inline">\((T,X)\)</span>, a point <span class="math inline">\(x\in X\)</span> is called <em>eventually periodic</em> if there exists <span class="math inline">\(m&gt;m&#39;\)</span> so that <span class="math inline">\(T^mx=T^{m&#39;}x\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\((T,[0,1))\)</span> be the doubling map and let <span class="math inline">\((\sigma,\Omega)\)</span> be the full two shift. For each system, give an example of (i) a point that is eventually periodic, and (ii) a point that is eventually periodic but <em>not</em> periodic.</p>
+<blockquote>
+<p>Recall, the doubling map is defined by, <span class="math display">\[T: [0,1) \to [0,1); x \mapsto 2x \ mod \ 1.\]</span> A periodic point can be given by <span class="math inline">\(\frac{1}{5}\)</span> and an eventually periodic point that is not periodic is given by <span class="math inline">\(\frac{11}{24}\)</span>: <span class="math display">\[\frac {11}{24} \mapsto \frac{11}{12} \mapsto 
+                        \frac {5}{6} \mapsto {\frac {2}{3}} \mapsto 
+                        {\frac {1}{3}} \mapsto {\frac {2}{3}}\mapsto 
+                        {\frac {1}{3}} \mapsto \cdots\]</span></p>
+<p>Recall, the full two shift, <span class="math inline">\((\sigma, \Omega)\)</span>, is defined as, <span class="math inline">\(\Omega=\{0,1\}^{\mathbb{N}}\)</span> and <span class="math inline">\(\sigma:\Omega\to\Omega\)</span>, <span class="math display">\[\sigma(a_0,a_1,a_2\ldots) = (a_1,a_2,a_3\ldots).\]</span> Then, a periodic point can be given by the base 2 expansion of $ = 0.0011001100110011..._2 $. An eventually periodic point that is not periodic is given by the base 2 expansion of the point <span class="math inline">\(\frac{11}{12} = 0.01110101010101..._2\)</span>. <span class="math display">\[\sigma^i(p) = \sigma^{i+2}(p), \forall i &gt; 5\]</span> That is, after shifting 5 times or more, <span class="math inline">\(\frac{11}{12}\)</span> has period of 2.</p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\({\mathbb{C}}\)</span> be the coding function for the doubling map with the usual partition (<span class="math inline">\(\mathcal P_0=[0,1/2)\)</span> and <span class="math inline">\(\mathcal P_1=[1/2,1)\)</span>).</p>
+<p>Prove <span class="math inline">\({\mathbb{C}}(x)\)</span> is eventually periodic in <span class="math inline">\((\sigma, \Omega)\)</span> if and only if <span class="math inline">\(x\)</span> is eventually periodic in <span class="math inline">\((T,[0,1))\)</span>.</p>
+<blockquote>
+<p>Any <span class="math inline">\(x \in [0, 1]\)</span> has a binary expansion given by <span class="math inline">\(\displaystyle x = \sum_{n=0}^{\infty} \frac{x_n}{2^{n+1}}\)</span> for <span class="math inline">\(x_n \in \{0,1\}\)</span>.</p>
+<p>For <span class="math inline">\({\mathbb{C}}(x)\)</span>, we may choose the encoding to be the binary values <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span>. Then for the doubling map with the defined partitions, <span class="math inline">\({\mathbb{C}}(x)\)</span> will encode values <span class="math inline">\(x_n\)</span> to 0 if <span class="math inline">\(T^n x \in \mathcal P_0\)</span> otherwise it will encode <span class="math inline">\(x_n\)</span> to 1. So <span class="math inline">\({\mathbb{C}}: [0,1) \mapsto \Omega\)</span></p>
+<p>Next, we can define <span class="math inline">\(\pi: \Omega \mapsto [0,1)\)</span> by <span class="math display">\[\begin{aligned}
+                 \pi(x_0, x_1, x_2, \cdots) 
+                 &amp;= \sum_{n=0}^{\infty} \frac{x_n}{2^{n+1}} 
+                 \intertext{Then,}
+                 T(\pi(x_0, x_1, x_2, \cdots)) 
+                 &amp;= T \Big (  \sum_{n=0}^{\infty} \frac{x_n}{2^{n+1}} \Big )\\
+                 &amp;= x_0  +\sum_{n=1}^{\infty} \frac{x_n}{2^{n}} \ mod \ 1\\
+                 &amp;= \sum_{n=1}^{\infty} \frac{x_n}{2^n}.
+                 \intertext{Since $x_0 = 0$}
+                 \intertext{Alternatively, }
+                 \pi(\sigma(x_0, x_1,  x_2, \cdots ))
+                 &amp;= \pi(x_1, x_2, \cdots)\\
+                 &amp;= \sum_{n=1}^{\infty} \frac{x_n}{2^n}.
+            \end{aligned}\]</span> Thus, <span class="math inline">\(T \circ \pi = \pi \circ \sigma\)</span>. We see that <span class="math inline">\(\pi\)</span> is surjective and is injective on the set <span class="math inline">\([0, 1)\)</span> after removing binary expansions ending in all 0s or 1s (dyadic rationals). This is because these rationals all have two binary representations so are not unique.</p>
+<p>Since it is trivial to see that dyadic rationals will have period of length 1 in both systems, we may remove them and only consider the remaining values in <span class="math inline">\([0,1)\)</span> for which there is a bijection. Since both mappings will have the same binary representation, it is clear that <span class="math inline">\({\mathbb{C}}(x)\)</span> is eventually periodic in <span class="math inline">\((\sigma, \Omega)\)</span> if and only if <span class="math inline">\(x\)</span> is eventually periodic in <span class="math inline">\((T,[0,1))\)</span></p>
+</blockquote></li>
+<li><p>Prove that <span class="math inline">\({\mathbb{C}}(x)\)</span> is eventually periodic if and only if <span class="math inline">\(x\)</span> is a rational number.</p>
+<blockquote>
+<p>As we have already shown that <span class="math inline">\({\mathbb{C}}(x)\)</span> is surjective with the base 2 expansion of a number <span class="math inline">\(x \in [0,1)\)</span>, we know that <span class="math inline">\({\mathbb{C}}(x)\)</span> will always correspond to a binary representation of a number in <span class="math inline">\([0,1)\)</span>. We only need to prove that the binary expansion of any rational number is periodic.</p>
+<p>We see that if <span class="math inline">\(x = \frac{1}{n}\)</span> for <span class="math inline">\(n&gt;0\)</span> we have <span class="math inline">\(2^m \equiv 1 \mod n\)</span>. Then for some <span class="math inline">\(a, 1 \leq a &lt; 2^m-1\)</span> we have, <span class="math display">\[\begin{aligned}
+                    \dfrac{1}{n} &amp;= \dfrac{a}{2^k-1} \\
+                    &amp;= \dfrac{a}{2^k} + \dfrac{a}{2^{2k}} + \dfrac{a}{2^{3k}} + \cdots
+                \end{aligned}\]</span> This is equal to the number $x [0,1) $ with base 2 expansion of <span class="math inline">\(0.\overline{00\dots01}\)</span> where there are <span class="math inline">\(k-1\)</span> <span class="math inline">\(0\)</span>s. Thus we see that any rational number will have a periodic binary expansion.</p>
+</blockquote></li>
+<li><p>Prove that a binary expansion of a number in <span class="math inline">\([0,1)\)</span> (viewed as an element of <span class="math inline">\((\sigma, \Omega)\)</span> is eventually periodic if and only if that number is rational. (<em>Hint: <span class="math inline">\({\mathbb{C}}(x)\)</span> is always a binary expansion, but not all binary expansions come from codings</em>).</p>
+<blockquote>
+<p>The previous proofs have already shown that all binary expansions <span class="math inline">\(\mathcal C = \{ {\mathbb{C}}(x) | x \in [0,1) \}\)</span> will have a periodic expansion iff <span class="math inline">\(x\)</span> is rational. We can see that <span class="math inline">\(\mathcal B = \Omega - \mathcal C\)</span> will be the set of possible binary expansions that do not come from the set of all possible codings.</p>
+<p>We find that elements of <span class="math inline">\(\mathcal B\)</span> must be irrational because they cannot be represented in the following form which previously represented any periodic base-2 expansion, <span class="math display">\[\begin{aligned}
+                    \dfrac{1}{n} &amp;= \dfrac{a}{2^k-1} 
+                    = \dfrac{a}{2^k} + \dfrac{a}{2^{2k}} + \dfrac{a}{2^{3k}} + \cdots
+                \end{aligned}\]</span></p>
+</blockquote></li>
+<li><p>Prove that the base <span class="math inline">\(n\)</span> expansion of a number in <span class="math inline">\([0,1)\)</span> is eventually periodic if an only if that number is rational.</p>
+<blockquote>
+<p>We can use the following identity, <span class="math display">\[\begin{aligned}
+                    \sum_{n=1}^\infty p^{-kn}
+                    &amp;= \frac{p^{-k}}{1-p^{-k}}
+                    =\frac{1}{p^k-1}\\
+                    &amp;= 
+                \end{aligned}\]</span> This is equal to the number <span class="math inline">\(x \in [0,1)\)</span> with base <span class="math inline">\(p\)</span> expansion of <span class="math inline">\(0.\overline{00\dots01}\)</span> where there are <span class="math inline">\(k-1\)</span> <span class="math inline">\(0\)</span>s. Thus any base p expansion of a number in <span class="math inline">\([0,1)\)</span> is eventually periodic iff that number is rational</p>
+</blockquote></li>
+</ol></li>
+<li><p>Let <span class="math inline">\((\sigma, \Omega)\)</span> be the full two-shift. Let <span class="math inline">\(G\subseteq\Omega\)</span> bet the set of sequences without two ones in a row. Let <span class="math inline">\(X\subseteq \Omega\)</span> be the set of sequences without <em>three</em> ones in a row.</p>
+<ol style="list-style-type: decimal">
+<li><p>Show that <span class="math inline">\((\sigma, X)\)</span> is a subshift.</p>
+<blockquote>
+<p>We know that <span class="math inline">\(X\)</span> is <span class="math inline">\(\sigma\)</span>-invariant, that is <span class="math inline">\(\sigma(X) = X\)</span>. This is because after shifting any sequence without three ones in row, the resulting sequence will also not contain three ones in a row.</p>
+<p>We also know that <span class="math inline">\(X\)</span> is a closed set because it contains all its limit points. This is true because infinite applications of sigma can not produce sequences containing three consecutive ones in a row if the original sequence did not contain three consecutive ones.</p>
+<p>Thus, <span class="math inline">\((\sigma, X)\)</span> is a subshift.</p>
+</blockquote></li>
+<li><p>A <em>two-step</em> Markov chain is a Markov chain where the transition probabilities between states depend on the current state <em>and</em> the previous state.</p>
+<p>A <em>two-step</em> Markov chain on a state space <span class="math inline">\(S\)</span> can be thought of as a one-step (regular) Markov chain on the state space <span class="math inline">\(S\times S\)</span>. For example, let <span class="math inline">\(\mathcal M\)</span> be the Markov chain on states <span class="math inline">\(0\)</span> and <span class="math inline">\(1\)</span> with equal transition probabilities. Normally, <span class="math inline">\(\mathcal M\)</span> has a graph like this:</p>
+<p>[-&gt;,&gt;=stealth’,shorten &gt;=1pt,auto,node distance=2cm, thick,main node/.style=<span>circle,draw,font=****</span>] (1) <span>0</span>; (2) [right of=1] <span>1</span>;</p>
+<p>(2) edge [loop above] (2);</p>
+<p>(1) edge [loop above] (1) edge [bend right] (2) (2) edge [bend right] (1) ;</p>
+<p>However, we can also model <span class="math inline">\(\mathcal M\)</span> as a Markov chain <span class="math inline">\(\mathcal M&#39;\)</span> with state space <span class="math inline">\(00\)</span>, <span class="math inline">\(01\)</span>, <span class="math inline">\(10\)</span>, and <span class="math inline">\(11\)</span> and transition graph like this:</p>
+<p>[-&gt;,&gt;=stealth’,shorten &gt;=1pt,auto,node distance=2cm, thick,main node/.style=<span>circle,draw,font=****</span>] (00) <span>00</span>; (11) [below of=00] <span>11</span>; (01) [below right of=00] <span>01</span>; (10) [below left of=00] <span>10</span>;</p>
+<p>(11) edge [loop above] (11);</p>
+<p>(00) edge [loop above] (00);</p>
+(11) edge [bend left] (10) (01) edge [bend left] (10) (01) edge [bend left] (11) (10) edge [bend left] (00) (10) edge [bend left]
+<ol style="list-style-type: decimal">
+<li><ol start="0" style="list-style-type: decimal">
+<li>edge [bend left] (01) ;</li>
+</ol></li>
+</ol>
+<p>Explain how <span class="math inline">\(\mathcal M&#39;\)</span> models <span class="math inline">\(\mathcal M\)</span>. In particular, explain why the graph for <span class="math inline">\(\mathcal M&#39;\)</span> has no edge between <span class="math inline">\(00\)</span> and <span class="math inline">\(11\)</span>.</p>
+<blockquote>
+<p>We know the states of <span class="math inline">\(\mathcal M&#39;\)</span> capture the previous and current state of <span class="math inline">\(\mathcal M\)</span>. <span class="math inline">\(\mathcal M&#39;\)</span> can be understood as being a model of <span class="math inline">\(\mathcal M\)</span> if we consider <span class="math inline">\(00 \equiv 0\)</span>, <span class="math inline">\(11 \equiv 1\)</span> and suppose the additional transitions for the states <span class="math inline">\(01\)</span> and <span class="math inline">\(10\)</span> have equivalent steady state probabilities for <span class="math inline">\(0 \to 1\)</span>, <span class="math inline">\(1 \to 0\)</span> and self transitions <span class="math inline">\(0 \to 0\)</span>, <span class="math inline">\(1 \to 1\)</span> respectively. Moreover, the additional states add extra information about the transition probabilities given the previous state.</p>
+<p>There is no edge between <span class="math inline">\(00\)</span> and <span class="math inline">\(11\)</span> because it is not possible for a state <span class="math inline">\(0\)</span> to transition to state <span class="math inline">\(1\)</span> without having a previous state of <span class="math inline">\(0\)</span>.</p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\(\mathcal M_G\)</span> be a Markov chain whose set of realizations is <span class="math inline">\(G\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li>Draw a graph for <span class="math inline">\(\mathcal M_G\)</span> and find its associated transition matrix. $$
+\begin{aligned}[c]
+                        \begin{tikzpicture}[-&gt;,&gt;=stealth&#39;,shorten &gt;=1pt,auto,node distance=2cm,
+                        thick,main node/.style={circle,draw,font=\Large\bfseries}]
+                        \node[main node] (1) {0};
+                        \node[main node] (2) [right of=1] {1};
+
+                        \path
+                        (1) edge [loop above] (1)
+                        edge [bend right] (2)
+                        (2) edge [bend right] (1)
+                        ; 
+                        \end{tikzpicture} 
+                    \end{aligned}
+    <br />
+
+\begin{aligned}[c]
+                        \mathcal M_G  
+                        =
+                        {\begin{bmatrix}
+                            0.5&amp; 1 \\
+                            0.5&amp; 0 \\
+                        \end{bmatrix}}
+                        =
+                        {\begin{bmatrix}
+                            1&amp; 1 \\
+                            1&amp; 0 \\
+                        \end{bmatrix}}
+                    \end{aligned}
+<p>$$</p></li>
+<li><p>Use the transition matrix for <span class="math inline">\(\mathcal M_G\)</span> to compute the entropy of <span class="math inline">\((\sigma, G)\)</span>.</p>
+<blockquote>
+<p>We may use the fact that for subshifts of finite type, topological entropy coincides with the logarithm of the spectral radius of the transition matrix<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>.</p>
+<p>Let <span class="math inline">\(\lambda^*\)</span> be the spectral radius, i.e. the largest eigenvalue modulus of the adjacency matrix. Then we can calculate the topological entropy as, <span class="math display">\[\begin{aligned}
+                        \mathcal H(G) &amp;= \lim_{n\to \infty} 
+                        \frac{log(\text{\# words of length n in G})}{log(\text{\# of words of length n in } \Omega)}\\[8pt]
+                        &amp;\equiv log(|\lambda^*|) 
+                        = log \Big ( \Big | \frac{(1+ \sqrt{5}))}{2} \Big | \Big) 
+                        = 0.4812118250...
+                    \end{aligned}\]</span></p>
+</blockquote></li>
+<li><p>Model <span class="math inline">\(\mathcal M_G\)</span> as a two-step Markov chain <span class="math inline">\(\mathcal M_G&#39;\)</span>, which can be viewed as a Markov chain with state space <span class="math inline">\(\{00,01,10,11\}\)</span>. Draw the graph associated with <span class="math inline">\(\mathcal M_G&#39;\)</span> and find its transition matrix. <span class="math display">\[\begin{aligned}[c]
+                        \begin{tikzpicture}[-&gt;,&gt;=stealth&#39;,shorten &gt;=1pt,auto,node distance=2cm, thick,main node/.style={circle,draw,font=\Large\bfseries}]
+                        \node[main node] (00) {00};
+                        \node[main node] (01) [below right of=00] {01};
+                        \node[main node] (10) [below left of=00] {10};
+                        \path
+                        (00) edge [loop above] (00);
+                        \path
+                        (01) edge [bend left] (10)
+                        (10) edge [bend left] (00)
+                        (10) edge [bend left] (01)
+                        (00) edge [bend left] (01)
+                        ; 
+                        \end{tikzpicture} 
+                    \end{aligned}
+                    \ \ \ \ \
+                    \begin{aligned}[c]
+                        \mathcal M_G  
+                        =
+                        {\begin{bmatrix}
+                            0.5&amp; 0&amp; 0.5 \\
+                            0.5&amp; 0&amp; 0.5 \\
+                            0&amp; 1&amp; 0 
+                        \end{bmatrix}}
+                        =
+                        {\begin{bmatrix}
+                            1&amp; 0&amp; 1 \\
+                            1&amp; 0&amp; 1 \\
+                            0&amp; 1&amp; 0 
+                        \end{bmatrix}}
+                    \end{aligned}\]</span></p></li>
+<li><p>Using the transition matrix for <span class="math inline">\(\mathcal M_G&#39;\)</span>, compute the entropy of <span class="math inline">\((\sigma, G)\)</span>.</p>
+<blockquote>
+<p>Let <span class="math inline">\(\lambda^*\)</span> be the spectral radius, i.e. the largest eigenvalue of the adjacency matrix. Then we can calculate the topological entropy as <span class="math display">\[\begin{aligned}
+                        \mathcal H(G) &amp;= \lim_{n\to \infty} 
+                        \frac{log(\text{\# words of length n in G})}{log(\text{\# of words of length n in } \Omega)}\\[8pt]
+                        &amp;= log(|\lambda^*|) 
+                        = log \Big ( \Big | \frac{(1+ \sqrt{5})}{2} \Big | \Big ) 
+                        = 0.4812118250...
+                    \end{aligned}\]</span></p>
+</blockquote></li>
+</ol></li>
+<li><p>Can <span class="math inline">\(X\)</span> be modeled by a one-step Markov chain? Why or why not?</p>
+<blockquote>
+<p>Recall, <span class="math inline">\(X\)</span> is the subset of sequences without 3 consecutive <span class="math inline">\(1\)</span>’s. The one-step Markov chain could not model this as removing a transition or edge from 1 to itself would also remove all sequences with two consecutive 1s.</p>
+</blockquote></li>
+<li><p>Find the entropy of <span class="math inline">\((\sigma, X)\)</span>.</p>
+<blockquote>
+We see that <span class="math inline">\(X \subset G\)</span> without any transitions or edges from state <span class="math inline">\(11\)</span> to itself so it can be modeled with the two-state markov chain and its entropy found, $$
+\begin{aligned}[c]
+                \begin{tikzpicture}[-&gt;,&gt;=stealth&#39;,shorten &gt;=1pt,auto,node distance=2cm, thick,main node/.style={circle,draw,font=\Large\bfseries}]
+                \node[main node] (00) {00};
+                \node[main node, yshift=-1.5cm] (11) [below of=00] {11};
+                \node[main node] (01) [below right of=00] {01};
+                \node[main node] (10) [below left of=00] {10};
+                
+                \path
+                (00) edge [loop above] (00);
+                
+                \path
+                (11) edge [bend left] (10)
+                (01) edge [bend left] (10)
+                (01) edge [bend left] (11)
+                (10) edge [bend left] (00)
+                (10) edge [bend left] (01)
+                (00) edge [bend left] (01)
+                ; 
+                \end{tikzpicture}  
+            \end{aligned}
+     <br />
+
+\begin{aligned}[c]
+                \mathcal M_G  
+                =
+                {\begin{bmatrix}
+                    1&amp; 0&amp; 1&amp; 0 \\
+                    1&amp; 0&amp; 1&amp; 0 \\
+                    0&amp; 1&amp; 0&amp; 1 \\
+                    0&amp; 1&amp; 0&amp; 0  \\
+                \end{bmatrix}}
+            \end{aligned}
+<p>       \begin{aligned}[c] H(G) &amp;= log(|^*|) \ &amp;= log(1.83929) \ &amp;= 0.609380... \end{aligned}$$</p>
+</blockquote></li>
+</ol></li>
+<li><p>Let <span class="math inline">\((\sigma, \Omega)\)</span> be the full two shift.</p>
+<ol style="list-style-type: decimal">
+<li><p>Prove that <span class="math inline">\((\sigma, \Omega)\)</span> is <em>expansive</em>.</p>
+<blockquote>
+<p>Recall, <span class="math inline">\((\sigma, \Omega)\)</span> is expansive if for any <span class="math inline">\(x, y \in \Omega\)</span>, if <span class="math inline">\(x \neq y\)</span> then for some <span class="math inline">\(n\)</span> and some <span class="math inline">\(\epsilon &gt; 0\)</span>, $d(^n(x), ^n(y)) &gt; $.</p>
+<p>Suppose $(a_n), (b_n) $ and <span class="math inline">\((a_n)\neq(b_n)\)</span>, then for some <span class="math inline">\(K \in {\mathbb{N}},a_K \neq b_K\)</span>. Therefore <span class="math inline">\(d(\sigma^K((a_n)), \sigma^K((b_n))) \geq 1\)</span>. So the full two shift is an expansive dynamical system.</p>
+</blockquote></li>
+<li><p>Prove that <span class="math inline">\((\sigma, \Omega)\)</span> is <em>transitive</em>.</p>
+<blockquote>
+<p>Recall, the point <span class="math inline">\(x \in \Omega\)</span> is called transitive if $  = $, where <span class="math inline">\(\overline{ \mathcal O(x) }\)</span> the closure of the orbit. The system <span class="math inline">\((\sigma, \Omega)\)</span> is transitive if there exists a transitive point in <span class="math inline">\(\Omega\)</span>.</p>
+<p>We claim that there exists a <span class="math inline">\(y\in \Omega\)</span> such that <span class="math inline">\(\overline{ \mathcal O (y) } = \Omega\)</span>. Then, for any <span class="math inline">\(\alpha \in \Omega\)</span>, we can choose an arbitrary <span class="math inline">\(\epsilon &gt; 0\)</span>, and choose <span class="math inline">\(n\)</span> such that <span class="math inline">\(2^{-n} &lt; \epsilon\)</span>. Since <span class="math inline">\(\alpha\)</span> will contain some finite <span class="math inline">\(n\)</span> symbols and since <span class="math inline">\(y\)</span> contains all lists of finite symbols, the contents of <span class="math inline">\(\alpha\)</span> must be in <span class="math inline">\(y\)</span> at some index <span class="math inline">\(j\)</span>. Then, by shifting <span class="math inline">\(y\)</span> to this index <span class="math inline">\(j\)</span> will reduce the distance to any arbitrary value, i.e. <span class="math inline">\(d(\sigma^k(y), \alpha) &lt; \epsilon\)</span> for some <span class="math inline">\(k\)</span>. We can see that this is the definition for <span class="math inline">\(y\)</span> having a dense orbit, which means that <span class="math inline">\((\sigma, \Omega)\)</span> is transitive.</p>
+<p>We may choose the base 2 expansion of some transcendental irrational to be <span class="math inline">\(y\)</span>, then we know it will be neither periodic nor eventually periodic and will contain all possible sequences of binary values.</p>
+</blockquote></li>
+<li><p>Show that <span class="math inline">\((\sigma, \Omega)\)</span> is <em>chaotic</em>.</p>
+<blockquote>
+<p>By our definition, the dynamical system <span class="math inline">\((\sigma, \Omega)\)</span> is chaotic if it is both expansive and transitive.</p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\((T,X)\)</span> be a dynamical system and let <span class="math inline">\(x,y\in X\)</span>. We say <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> are <em><span class="math inline">\(\delta\)</span>-correlated for <span class="math inline">\(n\)</span> steps</em> if the distance between <span class="math inline">\(T^ix\)</span> and <span class="math inline">\(T^iy\)</span> is at most <span class="math inline">\(\delta\)</span> for <span class="math inline">\(i=0,\ldots, n\)</span>.</p>
+<p>Let <span class="math inline">\(x,y\in \Omega\)</span> be points that are at distance <span class="math inline">\(2^{-k}\)</span> of each other. For how many steps will <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> be <span class="math inline">\(\delta\)</span>-correlated when <span class="math inline">\(\delta=1/4\)</span>?</p>
+<blockquote>
+<p>If <span class="math inline">\(d(x, y) = 2^{-k}\)</span> we know <span class="math inline">\(k = min_k\{j: x_j \neq y_j \}\)</span> is the number of steps x and y will be <span class="math inline">\(\delta\)</span>-correlated. We also have that <span class="math inline">\(d(T^{i}x, T^{i}y) \leq \frac{1}{4} = 2^{-2}\)</span>. Thus, <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span> be <span class="math inline">\(\delta\)</span>-correlated for <span class="math inline">\(2\)</span> steps.</p>
+</blockquote></li>
+<li><p>If <span class="math inline">\((T,X)\)</span> is a chaotic dynamical system, can two points be <span class="math inline">\(\delta\)</span>-correlated indefinitely? What implications does this have for measurement error?</p>
+<blockquote>
+<p>For two points to be <span class="math inline">\(\delta\)</span>-correlated indefinitely means that the distance between <span class="math inline">\(T^nx\)</span> and <span class="math inline">\(T^ny \leq \delta\)</span> for all <span class="math inline">\(n \in {\mathbb{N}}\)</span>.</p>
+<p>If <span class="math inline">\(X\)</span> is finite, we may choose some <span class="math inline">\(\delta\)</span> outside the radius of the system <span class="math inline">\((T,X)\)</span> so that two points will be <span class="math inline">\(\delta\)</span>-correlated indefinitely.</p>
+<p>However, if <span class="math inline">\((T,X)\)</span> is infinite and chaotic or we pick a point within the radius then, because the system is expansive we know there exists <span class="math inline">\(\epsilon&gt;0\)</span>, so that if <span class="math inline">\(x,y \in \Omega\)</span> and <span class="math inline">\(d(T^n(x),T^n(y)) \leq \epsilon\)</span> for every <span class="math inline">\(n \in {\mathbb{N}}\)</span> then, <span class="math inline">\(x=y\)</span>. So two points <span class="math inline">\(x \neq y\)</span> will not be <span class="math inline">\(\delta\)</span>-correlated indefinitely in an infinite choatic dynamical system or for some choices of <span class="math inline">\(\delta\)</span> inside the bounds of a finite system.</p>
+<p>If you can always pick a small enough <span class="math inline">\(\delta\)</span> so that nothing is delta correlated then you will have a minimum bound on your measurement error. Conversely, if you pick a large enough <span class="math inline">\(\delta\)</span> outside the system, you have a maximum bound on your measurement error.</p>
+</blockquote></li>
+</ol></li>
+<li><p>Two dynamical systems <span class="math inline">\((T, X)\)</span> and <span class="math inline">\((S,Y)\)</span> are called <em>conjugate</em> if there exists a continuous, invertible function <span class="math inline">\(\Phi:Y\to X\)</span> so that <span class="math inline">\(T=\Phi^{-1}\circ S\circ \Phi\)</span>. In this case, <span class="math inline">\(\Phi\)</span> is called a <em>conjugacy</em>.</p>
+<p>The systems are called <em>semi-conjugate</em> if there exist continuous, onto function <span class="math inline">\(\Phi:Y\to X\)</span> so that <span class="math inline">\(T\circ\Phi\)</span> = <span class="math inline">\(\Phi\circ S\)</span>. In this case, <span class="math inline">\(\Phi\)</span> is called a <em>semi-conjugacy</em>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\((T,X)\)</span> and <span class="math inline">\((S,Y)\)</span> be conjugate dynamical systems.</p>
+<ol style="list-style-type: decimal">
+<li><p>Show that if there exists a point of period <span class="math inline">\(k\)</span> in <span class="math inline">\(Y\)</span>, there exists a point of period <span class="math inline">\(k\)</span> in <span class="math inline">\(X\)</span>.</p>
+<blockquote>
+<p>Since <span class="math inline">\((T,X)\)</span> and <span class="math inline">\((S,Y)\)</span> are conjugate, we have, <span class="math display">\[\begin{aligned}
+                            T &amp;= \Phi^{-1}\circ S\circ \Phi \\
+                            T^k &amp;= \Phi^{-1}\circ S^k \circ \Phi \\
+                            S^k &amp;= \Phi \circ T \circ \Phi^{-1}
+                        \intertext{Then for $y\in Y$,}
+                            y &amp;= S^k y \\
+                            \implies \Phi^{-1} \circ \Phi y &amp;=  \Phi^{-1} \circ S^k \circ \Phi y \\
+                            y &amp;= T^k y.
+                            \intertext{Since $\Phi$ is bijective we know there will be a unique $x \in X$,}
+                            y &amp;= \Phi^{-1}(x) \\
+                            \implies x &amp;= T^k x\\
+                                                                              \intertext{Therefore if a point in $Y$ has period $k$, a point in $X$ will also have period $k$.}
+                        \end{aligned}\]</span></p>
+</blockquote></li>
+<li><p>Show that if <span class="math inline">\((S,Y)\)</span> is transitive, then <span class="math inline">\((T,X)\)</span> is transitive.</p>
+<blockquote>
+<p><span class="math display">\[\begin{aligned}
+                            \intertext{If $(S,Y)$ is transitive, then for some $y \in Y$ we have,}
+                            \overline{\mathcal O(y)} &amp;= Y\\
+                           &amp;= \bigcap_{n \in {\mathbb{N}}}  {\{ S^k(y):k&gt;n\}}.\\
+                            \intertext{Since $\Phi$ forms a bijection between $Y$ and $X$, for each point in $Y$ from the closure of the orbit of $y$ there will be a unique point in $X$}
+                            \overline{\mathcal O(y)} 
+                            = \overline{\mathcal O(\Phi^{-1} \circ \Phi (y))} 
+                            &amp;= \bigcap_{n \in {\mathbb{N}}} {\{ \Phi^{-1} \circ S^k \circ \Phi (y):k&gt;n\}}\\
+                            &amp;= \bigcap_{n \in {\mathbb{N}}} {\{ T^k (y):k&gt;n\}}\\
+                            &amp;= X
+                            \intertext{Thus, if $(S,Y)$ is transitive, then $(T,X)$ is also transitive }
+                        \end{aligned}\]</span></p>
+</blockquote></li>
+<li><p>Is it true that if <span class="math inline">\((S,Y)\)</span> is expansive, then <span class="math inline">\((T,X)\)</span> is necessarily expansive?</p>
+<blockquote>
+<p><span class="math display">\[\begin{aligned}
+                            \intertext{If $X$ and $Y$ are compact, then $\Phi$ is uniformly continuous so there exists an $\alpha &gt; 0$ such that}
+                            d(\Phi(y_1)), \Phi(y_2)) \leq \alpha
+                            &amp;\implies d(y_1, y_2) &lt; \epsilon 
+                            \\
+                            d(y_1, y_2) &gt; \epsilon 
+                            &amp;\implies d(\Phi(y_1), \Phi(y_2)) &gt; \alpha  
+                            \\
+                            \intertext{If $x_1,x_2 \in X$, $x_1 \neq x_2$, then $\Phi^{-1}(x_1) \in Y$ and $\Phi^{-1}(x_2) \in Y$ so there exists an $n \in {\mathbb{Z}}$ such that}
+                            d(S^n \Phi^{-1} (x_1) &amp;, S^n\Phi^{-1}(x_1)) &gt; d \\
+                            d(\Phi^{-1} S^n(x_1) &amp;, \Phi^{-1}S^n(x_1)) &gt; d \\
+                            d(\Phi^{-1}S^n\Phi(x_1)&amp;, \Phi^{-1}S^n\Phi(x_1)) &gt; \alpha\\
+                            d(T^nx_1 &amp;, T^n x_2) &gt; \alpha
+                            \intertext{So, $(T,X)$ is also expansive.}
+                            \intertext{However, if $X$ or $Y$ are not compact and are infinite or open, then the implication doesn&#39;t necessarily hold and we can find a counter example as follows}
+                            T: {\mathbb{R}}\mapsto {\mathbb{R}}, T(x) &amp;= 2x \\
+                            S: [0,1) \mapsto [0,1), S(x) &amp;= \frac{1}{2x}\\
+                            \Phi: T \mapsto S, \Phi(x) &amp;= \frac{1}{x} \\
+                            \Phi^{-1} \circ S \circ \Phi(x) 
+                            &amp;= \Phi \circ S \Big( \frac{1}{x} \Big)
+                            = \Phi \Big ( \frac{1}{2x} \Big )
+                            = 2x
+                            \intertext{Here we see two systems are conjugate by $\Phi$, but $T$ is an expansion while $S$ is contraction. So the statement doesn&#39;t hold when X,Y are not compact or when $\Phi$ is not uniformly continuous}
+                        \end{aligned}\]</span></p>
+</blockquote></li>
+</ol></li>
+<li><p>Prove that if <span class="math inline">\((T,X)\)</span> and <span class="math inline">\((S,Y)\)</span> are conjugate dynamical systems, that they are also semi-conjugate dynamical systems.</p>
+<blockquote>
+<p>Since <span class="math inline">\(\Phi\)</span> is bijective, it will be surjective. We can derive the identity from the definition as follows, <span class="math display">\[\begin{aligned}
+                    T &amp;= \Phi^{-1}  S \Phi \\
+                    \Phi T &amp;= \Phi \Phi^{-1} S \Phi \\
+                    \Phi T &amp;= S \Phi \\
+                    T \Phi &amp;= \Phi S
+                \end{aligned}\]</span> Using <span class="math inline">\(\Phi\)</span>’s continuous invertibility, it can be shown that function composition will be commutative. Then, this result matches the definition of being topologically semi-conjugate.</p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\((T,X)\)</span> and <span class="math inline">\((S,Y)\)</span> be semi-conjugate dynamical systems.</p>
+<ol style="list-style-type: decimal">
+<li><p>Show that if there exists a point of period <span class="math inline">\(k\)</span> in <span class="math inline">\(Y\)</span>, there exists a point of period <span class="math inline">\(\leq k\)</span> in <span class="math inline">\(X\)</span>.</p>
+<blockquote>
+<p><span class="math display">\[\begin{aligned}
+                            \intertext{It can easily be shown through induction that,}
+                            T^n \circ\Phi &amp;= \Phi\circ S^n
+                            \intertext{If $y$ is a periodic point of period $n$ for S we have,}
+                            y &amp;= S^ny 
+                            \intertext{By the conjugacy relation,}
+                            T^n (\Phi (y)) &amp;= \Phi(S^n (y)) = \Phi(y) \\
+                            \intertext{This means that $\Phi(y)$ is a periodic point of period $n$ for $(T,X)$.}
+                                                                                                             \Phi y  &amp;= x_i \\
+                            x_i &amp;= T^{k} x_i
+                            \intertext{Because $\Phi$ is surjective,}
+                            dim(S) &amp; \leq dim(T) \\
+                            k &amp;\leq n
+                        \end{aligned}\]</span></p>
+<p>Thus, we can conclude that if there exists a point of period <span class="math inline">\(n\)</span> in <span class="math inline">\(Y\)</span>, there exists a point of period <span class="math inline">\(k \leq n\)</span> in <span class="math inline">\(X\)</span>.</p>
+</blockquote></li>
+<li><p>Show that if <span class="math inline">\((S,Y)\)</span> is transitive, then <span class="math inline">\((T,X)\)</span> is transitive.</p>
+<blockquote>
+<p>If <span class="math inline">\((S,Y)\)</span> is transitive, we know there <span class="math inline">\(\mathcal O_S(y)\)</span> is dense for some <span class="math inline">\(y \in Y\)</span>.</p>
+<p>For any non-empty open set <span class="math inline">\(U \subset X\)</span>, it must be true that <span class="math inline">\(\Phi^{-1}(U)\)</span> is an open set in Y because <span class="math inline">\(\Phi\)</span> is surjective and its inverse is continuous. Using the assumed density of the orbit of y, there must be some <span class="math inline">\(k \in {\mathbb{N}}\)</span> such that, <span class="math display">\[S^k(y) \in \Phi^{-1}(U) \iff \Phi(S^k(y)) \in U.\]</span> Because <span class="math inline">\(\Phi\)</span> defines a conjugcacy, <span class="math display">\[T^k\Phi = \Phi S^k
+                            T^k(\Phi(y)) = \Phi(S^k(y)) \in U
+                            \implies \mathcal O_T(\Phi(y)) \cap U\]</span> This means that if the orbit <span class="math inline">\(\mathcal O_S(y)\)</span> is dense in Y, then the orbit <span class="math inline">\(\mathcal O_T(\Phi(y))\)</span> is dense in X. Moreover, it implies that <span class="math inline">\((T,X)\)</span> will contain a transitive point, so it must also be transitive.</p>
+</blockquote></li>
+<li><p>Is it true that if <span class="math inline">\((S,Y)\)</span> is expansive, then <span class="math inline">\((T,X)\)</span> is necessarily expansive?</p>
+<blockquote>
+<p>Since the semi-conjugacy <span class="math inline">\(\Phi\)</span> is only surjective, it won’t necessarly commute with <span class="math inline">\(S^n\)</span>. Thus we can not show that <span class="math inline">\((S,Y)\)</span> being expansive implies <span class="math inline">\((T,X)\)</span> is expansive in general.</p>
+</blockquote></li>
+</ol></li>
+<li><p>Let <span class="math inline">\((T,[0,1))\)</span> be the doubling map and let <span class="math inline">\((\sigma, \Omega)\)</span> be the full two shift.</p>
+<ol style="list-style-type: decimal">
+<li><p>Show that <span class="math inline">\((T,[0,1))\)</span> and <span class="math inline">\((\sigma, \Omega)\)</span> are semi-conjugate.</p>
+<blockquote>
+<p><span class="math display">\[\begin{aligned}
+                        \intertext{As seen before, we may claim $\pi:\Omega \mapsto [0,1]$ defines a surjective semi-conjugative map, }
+                         \pi(a_0, a_1, a_2, \cdots) 
+                         &amp;= \sum_{n=0}^{\infty} \frac{a_n}{2^{n+1}} 
+                         \intertext{We know that $\pi$ is surjective since each real $x \in [0, 1]$ has a binary expansion. To show that it commutes so that $\pi \circ \sigma = T\circ \pi$. First we find $\pi \circ \sigma$}
+                         \pi(\sigma (a_i)_{i=1}^\infty)
+                         &amp;= \pi (\sigma (b_i)_{i=1}^\infty
+                         = \sum_{i=1}^\infty \frac{b_i}{2^i}
+                         = \sum_{i=1}^\infty \frac{a_{i+1}}{2^i}
+                         \intertext{Given that $b_i=a_{i+1}$. Next we find $T \circ \pi$}
+                         T(\pi(a_i)_{i=1}^\infty))
+                         &amp;= T \Big( \sum_{i=1}^\infty \frac{a_i}{2^i} \Big )
+                         = \sum_{i=1}^\infty\frac{a_i}{2^i} \ mod \ 1 
+                         = \sum_{j=1}^\infty\frac{a_{j+1}}{2^j}
+                         \intertext{We see the results are the same, so $\pi  \circ \sigma = T \circ \pi$ and $\pi$ defines a semi-conjugacy between $(T,[0,1))$ and $(\sigma, \Omega)$.}
+                    \end{aligned}\]</span></p>
+</blockquote></li>
+<li><p>Show that <span class="math inline">\((T,[0,1))\)</span> is chaotic.</p>
+<blockquote>
+<p>We have already shown that <span class="math inline">\((\sigma, \Omega)\)</span> is chaotic and thus transitive. Since we’ve shown that <span class="math inline">\((T,[0,1))\)</span> is semi-conjugate to <span class="math inline">\((\sigma, \Omega)\)</span> with our defined <span class="math inline">\(\pi\)</span> we know that it is transitive, then we only need to show that <span class="math inline">\((T,[0,1))\)</span> is expansive.</p>
+<p><span class="math display">\[\begin{aligned}
+                            \intertext{Let $x \neq y$ be distinct points in $[0,1)$, if $d(x,y) &lt; \frac{1}{4}$ we see that}
+                            d(T(x),T(y)) &amp;&gt; 2d(x,y)\\
+                            \intertext{Then for all $n$ and for some $\epsilon &gt;0$}
+                            d(T^n(x), T^n(y)) &amp;= 2^n d(x,y) &gt; \epsilon
+                            \intertext{Thus, $(T,[0,1))$ is expansive and transitive so it must be chaotic. Moreover, we found that the expansive constant is $\epsilon = \frac{1}{4}$.}
+                        \end{aligned}\]</span></p>
+</blockquote></li>
+</ol></li>
+<li><p>Let <span class="math inline">\((T,[0,1))\)</span> be the doubling map and let <span class="math inline">\((L,[0,1])\)</span> be the <em>logistic map</em> defined by <span class="math inline">\(L(x)=rx(1-x)\)</span> for <span class="math inline">\(r=4\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Define <span class="math inline">\(f:[0,1)\to[0,1)\)</span> by <span class="math inline">\(f(x)=\sin^2(2\pi x)\)</span>. Show that <span class="math inline">\(f\)</span> is a semi-conjugacy between <span class="math inline">\((L,[0,1])\)</span> and <span class="math inline">\((T,[0,1))\)</span>.</p>
+<blockquote>
+<p><span class="math display">\[\begin{aligned}
+                           \intertext{We may first note that,}
+                           f(x) &amp;= sin^2(2\pi x) = \frac{1}{2}(1-cos(4\pi x))
+                           \intertext{
+                           We want to show that f is surjective and commutes as expected between $T$ and $L$ so we need to verify that $L\circ f = f \circ T$. We first find $L\circ f$,
+                           }
+                           L \circ f &amp;= 4f(x)(1-f(x))\\
+                           &amp;= 2(1-cos(4\pi x))\frac{1}{2}(1+cos(4\pi x))\\
+                           &amp;= 1 -cos^2(4 \pi x).\\
+                           \intertext{Next, we find $ f\circ T$,}
+                           f \circ T &amp;= \frac{1}{2}(1-cos(4\pi T(x)))\\
+                           &amp;= \frac{1}{2}(1-(2cos^2(4\pi x)-1)) \\
+                           &amp;= 1 - cos^2(4\pi x).
+                           \intertext{Thus, $L\circ f = f \circ T$. We see that $f$ is a composition of $cos(4\pi x)$ and $\frac{1-x}{2}$, both of which are continuous and surjective on $[0, 1)$ so their composition will also be surjective and continuous. Then $f$ gives a semi-conjugacy.}
+                        \end{aligned}\]</span></p>
+</blockquote></li>
+<li><p>Show that <span class="math inline">\((L,[0,1])\)</span> contains points of every period.</p>
+<blockquote>
+<p>We know the logistic map is semi-conjugate to the doubling map. We also know the doubling map is semi-conjugate to the full two-shift map. Then, we try to define a semi-conjugacy <span class="math inline">\(g\)</span> between <span class="math inline">\((L,[0,1])\)</span> and <span class="math inline">\((\sigma,\Omega)\)</span> with <span class="math display">\[g(x)= \sin ^{2}(2\pi(x)).\]</span> However, we see that for points of the form, <span class="math inline">\(x\in [0,1), x = \frac{1}{q}\)</span> where $ 2 q$, <span class="math inline">\(x\)</span> will have period of <span class="math inline">\(q-1\)</span> but <span class="math inline">\(g\)</span> will collapse half of those values along their symmetry of <span class="math inline">\(1/2\)</span> of the sine curve. We may claim that for these points, <span class="math inline">\(g(\frac{1}{q})\)</span> has a period of <span class="math inline">\(q-1\)</span> in <span class="math inline">\(T\)</span> but will have half that period of <span class="math inline">\(\frac{q-1}{2}\)</span> in <span class="math inline">\(L\)</span>.</p>
+<p>We see that the sorted values of the orbit will be <span class="math inline">\(\mathcal O(\frac{1}{q}) = \{ \frac{1}{q}, \frac{2}{q}, \frac{3}{q}, ..., \frac{q-1}{q}\}\)</span> and will have symmetry along <span class="math inline">\(1/2\)</span>. There will be an even number of equally spaced points in the period with half in the LHS and the other half in the RHS. If we consider only the first half from <span class="math inline">\([0, 1/2]\)</span> we see the right endpoint will have distance of <span class="math inline">\(1/2q\)</span> to <span class="math inline">\(1/2\)</span>, but the left point will have distance <span class="math inline">\(1/q\)</span> from <span class="math inline">\(0\)</span>. This means that the points can not be symmetrically distributed along 1/4 and moreover, it means that the points we be guaranteed to have no overlap in <span class="math inline">\(g\)</span>.</p>
+<p>We have already seen how periods of any size <span class="math inline">\(k\)</span> can be formed from the full two shift map using an identity for rationals. Form here, it is easy to see how these rationals can be constructed so that they are mapped to a value in <span class="math inline">\((L,[0,1])\)</span> with arbitrary period lengths using the above defined conjugacy.</p>
+</blockquote></li>
+<li><p>Show that <span class="math inline">\((L,[0,1])\)</span> is chaotic.</p>
+<blockquote>
+<p>It can be shown that <span class="math inline">\(g(x)= \sin ^{2}(2\pi(x))\)</span> defines a conjugate bijective map between <span class="math inline">\((L,[0,1])\)</span> and <span class="math inline">\((\sigma,\Omega)\)</span>.</p>
+<p>We’ve shown that <span class="math inline">\((\sigma,\Omega)\)</span> is chaotic, then since <span class="math inline">\((L,[0,1])\)</span> is conjugate, it must be transitive and expansive as well and is therefore also chaotic.</p>
+</blockquote></li>
+</ol></li>
+</ol></li>
+</ol>
+<h2 id="programming-problems" class="unnumbered">Programming Problems</h2>
+<p>For the programming problems, please use the Jupyter notebook available at</p>
+<p><a href="https://utoronto.syzygy.ca/jupyter/user-redirect/git-pull?repo=https://github.com/siefkenj/2020-MAT-335-webpage&amp;subPath=homework/homework4-exercises.ipynb" class="uri">https://utoronto.syzygy.ca/jupyter/user-redirect/git-pull?repo=https://github.com/siefkenj/2020-MAT-335-webpage&amp;subPath=homework/homework4-exercises.ipynb</a></p>
+<p>Make sure to comment your code and use “Markdown” style cells to explain your answers.</p>
+<ol style="list-style-type: decimal">
+<li><p>The <em>logistic map with parameter <span class="math inline">\(r\)</span></em> is the function <span class="math inline">\(f:[0,1]\to[0,1]\)</span> defined by <span class="math inline">\(f(x)=rx(1-x)\)</span> (for <span class="math inline">\(r\in[0,4]\)</span>). It was invented as a simple model for population in biology. The idea is that if <span class="math inline">\(x\)</span> is your original population, there will be some birth rate <span class="math inline">\(r\)</span> governing population growth; however, when the population outstretches its resources, its growth will be constrained. The <span class="math inline">\(1-x\)</span> parameter models this constraint on growth.</p>
+<p>Despite being so simple, the logistic map can have amazingly complex behaviour!</p>
+<ol style="list-style-type: decimal">
+<li><p>A two-parameter logistic function <span>f</span> has been predefined. Create a function <code>orbit_f</code> which inputs a starting value, a parameter <span class="math inline">\(r\)</span>, and an orbit length <span class="math inline">\(n\)</span>, and returns a list with the first <span class="math inline">\(n\)</span> points along the orbit of <span>f</span>.</p></li>
+<li><p>[PARTIALORBIT]Given a dynamical system <span class="math inline">\((T,X)\)</span>, the <span class="math inline">\(n\)</span>-orbit of <span class="math inline">\(x\)</span> is <span class="math inline">\(\mathcal O^n(x)=\{x,Tx,\ldots, T^{n-1}x\}\)</span>.</p>
+<p>Using <span class="math inline">\(r=2\)</span>, plot the 20-orbits of <span class="math inline">\(x\)</span> for at least 10 different <span class="math inline">\(x\)</span>’s (plot time vs. value). What do you notice?</p></li>
+<li><p>Does the logistic map with <span class="math inline">\(r=2\)</span> have a <em>basin of attraction</em><a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>? Justify your conclusion.</p></li>
+<li><p>Repeat part [PARTIALORBIT] using <span class="math inline">\(r=3\)</span>. What do you notice? Is there a basin of attraction consisting of a single point?</p></li>
+<li><p>In general, a <em>basin of attraction</em> for a dynamical system is a set which all points limit to. Does the logistic map have a basin of attraction when <span class="math inline">\(r=3\)</span>? If so, describe it.</p></li>
+<li><p>Repeat part [PARTIALORBIT] with <span class="math inline">\(r=4\)</span>. Is there a basin of attraction? Why or why not?</p></li>
+</ol></li>
+<li><p>We are going to plot the basins of attraction for the logistic map as a function of <span class="math inline">\(r\)</span>. We can approximate a basin of attraction by taking the <span class="math inline">\(1000\)</span>-orbit of several points, and then taking the set consisting of the last <span class="math inline">\(100\)</span> points in each orbit.</p>
+<ol style="list-style-type: decimal">
+<li><p>Create a function <code>approximate_basin</code> which takes in a parameter <span class="math inline">\(r\)</span> and returns a list of points that approximate the basin of attraction of the logistic map with parameter <span class="math inline">\(r\)</span>.</p>
+<p><em>Hint:</em> It may be useful to round your results to 3 or 4 decimal places and then use <span>np.unique</span> to get a list of manageable length.</p></li>
+<li><p>Plot the basins of attraction of the logistic map vs. <span class="math inline">\(r\)</span> for at 1000 different values of <span class="math inline">\(r\)</span> between <span class="math inline">\(0\)</span> and <span class="math inline">\(4\)</span>.</p></li>
+<li><p>What do you notice about the basins of attraction? Did you expect this?</p></li>
+<li><p>In the <em>proofs</em> part of this homework set, you proved that the logistic map is chaotic when <span class="math inline">\(r=4\)</span>. What does that imply about the basin of attraction?</p></li>
+<li><p>If a population is well-modeled by the logistic map with a parameter of <span class="math inline">\(r=3.82\)</span>, what can you say about the population after 1000 days? What if it is modeled by a logistic map with parameter <span class="math inline">\(r=3.83\)</span>? Is the population more or less predictable?</p></li>
+</ol></li>
+</ol>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"></li>
+<li id="fn2"><p>Look back in the notes if you’ve forgotten this term.<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+</body>
+</html>

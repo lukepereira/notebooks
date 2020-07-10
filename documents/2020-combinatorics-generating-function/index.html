@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<p><span> </span></p>
+<ol style="list-style-type: decimal">
+<li><p>Find a closed form formula for the sequence <span class="math inline">\((a_n)\)</span> defined by <span class="math inline">\(a_0 = 2, a_1 = 12\)</span>, and <span class="math inline">\(a_{n+2} = 7 a_{n+1} - 10a_n\)</span> for <span class="math inline">\(n \geq 0\)</span>.</p>
+<blockquote>
+<p>First we rewrite the equation using the advancement operation: <span class="math display">\[\begin{aligned}
+                    0 &amp;= (A^2 - 7A + 10)a  \\
+                    0 &amp;= (A - 2) (A - 5)a  
+            \end{aligned}\]</span> The general solution will have the form <span class="math inline">\(a_n = x2^n + y 5^n\)</span>. Plugging in the initial conditions we see <span class="math inline">\(x + y = 2\)</span> and <span class="math inline">\(2x + 5y = 12\)</span>, thus <span class="math inline">\(x = -\frac{2}{3}\)</span>, <span class="math inline">\(y = \frac{8}{3}\)</span>.</p>
+<p>The closed form of <span class="math inline">\(a_n\)</span> is <span class="math inline">\(a_n = -\frac{2}{3}2^n + \frac{8}{3}5^n\)</span>.</p>
+</blockquote></li>
+<li><p>Find a closed form formula for the sequence <span class="math inline">\((a_n)\)</span> defined by <span class="math inline">\(a_0 = 1, a_1 = 3\)</span>, <span class="math inline">\(a_2 = 27\)</span>, and <span class="math inline">\(a_{n+3} = 9a_{n+2} - 27a_{n+1} + 27a_n\)</span> for <span class="math inline">\(n \geq 0\)</span>.</p>
+<blockquote>
+<p>First we rewrite the equation using the advancement operation <span class="math display">\[\begin{aligned}
+                0 &amp;= (A^3 -9A^2 +27A -27)a \\
+                0 &amp;= (A-3)^3 a
+            \end{aligned}\]</span> This equation has a solution with the form <span class="math inline">\(a_n = c3^n\)</span> and the general solution will have the form <span class="math inline">\(a_n = c_1 3^n + c_2 n3^n + c_3 n^2 3^n\)</span>.</p>
+<p>Plugging in the initial conditions, we get the following system of equations, <span class="math display">\[\begin{aligned}
+                    c_1 &amp;= 1\\
+                    3 &amp;= 3c_1 + 3c_2 + 3c_3\\
+                    27 &amp;= 9c_1 + 18c_2 + 36c_3
+                \end{aligned}\]</span> Solving for the unknowns, we find: <span class="math inline">\(c_1 = 1, c_2 = -1, c_3 = 1\)</span>.</p>
+<p>Thus, the closed form is: <span class="math inline">\(a_n = 3^n - n3^n + n^2 3^n\)</span>.</p>
+</blockquote></li>
+<li><p>Give the general solution to the recurrence <span class="math inline">\(a_{n+3} = 4a_{n+2} - 5a_{n+1} + 2a_n\)</span>. (Note: <span class="math inline">\(x^3 - 4x^2 + 5x - 2 = (x - 1)^2(x - 2)\)</span>)</p>
+<blockquote>
+<p>First, we rewrite the recurrence using the advancement operator: <span class="math display">\[\begin{aligned}
+                0 &amp;= (A^3 - 4A^2 + 5A - 2)a\\
+                0 &amp;= (A - 1)^2(A - 2)a
+            \end{aligned}\]</span> This equation has general solutions of the form <span class="math display">\[a_n = c_1 + n c_2 +  c_3 2^n\]</span></p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\(p\)</span> be a polynomial of degree <span class="math inline">\(k\)</span>. Suppose <span class="math inline">\(\lambda\)</span> is not a root of <span class="math inline">\(p\)</span>. Find a solution to the recurrence <span class="math inline">\((p(A)a)(n) = \lambda^n\)</span>.</p>
+<blockquote>
+<p>We would like to find a particular solution to the nonhomogeneous recurrence, <span class="math display">\[\begin{aligned}
+                f_0(n) &amp;= d \lambda^n \\
+                p(A) d \lambda^n &amp;= \lambda^n \\
+                (\sum A^k c^k) d \lambda^n &amp;= \lambda^n \\
+                d \sum c^k A^k \lambda^n &amp;= \lambda^n \\
+                d \sum c^k \lambda^{n+k} &amp;= \lambda^n \\
+                d \sum c^k \lambda^k &amp;= 1  \\
+                d p(\lambda) &amp;= 1  \\
+                d &amp;= \frac{1}{p(\lambda)}               
+            \end{aligned}\]</span> Thus, a particular solution will be, <span class="math display">\[f_0(n) = \frac{ \lambda^n}{p(\lambda)}\]</span></p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> be nonzero and distinct. Find the general solution to the recurrence <span class="math display">\[a_{n+2} - (\alpha + \beta)a_{n+1} + \alpha\beta a_n = \alpha^n.\]</span></p>
+<blockquote>
+<p>First, we rewrite the recurrence using the advancement operator: <span class="math display">\[\begin{aligned}
+                (A^2 - (\alpha + \beta)A + \alpha \beta)a &amp;= \alpha^n\\
+                (A- \alpha)(A-\beta) &amp;=\alpha^n
+            \end{aligned}\]</span></p>
+<p>The general solution to the nonhomogeneous recurrence will be of the form <span class="math inline">\(f=f_0+f_1\)</span> where <span class="math inline">\(f_0\)</span> is a particular solution and <span class="math inline">\(f_1\)</span> is a solution to the corresponding homogeneous recurrence. The homogeneous recurrence will be, <span class="math display">\[\begin{aligned}
+                (A- \alpha)(A-\beta) &amp;= 0
+            \end{aligned}\]</span> So it will have a general solution with the form, <span class="math display">\[f_1(n) = c_1(\alpha^n) + c_2(\beta^n)\]</span></p>
+<p>Since <span class="math inline">\(\alpha^n\)</span> is a solution the homogeneous equation, we choose a particular solution of the form, <span class="math display">\[\begin{aligned}
+                f_0(n) &amp;= d n \alpha^n\\
+                \implies (A- \beta)(A -\alpha)  d n \alpha^n 
+                &amp;= (A-\beta)(d (n+1)\alpha^{n+1} - dn\alpha^{n+1}) \\
+                &amp;= (A-\beta)d\alpha^{n+1}\\
+                &amp;= d\alpha^{n+2} - d\alpha^{n+1}\beta\\
+                &amp;= \alpha^{n}(d\alpha^2 - d\beta\alpha)
+            \end{aligned}\]</span> We want this to equal <span class="math inline">\(\alpha^n\)</span> so we let <span class="math inline">\(d = \frac{1}{\alpha(\alpha-\beta)}\)</span>. Therefore the particular solution will be, <span class="math display">\[f_0(n) = \frac{n\alpha^n}{\alpha(\alpha-\beta)}\]</span> And the general solution will be, <span class="math display">\[f(n) = \frac{n\alpha^n}{\alpha(\alpha-\beta)} + c_1(\alpha^n) + c_2(\beta^n)\]</span></p>
+</blockquote></li>
+<li><p>Find the general solution to the recurrence <span class="math inline">\(a_{n+2} - 5a_{n+1} + 6a_n = n + 1\)</span>.</p>
+<blockquote>
+<p>First, we rewrite the recurrence using the advancement operator: <span class="math display">\[(A^2 - 5A +6)a = n+1\]</span> The corresponding homogeneous equation is, <span class="math display">\[\begin{aligned}
+                (A^2 - 5A +6)a &amp;= 0 \\
+                (A-3)(A-2) &amp;= 0.
+            \end{aligned}\]</span> Which will have solutions of the form, <span class="math display">\[f_1(n) = c_1 3^n  + c_2 2^n\]</span> The particular solutions will have the form, <span class="math display">\[\begin{aligned}
+                f_0(n) &amp;= c_3 +c_4 n \\
+                (A-3)(A-2)(c_3 + c_4n) &amp;= n + 1 \\
+                (A-3)(c_3 + c_4(n+1)-2c_3 -2c_4n) &amp;= n + 1 \\
+                n(2c_4) +(2c_3 -3c_4) &amp;= n + 1 \\
+                \implies c_4 &amp;= \frac{1}{2}\\
+                \implies c_3 &amp;= \frac{5}{4} \\ 
+                \implies f_0(n) &amp;= \frac{5}{4} + \frac{1}{2} n
+            \end{aligned}\]</span> So the general solution will have the form, <span class="math display">\[f(n) = c_1 3^n + c_2 2^n +  \frac{1}{2} n +  \frac{5}{4}\]</span></p>
+</blockquote></li>
+<li><p>Let <span class="math inline">\(p\)</span> be a polynomial with <span class="math inline">\(p(1) \neq 0\)</span>. Let <span class="math inline">\(g\)</span> be a polynomial of degree <span class="math inline">\(\leq d\)</span>. Show that there is a unique polynomial <span class="math inline">\(f\)</span> of degree <span class="math inline">\(\leq d\)</span> such that the sequence <span class="math inline">\((f(n))\)</span> satisfies the recursion <span class="math inline">\(p(A)f = g\)</span>.</p>
+<blockquote>
+<p>Using the hint, we let <span class="math inline">\(P_d\)</span> denote the space of polynomial sequences of degree <span class="math inline">\(\leq d\)</span>, i.e., <span class="math inline">\(P_d\)</span> consists of sequences <span class="math inline">\((f(n))\)</span> where <span class="math inline">\(f\)</span> is a polynomial of degree <span class="math inline">\(\leq d\)</span>.</p>
+<p>We may assume that <span class="math inline">\(P_d\)</span> is a vector space and since p is a polynomial, we can also assume that <span class="math inline">\(p(A)\)</span> is linear. Then <span class="math inline">\(\forall f_d \in P_d\)</span>, <span class="math display">\[f_d(x) = c_0 + c_1 x + c_2 x^2 + ... + c_d x^d\]</span> We can see that the basis of the space of all polynomial sequences of this form will be <span class="math inline">\(\{ 1, x , x^2,...,x^d \}\)</span>. Since the basis is finite, it must be true that <span class="math inline">\(P_d\)</span> is finite dimensional.</p>
+<p>We can also observe that the transformation <span class="math inline">\(p(A)\)</span> goes from <span class="math inline">\(P_d\)</span> to <span class="math inline">\(P_d\)</span>, that is, the dimension of a function will never exceed <span class="math inline">\(d\)</span>. <span class="math inline">\(\forall f_d \in P_d\)</span> we’ve seen <span class="math inline">\(f_d(n)\)</span> is a linear combination of terms of <span class="math inline">\(n\)</span> with degrees less than or equal to <span class="math inline">\(d\)</span>. Applying the advancement operator on any individual term of degree <span class="math inline">\(l \leq d\)</span> will yield, <span class="math inline">\(A(n^l) = (n+1)^l = n^l + ... + 1\)</span>. Thus <span class="math inline">\(A\)</span> sends all terms from <span class="math inline">\(P_d \to P_d\)</span>. Using linearity, we can see that applying <span class="math inline">\(A\)</span> to all linear combinations of a polynomial will also be sent to <span class="math inline">\(P_d\)</span>. We can see that any powers of <span class="math inline">\(A\)</span> will be sent to <span class="math inline">\(P_d\)</span> as well since the leading term will never be able to exceed degree <span class="math inline">\(d\)</span>.</p>
+<p>Next, we aim to show that <span class="math inline">\(p(A)\)</span> gives a bijective linear transformation <span class="math inline">\(P_d \to P_d\)</span>. Since <span class="math inline">\(P_d\)</span> is finite dimensional and <span class="math inline">\(p(A): P_d \to P_d\)</span>, we know from linear algebra that <span class="math inline">\(p(A)\)</span> is bijective <span class="math inline">\(\iff\)</span> <span class="math inline">\(p(A)\)</span> is injective <span class="math inline">\(\iff\)</span> <span class="math inline">\(p(A)\)</span> is surjective. Thus we can prove bijectivity by proving injectivity.</p>
+<p>To show injectivity, we aim to show that <span class="math inline">\(ker(p(A)) = 0\)</span> (i.e., the kernel is trivial).</p>
+<p><span class="math display">\[p(A)(\sum_{j=0}^l a_j n^j) = (\sum_{i=1}^{k} c_iA^i) (\sum_{j=0}^l a_j n^j)\]</span> We know <span class="math inline">\(a_l \neq 0\)</span>. We want to find the coeffecient of <span class="math inline">\(n^l\)</span> so we can calculate <span class="math display">\[\begin{aligned}
+            (\sum_{i=1}^{k} c_iA^i) a_l n^l &amp;=  a_l(\sum_{i=1}^{k} c_iA^i)n^l \\
+            An^l  
+            &amp;= A(n^l + [\text{terms of degree $&lt;l$}] ) \\
+            &amp;=(n+1)^l +  [\text{terms of degree $&lt;l$}]\\
+            &amp;= n^l + [\text{terms of degree $&lt;l$]}
+        \end{aligned}\]</span> Again, we see that applying the advancement operator several times will yield something of the form <span class="math inline">\(n^l + [\text{terms of degree $&amp;lt;l$]}\)</span>. Moreover, the total coeffecient of the <span class="math inline">\(n^l\)</span> term will be sum of the coefficients of A, i.e. <span class="math inline">\(\sum_{i=1}^{k} c_i\)</span>. As long as this sum is not zero, the polynomial will not be zero and the kernel is trivial. We can use the fact that <span class="math inline">\(p(1) \neq 0\)</span> to see this the sum is not zero and the kernel of <span class="math inline">\(p(A)\)</span> is trivial.</p>
+<p>Using the previous findings we can conclude that the transformation <span class="math inline">\(p(A)\)</span> is a bijection from <span class="math inline">\(P_d \to P_d\)</span>. Thus for all <span class="math inline">\(g\)</span> there exists a unique polynomial <span class="math inline">\(f\)</span> such that the sequence <span class="math inline">\((f(n))\)</span> satisfies the recursion <span class="math inline">\(p(A)f = g\)</span>.</p>
+</blockquote></li>
+<li><p>Find a solution to the recursion <span class="math inline">\(((A - 1)(A - 2)a)(n) = n + 2 \cdot 3^n\)</span>.</p>
+<blockquote>
+<p>First, we solve the corresponding homogeneous recursion, <span class="math inline">\((A - 1)(A - 2)a =0\)</span> which will have solutions of the form <span class="math display">\[f_1(n) = c_1 + c_2 2^n\]</span> We may split the particular solution into to parts and solve them separately, then by linearity we can add them back together to get the final general solution. <span class="math display">\[\begin{aligned}
+                f_0^{(1)}(n) &amp;= c_3n^2 +c_4n + c_5 \\
+                (A^2 - 3A + 2)(c_3n^2 +c_4n + c_5) &amp;= n\\
+                                                                2 c_3 n^2 + 2 c_4 n - 3 c_3 (n + 1)^2 + c_3 (n + 2)^2 - 3 c_4 (n + 1) + c_4 (n + 2) &amp;= n \\
+                -2 c_3 n + c_3 - c_4 &amp;= n \\
+                \implies c_3 &amp;= -\frac{1}{2} \\ 
+                \implies c_4 &amp;= \frac{1}{2} \\
+                \implies c_5 &amp;= 0 
+            \end{aligned}\]</span> Thus, the first part of the particular solution will have the form, <span class="math display">\[f_0^{(1)}(n) =  -\frac{1}{2}n^2 + \frac{1}{2}n\]</span> For the second part of the particular solution we try, <span class="math display">\[\begin{aligned}
+                f_0^{(2)}(n) &amp;= d 3^n \\
+                (A^2 -3A+2)d 3^n &amp;= 2\cdot3^n \\
+                (3^{n+1} - 3\cdot 3^{n+1} + 2\cdot3^n)d &amp;= 2\cdot3^n \\
+                d(9 - 9 + 2) &amp;= 2\cdot1 \\ 
+                d &amp;= 1\\
+                \implies f_0^{(2)}(n) &amp;= 3^n
+            \end{aligned}\]</span></p>
+<p>Thus, the general solution will be, <span class="math display">\[f(n) =  c_1 + c_2 2^n + -\frac{1}{2}n^2 + \frac{1}{2}n + 3^n\]</span></p>
+</blockquote></li>
+<li><p>There is a famous puzzle called the Towers of Hanoi that consists of three pegs and <span class="math inline">\(n\)</span> circular discs, all of different sizes. The discs start on the leftmost peg, with the largest disc on the bottom, the second largest on top of it, and so on, up to the smallest disc on top. The goal is to move the discs so that they are stacked in this same order on the rightmost peg. However, you are allowed to move only one disc at a time, and you are never able to place a larger disc on top of a smaller disc. Let <span class="math inline">\(t_n\)</span> denote the fewest moves (a move being taking a disc from one peg and placing it onto another) in which you can accomplish the goal. Determine an explicit formula for <span class="math inline">\(t_n\)</span>.</p>
+<blockquote>
+<p>To move the largest disc to the rightmost peg, we must first move all other discs onto the middle peg first. This can be done in <span class="math inline">\(t_{n-1}\)</span> moves. Next we add one to move the largest disc to the right peg and again repeat moving all the discs from the centre peg to the right peg in <span class="math inline">\(t_{n-1}\)</span> moves. This results in the following recursion, <span class="math display">\[t_n = 2t_{n-1} + 1, t_1 = 1; n &gt; 0\]</span> To find a closed form formula, we rewrite the equation using the advancement operation: <span class="math display">\[(A -2) =1\]</span> We see that the general solution will have the form <span class="math display">\[f(n) = c_1 2^n + c_2.\]</span> Solving for <span class="math inline">\(c_2\)</span>, <span class="math display">\[\begin{aligned}
+                2c_2 + 1  &amp;= 1 \\
+                \implies c_2 &amp;= -1.  
+            \end{aligned}\]</span> Solving for <span class="math inline">\(c_1\)</span>, <span class="math display">\[\begin{aligned}
+               f(1) &amp;=  c_1(2)^1 -1 = 1\\
+                \implies c_1 &amp;= 1
+            \end{aligned}\]</span> Thus, an explicit formula is given by: <span class="math display">\[t_n = 2^n -1\]</span></p>
+</blockquote></li>
+</ol>
+</body>
+</html>

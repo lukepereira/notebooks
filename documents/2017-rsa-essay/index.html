@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <meta name="author" content="Luke Pereira - 2017" />
+  <title>RSA Cryptosystem</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+<h1 class="title"><span style="font-variant: small-caps;">RSA Cryptosystem</span></h1>
+<h2 class="author">Luke Pereira - 2017</h2>
+</div>
+<ul>
+<li><a href="#history-of-cryptography">History of Cryptography</a></li>
+<li><a href="#diffie-and-helman-new-directions-in-cryptography">Diffie and Helman:<br />
+‘New Directions in Cryptography’</a></li>
+<li><a href="#the-rsa-method">The RSA Method</a></li>
+<li><a href="#theorems-and-identities">Theorems and Identities</a></li>
+<li><a href="#proof-of-correctness">Proof Of Correctness</a></li>
+<li><a href="#unprovable-security">Unprovable Security</a></li>
+<li><a href="#modern-applications-digital-signing-and-key-exchange">Modern Applications:<br />
+Digital Signing and Key Exchange</a></li>
+</ul>
+<h1 id="history-of-cryptography" class="unnumbered">History of Cryptography</h1>
+<p><span>2</span></p>
+<p>The word cryptography, derived from the Greek words kryptós, meaning “hidden”, and graphein, meaning “writing”, can broadly be understood as such - it is the practice of hiding the meaning or content of communications. More precisely, an encrypted message is typically made to be indistinguishable from random noise in an effort to prevent a third party adversary or the general public from ascertaining any useful information from the original private message.</p>
+<p>In 1883, the Dutch cryptographer Auguste Kerckhoffs formulated six design axioms for military ciphers. They are now known as Kerckhoffs’ principles [1] and are expressed as follows:</p>
+<ol style="list-style-type: decimal">
+<li><p>The system must be practically, if not mathematically, indecipherable;</p></li>
+<li><p>It should not require secrecy, and it should not be a problem if it falls into enemy hands;</p></li>
+<li><p>It must be possible to communicate and remember the key without using written notes, and correspondents must be able to change or modify it at will;</p></li>
+<li><p>It must be applicable to telegraph communications;</p></li>
+<li><p>It must be portable, and should not require several persons to handle or operate;</p></li>
+<li><p>Lastly, the system must be easy to use and should not be stressful or require its users to know and comply with a long list of rules.</p></li>
+</ol>
+<p>The second principle has proven to be particularly important in modern cryptosystems and their use of secret keys. It expresses the notion that despite an attacker’s access to or familiarity with a cryptosystem, it is critical that they are still unable to determine a given message without solving for a computationally infeasible problem.</p>
+<p>A cryptosystem can be more rigorously described with the following sets and functions [2]:</p>
+<ul>
+<li><p><span class="math inline">\(\Sigma\)</span>: The alphabet</p>
+<p>i.e. <span class="math inline">\(\Sigma=\{a,...,Z,0,...,9\}\)</span> or <span class="math inline">\(\Sigma=\{0,1\}\)</span></p></li>
+<li><p><span class="math inline">\(M \subseteq \Sigma^*\)</span>: the message space</p></li>
+<li><p><span class="math inline">\(C \subseteq \Sigma^*\)</span>: the cyphertext space</p></li>
+<li><p><span class="math inline">\(K\)</span>: the keyspace</p></li>
+<li><p><span class="math inline">\(\forall e \in K, E_e(x):M \to C\)</span></p>
+<p><span class="math inline">\(E_e(x)\)</span> is a bijective encryption function</p></li>
+<li><p><span class="math inline">\(\forall d \in K, D_d(x):C\to M\)</span></p>
+<p><span class="math inline">\(D_d(x)\)</span> is a bijective decryption function</p></li>
+<li><p>$ e K, d K$ such that <span class="math inline">\(D_d=E_e^{-1}\)</span></p>
+<p>That is, <span class="math inline">\(\forall m \in M, D_d(E_e(m))=m\)</span></p></li>
+</ul>
+<p>The proliferation of computers and communications systems has inspired an urgent demand to protect information in digital forms from an increasingly computationally powerful adversary. A groundbreaking development came in 1976 with the work of Diffie and Hellman [3] and their revolutionary concept of “public-key cryptography” and an ingenious method for a key exchange, the security of which relies on the infeasibility of the discrete logarithm problem. Then in 1978, Rivest, Shamir, and Adleman discovered the first complete public-key encryption and signature scheme, now known as RSA [4]. The RSA algorithm also relies on a mathematically hard problem, the infeasibility of factoring large integers.</p>
+<p>Diffie and Helman:<br />
+‘New Directions in Cryptography’ {#diffie-and-helman-new-directions-in-cryptography .unnumbered} ================================</p>
+<p>The conceptualization of the public-key cryptosystem, briefly described above, laid the foundation for the development of the RSA method. The 1978 paper directly motivated the RSA research, since Diffie and Helman had presented the idea but did not formulate any practical implementation of a concrete system.</p>
+<p>In particular, Diffie and Hellman introduced the concept of “trap-door one-way” functions <span class="math inline">\(E\)</span> and <span class="math inline">\(D\)</span>, to be used for encryption and decryption, but did not present any examples. These functions are considered “one-way” because they are easy to compute in one direction but are very difficult to compute in the other direction. They are referred to as “trapdoor” functions because the inverse functions are in fact easy to compute after certain secret “trap-door” information is known.</p>
+<h1 id="the-rsa-method" class="unnumbered">The RSA Method</h1>
+<p>Suppose that we have A and B (also known as Alice and Bob) who are two users of a public-key cryptosystem.</p>
+<pre><code>        (unsecured channel)
+  Alice -----+-----+------- Bob
+             |     |
+             |     |
+             |    Mallory 
+             |    (malicious attacker)
+            Eve 
+           (eavesdropper)
+         </code></pre>
+<p>Alice creates a public and private key pair <span class="math inline">\((k_e, k_d)\)</span> which have the feature that knowing one does not easily lead to knowing the other. Alice publishes her public key <span class="math inline">\(k_e\)</span> and keeps her private key securely hidden. <span class="math inline">\(k_e\)</span> and <span class="math inline">\(k_d\)</span> are inverses with respect to the <span class="math inline">\(RSA(key, message)\)</span> function, that is</p>
+<p><span class="math display">\[\text{RSA}(k_d, \text{RSA}(k_e, m))\]</span></p>
+<p><span class="math inline">\(= \text{RSA}(k_e, \text{RSA}(k_d, m))\)</span></p>
+<p><span class="math inline">\(=m \qquad \qquad \qquad \quad \quad \ \)</span></p>
+<p>To compute these public and private keys,</p>
+<ul>
+<li><p>Alice chooses two large primes, <span class="math inline">\(p,q \in \mathbb{Z}\)</span> and some value <span class="math inline">\(e \in \mathbb{Z}\)</span> which is relatively prime to <span class="math inline">\((p-1)(q-1)\)</span>.</p></li>
+<li><p>Next, Alice finds a natural number <span class="math inline">\(d\)</span> such that <span class="math inline">\(e\cdot d \equiv 1 \mod{(p-1)(q-1)}\)</span>.</p></li>
+<li><p>Alice now has private key <span class="math inline">\((pq,d)\)</span> and public key <span class="math inline">\((pq,e)\)</span>.</p></li>
+</ul>
+<p>To encrypt/decrypt a shared message,</p>
+<ul>
+<li><p>Suppose Bob has a message <span class="math inline">\(M \in \mathbb{N}\)</span> and wants to encrypt and send it to Alice.</p></li>
+<li><p>Bob computes $ C M ^ e $ and sends the encrypted message C to Alice.</p></li>
+<li><p>Alice computes <span class="math inline">\(M \equiv C^d \pmod{pq}\)</span>, Bob’s decrypted message.</p></li>
+</ul>
+<h1 id="theorems-and-identities" class="unnumbered">Theorems and Identities</h1>
+<p>The proof of correctness provided in the RSA paper relies on Fermat’s Little Theorem, which states that if <span class="math inline">\(p\)</span> is prime and <span class="math inline">\(p\)</span> does not divide an integer <span class="math inline">\(a\)</span> then, <span class="math display">\[a^{p-1} \equiv 1 {\ (\text{mod}\ p)}\]</span> and an identity from Euler’s theorem, which states that if <span class="math inline">\(n\)</span> and <span class="math inline">\(M\)</span> (a message in our case) are coprime positive integers, then <span class="math display">\[\label{eq:1}
+M ^{\varphi(n)} \equiv 1 {\ (\text{mod}\ n)}\]</span> where <span class="math inline">\(\varphi(n)\)</span> is Euler’s Totient function. <span class="math inline">\(\varphi(n)\)</span> gives the number of positive integers less than <span class="math inline">\(n\)</span> which are relatively prime to <span class="math inline">\(n\)</span>. The following properties of the Euler totient function are applied:</p>
+<p>for prime numbers <span class="math inline">\(p\)</span>, <span class="math display">\[\varphi(p) = p-1\]</span></p>
+<p>and if <span class="math inline">\(n = pq\)</span>, then <span class="math display">\[\begin{aligned}
+\varphi(n) &amp;= \varphi(p) \cdot \varphi(q) \nonumber\\
+&amp;= (p-1)\cdot(q-1) \\ \label{eq2}
+&amp;= n - (p+q) +1 \nonumber\end{aligned}\]</span></p>
+<p>Also, since <span class="math inline">\(d\)</span> is relatively prime to <span class="math inline">\(\varphi(n)\)</span>, it must have a multiplicative inverse <span class="math inline">\(e\)</span> such that <span class="math display">\[\label{eq:3}
+e\cdot d \equiv 1 {\ (\text{mod}\ \varphi(n))}\]</span></p>
+<h1 id="proof-of-correctness" class="unnumbered">Proof Of Correctness</h1>
+<p>Recall that the encryption and decryption algorithms E and D for a message M and a cyphertext C are:</p>
+<p><span class="math display">\[\begin{aligned}
+C \equiv E(M) &amp;\equiv M^e \pmod{n}, \nonumber\\
+D(C) &amp;\equiv C^d \pmod{n}. \nonumber\end{aligned}\]</span></p>
+<p>We can prove that deciphering works correctly if <span class="math inline">\(e\)</span> and <span class="math inline">\(d\)</span> are chosen as shown previously, by proving that the following equations hold: <span class="math display">\[\label{eq:4}
+D(E(M) = M.\]</span> <span class="math display">\[\label{eq:5}
+E(D(M) = M.\]</span></p>
+<p>So, <span class="math display">\[\begin{aligned}
+D(E(M) \equiv (E(M))^d &amp;\equiv (M^e)^d{\ (\text{mod}\ n)} \\
+&amp;=M^{e\cdot d} {\ (\text{mod}\ n)} \\
+E(D(M)) \equiv (D(M))^e &amp;\equiv (M^d)^e{\ (\text{mod}\ n)} \\
+&amp;=M^{e\cdot d} {\ (\text{mod}\ n)}\end{aligned}\]</span></p>
+<p>We know that $M^{ed} $ can equivalently be expressed as <span class="math inline">\(M^{k\cdot\varphi(n)+1}{\ (\text{mod}\ n)}\)</span> for some <span class="math inline">\(k\in \mathbb{Z}\)</span>. From <span class="math inline">\((1)\)</span>, we see that for all <span class="math inline">\(M\)</span> such that <span class="math inline">\(p\)</span> does not divide <span class="math inline">\(M\)</span>, <span class="math display">\[M^{p-1} \equiv 1 {\ (\text{mod}\ p)}\]</span> and since <span class="math inline">\((p - 1)\)</span> divides <span class="math inline">\(\varphi(n)\)</span>, we have <span class="math display">\[M^{k\cdot\varphi(n)+1} \equiv M {\ (\text{mod}\ p)}.\]</span> A similar argument follows for prime <span class="math inline">\(q\)</span>, <span class="math display">\[M^{k\cdot\varphi(n)+1} \equiv M {\ (\text{mod}\ q)} .\]</span> This is trivially true when <span class="math inline">\(M \equiv 0 {\ (\text{mod}\ p)}.\)</span> Therefore, the previous two equations together imply that for all <span class="math inline">\(M\)</span>, <span class="math display">\[M^{e\cdot d} \equiv M^{k\cdot\varphi(n)+1} \equiv M {\ (\text{mod}\ q)} .\]</span></p>
+<p>This implies the encryption/decryption equations (4) and (5) hold for all <span class="math inline">\(M\)</span>, <span class="math inline">\(0 \leq M &lt; n\)</span>. Therefore E and D are inverse functions.</p>
+<h1 id="unprovable-security" class="unnumbered">Unprovable Security</h1>
+<p>The security of the RSA cryptosystem rests on the difficulty of factoring large numbers and what is known as the RSA problem. The RSA problem is defined as the task of recovering a value <span class="math inline">\(M\)</span> such that <span class="math inline">\(C \equiv M^e {\ (\text{mod}\ n)}\)</span>, where <span class="math inline">\((n, e)\)</span> is an RSA public key and <span class="math inline">\(C\)</span> is the cyphertext. To break RSA, an attacker would need to recover the prime factors of <span class="math inline">\(n\)</span> into <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, and compute <span class="math inline">\(lcm(p - 1, q - 1)\)</span>, allowing for the determination of <span class="math inline">\(d\)</span> from <span class="math inline">\(e\)</span>.</p>
+<p>Full decryption of an RSA ciphertext is thought to be infeasible on the assumption that both of these problems are hard and that no such polynomial-time algorithm for factoring large integers on a classical computer has yet been found, though it has not been proven that none exists.</p>
+<p>Modern Applications:<br />
+Digital Signing and Key Exchange {#modern-applications-digital-signing-and-key-exchange .unnumbered} ================================</p>
+<p>Suppose Alice wants to send a signed message to Bob such that Bob can verify the origin of the message. A hash function, which is a one way function from a large finite strings to a smaller, fixed length string can be used to produce a hash value of the message. Alice can encrypt this value with her private key and attach it as a “signature” to the message. Bob can use the same hash algorithm in conjunction with Alice’s public key to decrypt and compare it with the message’s actual hash value. If the two values agree, he knows that the author of the message was in possession of Alice’s private key, and that the message has not been tampered with, since any modification would result in a different hash value.</p>
+<p>Unfortunately, RSA calculations tend to be too time consuming for most communication purposes and decryption of large messages becomes intolerably expensive. This is common for what’s known as asymmetric encryption, where the encryption and decryption keys differ. Typically RSA is used to exchange a session key for a more efficient algorithm which uses symmetric keys where ’essentially’ the same key is used to encrypt and decrypt, like Data Encryption Standard (DES) and Cipher Block Chaining (CBC).</p>
+<p><span>9</span> Auguste Kerckhoffs, <em>La cryptographie militaire</em>, Journal des sciences militaires, vol. IX, pp. 5–83, January 1883, 161-191.</p>
+<p>Timothy Gowers (Ed.), June Barrow-Green and Imre Leader (Assoc. Eds.). <em>The Princeton Companion to Mathematics</em>. Princeton University Press, Princeton, NJ, 2008, 887-895.</p>
+<p>Diffie, W., and Hellman, M. <em>New directions in cryptography</em>. IEEE Trans. Inform. Theory IT-22, (Nov. 1976), 644-654.</p>
+<p>Rivest, R.; Shamir, A.; Adleman, L. (February 1978). <em>A Method for Obtaining Digital Signatures and Public-Key Cryptosystem</em>, Communications of the ACM. 21 (2): 120-126.</p>
+</body>
+</html>

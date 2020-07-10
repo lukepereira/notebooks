@@ -1,0 +1,621 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Object-Oriented Programming and Design Patterns</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Object-Oriented Programming and Design Patterns</h1>
+</div>
+<ul>
+<li><a href="#object-oriented-design">Object-Oriented Design</a>
+<ul>
+<li><a href="#classes-objects-and-interfaces">Classes, Objects and Interfaces</a></li>
+<li><a href="#polymorphism">Polymorphism</a></li>
+<li><a href="#inheritence">Inheritence</a></li>
+<li><a href="#interfaces">Interfaces</a></li>
+<li><a href="#composition">Composition</a></li>
+<li><a href="#delegation">Delegation</a></li>
+<li><a href="#parameterized-types">Parameterized Types</a></li>
+<li><a href="#run-time-and-compile-time-structures">Run-Time and Compile-Time Structures</a></li>
+</ul></li>
+<li><a href="#design-patterns">Design Patterns</a>
+<ul>
+<li><a href="#creational-patterns">Creational Patterns</a>
+<ul>
+<li><a href="#abstract-factory">Abstract Factory *</a></li>
+<li><a href="#builder">Builder</a></li>
+<li><a href="#factory-method">Factory Method *</a></li>
+<li><a href="#prototype">Prototype</a></li>
+<li><a href="#singleton">Singleton</a></li>
+</ul></li>
+<li><a href="#structural-patterns">Structural Patterns</a>
+<ul>
+<li><a href="#adapter">Adapter *</a></li>
+<li><a href="#bridge">Bridge</a></li>
+<li><a href="#composite">Composite *</a></li>
+<li><a href="#decorator">Decorator *</a></li>
+<li><a href="#facade">Facade</a></li>
+<li><a href="#flyweight">Flyweight</a></li>
+<li><a href="#proxy">Proxy</a></li>
+</ul></li>
+<li><a href="#behavioural-patterns">Behavioural Patterns</a>
+<ul>
+<li><a href="#chain-of-responsibility">Chain of Responsibility</a></li>
+<li><a href="#command">Command</a></li>
+<li><a href="#interpreter">Interpreter</a></li>
+<li><a href="#iterator">Iterator</a></li>
+<li><a href="#mediator">Mediator</a></li>
+<li><a href="#memento">Memento</a></li>
+<li><a href="#observer">Observer *</a></li>
+<li><a href="#state">State</a></li>
+<li><a href="#strategy">Strategy *</a></li>
+<li><a href="#template-method">Template Method *</a></li>
+<li><a href="#visitor">Visitor</a></li>
+</ul></li>
+</ul></li>
+</ul>
+<h1 id="object-oriented-design">Object-Oriented Design</h1>
+<h2 id="classes-objects-and-interfaces">Classes, Objects and Interfaces</h2>
+<p>Object-oriented programs are made up of <strong>objects</strong>. An object packages both data and the procedures that operate on that data. The procedures are typically called <strong>methods</strong> or <strong>operations</strong>. An object performs an operation when it receives a request (or message) from a client.</p>
+<p><strong>Requests</strong> are the only way to get an object to execute an operation. Operations are the only way to change an object’s internal data. Because of these restrictions, the object’s internal state is said to be <strong>encapsulated</strong>; it cannot be accessed directly, and its representation is invisible from outside the object.</p>
+<p>Every operation declared by an object specifies the operation’s name, the objects it takes as parameters, and the operation’s return value. This is known as the operation’s <strong>signature</strong>. The set of all signatures defined by an object’s operations is called the <strong>interface</strong> to the object. An object’s interface characterizes the complete set of requests that can be sent to the object. Any request that matches a signature in the object’s interface may be sent to the object.</p>
+<p>A <strong>type</strong> is a name used to denote a particular interface. An object may have many types, and widely different objects can share a type. The class defines the object’s internal state and the implementation of its operations. In contrast, an object’s type only refers to its interface — the set of requests to which it can respond. Part of an object’s interface may be characterized by one type, and other parts by other types. Two objects of the same type need only share parts of their interfaces. Interfaces can contain other interfaces as subsets. We say that a type is a subtype of another if its interface contains the interface of its supertype. Often we speak of a subtype inheriting the interface of its supertype.</p>
+<p>Objects are created by instantiating a <strong>class</strong>. The object is said to be an <strong>instance</strong> of the class. The process of instantiating a class allocates storage for the object’s internal data (made up of instance variables) and associates the operations with these data. Many similar instances of an object can be created by instantiating a class.</p>
+<p>A useful analogy is as follows: A blueprint for a house design is like a class description. All the houses built from that blueprint are objects of that class. A given house is an instance.</p>
+<h2 id="polymorphism">Polymorphism</h2>
+<p>The run-time association of a request to an object and one of its operations is known as <strong>dynamic binding</strong>, which means that issuing a request doesn’t commit you to a particular implementation until run-time. Consequently, you can write programs that expect an object with a particular interface, knowing that any object that has the correct interface will accept the request. Moreover, dynamic binding lets you substitute objects that have identical interfaces for each other at run-time. This substitutability is known as <strong>polymorphism</strong>, and it’s a key concept in object-oriented systems. It lets a client object make few assumptions about other objects beyond supporting a particular interface. Polymorphism simplifies the definitions of clients, decouples objects from each other, and lets them vary their relationships to each other at run-time.</p>
+<h2 id="inheritence">Inheritence</h2>
+<p>New classes can be defined in terms of existing classes using class <strong>inheritance</strong>. Class inheritance is basically just a mechanism for extending an application’s functionality by reusing functionality in parent classes. When a subclass inherits from a parent class, it includes the definitions of all the data and operations that the parent class defines. Objects that are instances of the subclass will contain all data defined by the subclass and its parent classes, and they’ll be able to perform all operations defined by this subclass and its parents. Inheritance’s ability to define families of objects with identical interfaces (usually by inheriting from an abstract class) is what allows polymorphism to work.</p>
+<p>Implementation dependencies can cause problems when you’re trying to reuse a subclass. Should any aspect of the inherited implementation not be appropriate for new problem domains, the parent class must be rewritten or replaced by something more appropriate. This dependency limits flexibility and ultimately reusability. One cure for this is to inherit only from abstract classes, since they usually provide little or no implementation.</p>
+<p>An <strong>abstract class</strong> is one whose main purpose is to define a common interface for its subclasses. An abstract class will defer some or all of its implementation to operations defined in subclasses; hence an abstract class cannot be instantiated. The operations that an abstract class declares but doesn’t implement are called abstract operations. Classes that aren’t abstract are called <strong>concrete classes</strong>.</p>
+<p>Subclasses can refine and redefine behaviors of their parent classes. More specifically, a class may override an operation defined by its parent class. <strong>Overriding</strong> gives subclasses a chance to handle requests instead of their parent classes.</p>
+<p>Class inheritance lets you define classes simply by extending other classes, making it easy to define families of objects having related functionality. In contrast to class inheritance, interface inheritance or <strong>subtyping</strong> describes when an object can be used in place of another.</p>
+<p>A <strong>mixin class</strong> is a class that’s intended to provide an optional interface or methods to other classes without having to be the parent class of those other classes. It’s similar to an abstract class in that it’s not intended to be instantiated. Mixin classes require multiple inheritance.</p>
+<h2 id="interfaces">Interfaces</h2>
+<p><strong>Program to an interface, not an implementation</strong></p>
+<p>This principle of object-oriented design has two main benefits:</p>
+<ol style="list-style-type: decimal">
+<li><p>Clients remain unaware of the specific types of objects they use, as long as the objects adhere to the interface that clients expect.</p></li>
+<li><p>Clients remain unaware of the classes that implement these objects. Clients only know about the abstract classes defining the interface. This greatly reduces implementation dependencies between subsystems</p></li>
+</ol>
+<p>Don’t declare variables to be instances of particular concrete classes. Instead, commit only to an interface defined by an abstract class. Though you will need to instantiate concrete classes in order to specify a particular implementation somewhere in your system – the creational patterns ensure that your system is written in terms of interfaces, not implementations.</p>
+<h2 id="composition">Composition</h2>
+<p><strong>Favor object composition over class inheritance.</strong></p>
+<p>The two most common techniques for reusing functionality in object-oriented systems are class inheritance and object composition. Reuse by subclassing is often referred to as <strong>white-box reuse</strong>. The term “white-box&quot; refers to visibility: With inheritance, the internals of parent classes are often visible to subclasses.</p>
+<p>Object composition is an alternative to class inheritance. Here, new functionality is obtained by assembling or composing objects to get more complex functionality. Object composition requires that the objects being composed have well-defined interfaces. This style of reuse is called <strong>black-box reuse</strong>, because no internal details of objects are visible. Objects appear only as “black boxes.&quot;</p>
+<p>Because objects are accessed solely through their interfaces, we don’t break encapsulation. Any object can be replaced at run-time by another as long as it has the same type. Moreover, because an object’s implementation will be written in terms of object interfaces, there are substantially fewer implementation dependencies.</p>
+<p>Additionally, favoring object composition over class inheritance helps you keep each class encapsulated and focused on one task. Your classes and class hierarchies will remain small and will be less likely to grow into unmanageable monsters. On the other hand, a design based on object composition will have more objects (if fewer classes), and the system’s behavior will depend on their inter relationships instead of being defined in one class.</p>
+<h2 id="delegation">Delegation</h2>
+<p>Delegation is a way of making composition as powerful for reuse as inheritance. In delegation, two objects are involved in handling a request: a receiving object delegates operations to its delegate. This is analogous to subclasses deferring requests to parent classes. Delegation is an extreme example of object composition. It shows that you can always replace inheritance with object composition as a mechanism for code reuse.</p>
+<p>For example, instead of making class Window a subclass of Rectangle (because windows happen to be rectangular), the Window class might reuse the behavior of Rectangle by keeping a Rectangle instance variable and delegating Rectangle-specific behavior to it. In other words, instead of a Window being a Rectangle, it would have a Rectangle and may call the Area method.</p>
+<p>The main advantage of delegation is that it makes it easy to compose behaviors at run-time and to change the way they’re composed. Our window can become circular at run-time simply by replacing its Rectangle instance with a Circle instance, assuming Rectangle and Circle have the same type.</p>
+<p>Delegation has a disadvantage it shares with other techniques that make software more flexible through object composition: Dynamic, highly parameterized software is harder to understand than more static software.There are also run-time inefficiencies, but the human inefficiencies are more important in the long run. Delegation is a good design choice only when it simplifies more than it complicates.</p>
+<h2 id="parameterized-types">Parameterized Types</h2>
+<p>Parameterized types give us a third way (in addition to class inheritance and object composition) to compose behavior in object-oriented systems. This technique lets you define a type without specifying all the other types it uses. The unspecified types are supplied as parameters at the point of use. For example, a List class is parameterized by the type of elements it contains.</p>
+<h2 id="run-time-and-compile-time-structures">Run-Time and Compile-Time Structures</h2>
+<p>Object composition lets you change the behavior being composed at run-time, but it also requires indirection and can be less efficient. Inheritance lets you provide default implementations for operations and lets subclasses override them. Parameterized types let you change the types that a class can use. But neither inheritance nor parameterized types can change at run-time.</p>
+<p>Many design patterns (in particular those that have object scope) capture the distinction between compile-time and run-time structures explicitly. Composite and Decorator patterns are especially useful for building complex run-time structures. Observer involves run-time structures that are often hard to understand unless you know the pattern. Chain of Responsibility also results in communication patterns that inheritance doesn’t reveal. In general, the run-time structures aren’t clear from the code until you understand the patterns.</p>
+<h1 id="design-patterns">Design Patterns</h1>
+<p>We classify design patterns by two criteria. The first criterion, called <strong>purpose</strong>, reflects what a pattern does. Patterns can have either <strong>creational</strong>, <strong>structural</strong>, or <strong>behavioral</strong> purpose. Creational patterns concern the process of object creation. Structural patterns deal with the composition of classes or objects. Behavioral patterns characterize the ways in which classes or objects interact and distribute responsibility.</p>
+<p>The second criterion, called <strong>scope</strong>, specifies whether the pattern applies primarily to classes or to objects. Class patterns deal with relationships between classes and their subclasses. These relationships are established through inheritance, so they are static — fixed at compile-time. Object patterns deal with object relationships, which can be changed at run-time and are more dynamic. Almost all patterns use inheritance to some extent. So the only patterns labeled “class patterns&quot; are those that focus on class relationships. Note that most patterns are in the Object scope.</p>
+<p>Creational class patterns defer some part of object creation to subclasses, while Creational object patterns defer it to another object. The Structural class patterns use inheritance to compose classes, while the Structural object patterns describe ways to assemble objects. The Behavioral class patterns use inheritance to describe algorithms and flow of control, whereas the Behavioral object patterns describe how a group of objects cooperate to perform a task that no single object can carry out alone</p>
+<p>Each design pattern lets some aspect of a system’s structure vary independently of other aspects, thereby making a system more robust to a particular kind of change.</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Creating an object by specifying a class explicitly</strong></p>
+<p>Avoid with: Abstract Factory, Factory Method, Prototype.</p></li>
+<li><p><strong>Dependence on specific operations.</strong></p>
+<p>Avoid with: Chain of Responsibility, Command.</p></li>
+<li><p><strong>Dependence on hardware and software platform.</strong></p>
+<p>Avoid with: Abstract Factory, Bridge.</p></li>
+<li><p><strong>Dependence on object representations or implementations.</strong></p>
+<p>Avoid with: Abstract Factory, Bridge, Memento, Proxy.</p></li>
+<li><p><strong>Algorithmic dependencies</strong></p>
+<p>Avoid with: Builder, Iterator, Strategy, Template Method , Visitor.</p></li>
+<li><p><strong>Tight coupling</strong></p>
+<p>Avoid with: Abstract Factory, Bridge, Chain of Responsibility, Command, Facade, Mediator, Observer.</p></li>
+<li><p><strong>Extending functionality by subclassing.</strong></p>
+<p>Avoid with: Bridge, Chain of Responsibility, Composite, Decorator, Observer, Strategy.</p></li>
+<li><p><strong>Inability to alter classes conveniently.</strong></p>
+<p>Avoid with: Adapter, Decorator, Visitor.</p></li>
+</ol>
+<div class="figure">
+<img src="design-patterns.png" alt="image" />
+<p class="caption">image</p>
+</div>
+<h2 id="creational-patterns">Creational Patterns</h2>
+<h3 id="abstract-factory">Abstract Factory *</h3>
+<p>Provide an interface for creating families of related or dependent objects without specifying their concrete classes.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Abstract Factory pattern when</p>
+<ul>
+<li><p>a system should be independent of how its products are created, composed, and represented.</p></li>
+<li><p>a system should be configured with one of multiple families of products.</p></li>
+<li><p>a family of related product objects is designed to be used together, and you need to enforce this constraint.</p></li>
+<li><p>you want to provide a class library of products, and you want to reveal just their interfaces, not their implementations.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Abstract Factory pattern has the following benefits and liabilities:</p>
+<ul>
+<li><p>It isolates concrete classes.</p></li>
+<li><p>It makes exchanging product families easy.</p></li>
+<li><p>It promotes consistency among products.</p></li>
+<li><p>Supporting new kinds of products is difficult.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-1-abstract-factory.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="builder">Builder</h3>
+<p>Separate the construction of a complex object from its representation so that the same construction process can create different representations.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Builder pattern when</p>
+<ul>
+<li><p>the algorithm for creating a complex object should be independent of the parts that make up the object and how they’re assembled.</p></li>
+<li><p>the construction process must allow different representations for the object that’s constructed.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<ul>
+<li><p>It lets you vary a product’s internal representation.</p></li>
+<li><p>It isolates code for construction and representation.</p></li>
+<li><p>It gives you finer control over the construction process.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/patterns-2-builder.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="factory-method">Factory Method *</h3>
+<p>Define an interface for creating an object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Factory Method pattern when</p>
+<ul>
+<li><p>a class can’t anticipate the class of objects it must create.</p></li>
+<li><p>a class wants its subclasses to specify the objects it creates.</p></li>
+<li><p>classes delegate responsibility to one of several helper subclasses, and you want to localize the knowledge of which helper subclass is the delegate.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Factory methods eliminate the need to bind application-specific classes into your code. The code only deals with the Product interface; therefore it can work with any user-defined ConcreteProduct classes.</p>
+<p>A potential disadvantage of factory methods is that clients might have to subclass the Creator class just to create a particular ConcreteProduct object. Subclassing is fine when the client has to subclass the Creator class anyway, but otherwise the client now must deal with another point of evolution.</p>
+<p>Factory Method has the additional consequences:</p>
+<ul>
+<li><p>Provides hooks for subclasses.</p></li>
+<li><p>Connects parallel class hierarchies.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-3-factory-method.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="prototype">Prototype</h3>
+<p>Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Prototype pattern</p>
+<ul>
+<li><p>when a system should be independent of how its products are created, composed, and represented</p></li>
+<li><p>when the classes to instantiate are specified at run-time, for example, by dynamic loading.</p></li>
+<li><p>to avoid building a class hierarchy of factories that parallels the class hierarchy of products.</p></li>
+<li><p>when instances of a class can have one of only a few different combinations of state.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Prototype has many of the same consequences that Abstract Factory and Builder have: It hides the concrete product classes from the client, thereby reducing the number of names clients know about. Moreover, these patterns let a client work with application-specific classes without modification.</p>
+<p>Additional benefits of the Prototype pattern include</p>
+<ul>
+<li><p>Adding and removing products at run-time.</p></li>
+<li><p>Specifying new objects by varying values</p></li>
+<li><p>Specifying new objects by varying structure.</p></li>
+<li><p>Reduced subclassing.</p></li>
+<li><p>Configuring an application with classes dynamically.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-4-prototype.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="singleton">Singleton</h3>
+<p>Ensure a class only has one instance, and provide a global point of access to it.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Singleton pattern when</p>
+<ul>
+<li><p>there must be exactly one instance of a class, and it must be accessible to clients from a well-known access point.</p></li>
+<li><p>when the sole instance should be extensible by subclassing, and clients should be able to use an extended instance without modifying their code.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Singleton pattern has several benefits:</p>
+<ul>
+<li><p>Controlled access to sole instance.</p></li>
+<li><p>Reduced name space.</p></li>
+<li><p>Permits refinement of operations and representation.</p></li>
+<li><p>Permits a variable number of instances.</p></li>
+<li><p>More flexible than class operations.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-5-singleton.png" alt="image" width="377" />
+<p class="caption">image</p>
+</div>
+<h2 id="structural-patterns">Structural Patterns</h2>
+<h3 id="adapter">Adapter *</h3>
+<p>Convert the interface of a class into another interface clients expect. Adapter lets classes work together that couldn’t otherwise because of incompatible interfaces.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Adapter pattern when</p>
+<ul>
+<li><p>you want to use an existing class, and its interface does not match the one you need.</p></li>
+<li><p>you want to create a reusable class that cooperates with unrelated or unforeseen classes, that is, classes that don’t necessarily have compatible interfaces.</p></li>
+<li><p>(object adapter only) you need to use several existing subclasses, but it’s unpractical to adapt their interface by subclassing every one. An object adapter can adapt the interface of its parent class</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Class and object adapters have different trade-offs. A class adapter</p>
+<ul>
+<li><p>adapts Adaptee to Target by committing to a concrete Adaptee class.</p></li>
+<li><p>lets Adapter override some ofAdaptee’sbehavior, since Adapter is a subclass of Adaptee.</p></li>
+<li><p>introduces only one object, no additional pointer indirection is needed for the adaptee</p></li>
+</ul>
+<p>An object adapter</p>
+<ul>
+<li><p>lets a single Adapter work with many Adaptees</p></li>
+<li><p>makes it harder to override Adaptee behavior</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-6-adapter.png" alt="image" width="377" />
+<p class="caption">image</p>
+</div>
+<h3 id="bridge">Bridge</h3>
+<p>Decouple an abstraction from its implementation so that the two can vary independently.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Bridge pattern when</p>
+<ul>
+<li><p>you want to avoid a permanent binding between an abstraction and its implementation.</p></li>
+<li><p>both the abstractions and their implementations should be extensible by subclassing.</p></li>
+<li><p>changes in the implementation of an abstraction should have no impact on clients; that is, their code should not have to be recompiled.</p></li>
+<li><p>you have a proliferation of hierarchical classes (“nested generalizations&quot;)</p></li>
+<li><p>you want to share an implementation among multiple objects, and this fact should be hidden from the client.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Bridge pattern has the following consequences:</p>
+<ul>
+<li><p>Decoupling interface and implementation.</p></li>
+<li><p>Improved extensibility.</p></li>
+<li><p>Hiding implementation details from clients.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-7-bridge.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="composite">Composite *</h3>
+<p>Compose objects into tree structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Composite pattern when</p>
+<ul>
+<li><p>you want to represent part-whole hierarchies of objects.</p></li>
+<li><p>you want clients to be able to ignore the difference between compositions of objects and individual objects</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Composite pattern</p>
+<ul>
+<li><p>defines class hierarchies consisting of primitive objects and composite objects</p></li>
+<li><p>makes the client simple.</p></li>
+<li><p>makes it easier to add new kinds of components.</p></li>
+<li><p>can make your design overly general.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-8-composite.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="decorator">Decorator *</h3>
+<p>Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to subclassing for extending functionality.</p>
+<p><strong>Applicability</strong></p>
+<p>Use Decorator</p>
+<ul>
+<li><p>to add responsibilities to individual objects dynamically and transparently, that is, without affecting other objects.</p></li>
+<li><p>for responsibilities that can be withdrawn.</p></li>
+<li><p>when extension by subclassing is impractical.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Decorator pattern has at least two key benefits and two liabilities:</p>
+<ul>
+<li><p>More flexibility than static inheritance.</p></li>
+<li><p>Avoids feature-laden classes high up in the hierarchy.</p></li>
+<li><p>A decorator and its component aren’t identical.</p></li>
+<li><p>Lots of little objects.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-9-decorator.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="facade">Facade</h3>
+<p>Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Facade pattern when</p>
+<ul>
+<li><p>you want to provide a simple interface to a complex subsystem</p></li>
+<li><p>there are many dependencies between clients and the implementation classes of an abstraction</p></li>
+<li><p>you want to layer your subsystems.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Facade pattern offers the following benefits:</p>
+<ul>
+<li><p>It shields clients from subsystem components, thereby reducing the number of objects that clients deal with and making the subsystem easier to use.</p></li>
+<li><p>It promotes weak coupling between the subsystem and its clients.</p></li>
+<li><p>It doesn’t prevent applications from using subsystem classes if they need to. Thus you can choose between ease of use and generality</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-10-facade.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="flyweight">Flyweight</h3>
+<p>Use sharing to support large numbers of fine-grained objects efficiently.</p>
+<p><strong>Applicability</strong></p>
+<p>The Flyweight pattern’s effectiveness depends heavily on how and where it’s used. Apply the Flyweight pattern when all of the following are true:</p>
+<ul>
+<li><p>An application uses a large number of objects</p></li>
+<li><p>Storage costs are high because of the sheer quantity of objects.</p></li>
+<li><p>Most object state can be made extrinsic.</p></li>
+<li><p>Many groups of objects may be replaced by relatively few shared objects once extrinsic state is removed.</p></li>
+<li><p>The application doesn’t depend on object identity. Since flyweight objects may be shared, identity tests will return true for conceptually distinct objects.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Flyweights may introduce run-time costs associated with transferring, finding, and/or computing extrinsic state. However, such costs are offset by space savings, which increase as more flyweights are shared.</p>
+<div class="figure">
+<img src="diagrams/pattern-11-flyweight.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="proxy">Proxy</h3>
+<p>Provide a surrogate or placeholder for another object to control access to it.</p>
+<p><strong>Applicability</strong></p>
+<p>Proxy is applicable whenever there is a need for a more versatile or sophisticated reference to an object than a simple pointer. Here are several common situations in which the Proxy pattern is applicable:</p>
+<ul>
+<li><p>A remote proxy provides a local representative for an object in a different address space.</p></li>
+<li><p>A virtual proxy creates expensive objects on demand.</p></li>
+<li><p>A protection proxy controls access to the original object. Protection proxies are useful when objects should have different access rights.</p></li>
+<li><p>A smart reference is a replacement for a bare pointer that performs additional actions when an object is accessed.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Proxy pattern introduces a level of indirection when accessing an object. The additional indirection has many uses, depending on the kind of proxy:</p>
+<ul>
+<li><p>A remote proxy can hide the fact that an object resides in a different address space.</p></li>
+<li><p>A virtual proxy can perform optimizations such as creating an object on demand.</p></li>
+<li><p>Both protection proxies and smart references allow additional housekeeping tasks when an object is accessed</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-12-proxy.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h2 id="behavioural-patterns">Behavioural Patterns</h2>
+<h3 id="chain-of-responsibility">Chain of Responsibility</h3>
+<p>Avoid coupling the sender of a request to its receiver by giving more than one object a chance to handle the request. Chain the receiving objects and pass the request along the chain until an object handles it.</p>
+<p><strong>Applicability</strong></p>
+<p>Use Chain of Responsibility when</p>
+<ul>
+<li><p>more than one object may handle a request, and the handler isn’t known a priori.</p></li>
+<li><p>you want to issue a request to one ofseveral objects without specifying the receiver explicitly.</p></li>
+<li><p>the set of objects that can handle a request should be specified dynamically.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Chain of Responsibility has the following benefits and liabilities:</p>
+<ul>
+<li><p>Reduced coupling.</p></li>
+<li><p>Added flexibility in assigning responsibilities to objects</p></li>
+<li><p>Receipt isn’t guaranteed.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-13-chain-of-responsibility.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="command">Command</h3>
+<p>Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undo-able operations.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Command pattern when you want to</p>
+<ul>
+<li><p>parameterize objects by an action to perform.</p></li>
+<li><p>specify, queue, and execute requests at different times.</p></li>
+<li><p>support undo.</p></li>
+<li><p>support logging changes so that they can be reapplied in case of a system crash.</p></li>
+<li><p>structure a system around high-level operations built on primitives operations.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Command pattern has the following consequences:</p>
+<ul>
+<li><p>Command decouples the object that invokes the operation from the one that knows how to perform it.</p></li>
+<li><p>Commands are first-class objects. They can be manipulated and extended like any other object.</p></li>
+<li><p>You can assemble commands into a composite command.</p></li>
+<li><p>It’s easy to add new Commands, because you don’t have to change existing classes.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-14-command.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="interpreter">Interpreter</h3>
+<p>Use the Interpreter pattern when there is a language to interpret, and you can represent statements in the language as abstract syntax trees. The Interpreter pattern works best when</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Command pattern when you want to</p>
+<ul>
+<li><p>the grammar is simple. For complex grammars, the class hierarchy for the grammar becomes large and unmanageable.</p></li>
+<li><p>efficiency is not a critical concern. The most efficient interpreters are usually not implemented by interpreting parse trees directly but by first translating them into another form.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Interpreter pattern has the following benefits and liabilities:</p>
+<ul>
+<li><p>It’s easy to change and extend the grammar</p></li>
+<li><p>Implementing the grammar is easy.</p></li>
+<li><p>Complex grammars are hard to maintain.</p></li>
+<li><p>Easier to add new ways to interpret expressions.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-15-interpreter.png" alt="image" width="415" />
+<p class="caption">image</p>
+</div>
+<h3 id="iterator">Iterator</h3>
+<p>Provide a way to access the elements of an aggregate object sequentially without exposing its underlying representation.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Iterator pattern</p>
+<ul>
+<li><p>to access an aggregate object’s contents without exposing its internal representation (i.e. a list).</p></li>
+<li><p>to support multiple traversals of aggregate objects.</p></li>
+<li><p>to provide a uniform interface for traversing different aggregate structures (that is, to support polymorphic iteration)</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Iterator pattern has three important consequences:</p>
+<ul>
+<li><p>It supports variations in the traversal of an aggregate</p></li>
+<li><p>Iterators simplify the Aggregate interface.</p></li>
+<li><p>More than one traversal can be pending on an aggregate.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-16-iterator.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="mediator">Mediator</h3>
+<p>Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it lets you vary their interaction independently.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Mediator pattern when</p>
+<ul>
+<li><p>a set of objects communicate in well-defined but complex ways.The resulting interdependencies are unstructured and difficult to understand.</p></li>
+<li><p>reusing an object is difficult because it refers to and communicates with many other objects.</p></li>
+<li><p>a behavior that’s distributed between several classes should be customizable without a lot of subclassing</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Mediator pattern has the following benefits and drawbacks:</p>
+<ul>
+<li><p>It limits subclassing.</p></li>
+<li><p>It decouples colleagues.</p></li>
+<li><p>It simplifies object protocols.</p></li>
+<li><p>It abstracts how objects cooperate.</p></li>
+<li><p>It centralizes control.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-17-mediator.png" alt="image" width="377" />
+<p class="caption">image</p>
+</div>
+<h3 id="memento">Memento</h3>
+<p>Without violating encapsulation, capture and externalize an object’s internal state so that the object can be restored to this state later.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Memento pattern when</p>
+<ul>
+<li><p>a snapshot of (some portion of) an object’s state must be saved so that it can be restored to that state later.</p></li>
+<li><p>a direct interface to obtaining the state would expose implementation details and break the object’s encapsulation.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Memento pattern has several consequences:</p>
+<ul>
+<li><p>Preserving encapsulation boundaries.</p></li>
+<li><p>It simplifies Originator.</p></li>
+<li><p>Using mementos might be expensive.</p></li>
+<li><p>Defining narrow and wide interfaces.</p></li>
+<li><p>Hidden costs in caring for mementos.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-18-memento.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="observer">Observer *</h3>
+<p>Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Observer pattern in any of the following situations:</p>
+<ul>
+<li><p>When an abstraction has two aspects, one dependent on the other. Encapsulating these aspects in separate objects lets you vary and reuse them independently.</p></li>
+<li><p>When a change to one object requires changing others, and you don’t know how many objects need to be changed.</p></li>
+<li><p>When an object should be able to notify other objects without making assumptions about who these objects are.In other words, you don’t want these objects tightly coupled.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Observer pattern lets you vary subjects and observers independently. Further benefits and liabilities of the Observer pattern include the following:</p>
+<ul>
+<li><p>Abstract coupling between Subject and Observer.</p></li>
+<li><p>Support for broadcast communication.</p></li>
+<li><p>Unexpected updates.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-19-observer.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="state">State</h3>
+<p>Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the State pattern in either of the following cases:</p>
+<ul>
+<li><p>An object’s behavior depends on its state, and it must change its behavior at run-time depending on that state.</p></li>
+<li><p>Operations have large, multipart conditional statements that depend on the object’s state.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The State pattern has the following consequences:</p>
+<ul>
+<li><p>It localizes state-specific behavior and partitions behavior for different states.</p></li>
+<li><p>It makes state transitions explicit.</p></li>
+<li><p>State objects can be shared.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-20-state.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="strategy">Strategy *</h3>
+<p>Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Strategy pattern when</p>
+<ul>
+<li><p>many related classes differ only in their behavior. Strategies provide a way to configure a class with one of many behaviors.</p></li>
+<li><p>you need different variants of an algorithm.</p></li>
+<li><p>an algorithm uses data that clients shouldn’t know about.</p></li>
+<li><p>a class defines many behaviors, and these appear as multiple conditional statements in its operations.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>The Strategy pattern has the following benefits and drawbacks:</p>
+<ul>
+<li><p>Families of related algorithms.</p></li>
+<li><p>An alternative to subclassing.</p></li>
+<li><p>Strategies eliminate conditional statements.</p></li>
+<li><p>A choice of implementations.</p></li>
+<li><p>Clients must be aware of different Strategies.</p></li>
+<li><p>Communication overhead between Strategy and Context.</p></li>
+<li><p>Increased number of objects.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-21-strategy.png" alt="image" width="529" />
+<p class="caption">image</p>
+</div>
+<h3 id="template-method">Template Method *</h3>
+<p>Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm’s structure.</p>
+<p><strong>Applicability</strong></p>
+<p>The Template Method pattern should be used</p>
+<ul>
+<li><p>to implement the invariant parts of an algorithm once and leave it up to subclasses to implement the behavior that can vary.</p></li>
+<li><p>when common behavior among subclasses should be factored and localized in a common class to avoid code duplication.</p></li>
+<li><p>to control subclasses extensions.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Template methods are a fundamental technique for code reuse. Template methods lead to an inverted control structure. This refers to how a parent class calls the operations of a subclass and not the other way around.</p>
+<p>Template methods call the following kinds of operations:</p>
+<ul>
+<li><p>concrete operations (either on the ConcreteClass or on client classes)</p></li>
+<li><p>concrete AbstractClass operations (i.e., operations that are generally useful to subclasses)</p></li>
+<li><p>primitive operations (i.e., abstract operations)</p></li>
+<li><p>factory methods</p></li>
+<li><p>hook operations, which provide default behavior that subclasses can extend if necessary. A hook operation often does nothing by default.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-22-template.png" alt="image" width="377" />
+<p class="caption">image</p>
+</div>
+<h3 id="visitor">Visitor</h3>
+<p>Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.</p>
+<p><strong>Applicability</strong></p>
+<p>Use the Visitor pattern when</p>
+<ul>
+<li><p>an object structure contains many classes of objects with differing interfaces, and you want to perform operations on these objects that depend on their concrete classes.</p></li>
+<li><p>many distinct and unrelated operations need to be performed on objects in an object structure, and you want to avoid “polluting&quot; their classes with these operations.</p></li>
+<li><p>the classes defining the object structure rarely change, but you often want to define new operations over the structure.</p></li>
+</ul>
+<p><strong>Consequences</strong></p>
+<p>Some of the benefits and liabilities of the Visitor pattern are as follows:</p>
+<ul>
+<li><p>Visitor makes adding new operations easy.</p></li>
+<li><p>A visitor gathers related operations and separates unrelated ones.</p></li>
+<li><p>Adding new ConcreteElement classes is hard.</p></li>
+<li><p>Visiting across class hierarchies.</p></li>
+</ul>
+<div class="figure">
+<img src="diagrams/pattern-23-visitor.png" alt="image" width="415" />
+<p class="caption">image</p>
+</div>
+<p>Gamma, E., Helm, R., Johnson, R.,, Vlissides, J. M. (1994). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley Professional. ISBN: 0201633612</p>
+</body>
+</html>

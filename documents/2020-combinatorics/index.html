@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Combinatorics</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Combinatorics</h1>
+</div>
+<ul>
+<li><a href="#counting-and-enumeration">Counting and Enumeration</a>
+<ul>
+<li><a href="#strings-and-sets">Strings and sets</a></li>
+<li><a href="#exponential">Exponential</a></li>
+<li><a href="#permutations">Permutations</a></li>
+<li><a href="#combinations-binomial-coefficient">Combinations (Binomial Coefficient)</a></li>
+<li><a href="#n-th-partial-sums">n-th Partial Sums</a></li>
+<li><a href="#pascals-triangle">Pascal’s Triangle</a></li>
+<li><a href="#binomial-theorem">Binomial Theorem</a></li>
+<li><a href="#multinomial-coefficients">Multinomial Coefficients</a></li>
+<li><a href="#stars-and-bars">Stars and Bars</a></li>
+<li><a href="#multinomial-theorem">Multinomial Theorem</a></li>
+<li><a href="#lattice-paths">Lattice Paths</a></li>
+<li><a href="#catalan-number">Catalan Number</a></li>
+<li><a href="#the-rule-of-sum">The Rule of Sum</a></li>
+<li><a href="#inclusion-exclusion-principle">Inclusion-Exclusion Principle</a></li>
+<li><a href="#the-euler-totient-function">The Euler Totient Function</a></li>
+</ul></li>
+<li><a href="#number-theory">Number Theory</a>
+<ul>
+<li><a href="#well-ordered-property">Well-Ordered Property</a></li>
+<li><a href="#principle-of-mathematical-induction">Principle of Mathematical Induction</a></li>
+<li><a href="#pigeonhole-principle">Pigeonhole Principle</a></li>
+<li><a href="#erdosszekeres-theorem">Erdos–Szekeres theorem</a></li>
+<li><a href="#fibonacci-sequence">Fibonacci Sequence</a></li>
+<li><a href="#euclidean-algorithm">Euclidean Algorithm</a></li>
+</ul></li>
+<li><a href="#graphs-theory">Graphs Theory</a>
+<ul>
+<li><a href="#subgraph">Subgraph</a></li>
+<li><a href="#induced-subgraph">Induced Subgraph</a></li>
+<li><a href="#spanning">Spanning</a></li>
+<li><a href="#isomorphic">Isomorphic</a></li>
+<li><a href="#homeomorphic">Homeomorphic</a></li>
+<li><a href="#contains">Contains</a></li>
+<li><a href="#complete-graphs">Complete Graphs</a></li>
+<li><a href="#independent-graphs">Independent Graphs</a></li>
+<li><a href="#paths-and-cycles">Paths and Cycles</a></li>
+<li><a href="#connected">Connected</a></li>
+<li><a href="#component">Component</a></li>
+<li><a href="#acyclic-forrests">Acyclic / Forrests</a></li>
+<li><a href="#tree">Tree</a></li>
+<li><a href="#spanning-tree">Spanning Tree</a></li>
+<li><a href="#degree-sum-formula">Degree Sum Formula</a></li>
+<li><a href="#eulerian-cycles-and-graphs">Eulerian Cycles and Graphs</a></li>
+<li><a href="#hamiltonian-cycles-and-graphs">Hamiltonian Cycles and Graphs</a></li>
+<li><a href="#bipartite-graphs">Bipartite Graphs</a></li>
+<li><a href="#graph-coloring">Graph Coloring</a></li>
+<li><a href="#chromatic-number">Chromatic Number</a></li>
+<li><a href="#clique-number">Clique Number</a></li>
+<li><a href="#planar-graph">Planar Graph</a></li>
+<li><a href="#eulers-formula">(Euler’s formula)</a></li>
+<li><a href="#kuratowskis-theorem">Kuratowski’s Theorem</a></li>
+<li><a href="#four-color-theorem">Four Color Theorem</a></li>
+<li><a href="#petersen-graph">Petersen Graph</a></li>
+<li><a href="#dense-graph">Dense Graph</a></li>
+<li><a href="#sparse-graph">Sparse Graph</a></li>
+</ul></li>
+<li><a href="#generating-functions">Generating Functions</a>
+<ul>
+<li><a href="#newtons-binomial-theorem">Newton’s Binomial Theorem</a></li>
+<li><a href="#partitions-of-an-integer">Partitions of an Integer</a></li>
+<li><a href="#exponential-generating-function">Exponential Generating Function</a></li>
+</ul></li>
+<li><a href="#recurrence-equations">Recurrence Equations</a>
+<ul>
+<li><a href="#advancement-operator">Advancement Operator</a></li>
+<li><a href="#finding-closed-form-expressions">Finding Closed-Form Expressions</a></li>
+<li><a href="#using-generating-functions">Using Generating Functions</a></li>
+</ul></li>
+</ul>
+<h1 id="counting-and-enumeration">Counting and Enumeration</h1>
+<h2 id="strings-and-sets">Strings and sets</h2>
+<p>An <span class="math inline">\(X\)</span>-string of length <span class="math inline">\(n\)</span> is written <span class="math inline">\(x_1x_2x_3 \cdots x_n\)</span> for <span class="math inline">\(x_i \in X\)</span>, where <span class="math inline">\(X\)</span> is an alphabet its elements are characters. <span class="math display">\[s: [n] \mapsto X, \ \ \  [n] = \{ 1, 2,3 \cdots, n \}\]</span></p>
+<h2 id="exponential">Exponential</h2>
+<p>An enumeration such that:</p>
+<ol style="list-style-type: decimal">
+<li><p>Order of items matters.</p></li>
+<li><p>Counts include duplication or removals of items.</p></li>
+</ol>
+<p>If <span class="math inline">\(X\)</span> is a finite set, the number of all <span class="math inline">\(X\)</span>-strings of length <span class="math inline">\(n\)</span> will be <span class="math inline">\(|X|^n\)</span>.</p>
+<h2 id="permutations">Permutations</h2>
+<p>If <span class="math inline">\(X\)</span> is an <span class="math inline">\(n\)</span> element set, the number of <span class="math inline">\(X\)</span>-strings of length <span class="math inline">\(m\)</span> is, <span class="math display">\[P(n,m) = \frac{n!}{(n-m)!}\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Order of items matters.</p></li>
+<li><p>Counts do not include duplication or removals of items.</p></li>
+<li><p>Collection of counts could be stored in <em>arrays</em>.</p></li>
+</ol>
+<h2 id="combinations-binomial-coefficient">Combinations (Binomial Coefficient)</h2>
+<p>The number of combinations of <span class="math inline">\(n\)</span> objects taken <span class="math inline">\(k\)</span> at a time. Given <span class="math inline">\(n, k \in \mathbb Z, 0 \leq k \leq n\)</span> then the binomial coefficient is, <span class="math display">\[C(n, k) = \binom{n}{k} = \frac{P(n,k)}{k!} = \frac{n!}{k!(n-k)!} = \binom{n}{n-k}\]</span></p>
+<ol style="list-style-type: decimal">
+<li><p>Order of items doesn’t matter.</p></li>
+<li><p>Counts do not include duplication or removals of items.</p></li>
+<li><p>Collection of counts could be stored in <em>sets</em>.</p></li>
+</ol>
+<p><span class="math display">\[\binom{n+1}{k} = \binom{n}{k} + \binom{n}{k+1}\]</span></p>
+<h2 id="n-th-partial-sums">n-th Partial Sums</h2>
+<p><span class="math display">\[1 +2 +3 + \cdots + n =  \frac{n(n+1)}{2}\]</span></p>
+<p><span class="math display">\[1 +3 + 5 + \cdots + 2n -1 = n^2\]</span></p>
+<h2 id="pascals-triangle">Pascal’s Triangle</h2>
+<p>A triangular array made up of the binomial coefficients in which the entry in the <span class="math inline">\(n\)</span>th row and <span class="math inline">\(k\)</span>th column is <span class="math inline">\({\tbinom {n}{k}}\)</span>.</p>
+<p><span class="math display">\[\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}\]</span></p>
+<p><span class="math display">\[\sum_{i=0}^n \binom{n}{i} = 2^n\]</span></p>
+<h2 id="binomial-theorem">Binomial Theorem</h2>
+<p>Let <span class="math inline">\(x,y \in \mathbb R, x+y \neq 0\)</span>. Then <span class="math inline">\(\forall n \in \mathbb Z^{+}\)</span>, <span class="math display">\[(x + y)^n = \sum_{i=0}^n \binom{n}{i} x^{n-i} y^i\]</span></p>
+<h2 id="multinomial-coefficients">Multinomial Coefficients</h2>
+<p>The number of combinations in which <span class="math inline">\(k\)</span> elements are chosen from subsets of <span class="math inline">\(X\)</span> with <span class="math inline">\(|X| = n\)</span> will be, <span class="math display">\[\binom{n}{k_1, k_2, \cdots, k_n} = \frac{n!}{k_1! k_2! \cdots k_n!}\]</span></p>
+<h2 id="stars-and-bars">Stars and Bars</h2>
+<p>Stars and bars is a graphical aid for deriving certain combinatorial theorems. It can be used to solve many simple counting problems, such as how many ways there are to put n indistinguishable balls into k distinguishable bins.</p>
+<p>For any pair of positive integers n and k, the number of k-tuples of positive integers whose sum is n is equal to the number of <span class="math inline">\((k - 1)\)</span>-element subsets of a set with <span class="math inline">\(n - 1\)</span> elements, i.e. <span class="math inline">\(\binom{n - 1}{k-1}\)</span>.</p>
+<p>For any pair of positive integers n and k, the number of k-tuples of non-negative integers whose sum is n is equal to the number of multisets of cardinality <span class="math inline">\(k - 1\)</span> taken from a set of size <span class="math inline">\(n + 1\)</span>, i.e. <span class="math inline">\(\binom{n+1}{k-1}\)</span>.</p>
+<h2 id="multinomial-theorem">Multinomial Theorem</h2>
+<p>Let <span class="math inline">\(x_1,\cdots x_n \in \mathbb R^+\)</span>. Then <span class="math inline">\(\forall n \in \mathbb N^+\)</span>, <span class="math display">\[(x_1 + \cdots x_n)^n = \sum_{k_1 + ... + k_r = n} = \binom{n}{k_1, \cdots k_r} x_1^{k_1} x_2 ^{k_2} \cdots x_r^{k_r}\]</span></p>
+<h2 id="lattice-paths">Lattice Paths</h2>
+<p>A sequence of ordered pairs <span class="math inline">\((m_1, n_1), (m_2, n_2), \cdots, (m_t, n_t)\)</span> such that either:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(m_{i+1} = m_{i}+1\)</span> and <span class="math inline">\(n_{i+1} = n_{i}\)</span></p></li>
+<li><p><span class="math inline">\(m_{i+1} = m_i\)</span> and <span class="math inline">\(n_{i+1} = n_i +1\)</span>.</p></li>
+</ol>
+<p>The construction of lattice paths forms a bijection with <span class="math inline">\(X\)</span>-strings where <span class="math inline">\(X = \{ H, V\}\)</span> with <span class="math inline">\(H,V\)</span> encoding horizontal or vertical moves. The number of lattice paths from <span class="math inline">\((m_1, n_1)\)</span> to <span class="math inline">\((m_2,n_2)\)</span> is, <span class="math display">\[\binom{m_2 - m_1 + m_2 - m_1}{m_2-m_1}.\]</span></p>
+<h2 id="catalan-number">Catalan Number</h2>
+<p>The number of lattice paths from <span class="math inline">\((0,0)\)</span> to <span class="math inline">\((n,n)\)</span> that do not go above the diagonal line <span class="math inline">\(y = x\)</span>, also known as Dyck paths, are equal to the <span class="math inline">\(n\)</span>th Catalan number, <span class="math display">\[C(n) = \frac{1}{n+1} \binom{2n}{n}\]</span></p>
+<h2 id="the-rule-of-sum">The Rule of Sum</h2>
+<p>The rule of sum or addition principle is a basic counting principle. Stated simply, it is the idea that if we have A ways of doing something and B ways of doing another thing and we can not do both at the same time, then there are A + B ways to choose one of the actions.</p>
+<h2 id="inclusion-exclusion-principle">Inclusion-Exclusion Principle</h2>
+<p>The inclusion–exclusion principle is a counting technique that generalizes the method of obtaining the number of elements in the union of two finite sets without double counting elements, <span class="math display">\[|A\cup B|=|A|+|B|-|A\cap B|.\]</span> The principle is particularly useful in the case of three sets, i.e. for the sets <span class="math inline">\(A\)</span>, <span class="math inline">\(B\)</span> and <span class="math inline">\(C\)</span>, the count of the union is given by, <span class="math display">\[|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|A\cap C|-|B\cap C|+|A\cap B\cap C|.\]</span></p>
+<h2 id="the-euler-totient-function">The Euler Totient Function</h2>
+<p>For a positive integer <span class="math inline">\(n\geq2\)</span>, Euler’s Totient function is defined by <span class="math display">\[\phi(n)=|\{m\in \mathbb N: m\le n,  \gcd(m,n)=1\}|.\]</span></p>
+<h1 id="number-theory">Number Theory</h1>
+<h2 id="well-ordered-property">Well-Ordered Property</h2>
+<p><span class="math inline">\(\forall A \subset \mathbb N^+, A \neq \emptyset\)</span>, <span class="math inline">\(A\)</span> must have a minimum element. This statement is equivalent to mathematical induction.</p>
+<h2 id="principle-of-mathematical-induction">Principle of Mathematical Induction</h2>
+<p>Let <span class="math inline">\(S_n\)</span> be an open statement involving a positive integer <span class="math inline">\(n\)</span>. If <span class="math inline">\(S_1\)</span> is true, and if for each positive integer <span class="math inline">\(k\)</span>, assuming that the statement <span class="math inline">\(S_k\)</span> is true implies that the statement <span class="math inline">\(S_k + 1\)</span> is true, then <span class="math inline">\(S_n\)</span> is true for every positive integer <span class="math inline">\(n\)</span>.</p>
+<h2 id="pigeonhole-principle">Pigeonhole Principle</h2>
+<p>Given <span class="math inline">\(m\)</span> items and <span class="math inline">\(n\)</span> containers, there exists a containers with at least <span class="math inline">\(\lceil \frac{m}{n} \rceil\)</span> items.</p>
+<p>Expressed in terms of functions and their domains and ranges: if <span class="math inline">\(f: X \mapsto Y\)</span> and <span class="math inline">\(|X| &gt; |Y|\)</span> then there exists a <span class="math inline">\(y \in Y\)</span> and <span class="math inline">\(x, x&#39; \in X, x \neq x&#39;\)</span> so that <span class="math inline">\(f(x) = f(x&#39;) = y\)</span></p>
+<h2 id="erdosszekeres-theorem">Erdos–Szekeres theorem</h2>
+<p>If <span class="math inline">\(m,n \in \mathbb Z^+\)</span>, then any sequence of <span class="math inline">\(mn+1\)</span> distinct real numbers either has an increasing sub-sequence of <span class="math inline">\(m+1\)</span> items or a decreasing sub-sequence of <span class="math inline">\(n+1\)</span> terms.</p>
+<h2 id="fibonacci-sequence">Fibonacci Sequence</h2>
+<p><span class="math display">\[\phi_n = \phi_{n-1} +\phi_{n-2}\text{; } \phi_1 = 1 \text{, } \phi_2 = 2\]</span></p>
+<h2 id="euclidean-algorithm">Euclidean Algorithm</h2>
+<p>The Euclidean algorithm is an efficient method for computing the greatest common divisor (GCD) of two integers.</p>
+<p>Given <span class="math inline">\(m = q_i n_i + r_i\)</span> where <span class="math inline">\(m_i,n_i \in \mathbb Z^+\)</span> with <span class="math inline">\(0 \leq r_i &lt; n_i\)</span> we see that <span class="math inline">\(r_i\)</span> represents the remainder and <span class="math inline">\(q_i\)</span> represents the quotient. We use the fact that <span class="math inline">\(\gcd(m, n_i) = \gcd(n_i, r_i)\)</span> to iteratively calculate the <span class="math inline">\(\gcd\)</span> on the decomposition of the <span class="math inline">\(n_i\)</span> term and the remainder <span class="math inline">\(r_i\)</span>.</p>
+<h1 id="graphs-theory">Graphs Theory</h1>
+<p>Let <span class="math inline">\(G = (V, E)\)</span> be a graph with <span class="math inline">\(V\)</span> verticies and <span class="math inline">\(E\)</span> edges.</p>
+<h2 id="subgraph">Subgraph</h2>
+<p><span class="math inline">\(H = (W, F)\)</span> is a subgraph of <span class="math inline">\(G\)</span> if <span class="math inline">\(W \subseteq V\)</span> and <span class="math inline">\(F \subseteq E\)</span>. That is, a subgraph does not contain any additional vertices or edges but may contain fewer.</p>
+<h2 id="induced-subgraph">Induced Subgraph</h2>
+<p><span class="math inline">\(H = (W, F)\)</span> is an induced subgraph if <span class="math inline">\(W \subseteq V\)</span> and <span class="math inline">\(F = \{ xy \in E : xy \in W \}\)</span>. That is, an induced subgraph is formed from a subset of the vertices of the graph with all of the edges connecting pairs of vertices in the subset being kept from the original graph.</p>
+<h2 id="spanning">Spanning</h2>
+<p><span class="math inline">\(H = (W, F)\)</span> is spanning when <span class="math inline">\(W = V\)</span>.</p>
+<h2 id="isomorphic">Isomorphic</h2>
+<p><span class="math inline">\(G\)</span> is isomorphic to <span class="math inline">\(H\)</span>, denoted by <span class="math inline">\(G \cong H\)</span>, if there exists an edge-preserving bijective mapping, <span class="math inline">\(f: V \mapsto W\)</span>.</p>
+<h2 id="homeomorphic">Homeomorphic</h2>
+<p>The subdivision of an edge <span class="math inline">\(e\)</span> with endpoints <span class="math inline">\(\{u,v\}\)</span> yields a graph containing one new vertex <span class="math inline">\(w\)</span> with an edge set replacing <span class="math inline">\(e\)</span> by two new edges, <span class="math inline">\(\{u,w\}\)</span> and <span class="math inline">\(\{w,v\}\)</span>.</p>
+<p>Two graphs <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span> are homeomorphic if there is a graph isomorphism from some subdivision of <span class="math inline">\(G\)</span> to some subdivision of <span class="math inline">\(H\)</span>.</p>
+<h2 id="contains">Contains</h2>
+<p><span class="math inline">\(G\)</span> contains <span class="math inline">\(H\)</span> if there exists a subgraph of <span class="math inline">\(G\)</span> that is isomorphic to <span class="math inline">\(H\)</span>.</p>
+<h2 id="complete-graphs">Complete Graphs</h2>
+<p>A complete graph is a graph in which each pair of graph vertices is connected by an edge, i.e. <span class="math inline">\(x, y \in E\)</span> for all distinct <span class="math inline">\(x,y \in V\)</span>.</p>
+<p>The complete graph with n graph vertices is denoted as <span class="math inline">\(K_n\)</span>. <span class="math inline">\(K_n\)</span> has <span class="math inline">\(\binom{n}{2}\)</span> edges.</p>
+<h2 id="independent-graphs">Independent Graphs</h2>
+<p>An inedpendent graph, denoted <span class="math inline">\(I_n\)</span>, is a graph with <span class="math inline">\(xy \not\in E\)</span> for all distinct pairs of vertices <span class="math inline">\(xy \in V\)</span></p>
+<h2 id="paths-and-cycles">Paths and Cycles</h2>
+<p><span class="math inline">\(P_n = \{ x_1, x_2, \cdots x_n \}\)</span> is a path of length <span class="math inline">\(n-1\)</span>.</p>
+<p><span class="math inline">\(C_n = \{ x_1, x_2, \cdots x_n, x_1 \}\)</span> is a cycle with length <span class="math inline">\(n\)</span>.</p>
+<h2 id="connected">Connected</h2>
+<p>A graph <span class="math inline">\(G\)</span> is connected if every vertex can be reached by any other vertex in the graph, i.e a path exists connecting <span class="math inline">\(v_1\)</span> to <span class="math inline">\(v_2\)</span> for all <span class="math inline">\(v_1,v_2 \in V\)</span>.</p>
+<h2 id="component">Component</h2>
+<p>A maximal connected subgraph of a disconnected graph.</p>
+<h2 id="acyclic-forrests">Acyclic / Forrests</h2>
+<p>A graph that does not contain any cycles.</p>
+<p>The number of components is a forrest is <span class="math inline">\(|V| - |E|\)</span></p>
+<h2 id="tree">Tree</h2>
+<p>A connected acyclic graph.</p>
+<h2 id="spanning-tree">Spanning Tree</h2>
+<p>If <span class="math inline">\(G\)</span> is a connected tree and <span class="math inline">\(H\)</span> is a spanning subgraph, then we can call <span class="math inline">\(H\)</span> a spanning tree.</p>
+<h2 id="degree-sum-formula">Degree Sum Formula</h2>
+<p>The degree sum formula states that, given a graph <span class="math inline">\(G=(V,E)\)</span>,</p>
+<p><span class="math display">\[\sum _{v\in V}\deg(v)=2|E|.\]</span></p>
+<p>The formula implies that in any undirected graph, the number of vertices with odd degree is even, which is known as the Handshaking lemma. The name comes from a popular problem: in any group of people the number of people who have shaken hands with an odd number of other people from the group must be even.</p>
+<h2 id="eulerian-cycles-and-graphs">Eulerian Cycles and Graphs</h2>
+<p>A Eulerian cycle is a cycle that contains every edge in a given graph exactly once. A Eulerian graph is a graph that contains a Eulerian cycle.</p>
+<p>A graph admits a Eularian cycle if and only if all vertices have even degree</p>
+<h2 id="hamiltonian-cycles-and-graphs">Hamiltonian Cycles and Graphs</h2>
+<p>A Hamiltonian cycle is a cycle that traverses each vertex exacltly once. A Hamiltonian graph is a graph that contains a Hamiltonian cycle.</p>
+<p>If a graph has <span class="math inline">\(n\)</span> vertices and <span class="math inline">\(\forall v \in V, \deg(v) \geq \lceil \frac{n}{2} \rceil\)</span>, then it must be Hamiltonian.</p>
+<p>(Ore’s Theorem) If for all non-adjacent vertices <span class="math inline">\(v,w \in V\)</span>, <span class="math inline">\(deg(v) + deg(w) \geq n\)</span>, then <span class="math inline">\(G\)</span> must be Hamiltonian.</p>
+<h2 id="bipartite-graphs">Bipartite Graphs</h2>
+<p>A graph is bipartite if there exists a partition of <span class="math inline">\(V\)</span> so that the resulting induced subgraphs are independent.</p>
+<p>A graph is complete bipartite, denoted <span class="math inline">\(K_{m,n}\)</span>, if it is bipartite with <span class="math inline">\(V = V_1 \cup V_2, |V_1| = m, |V_2|= n\)</span> and has edges <span class="math inline">\(xy\)</span> for all <span class="math inline">\(x \in V_1, y \in V_2\)</span>.</p>
+<h2 id="graph-coloring">Graph Coloring</h2>
+<p>A graph can be colored by assigning a color or label to each of its vertices. A proper coloring exists when no adjacent vertices have the same color.</p>
+<h2 id="chromatic-number">Chromatic Number</h2>
+<p>The chromatic number of a graph, denoted <span class="math inline">\(\chi (G)\)</span>, is the smallest number of <span class="math inline">\(k\)</span> colors so that <span class="math inline">\(G\)</span> is k-colorable.</p>
+<p>Recall <span class="math inline">\(C_n\)</span> is a cycle of <span class="math inline">\(n\)</span> vertices. Then, <span class="math inline">\(\chi (C_n) = \begin{cases} 2 ,\ \ \text{if } n \text{ is even} \\ 3,\ \  \text{if } n \text{ is odd } \end{cases}\)</span></p>
+<h2 id="clique-number">Clique Number</h2>
+<p>The clique number of a graph, denoted <span class="math inline">\(\omega(G)\)</span>, is the maximum number <span class="math inline">\(n\)</span> so that <span class="math inline">\(G\)</span> has a subgraph isomorphc to the complete graph <span class="math inline">\(K_m\)</span>.</p>
+<p>For any graph <span class="math inline">\(G\)</span>, $ (G) (G)$.</p>
+<p>If $ (G) = (G)$, then <span class="math inline">\(G\)</span> is called perfect or reduced.</p>
+<p>For any <span class="math inline">\(t \geq 3\)</span>, there exists a graph <span class="math inline">\(G\)</span> so that <span class="math inline">\(\omega(G) = 2\)</span> and <span class="math inline">\(\chi(G) = t\)</span>.</p>
+<p>This means that graphs can have an arbitrarily large chromatic number. If the original graph is triangle-free, a Mycielskian graph may be constructed to increase the graph’s chromatic number.</p>
+<h2 id="planar-graph">Planar Graph</h2>
+<p>A graph is planar if it has a drawing or embedding so that its edges only intersect one another at one of the graph’s vertices.</p>
+<h2 id="eulers-formula">(Euler’s formula)</h2>
+<p>Given a finite, connected, planar graph where <span class="math inline">\(v\)</span> is the number of vertices, <span class="math inline">\(e\)</span> is the number of edges and <span class="math inline">\(f\)</span> is the number of faces, <span class="math display">\[v-e+f=2.\]</span></p>
+<p>A planar graph on <span class="math inline">\(n\)</span> verticies has at most <span class="math inline">\(3n-6\)</span> edges, for <span class="math inline">\(n \geq 3\)</span>.</p>
+<h2 id="kuratowskis-theorem">Kuratowski’s Theorem</h2>
+<p>A graph is planar if and only if it does not contain a subgraph homeomorphic to <span class="math inline">\(K_5\)</span> or <span class="math inline">\(K_{3,3}\)</span>.</p>
+<h2 id="four-color-theorem">Four Color Theorem</h2>
+<p>Every planar graph has chromatic number of at most 4.</p>
+<h2 id="petersen-graph">Petersen Graph</h2>
+<p>A Petersen graph has the following properties: <span class="math inline">\(|V| = 10, |E| = 15\)</span>, there are no cycles of length 3 or 4, and <span class="math inline">\(\deg(v) = 3, \forall v \in V\)</span>. A Petersen graph is never Hamiltonian.</p>
+<h2 id="dense-graph">Dense Graph</h2>
+<p>A dense graph is a graph in which the number of edges is close to the maximal number of edges. For undirected simple graphs, the graph density is: <span class="math display">\[D={\frac {|E|}{\binom {|V|}{2}}}={\frac {2|E|}{|V|(|V|-1)}}\]</span></p>
+<h2 id="sparse-graph">Sparse Graph</h2>
+<p>Conversely, a sparse graph is a graph in which the number of edges is close to the minimal number of edges. A sparse graph can be a disconnected graph.</p>
+<h1 id="generating-functions">Generating Functions</h1>
+<p>Given a sequence <span class="math inline">\(\sigma=\{a_n:n\ge0\}\)</span> of real numbers, we define the ordinary generating function <span class="math inline">\(F(x)\)</span> of the sequence <span class="math inline">\(\sigma\)</span> as, <span class="math display">\[F(x)=\sum_{n=0}^\infty a_n x^n.\]</span></p>
+<p>This differs from a formal power series in that we are not concerned with the series convergence or divergence and are generally not interested in substituting a value of <span class="math inline">\(x\)</span> and obtaining a specific value for <span class="math inline">\(F(x)\)</span>. Instead we may use <span class="math inline">\(F(x)\)</span> to encode and generate the sequence <span class="math inline">\(\sigma\)</span>.</p>
+<p>The geometric series: <span class="math display">\[\frac {1}{1-x}=\sum _{n=0}^{\infty }x^{n}=1+x+x^{2}+x^{3}+\cdots\]</span></p>
+<h2 id="newtons-binomial-theorem">Newton’s Binomial Theorem</h2>
+<p>For all real <span class="math inline">\(p\)</span> with <span class="math inline">\(p\neq 0\)</span>, <span class="math display">\[(1+x)^p=\sum_{n=0}^\infty\binom{p}{n}x^n.\]</span></p>
+<h2 id="partitions-of-an-integer">Partitions of an Integer</h2>
+<p>A partition <span class="math inline">\(P\)</span> of an integer is a collection of (not necessarily distinct) positive integers such that, <span class="math display">\[\sum_{i\in P} i = n.\]</span> We can find the number of partitions of a given integer using a generator function <span class="math display">\[P(x) = \left(\sum_{m=0}^\infty x^{m}\right)\left(\sum_{m=0}^\infty x^{2m}\right)         \left(\sum_{m=0}^\infty x^{3m}\right)\cdots         \left(\sum_{m=0}^\infty x^{km}\right)\cdots = \prod_{m=1}^\infty\frac{1}{1-x^m}.\]</span></p>
+<p>For each <span class="math inline">\(n\geq 1\)</span>, the number of partitions of <span class="math inline">\(n\)</span> into distinct parts is equal to the number of partitions of <span class="math inline">\(n\)</span> into odd parts.</p>
+<h2 id="exponential-generating-function">Exponential Generating Function</h2>
+<p>The exponential generating function for the sequence <span class="math inline">\(\{a_n\colon n\geq 0\}\)</span> is <span class="math inline">\(\displaystyle \sum_n \frac{a_n x^n}{n!}\)</span>.</p>
+<p>The exponential function formula: <span class="math display">\[e^{x} =\sum _{n=0}^{\infty }{\frac {x^{n}}{n!}}=1+x+{\frac {x^{2}}{2!}}+{\frac {x^{3}}{3!}}+\cdots.\]</span></p>
+<h1 id="recurrence-equations">Recurrence Equations</h1>
+<p>A recurrence tells us how to compute the <span class="math inline">\(n\)</span>th term of a sequence given some number of previous values. A recursion is linear when it has the following form, <span class="math display">\[c_0a_{n+k}+ c_1a_{n+k-1} + \dots+c_ka_{n} = g(n),\]</span> where <span class="math inline">\(k \geq 1\)</span> is an integer, <span class="math inline">\(c_0,c_1,\dots,c_k\)</span> are constants with <span class="math inline">\(c_0, c_k \neq 0\)</span>, and <span class="math inline">\(g: \mathbb Z \rightarrow \mathbb R\)</span> is a function.</p>
+<p>A linear equation is homogeneous if the function <span class="math inline">\(g(n)\)</span> is the zero function is non-homogeneous otherwise. The process of solving recurrence equations is similar to solving ordinary differential equations as both functions express future states in relation to differences to their previous states.</p>
+<h2 id="advancement-operator">Advancement Operator</h2>
+<p>The advancement operator is a linear map that shifts or advances a function’s input forward by one, i.e. <span class="math inline">\(A: \mathbb R \mapsto \mathbb R\)</span>, where <span class="math inline">\((Af)(n) = f(n+1)\)</span>.</p>
+<p>It is commutative and has the properties that <span class="math inline">\(A^k = \underbrace{A \circ \cdots \circ A }_\text{k times}\)</span> and <span class="math inline">\((A^k f)(n) = f(n+k)\)</span>.</p>
+<h2 id="finding-closed-form-expressions">Finding Closed-Form Expressions</h2>
+<p>The set of all solutions to the homogeneous linear equation of degree <span class="math inline">\(k\)</span> is a <span class="math inline">\(k\)</span>-dimensional subspace of <span class="math inline">\(V\)</span>.</p>
+<p>This means that we may solve a linear recurrence stated in terms of advancement operations by finding a basis for the vector space of solutions.</p>
+<p>Let <span class="math inline">\(r \neq 0\)</span> , and let <span class="math inline">\(f\)</span> be a solution to the operator equation <span class="math inline">\((A - r)f=0\)</span>. If <span class="math inline">\(c=f(0)\)</span>, then <span class="math inline">\(f(n)=c r^n\)</span> for every <span class="math inline">\(n \in \mathbb Z\)</span>.</p>
+<p>This means that the roots of the advancement operator equation will give us solutions to its corresponding recurrence of the form <span class="math inline">\(f(n) = c r^n\)</span>.</p>
+<p>Consider a non-homogeneous operator equation and let <span class="math inline">\(W\)</span> be the subspace of <span class="math inline">\(V\)</span> consisting of all solutions to its corresponding homogeneous equation.</p>
+<p>If <span class="math inline">\(f_0\)</span> is a solution to the homogeneous equation, then every solution <span class="math inline">\(f\)</span> to has the form <span class="math inline">\(f = f_0 + f_1\)</span> where <span class="math inline">\(f_1 \in W\)</span> is a particular solution.</p>
+<p>If the polynomial in the advancement operator has distinct roots we may use the following theorem,</p>
+<p>Consider the following advancement operator equation <span class="math inline">\(p(A) f = (A-r_1)(A-r_2)\cdots(A-r_k)f=0\)</span>. with <span class="math inline">\(r_1 , r_2 , \cdots , r_k\)</span> distinct non-zero constants. Then every solution has the form <span class="math inline">\(f(n) = c_1 r_1^n + c_2 r_2^n + c_3 r_3^n + \cdots + c_k r_k^n\)</span>.</p>
+<p>If there are repeated roots we use the following theorem,</p>
+<p>Let <span class="math inline">\(k \geq 1\)</span> and consider the equation <span class="math inline">\(( A - r )^k f = 0\)</span>. Then the general solution has the form <span class="math inline">\(f(n) = c_1 r_n + c_2 n r_n + c_3 n^2r^n + c_4 n^3 r^n + \cdots + c_k n^{k - 1} r ^n\)</span>.</p>
+<h2 id="using-generating-functions">Using Generating Functions</h2>
+<p>Alternatively, we may use generating function to solve recursive equations. This approach does not require determining an appropriate form for the particular solution but instead the method of generating functions often requires that the resulting generating function be expanded using partial fractions.</p>
+<p>Generating functions can be used in solving certain nonlinear recurrence equation, in particular, we can use it to determine the number of rooted, unlabeled, binary, ordered trees. A tree is rooted if we have designated a special vertex called its root. An unlabeled tree is one in which we do not make distinctions based upon names given to the vertices. A binary tree is one in which each vertex has 0 or 2 children, and an ordered tree is one in which the children of a vertex have some ordering (first, second, third, etc.).</p>
+<p>The generating function for the number <span class="math inline">\(c_n\)</span> of rooted, unlabeled, binary, ordered trees with <span class="math inline">\(n\)</span> leaves is <span class="math display">\[C(x) = \frac{1-\sqrt{1-4x}}{2} = \sum_{n=1}^\infty \frac{1}{n}\binom{2n-2}{n-1}x^n.\]</span></p>
+<p>Notice that <span class="math inline">\(c_n\)</span> is a Catalan number, which also counts the number of lattice paths that do not cross the diagonal line <span class="math inline">\(y=x\)</span>.</p>
+<p>Keller, M.T. and Trotter, W.T., Applied Combinatorics, Open Textbook Library, ISBN9781534878655. http://www.rellek.net/book/app-comb.html</p>
+</body>
+</html>

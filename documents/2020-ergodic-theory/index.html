@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>Ergodic Theory</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+<h1 class="title">Ergodic Theory</h1>
+</div>
+<ul>
+<li><a href="#dynamical-systems">Dynamical Systems</a></li>
+<li><a href="#measure">Measure</a></li>
+<li><a href="#ergodicity">Ergodicity</a></li>
+<li><a href="#birkhoffs-ergodic-theorem">Birkhoff’s Ergodic Theorem</a></li>
+<li><a href="#statistical-mechanics-and-the-law-of-large-numbers">Statistical Mechanics and the Law of Large Numbers</a></li>
+<li><a href="#ergodic-hierarchy">Ergodic Hierarchy</a></li>
+</ul>
+<h1 id="dynamical-systems">Dynamical Systems</h1>
+<p>A <strong>dynamical system</strong>, usually written as the tuple <span class="math inline">\((T, X)\)</span>, is described by a transformation that maps a phase space onto itself, <span class="math inline">\(T: X \to X\)</span>. The set of points attained from repeated applications of the transformation from some starting point is known as its <strong>forward orbit</strong> or trajectory, <span class="math display">\[\mathcal{O}(x, T) = \{ T^i(x) : i \in \mathbb Z^+ \}.\]</span></p>
+<p>If the trajectory repeats itself, the point is considered <strong>periodic</strong>, $T^n(x) = T^m(x), n m $.</p>
+<h1 id="measure">Measure</h1>
+<p>A measure is an extension of the concepts of length, area, or volume in Euclidean geometry. In a generic space, a measure is a way of assigning a value or weight to different parts of the space.</p>
+<p>Let <span class="math inline">\(X\)</span> be a set. A collection <span class="math inline">\(\mathcal{F}\)</span> of subsets of <span class="math inline">\(X\)</span> is called a <strong><span class="math inline">\(\sigma\)</span>-algebra</strong> if:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(X\)</span> is in <span class="math inline">\(\mathcal{F}\)</span></p></li>
+<li><p>If <span class="math inline">\(A\)</span> is in <span class="math inline">\(\mathcal{F}\)</span>, then so is the complement of <span class="math inline">\(A\)</span></p></li>
+<li><p>if <span class="math inline">\(A_n\)</span> is a countable sequence of sets in <span class="math inline">\(\mathcal{F}\)</span> then their union is in <span class="math inline">\(\mathcal{F}\)</span>, i.e. $ _{n=1}^{} A_n $</p></li>
+</ol>
+<p>This definition provides us with sets that can be considered <em>events</em> in a probability space, while elements not in <span class="math inline">\(\mathcal{F}\)</span> have no defined probability measure. <span class="math inline">\(\sigma\)</span>-algebras allow us to avoid certain undefined behaviour which arises from non-measurable sets.</p>
+<p>A function <span class="math inline">\(\mu: \mathcal{F} \mapsto \mathbb{R}^+ \cup \{\infty\}\)</span> is called a <strong>measure</strong> if:</p>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(\mu(\emptyset)=0\)</span></p></li>
+<li><p>if <span class="math inline">\(A_n\)</span> is a countable collection of pairwise disjoint sets in <span class="math inline">\(\mathcal{F}\)</span> (i.e. <span class="math inline">\(A_n \cap A_m = \emptyset\)</span> for <span class="math inline">\(n \neq m\)</span>) then <span class="math display">\[\mu \Big(  \bigcup_{n=1}^{\infty} A_n \Big) = \sum_{n=1}^{\infty}\mu(A_n).\]</span></p></li>
+</ol>
+<p>We call <span class="math inline">\((X, \mathcal{F}, \mu)\)</span> a measure space. If <span class="math inline">\(\mu(X) = 1\)</span> then we consider <span class="math inline">\(\mu\)</span> a probability measure similar to $ 0 Pr(X) 1$ and may refer to <span class="math inline">\((X, \mathcal{F}, \mu)\)</span> as a probability space.</p>
+<p>We say that <span class="math inline">\(T\)</span> is a measure-preserving transformation or, equivalently, <span class="math inline">\(\mu\)</span> is said to be a <span class="math inline">\(T\)</span>-invariant measure if the measure of a set is always the same as the measure of the set of points which map to it, i.e. <span class="math inline">\(\mu(T^{-1}(A))=\mu(A)\)</span> for any measurable set <span class="math inline">\(A \in \mathcal{F}\)</span>.</p>
+<h1 id="ergodicity">Ergodicity</h1>
+<p>Let <span class="math inline">\((X, \mathcal{F}, \mu)\)</span> be a probability space and let  <span class="math inline">\(T : X \mapsto X\)</span> be a measure-preserving transformation. We say that <span class="math inline">\(T\)</span> is an <strong>ergodic transformation</strong>, or that <span class="math inline">\(\mu\)</span> is an <strong>ergodic measure</strong>, if whenever <span class="math inline">\(A \in \mathcal{F}\)</span> satisfies <span class="math inline">\(T ^{-1}(A) = A\)</span>, then <span class="math inline">\(\mu(A) = 0\)</span> or <span class="math inline">\(1\)</span>.</p>
+<p>Ergodicity can be understood as a measure theoretic version of irreducibility, similar to the inability to split up markov chains into smaller sub-chains. Ergodicity can be viewed as an indecomposability condition and is concerned with how a typical orbit of a dynamical system is distributed throughout the phase space while ergodic theory studies the qualitative distributional properties of typical orbits of a dynamical system with these properties being expressed in terms of measure theory. An ergodic dynamical system is one in which, with respect to some probability distribution, all invariant sets either have measure 0 or 1.</p>
+<h1 id="birkhoffs-ergodic-theorem">Birkhoff’s Ergodic Theorem</h1>
+<blockquote>
+<ol style="list-style-type: decimal">
+<li><p>Let <span class="math inline">\((X, \mathcal B, \mu, T)\)</span> be a measure-preserving system on a <span class="math inline">\(\sigma\)</span>-finite measure space (<span class="math inline">\(\mu(X)&lt; \infty\)</span>), and let <span class="math inline">\(f\)</span> be any integrable function.</p></li>
+<li><p>We consider <span class="math inline">\(\hat f\)</span> the time-average of <span class="math inline">\(f\)</span>, <span class="math display">\[\hat f(x) = \frac{1}{n}\sum_{i=0}^{n-1} f(T^{i}(x)).\]</span> <span class="math inline">\(\hat f(x)\)</span> converges for almost every <span class="math inline">\(x \in X\)</span>, and is integrable i.e. <span class="math inline">\(\hat f\)</span> is in <span class="math inline">\(L^1(\mu)\)</span>. Moreover, <span class="math inline">\(\hat f\)</span> is <span class="math inline">\(T\)</span>-invariant, i.e., $ f T = f$.</p></li>
+<li><p>We consider <span class="math inline">\(\bar f\)</span> the space-average of <span class="math inline">\(f\)</span>, <span class="math display">\[\bar f = \frac{1}{\mu(x)} \int_{X} f d\mu.\]</span> For a probability space, <span class="math inline">\(\mu (X)=1\)</span>.</p></li>
+<li><p>If <span class="math inline">\(T\)</span> is ergodic, then <span class="math inline">\(\hat f\)</span> is constant in <span class="math inline">\(\mu\)</span> almost everywhere, so we have <span class="math inline">\(\hat f = \bar f\)</span>, i.e. <span class="math display">\[\begin{aligned}
+            \displaystyle \lim_{n\to \infty} \frac{1}{n}\sum_{i=0}^{n-1}f(T^{i}(x)) &amp;= \frac{1}{\mu(x)} \int_{X} f d \mu 
+        \end{aligned}\]</span></p></li>
+</ol>
+<p>If a mapping is ergodic, as the number of finite averages taken along any of its orbit increases to infinity (the time-average), this value will converge to the continuous integral (the space average). That is, a finite average sampling of points of any orbit will be be as accurate as a continuous average integral over the entire state space.</p>
+</blockquote>
+<h1 id="statistical-mechanics-and-the-law-of-large-numbers">Statistical Mechanics and the Law of Large Numbers</h1>
+<p>The term <em>ergodic</em> was originally introduced by Ludwig Boltzman, the founder of statistical mechanics, to describe a stronger but related property: starting from a random point in state space, orbits will typically pass through every point in state space. To understand this relation in terms of a mathematical space, consider the <strong>indicator function</strong> of A, <span class="math inline">\(\mathbb{I_A} :X \to \{0,1\}\)</span> defined by, <span class="math display">\[\mathbb I_A(x) = \begin{cases}
+        1 &amp;\text{ if $x\in A$}\\ 0 &amp;\text{ otherwise}
+    \end{cases}.\]</span></p>
+<p>The time-average of <span class="math inline">\(\mathbb I_A\)</span> is the fraction of time that the orbit spends in <span class="math inline">\(A\)</span> while the space-average of <span class="math inline">\(I_A\)</span> is the probability that a randomly picked point is in <span class="math inline">\(A\)</span>. In an ergodic system, the two averages are almost always equal, meaning almost all trajectories end up covering the state space in the same way. The classical ergodic model is a version of the <strong>law of large numbers</strong> — the average of the results obtained from a large number of trials should be close to the expected value and will tend to become closer to the expected value as more trials are performed.</p>
+<h1 id="ergodic-hierarchy">Ergodic Hierarchy</h1>
+<p>Ergodicity is at the bottom level of the ergodic hierarchy, where the higher a system is categorized the more random its behaviour. This unpredictability occurs as a result of a decay of correlations between the systems’ past and present states. <span class="math display">\[\text{Bernoulli} \subset \text{Kolmogorov} \subset \text{Strong Mixing} \subset \text{Weak Mixing} \subset \text{Ergodic}.\]</span> We can gain an intuition for a mixing transformation, <span class="math inline">\(T\)</span>, through a comparison with stirring two parts <span class="math inline">\((A, B)\)</span> of a fluid together, meaning that <span class="math inline">\(T^n(A)\)</span> is the region or <span class="math inline">\(n\)</span>-orbit of the first part of fluid after <span class="math inline">\(n\)</span> time units of mixing. If the volume of the entire fluid <span class="math inline">\(V\)</span> is equal to <span class="math inline">\(C\)</span>, then we consider the fluid to be thoroughly mixed if the concentration of the first part of fluid equals <span class="math inline">\(\mu(A)/\mu(C)\)</span> in both the whole volume of fluid and also in sub-region in the volume. That is, the fluid is thoroughly mixed at time <span class="math inline">\(n\)</span> if <span class="math display">\[\frac{\mu(T^n A \cap V)}{\mu(V)}=\frac{\mu(A)}{\mu(C)}\]</span> for any volume <span class="math inline">\(V\)</span> (of non-zero measure). We assume that the volume of the combined liquid is one unit, i.e. <span class="math inline">\(\mu(C)=1\)</span>, then for all subsets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> of <span class="math inline">\(X\)</span> a system is <strong>strong mixing</strong> (S-M) if, <span class="math display">\[\displaystyle \lim_{n\to\infty} \mu(T^n B \cap A) = \mu(B) \mu(A).\]</span> A system is <strong>weak mixing</strong> (W-M) if, <span class="math display">\[\displaystyle \lim_{n\to \infty} \frac{1}{n} 
+        \sum_{k=0}^{n-1} | \mu(T^k B \cap A) - \mu(B)\mu(A)|=0.\]</span></p>
+<p>A system is <strong>K-mixing</strong> (K-M) if for any subsets <span class="math inline">\(A_0,A_1,...,A_r\)</span> of <span class="math inline">\(X\)</span>, where <span class="math inline">\(r\)</span> is an arbitrary natural number, the following condition holds: <span class="math display">\[\lim_{n\to\infty}
+        \sup_{B \in \sigma(n,r)} 
+        |\mu(T^n B \cap A) - \mu(B)\mu(A)| = 0\]</span></p>
+<p>A partition of <span class="math inline">\(X\)</span> is a division of <span class="math inline">\(X\)</span> into different mutually exclusive parts or atoms that jointly cover <span class="math inline">\(X\)</span>. A system is a <strong>Bernoulli system</strong> if if there exists a partition <span class="math inline">\(\alpha\)</span> of <span class="math inline">\(X\)</span> so that the images of <span class="math inline">\(\alpha\)</span> under its transformation <span class="math inline">\(T\)</span> at different instants of time are independent, i.e. <span class="math display">\[\mu(\delta \in \beta) = \mu(\delta_i) \mu(\beta_j)\]</span> for all atoms <span class="math inline">\(\delta_i\)</span> of <span class="math inline">\(T^k\alpha\)</span> and all atoms <span class="math inline">\(\beta_j\)</span> of <span class="math inline">\(T^l\alpha\)</span> for all <span class="math inline">\(k \neq l\)</span>.</p>
+<p>https://personalpages.manchester.ac.uk/staff/charles.walkden/magic/</p>
+<p>https://plato.stanford.edu/entries/ergodic-hierarchy/</p>
+<p>http://bactra.org/notebooks/ergodic-theory.html</p>
+<p>https://terrytao.files.wordpress.com/2011/01/measure-book1.pdf</p>
+</body>
+</html>
