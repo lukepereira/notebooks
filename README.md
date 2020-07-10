@@ -1,10 +1,4 @@
-# LaTex CI Compiler
-
-This repo compiles any modified .tex files and will commit the rendered .pdfs on push to remote using GitHub actions.
-
-# Markdown CI Compiler
-
-This repo also convets any modified .tex files into a markdown document using `pandoc` and will commit the generated .md files on push.
+# Notebooks
 
 ## Contents
 
@@ -29,3 +23,13 @@ This repo also convets any modified .tex files into a markdown document using `p
 
 - [\[pdf\]](https://lukepereira.github.io/notebooks/documents/homework-template/main.pdf) [\[md\]](documents/homework-template/main.md)
   _Homework template_
+
+---
+
+## LaTex CI Compiler
+
+This repo compiles any modified .tex files and will commit the rendered .pdfs on push to remote using GitHub actions.
+
+## Markdown CI Compiler
+
+This repo also converts any modified .tex files into a markdown document using `pandoc` and will commit the generated .md files on push.
