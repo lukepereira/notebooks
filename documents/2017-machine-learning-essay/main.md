@@ -6,6 +6,14 @@ title: |
     Machine Learning</span>
 ...
 
+-   [Learning From Examples ](#learning-from-examples)
+-   [Learning Models and Tasks](#learning-models-and-tasks)
+-   [Shift to Probability Theory](#shift-to-probability-theory)
+-   [Perceptrons and Artificial Neural
+    Networks](#perceptrons-and-artificial-neural-networks)
+-   [Applications](#applications)
+-   [Conclusion](#conclusion)
+
 Learning From Examples  {#learning-from-examples .unnumbered}
 =======================
 

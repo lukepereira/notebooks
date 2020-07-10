@@ -4,6 +4,14 @@ author:
 title: Experiments with Chaos
 ...
 
+-   [Prigogine’s Goggles](#prigogines-goggles)
+-   [Creativity at the Edge of Chaos](#creativity-at-the-edge-of-chaos)
+-   [Ergodicity and Predictability](#ergodicity-and-predictability)
+-   [Avalanches and
+    Self-organization](#avalanches-and-self-organization)
+-   [Dissapative Structures Outside the
+    Office](#dissapative-structures-outside-the-office)
+
 Prigogine’s Goggles
 ===================
 

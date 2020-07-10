@@ -30,7 +30,7 @@ fi
 
 if [ -z "$args" ]; then
   warn "Input 'args' is empty. Resetting to default value."
-  args="-s"
+  args="-s --toc"
 fi
 
 if [ -n "$working_directory" ]; then

@@ -2,6 +2,14 @@
 title: Ergodic Theory
 ...
 
+-   [Dynamical Systems](#dynamical-systems)
+-   [Measure](#measure)
+-   [Ergodicity](#ergodicity)
+-   [Birkhoff’s Ergodic Theorem](#birkhoffs-ergodic-theorem)
+-   [Statistical Mechanics and the Law of Large
+    Numbers](#statistical-mechanics-and-the-law-of-large-numbers)
+-   [Ergodic Hierarchy](#ergodic-hierarchy)
+
 Dynamical Systems
 =================
 

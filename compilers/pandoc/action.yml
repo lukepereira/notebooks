@@ -7,7 +7,7 @@ inputs:
     description: The working directory for the pandoc command
   args:
     description: Extra arguments to be passed to the pandoc command
-    default: "-s"
+    default: "-s --toc"
   extra_system_packages:
     description: Install extra packages by apk
   changed_files:

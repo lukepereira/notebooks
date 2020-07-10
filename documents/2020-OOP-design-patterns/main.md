@@ -2,6 +2,45 @@
 title: 'Object-Oriented Programming and Design Patterns'
 ...
 
+-   [Object-Oriented Design](#object-oriented-design)
+    -   [Classes, Objects and
+        Interfaces](#classes-objects-and-interfaces)
+    -   [Polymorphism](#polymorphism)
+    -   [Inheritence](#inheritence)
+    -   [Interfaces](#interfaces)
+    -   [Composition](#composition)
+    -   [Delegation](#delegation)
+    -   [Parameterized Types](#parameterized-types)
+    -   [Run-Time and Compile-Time
+        Structures](#run-time-and-compile-time-structures)
+-   [Design Patterns](#design-patterns)
+    -   [Creational Patterns](#creational-patterns)
+        -   [Abstract Factory \*](#abstract-factory)
+        -   [Builder](#builder)
+        -   [Factory Method \*](#factory-method)
+        -   [Prototype](#prototype)
+        -   [Singleton](#singleton)
+    -   [Structural Patterns](#structural-patterns)
+        -   [Adapter \*](#adapter)
+        -   [Bridge](#bridge)
+        -   [Composite \*](#composite)
+        -   [Decorator \*](#decorator)
+        -   [Facade](#facade)
+        -   [Flyweight](#flyweight)
+        -   [Proxy](#proxy)
+    -   [Behavioural Patterns](#behavioural-patterns)
+        -   [Chain of Responsibility](#chain-of-responsibility)
+        -   [Command](#command)
+        -   [Interpreter](#interpreter)
+        -   [Iterator](#iterator)
+        -   [Mediator](#mediator)
+        -   [Memento](#memento)
+        -   [Observer \*](#observer)
+        -   [State](#state)
+        -   [Strategy \*](#strategy)
+        -   [Template Method \*](#template-method)
+        -   [Visitor](#visitor)
+
 Object-Oriented Design
 ======================
 

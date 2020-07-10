@@ -4,6 +4,11 @@ author:
 title:  Stewardship of Dynamical Systems 
 ...
 
+-   [What is water? ](#what-is-water)
+-   [A simple machine](#a-simple-machine)
+-   [An excellent servant but a terrible
+    master](#an-excellent-servant-but-a-terrible-master)
+
 What is water? 
 ===============
 

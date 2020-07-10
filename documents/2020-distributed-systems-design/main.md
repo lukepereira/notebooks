@@ -2,6 +2,132 @@
 title: Distributed Systems Design and Concepts
 ...
 
+-   [Databases](#databases)
+    -   [Data Models and Query
+        Languages](#data-models-and-query-languages)
+    -   [Storage and Retrieval ](#storage-and-retrieval)
+        -   [Online Transactional
+            Processing](#online-transactional-processing)
+        -   [Online Analytical
+            Processing](#online-analytical-processing)
+    -   [Concepts](#concepts)
+        -   [CAP Theorem](#cap-theorem)
+        -   [Online analytic
+            processing (OLAP)](#online-analytic-processing-olap)
+        -   [Online transaction
+            processing (OLTP)](#online-transaction-processing-oltp)
+        -   [ACID (SQL)](#acid-sql)
+        -   [Primary and Foreign Keys](#primary-and-foreign-keys)
+        -   [Index and Secondary Index](#index-and-secondary-index)
+        -   [Normalized Data](#normalized-data)
+        -   [Derived Data, Joins, Materialized
+            Views](#derived-data-joins-materialized-views)
+        -   [BASE (NoSQL)](#base-nosql)
+        -   [Types of NoSQL](#types-of-nosql)
+        -   [Denormalized Data](#denormalized-data)
+        -   [Data Warehouse](#data-warehouse)
+        -   [Extract–Transform–Load](#extracttransformload)
+        -   [Stored Procedure](#stored-procedure)
+-   [Concurrency](#concurrency)
+    -   [Transactions](#transactions)
+    -   [Concepts](#concepts-1)
+        -   [Concurrency](#concurrency-1)
+        -   [Transactions](#transactions-1)
+        -   [Multi-Processing and
+            Multi-Threading](#multi-processing-and-multi-threading)
+        -   [Locks/Mutex](#locksmutex)
+        -   [Deadlocks](#deadlocks)
+        -   [Optimistic and Pessimistic
+            Locking](#optimistic-and-pessimistic-locking)
+        -   [Idempotent](#idempotent)
+        -   [Atomic](#atomic)
+        -   [Linearizable](#linearizable)
+        -   [Serializable](#serializable)
+        -   [Isolation](#isolation)
+        -   [Synchronization](#synchronization)
+        -   [CAS](#cas)
+        -   [Two-phase locking (2PL)](#two-phase-locking-2pl)
+        -   [Two-phase commit (2PC)](#two-phase-commit-2pc)
+        -   [Total order](#total-order)
+        -   [Skew](#skew)
+-   [Distributed Computing](#distributed-computing)
+    -   [Replication](#replication)
+    -   [Partitioning Data](#partitioning-data)
+    -   [Fault Tolerance ](#fault-tolerance)
+    -   [Consistency and Consensus ](#consistency-and-consensus)
+    -   [Concepts](#concepts-2)
+        -   [Distributed](#distributed)
+        -   [Fallacies of Distributed
+            Computing](#fallacies-of-distributed-computing)
+        -   [Partitioning](#partitioning)
+        -   [Consistency](#consistency)
+        -   [Strong and Eventual
+            Consistency](#strong-and-eventual-consistency)
+        -   [Horizontal and Vertical
+            Scaling](#horizontal-and-vertical-scaling)
+        -   [GFS](#gfs)
+        -   [Hot-spots](#hot-spots)
+        -   [Shared-nothing](#shared-nothing)
+        -   [Replication](#replication-1)
+        -   [Leader](#leader)
+        -   [Follower](#follower)
+        -   [Split Brain](#split-brain)
+        -   [Failover](#failover)
+        -   [Consensus](#consensus)
+        -   [Quorum](#quorum)
+        -   [Paxos](#paxos)
+        -   [Rebalance](#rebalance)
+        -   [Byzantine fault](#byzantine-fault)
+        -   [Partial Availability](#partial-availability)
+        -   [MBTF](#mbtf)
+-   [Application Design and Data
+    Processing](#application-design-and-data-processing)
+    -   [Encoding and Evolution](#encoding-and-evolution)
+    -   [Rolling Upgrades](#rolling-upgrades)
+    -   [Batch Processing and
+        MapReduce](#batch-processing-and-mapreduce)
+    -   [Stream Processing ](#stream-processing)
+    -   [Data Flow Applications and Systems of Record
+        ](#data-flow-applications-and-systems-of-record)
+    -   [Concepts](#concepts-3)
+        -   [Batch Process](#batch-process)
+        -   [Stream Process](#stream-process)
+        -   [MapReduce](#mapreduce)
+        -   [Systems of Record](#systems-of-record)
+        -   [Hash Functions](#hash-functions)
+        -   [Consistent Hashing](#consistent-hashing)
+        -   [Probabilistic Data
+            Structures](#probabilistic-data-structures)
+        -   [Design Patterns and OOP](#design-patterns-and-oop)
+        -   [Protocol Buffers](#protocol-buffers)
+        -   [Logs](#logs)
+        -   [Multitier Architecture](#multitier-architecture)
+        -   [Services](#services)
+        -   [Back of the Envelope
+            Calculations](#back-of-the-envelope-calculations)
+        -   [Canary Deployments](#canary-deployments)
+        -   [Feature Flags](#feature-flags)
+-   [Networks](#networks)
+    -   [Concepts](#concepts-4)
+        -   [Caching](#caching)
+        -   [Request Protocols](#request-protocols)
+        -   [TCP and UDP](#tcp-and-udp)
+        -   [IPv4 and IPV6](#ipv4-and-ipv6)
+        -   [DNS Lookup](#dns-lookup)
+        -   [HTTPS and TLS](#https-and-tls)
+        -   [Symmetric and Asymetric
+            Encryption](#symmetric-and-asymetric-encryption)
+        -   [Internet Protocol Suite and
+            OSI](#internet-protocol-suite-and-osi)
+        -   [L4 and L7 Load Balancers](#l4-and-l7-load-balancers)
+        -   [CDN and Edge Computing](#cdn-and-edge-computing)
+        -   [Locality](#locality)
+        -   [Percentiles](#percentiles)
+        -   [Metrics](#metrics)
+        -   [Backpressure](#backpressure)
+        -   [The Two Generals and Byzantine Generals
+            Problem](#the-two-generals-and-byzantine-generals-problem)
+
 Databases
 =========
 
