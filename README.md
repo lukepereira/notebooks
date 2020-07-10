@@ -10,21 +10,22 @@ This repo also convets any modified .tex files into a markdown document using `p
 
 ### Computer Science
 
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-performance-analysis/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-performance-analysis/main.md) Stochastic Modeling and Queuing Theory (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/main.md) Data Structures and Algorithms (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/main.md) Object-Oriented Programming & Design Patterns (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-distributed-systems-design/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-distributed-systems-design/main.md) Distributed Systems Design and Concepts (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/main.md) RSA Encryption Essay (2017)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/main.md) Machine Learning Essay (2017)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-performance-analysis/main.pdf) [\[md\]](documents/2020-performance-analysis/main.md) _Stochastic Modeling and Queuing Theory_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/main.pdf) [\[md\]](documents/2020-data-structures-and-algorithms/main.md) _Data Structures and Algorithms_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/main.pdf) [\[md\]](documents/2020-OOP-design-patterns/main.md) _Object-Oriented Programming & Design Patterns_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-distributed-systems-design/main.pdf) [\[md\]](documents/2020-distributed-systems-design/main.md) _Distributed Systems Design and Concepts_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/main.pdf) [\[md\]](documents/2017-rsa-essay/main.md) _RSA Encryption Essay_ (2017)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/main.pdf) [\[md\]](documents/2017-machine-learning-essay/main.md) _Machine Learning Essay_ (2017)
 
 ### Mathematics
 
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-ergodic-theory/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-ergodic-theory/main.md) Ergodic Theory (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics/main.md) Combinatorics (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaos-essay/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-chaos-essay/main.md) Chaos Essay (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics-generating-function/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics-generating-function/main.md) Recursive Generating Functions HW (2020)
-- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaotic-systems/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/2020-chaotic-systems/main.md) Markov Chains & Chaotic Symbolic Dynamics HW (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-ergodic-theory/main.pdf) [\[md\]](documents/2020-ergodic-theory/main.md) _Ergodic Theory_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics/main.pdf) [\[md\]](documents/2020-combinatorics/main.md) _Combinatorics_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaos-essay/main.pdf) [\[md\]](documents/2020-chaos-essay/main.md) _Chaos Essay_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics-generating-function/main.pdf) [\[md\]](documents/2020-combinatorics-generating-function/main.md) _Recursive Generating Functions HW_ (2020)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaotic-systems/main.pdf) [\[md\]](documents/2020-chaotic-systems/main.md) _Markov Chains & Chaotic Symbolic Dynamics HW_ (2020)
 
 ### Templates
 
-- Homework template [\[pdf\]](https://lukepereira.github.io/notebooks/documents/homework-template/main.pdf) [\[md\]](https://lukepereira.github.io/notebooks/documents/homework-template/main.md)
+- [\[pdf\]](https://lukepereira.github.io/notebooks/documents/homework-template/main.pdf) [\[md\]](documents/homework-template/main.md)
+  _Homework template_
