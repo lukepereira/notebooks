@@ -15,6 +15,7 @@ jobs:
       - name: Get changed files
         run: |
           git diff-tree --no-commit-id --name-only -r ${{ github.sha }} | grep "\.tex" |  sort | uniq > changed-tex-files.txt
+          cat changed-tex-files.txt
 
       # TODO: Simplify above step, follow up on error:https://github.com/lots0logs/gh-action-get-changed-files/issues/10
       # - name: Get changed files
