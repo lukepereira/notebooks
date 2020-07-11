@@ -151,7 +151,8 @@
     
     \subsubsection{Stored Procedure}
     A way of encoding the logic of a transaction such that it can be entirely executed  on a database server, without communicating back and forth with a client during the transaction.
-    
+
+\newpage
 \section{Concurrency}
     \subsection{Transactions}
     Transactions are an abstraction layer that allows an application to pretend that certain concurrency problems and certain kinds of hardware and software faults don’t exist. A large class of errors is reduced down to a simple transaction abort, and the application just needs to try again.
@@ -211,6 +212,13 @@
     
     Pessimistic Locking is where you lock the record for your exclusive use until you have finished with it. It has much better integrity than optimistic locking but requires you to be careful with your application design to avoid deadlocks. To use pessimistic locking you need either a direct connection to the database (as would typically be the case in a two tier client server application) or an externally available transaction ID that can be used independently of the connection.
 
+    \subsubsection{Operational transformation}
+    Operational transformation (OT) is a technology for supporting a range of collaboration functionalities in advanced collaborative software systems. OT was originally invented for consistency maintenance and concurrency control in collaborative editing of plain text documents. Its capabilities have been extended and its applications expanded to include group undo, locking, conflict resolution, operation notification and compression, group-awareness, HTML/XML and tree-structured document editing, collaborative office productivity tools, application-sharing, and collaborative computer-aided media design tools.
+    
+    \subsubsection{Commit log}
+    A commit log is a record of transactions. It's used to keep track of what's happening, and help with e.g. disaster recovery - generally, all commits are written to the log before being applied, so transactions that were in flight when the server went down can be recovered and re-applied by checking the log. So when we want to update an entry in machine A, it will first store this request in commit log. And then a separate program will process all the commit logs in order (in a queue). Whenever an operation fails, we can easily recover as we can lookup the commit log.
+
+
     \subsubsection{Idempotent}
     Describing an operation that can be safely retried; if it is executed more than once, it has the same effect as if it was only executed once.
     
@@ -246,7 +254,8 @@
     
     \subsubsection{Skew}
     A timing anomaly that causes events to appear in an unexpected, nonsequential order.
-    
+
+\newpage    
 \section{Distributed Computing}
     \subsection{Replication}
     Replication can serve several purposes:
@@ -485,6 +494,7 @@
     Mean time between failures (MTBF)  is a measure of how reliable a hardware product or component is. For most components, the measure is typically in thousands or even tens of thousands of hours between failures.
     Assume you could start with super reliable servers (MTBF of 30 years). Building a computing system with 10 thousand of those means we will see one fail per day.
 
+\newpage
 \section{Application Design and Data Processing}
     \subsection{Encoding and Evolution}
     There are several ways of turning data structures into bytes on the network or bytes on disk. The details of these encodings affect not only their efficiency, but more importantly they affect architecture of applications and your options for deploying them.
@@ -608,9 +618,12 @@
     A special kind of hashing such that when a hash table is resized, only $n/m$ keys need to be remapped on average, where $n$ is the number of keys and $m$ is the number of slots.
     
     \subsubsection{Probabilistic Data Structures}
-    A Bloom filter is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either definitely is not in the set or may be in the set, i.e. it has false positives but never false negatives.
+    A \textbf{Bloom filter} is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either definitely is not in the set or may be in the set, i.e. it has false positives but never false negatives. Because of this, it is commonly used for deduplication, for example when adding a job into a pool.
     
-    The count–min sketch (CM sketch) is a probabilistic data structure that serves as a frequency table of events in a stream of data. It uses hash functions to map events to frequencies, but unlike a hash table uses only sub-linear space, at the expense of overcounting some events due to collisions.
+    To briefly explain how bloom filter works, an empty bloom filter is a bit array of m bits (all 0). There are also $k$ hash functions that map each element to one of the m bits. So when we add a new element into the bloom filter, we will get $k$ bits from the hash functions and set all of them to 1. Thus, when we check the existence of an element, we first get the $k$ bits for it and if any of them is not 1, we know immediately that the element doesn't exist. However, if all of the $k$ bits are 1, this can come from the combination of several other elements.
+    
+    
+    The \textbf{count–min sketch} (CM sketch) is a probabilistic data structure that serves as a frequency table of events in a stream of data. It uses hash functions to map events to frequencies, but unlike a hash table uses only sub-linear space, at the expense of overcounting some events due to collisions.
     
     \subsubsection{Design Patterns and OOP}
     See OOP and Design Patterns notebook\footnote{https://github.com/lukepereira/latex-ci}
@@ -649,8 +662,7 @@
     
     Given a basic problem definition, how do you choose the "best" solution? Best could be simplest, highest performance, easiest to extend, etc.
     
-    \textbf{Numbers Everyone Should Know}
-    
+    \textbf{Numbers Everyone Should Know (2012)}
     \begin{table}[H]
     \begin{tabular}{ll}
         L1 cache reference & 0.5 ns  \\
@@ -664,7 +676,7 @@
         Round trip within same datacenter & 500,000 ns \\
         Disk seek & 10,000,000 ns \\
         Read 1 MB sequentially from disk & 20,000,000 ns \\
-        Send packet CA $\to$ Netherlands $\to$ CA & 150,000,000 ns \\
+        Send packet CA $\to$ Netherlands $\to$ CA & 150,000,000 ns 
     \end{tabular}
     \end{table}
     
@@ -675,7 +687,7 @@
     
     Design 2: Issue reads in parallel: $\implies$ \newline 10 ms/seek + 256K read / 30 MB/s = 18 ms (Ignores variance, so really more like 30-60 ms, probably)
     
-    Consider tweets. How many tweet ids can you fit in memory on a common machine? Well, a typical machine at the end of 2012 has 24 GB of memory, you’ll need an overhead of 4-5 GB for the OS, another couple, at least, to handle requests, and a tweet id is 8 bytes.
+    \textbf{Throughput} is defined as the number of jobs processed over a given interval of time, transactions per second (TPS) measures the number of atomic actions. Each incoming transaction will have some level of operations it triggers where the number of CPU instructions entails \textbf{work done per transaction}. A user often waits or processes responses before submitting again. This delay is the user \textbf{think time} that falls between requests and can be taken into account when calculating optimum system load and incoming request distributions.
     
     \subsubsection{Canary Deployments}
     In software testing, a canary is a push of programming code changes to a small group of end users who are unaware that they are receiving new code. Because the canary is only distributed to a small number of users, its impact is relatively small and changes can be reversed quickly should the new code prove to be buggy. Canary tests, which are often automated, are run after testing in a sandbox environment has been completed.
@@ -687,7 +699,7 @@
 
     The use of feature flags means accepting that having multiple versions of infrastructure and data is a norm, not an rarity. Feature flags are best understood as a trade-off, trading local complexity (in the code, in one system) for global simplicity and resilience. 
     
-
+\newpage
 \section{Networks}
     \subsection{Concepts}
     
@@ -696,13 +708,53 @@
     
     Cached data must be relatively small since cached data is generally stored in memory
     
-    In an in-process cache, your cache elements are local to a single instance of your application. 
+    In an \textbf{in-process cache}, your cache elements are local to a single instance of your application. 
     
-    In a distributed cache, each object is replicated among multiple independent machines, multiple cache nodes.
+    In a \textbf{distributed cache}, each object is replicated among multiple independent machines, multiple cache nodes.
     
-    A cache eviction/replacement algorithm is a way of deciding which element to evict when the cache is full. They include first-in first-out (FIFO), last-in first-out (LIFO), least recently used (LRU).
+    Memcached is a commonly used distributed memory-caching system. It caches data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read.
     
-    Writing cached data back to persistent storage is bad.  A common presentation of this flaw is user information (e.g. screennames, emails, and hashed passwords) mysteriously reverting to a previous value. 
+    \textbf{Cache coherence} is the uniformity of shared resource data that ends up stored in multiple local caches. When clients in a system maintain caches of a common memory resource, problems may arise with incoherent or inconsistent data.
+    
+    The common solution to concurrency issues is using a lock, but has the downside of greatly affecting performance. An alternative is to use commit logs: we can store all the mutations to the cache into log files rather than update immediately, then a background processes will execute all the logs asynchronously. Writing cached data back to persistent storage is bad. A common presentation of this flaw is user information mysteriously reverting to a previous value. 
+    
+    A \textbf{cache eviction policy} or cache replacement algorithm is a way of deciding which element to evict when the cache is full. Some popular policies include:
+    \begin{enumerate}
+        \item First-in first-out (FIFO)
+        \item Last-in first-out (LIFO)
+        \item Least recently used (LRU)
+        \item  Random Replacement (RR) -- As the term suggests, we can just randomly delete an entry.
+        \item Least frequently used (LFU) -- We keep the count of how frequent each item is requested and delete the one least frequently used.
+        \item W-TinyLFU -- A modern eviction policy that resolves the problem of LFU storing an item that was used frequently in the past, but is no longer used. W-TinyLFU solves this problem by calculating frequency within a time window. It also has various optimizations of storage.
+    \end{enumerate}
+    
+    \subsubsection{LRU Cache}
+    The way LRU cache works is quite simple. When the client requests resource A, it happens as follow:
+    
+    \begin{enumerate}
+        \item If A exists in the cache, we just return immediately.
+        \item If not and the cache has extra storage slots, we fetch resource A and return to the client. In addition, insert A into the cache.
+        \item  If the cache is full, we kick out the resource that is least recently used and replace it with resource A.
+    \end{enumerate}
+    
+    An LRU cache should support the operations: lookup, insert and delete. We may use two data structures to implement an LRU Cache.
+    \begin{enumerate}
+        \item Queue which is implemented using a doubly linked list. The queue is useful for maintaining ordering while the linked list will optimize for insertions and deletions.
+        
+        The maximum size of the queue will be equal to the total number of frames available (cache size). The most recently used pages will be near front end and least recently pages will be near the rear end.
+        
+        \item A Hash with page number as key and address of the corresponding queue node as value. This allows $\mathcal O(1)$ lookups.
+    \end{enumerate}
+    
+    
+
+    For example, to combine all these operations we can use queue implemented by a doubly linked list to store all the resources. Also, a hash table with resource identifier as key and address of the corresponding queue node as value is needed.
+    
+    \begin{enumerate}
+        \item When resource A is requested, we check the hash table to see if A exists in the cache.
+        \item If exists, we can immediately locate the corresponding queue node and return the resource. If not, we’ll add A into the cache.
+        \item If there is enough space in the cache, we may add A to the end of the queue and update the hash table. Otherwise, we need to delete the least recently used entry by removing the head of the queue and the corresponding entry from the hash table.
+    \end{enumerate}  
     
     \subsubsection{Request Protocols}
     \textbf{HTTP/2} leaves all of HTTP 1.1's high-level semantics, such as methods, status codes, header fields, and URIs, the same but has some speed improvements over HTTP, i.e. multiple requests on single connection, multiplexing requests and responses to avoid blocking requests, header compression, and prioritization of requests.
