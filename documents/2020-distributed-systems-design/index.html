@@ -36,6 +36,7 @@
 <li><a href="#cap-theorem">CAP Theorem</a></li>
 <li><a href="#online-analytic-processing-olap">Online analytic processing (OLAP)</a></li>
 <li><a href="#online-transaction-processing-oltp">Online transaction processing (OLTP)</a></li>
+<li><a href="#indexed-query">Indexed Query</a></li>
 <li><a href="#acid-sql">ACID (SQL)</a></li>
 <li><a href="#primary-and-foreign-keys">Primary and Foreign Keys</a></li>
 <li><a href="#index-and-secondary-index">Index and Secondary Index</a></li>
@@ -200,6 +201,8 @@
 <p>Online analytic processing (OLAP) is an access pattern characterized by aggregating (e.g., count, sum, average) over a large number of records.</p>
 <h3 id="online-transaction-processing-oltp">Online transaction processing (OLTP)</h3>
 <p>Online transaction processing (OLTP) is an access pattern characterized by fast queries that read or write a small number of records, usually indexed by key</p>
+<h3 id="indexed-query">Indexed Query</h3>
+<p>Indexing is a way to get an unordered table into an order that will maximize the query’s efficiency while searching. An index creates a data structure, typically a B-tree, with values from a specific column. It may then use a search algorithm, typically binary search, to find the value and return a pointer to its true index in the unordered table.</p>
 <h3 id="acid-sql">ACID (SQL)</h3>
 <ol type="i">
 <li><p><strong>Atomicity</strong> – All operations in a transaction succeed or every operation is rolled back.</p></li>
@@ -605,7 +608,102 @@
 </tr>
 </tbody>
 </table>
-<p>Example: How long to generate image results page (30 thumbnails)?</p>
+<p><strong>How many operations in one second? (2020)</strong></p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">iterations over for loop</td>
+<td style="text-align: left;">550,000,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">iterations over for loop</td>
+<td style="text-align: left;">68,000,000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">insertions into a dictionary</td>
+<td style="text-align: left;">11,000,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">HTTP requests parsed in one second</td>
+<td style="text-align: left;">25,000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">download google webpage</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">start the python interpreter (-c python)</td>
+<td style="text-align: left;">77</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">bytes written to output file</td>
+<td style="text-align: left;">342,000,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">bytes written to memory</td>
+<td style="text-align: left;">2,000,000,000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bash</td>
+<td style="text-align: left;">bytes searched (grep)</td>
+<td style="text-align: left;">2,000,000,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bash</td>
+<td style="text-align: left;">files searched (find)</td>
+<td style="text-align: left;">325,000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">parse messages of size 64k encoded via JSON</td>
+<td style="text-align: left;">449</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">parse messages of size 64k encoded via msgpck</td>
+<td style="text-align: left;">4,000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">select a row from an indexed SQLite table with 10M rows</td>
+<td style="text-align: left;">53,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">select a row from an unindexed SQLite table with 10M rows</td>
+<td style="text-align: left;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">bytes hashed using md5sum</td>
+<td style="text-align: left;">455,000,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">python</td>
+<td style="text-align: left;">bytes hashed using bcrypt</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">size of array allocated and filled in order</td>
+<td style="text-align: left;">376,000,000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">size of array allocated and filled out of order</td>
+<td style="text-align: left;">68,000,000</td>
+</tr>
+</tbody>
+</table>
+<p>Example: How long will it take to generate image results page (30 thumbnails)?</p>
 <p>Design 1: Read serially, thumbnail 256K images on the fly <span class="math inline">\(\implies\)</span> seeks * 10 ms/seek + 30 * 256K / 30 MB/s = 560 ms</p>
 <p>Design 2: Issue reads in parallel: <span class="math inline">\(\implies\)</span> ms/seek + 256K read / 30 MB/s = 18 ms (Ignores variance, so really more like 30-60 ms, probably)</p>
 <p><strong>Throughput</strong> is defined as the number of jobs processed over a given interval of time, transactions per second (TPS) measures the number of atomic actions. Each incoming transaction will have some level of operations it triggers where the number of CPU instructions entails <strong>work done per transaction</strong>. A user often waits or processes responses before submitting again. This delay is the user <strong>think time</strong> that falls between requests and can be taken into account when calculating optimum system load and incoming request distributions.</p>
@@ -619,7 +717,8 @@
 <h2 id="concepts-4">Concepts</h2>
 <h3 id="caching">Caching</h3>
 <p>A cache is a component that remembers recently used data in order to speed up future reads of the same data. It is generally not complete: thus, if some data is missing from the cache, it has to be fetched from some underlying, slower data storage system that has a complete copy of the data.</p>
-<p>Cached data must be relatively small since cached data is generally stored in memory</p>
+<p>Cached data must be relatively small since cached data is generally stored in memory.</p>
+<p>CPUs these days have L1 and L2 caches, which are much faster to access than main memory. This means that accessing memory sequentially (where the CPU can load a bunch of data into a cache) will normally give you faster code than accessing memory out of order.</p>
 <p>In an <strong>in-process cache</strong>, your cache elements are local to a single instance of your application.</p>
 <p>In a <strong>distributed cache</strong>, each object is replicated among multiple independent machines, multiple cache nodes.</p>
 <p>Memcached is a commonly used distributed memory-caching system. It caches data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read.</p>
@@ -725,10 +824,11 @@
 <p>https://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-young-bloods/</p>
 <p>https://codahale.com/you-cant-sacrifice-partition-tolerance/</p>
 <p>https://research.cs.cornell.edu/ladis2009/talks/dean-keynote-ladis2009.pdf</p>
+<p>http://computers-are-fast.github.io/</p>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
-<li id="fn1" role="doc-endnote"><p>https://github.com/lukepereira/latex-ci<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>https://github.com/lukepereira/notebooks<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 </body>

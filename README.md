@@ -2,8 +2,8 @@
 
 ## Contents
 
-| Computer Science                                | Date   | Documents                                                                                                                                                                                                                                                                              |
-| ----------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Computer Science                                | Date | Documents                                                                                                                                                                                                                                                                              |
+| ----------------------------------------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | _Stochastic Modeling and Queuing Theory_        | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-performance-analysis/main.pdf)                                                                                                                                                                                        |
 | _Data Structures and Algorithms_                | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/main.pdf) [\[md\]](documents/2020-data-structures-and-algorithms/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/index.html) |
 | _Object-Oriented Programming & Design Patterns_ | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/main.pdf) [\[md\]](documents/2020-OOP-design-patterns/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/index.html)                                  |
@@ -11,16 +11,18 @@
 | _RSA Encryption Essay_                          | 2017 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/main.pdf) [\[md\]](documents/2017-rsa-essay/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/index.html)                                                                |
 | _Machine Learning Essay_                        | 2017 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/main.pdf) [\[md\]](documents/2017-machine-learning-essay/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/index.html)                         |
 
----
+<br />
 
-| Math                                           | Date   | Documents                                                                                                                                                                                                                              |
-| ---------------------------------------------- | ------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Math                                           |      |                                                                                                                                                                                                                                        |
+| ---------------------------------------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | _Ergodic Theory_                               | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-ergodic-theory/main.pdf) [\[md\]](documents/2020-ergodic-theory/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-ergodic-theory/index.html) |
 | _Combinatorics_                                | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics/main.pdf) [\[md\]](documents/2020-combinatorics/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics/index.html)    |
 | _Chaos Essay_                                  | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaos-essay/main.pdf) [\[md\]](documents/2020-chaos-essay/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics/index.html)        |
 | _Recursive Generating Functions HW_            | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-combinatorics-generating-function/main.pdf)                                                                                                                           |
 | _Markov Chains & Chaotic Symbolic Dynamics HW_ | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaotic-systems/main.pdf)                                                                                                                                             |
 | _Homework template_                            | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/homework-template/main.pdf)                                                                                                                                                |
+
+---
 
 ## Continuous Integration Compilers
 
