@@ -93,6 +93,9 @@
     \subsubsection{Online transaction processing (OLTP)}
     Online transaction processing (OLTP) is an access pattern characterized by fast queries that read or write a small number of records, usually indexed by key
     
+    \subsubsection{Indexed Query}
+    Indexing is a way to get an unordered table into an order that will maximize the query’s efficiency while searching. An index creates a data structure, typically a B-tree, with values from a specific column. It may then use a search algorithm, typically binary search, to find the value and return a pointer to its true index in the unordered table.
+    
     \subsubsection{ACID (SQL)}
     \begin{enumerate}[i.]
         \item \textbf{Atomicity} -- All operations in a transaction succeed or every operation is rolled back.
@@ -626,7 +629,7 @@
     The \textbf{count–min sketch} (CM sketch) is a probabilistic data structure that serves as a frequency table of events in a stream of data. It uses hash functions to map events to frequencies, but unlike a hash table uses only sub-linear space, at the expense of overcounting some events due to collisions.
     
     \subsubsection{Design Patterns and OOP}
-    See OOP and Design Patterns notebook\footnote{https://github.com/lukepereira/latex-ci}
+    See OOP and Design Patterns notebook\footnote{https://github.com/lukepereira/notebooks}
     
     \subsubsection{Protocol Buffers}
     Protocol buffers are a data storage and exchange format, notably used for RPC - communication between programs or computers.
@@ -680,7 +683,32 @@
     \end{tabular}
     \end{table}
     
-    Example: How long to generate image results page (30 thumbnails)?
+    \textbf{How many operations in one second? (2020)}
+    \begin{table}[H]
+    \begin{tabular}{l|l|l}
+        C  & iterations over for loop & 550,000,000 \\
+        python & iterations over for loop & 68,000,000 \\
+        python & insertions into a dictionary & 11,000,000 \\
+        python & HTTP requests parsed in one second & 25,000 \\
+        python & download google webpage & 4 \\
+        python & start the python interpreter (-c python) & 77 \\
+        python & bytes written to output file  &  342,000,000 \\
+        python & bytes written to memory & 2,000,000,000 \\
+        bash & bytes searched (grep)  &  2,000,000,000 \\
+        bash & files searched (find) & 325,000 \\
+        python & parse messages of size 64k encoded via JSON &  449 \\
+        python & parse messages of size 64k encoded via msgpck &  4,000 \\
+         python & select a row from an indexed SQLite table with 10M rows &  53,000 \\
+        python & select a row from an unindexed SQLite table with 10M rows &  2 \\
+        python & bytes hashed using md5sum &  455,000,000 \\
+        python & bytes hashed using bcrypt & 3 \\
+        C & size of array allocated and filled in order & 376,000,000 \\
+        C & size of array allocated and filled out of order & 68,000,000 \\
+    \end{tabular}
+    \end{table}
+    
+    
+    Example: How long will it take to generate image results page (30 thumbnails)?
     
     Design 1: Read serially, thumbnail 256K images on the fly $\implies$  \newline
     30 seeks * 10 ms/seek + 30 * 256K / 30 MB/s = 560 ms
@@ -706,7 +734,9 @@
     \subsubsection{Caching}
     A cache is a component that remembers recently used data in order to speed up future reads of the same data. It is generally not complete: thus, if some data is missing from the cache, it has to be fetched from some underlying, slower data storage system that has a complete copy of the data.
     
-    Cached data must be relatively small since cached data is generally stored in memory
+    Cached data must be relatively small since cached data is generally stored in memory.
+    
+    CPUs these days have L1 and L2 caches, which are much faster to access than main memory. This means that accessing memory sequentially (where the CPU can load a bunch of data into a cache) will normally give you faster code than accessing memory out of order.
     
     In an \textbf{in-process cache}, your cache elements are local to a single instance of your application. 
     
@@ -877,9 +907,11 @@ https://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-you
 \bibitem{c}
 https://codahale.com/you-cant-sacrifice-partition-tolerance/
 
-
 \bibitem{d}
 https://research.cs.cornell.edu/ladis2009/talks/dean-keynote-ladis2009.pdf
+
+\bibitem{e}
+http://computers-are-fast.github.io/
 
 \end{thebibliography}
 \end{document}

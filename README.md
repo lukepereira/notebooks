@@ -22,6 +22,8 @@
 | _Markov Chains & Chaotic Symbolic Dynamics HW_ | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-chaotic-systems/main.pdf)                                                                                                                                             |
 | _Homework template_                            | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/homework-template/main.pdf)                                                                                                                                                |
 
+---
+
 ## Continuous Integration Compilers
 
 ### LaTex
