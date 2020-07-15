@@ -154,7 +154,7 @@
 <li><a href="#selection-sort">Selection Sort</a></li>
 <li><a href="#insertion-sort">Insertion Sort</a></li>
 <li><a href="#merge-sort">Merge Sort</a></li>
-<li><a href="#quicksort">QuickSort</a></li>
+<li><a href="#quick-sort">Quick Sort</a></li>
 <li><a href="#heap-sort">Heap Sort</a></li>
 <li><a href="#counting-sort">Counting Sort</a></li>
 <li><a href="#radix-sort">Radix Sort</a></li>
@@ -209,6 +209,9 @@
 <ul>
 <li><a href="#permuations">Permuations</a></li>
 <li><a href="#combinations">Combinations</a></li>
+</ul></li>
+<li><a href="#cartesian-product">Cartesian Product</a>
+<ul>
 <li><a href="#n-th-partial-sum">n-th Partial Sum</a></li>
 <li><a href="#lattice-paths">Lattice Paths</a></li>
 <li><a href="#stars-and-bars">Stars and bars</a></li>
@@ -380,7 +383,7 @@
 <h2 id="trees">Trees</h2>
 <p>A tree is an ADT composed of nodes such that there is a root node with zero or more child nodes where each child node also has zero or more child nodes and can be recursively defined as a root node of a sub-tree. Since there are no edges between sibling nodes, a tree cannot contain cycles. Furthermore, nodes can be given a particular order, can have any data type as values, and they may or may not have links back to their parent nodes.</p>
 <p>A <strong>binary tree</strong> is a tree in which each node has up to two children. A <strong>binary search tree</strong> is a binary tree in which every node <span class="math inline">\(n\)</span> follows a specific ordering property: all left descendants <span class="math inline">\(\leq n &lt;\)</span> all right descendants. A <strong>complete</strong> binary tree is a binary tree in which every level of the tree is filled, except for perhaps the last level and all of the nodes in the bottom level are as far to the left as possible. A <strong>full</strong> binary tree is a binary tree in which every node has either zero or two children. A <strong>perfect</strong> binary tree is one that is both full and complete.</p>
-<p>A complete tree with <span class="math inline">\(n\)</span> nodes has <span class="math inline">\(\lceil \log n \rceil\)</span> height. There is no ambiguity about where the “empty” spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an array. For a node corresponding to index <span class="math inline">\(i\)</span>, its left child is stored at index <span class="math inline">\(2i\)</span>, and its right child is stored at index <span class="math inline">\(2i + 1\)</span>. Going backwards, we can also deduce that the parent of index <span class="math inline">\(i\)</span> (when <span class="math inline">\(i &gt; 1\)</span>) is stored at index <span class="math inline">\(\lceil i/2 \rceil\)</span>.</p>
+<p>A complete tree with <span class="math inline">\(n\)</span> nodes has <span class="math inline">\(\lceil \log n \rceil\)</span> height. There is no ambiguity about where the “empty” spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an zero-indexed array. For a node corresponding to index <span class="math inline">\(i\)</span>, its left child is stored at index <span class="math inline">\(2i + 1\)</span>, and its right child is stored at index <span class="math inline">\(2i + 2\)</span>. Going backwards, we can also deduce that the parent of index <span class="math inline">\(i\)</span> (when <span class="math inline">\(i &gt; 1\)</span>) is stored at index <span class="math inline">\(\lceil (i-1)/2 \rceil\)</span>.</p>
 <p><em>Python Implementation</em></p>
 <div class="sourceCode" id="cb4" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># n-ary tree using dictionary</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="im">from</span> collections <span class="im">import</span> defaultdict</span>
@@ -827,6 +830,7 @@
 <h3 id="insertion-sort">Insertion Sort</h3>
 <p>Time Complexity: <span class="math inline">\(\mathcal{O}(n^2)\)</span> average and worst case. Space Complexity: <span class="math inline">\(\mathcal{O}(1)\)</span></p>
 <p>Given an array <span class="math inline">\(A\)</span> of size <span class="math inline">\(n\)</span>, iterate <span class="math inline">\(i\)</span> from <span class="math inline">\(1\)</span> to <span class="math inline">\(n\)</span> and insert <span class="math inline">\(A[i]\)</span> into a sorted sub array <span class="math inline">\(A[0, i-1]\)</span> until the entire array is sorted. Sorting occurs through pairwise swaps of elements down to their correct positions.</p>
+<p>Insertion sort can be useful when streaming real-time data in large chunks and building real-time visualization for these data sources.</p>
 <p><em>Python Implementation</em></p>
 <div class="sourceCode" id="cb13" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">def</span> insertion_sort(A):</span>
 <span id="cb13-2"><a href="#cb13-2"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(A)):</span>
@@ -840,7 +844,9 @@
 <h3 id="merge-sort">Merge Sort</h3>
 <p>Time Complexity: <span class="math inline">\(\mathcal{O}( n \log n )\)</span> average and worst case. Space Complexity: Varies on implementation.</p>
 <p>Merge sort divides the array in half, sorts each of those halves, and then merges them back together. Each of those halves has the same sorting algorithm applied to it. Eventually, you are merging just two single element arrays. It is the "merge" part that does all the heavy lifting.</p>
-<p>The merge method operates by copying all the elements from the target array segment into a helper array, keeping track of where the start of the left and right halves should be. We then iterate through the helper, copying the smaller element from each half into the array. At the end, we copy any remaining elements into the target array. <span class="math display">\[\begin{aligned}
+<p>The merge method operates by copying all the elements from the target array segment into a helper array, keeping track of where the start of the left and right halves should be. We then iterate through the helper, copying the smaller element from each half into the array. At the end, we copy any remaining elements into the target array.</p>
+<p>Merge sort can work well with divide-and-conquer approaches if it comes to large amounts of data stored on different nodes.</p>
+<p><span class="math display">\[\begin{aligned}
         T(n) &amp;= 
             \underbrace{c_1}_\text{divide}
             + \underbrace{2T(n/2)}_\text{recursion}
@@ -871,7 +877,7 @@
 <span id="cb14-20"><a href="#cb14-20"></a>        left_sublist <span class="op">=</span> merge_sort(A[:midpoint])</span>
 <span id="cb14-21"><a href="#cb14-21"></a>        right_sublist <span class="op">=</span> merge_sort(A[midpoint:])</span>
 <span id="cb14-22"><a href="#cb14-22"></a>        <span class="cf">return</span> _merge_lists(left_sublist, right_sublist)</span></code></pre></div>
-<h3 id="quicksort">QuickSort</h3>
+<h3 id="quick-sort">Quick Sort</h3>
 <p>Time Complexity: <span class="math inline">\(\mathcal{O}(n \log n)\)</span> average, <span class="math inline">\(\mathcal{O}(n^2)\)</span> worst case. Space Complexity: <span class="math inline">\(\mathcal{O}(\log n )\)</span></p>
 <p>In quick sort, we pick an element and partition the array, such that all numbers that are less than the partitioning element come before all elements that are greater than it. The partitioning can be performed efficiently through a series of swaps.</p>
 <p>If we repeatedly partition the array (and its sub-arrays) around an element, the array will eventually become sorted. However, as the partitioned element is not guaranteed to be the median (or anywhere near the median), our sorting could be very slow. This is the reason for the 0 (<span class="math inline">\(n^2\)</span>) worst case runtime.</p>
@@ -1683,20 +1689,31 @@
 <span id="cb38-5"><a href="#cb38-5"></a></span>
 <span id="cb38-6"><a href="#cb38-6"></a><span class="co"># Get all combinations with an element-to-itself combination included </span></span>
 <span id="cb38-7"><a href="#cb38-7"></a>comb <span class="op">=</span> itertools.combinations_with_replacement([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span></code></pre></div>
+<h2 id="cartesian-product">Cartesian Product</h2>
+<p>The Cartesian product of two sets <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>, is the set of all ordered pairs <span class="math inline">\((a, b)\)</span> where <span class="math inline">\(a \in A\)</span> and <span class="math inline">\(b \in B\)</span>.</p>
+<div class="sourceCode" id="cb39" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a><span class="im">import</span> itertools</span>
+<span id="cb39-2"><a href="#cb39-2"></a>A <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</span>
+<span id="cb39-3"><a href="#cb39-3"></a>B <span class="op">=</span> [<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>]</span>
+<span id="cb39-4"><a href="#cb39-4"></a></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="co"># product of two iterable of size 2, one element from each</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a><span class="bu">list</span>(itertools.product(A, B))</span>
+<span id="cb39-7"><a href="#cb39-7"></a></span>
+<span id="cb39-8"><a href="#cb39-8"></a><span class="co"># product of iterable with itself of size 2</span></span>
+<span id="cb39-9"><a href="#cb39-9"></a><span class="bu">list</span>(itertools.product(A, repeat<span class="op">=</span><span class="dv">2</span>))</span></code></pre></div>
 <h3 id="n-th-partial-sum">n-th Partial Sum</h3>
 <p>This counting formula can be used to count the number of contiguous substrings in a string or contiguous subarrays in an array. <span class="math display">\[\sum_{k=1}^n k = 1 + 2 + 3 + \cdots + n = \frac{n(n+1)}{2}\]</span></p>
 <p><em>Python Implementation</em></p>
-<div class="sourceCode" id="cb39" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>nth_partial_sum <span class="op">=</span> (n <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>)) <span class="op">/</span> <span class="dv">2</span> </span>
-<span id="cb39-3"><a href="#cb39-3"></a>iterative_sum_count <span class="op">=</span> <span class="bu">sum</span>([i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>)])</span>
-<span id="cb39-4"><a href="#cb39-4"></a>contiguous_sublists <span class="op">=</span> <span class="kw">lambda</span> arr: [</span>
-<span id="cb39-5"><a href="#cb39-5"></a>    arr[m: n <span class="op">+</span> <span class="dv">1</span>] </span>
-<span id="cb39-6"><a href="#cb39-6"></a>    <span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(arr)) </span>
-<span id="cb39-7"><a href="#cb39-7"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(m, <span class="bu">len</span>(arr))</span>
-<span id="cb39-8"><a href="#cb39-8"></a>]</span>
-<span id="cb39-9"><a href="#cb39-9"></a>contiguous_sublist_count <span class="op">=</span> <span class="bu">len</span>(contiguous_sublists([<span class="dv">0</span>] <span class="op">*</span> n ))</span>
-<span id="cb39-10"><a href="#cb39-10"></a></span>
-<span id="cb39-11"><a href="#cb39-11"></a><span class="cf">assert</span> iterative_sum_count <span class="op">==</span> nth_partial_sum <span class="op">==</span> contiguous_sublist_count</span></code></pre></div>
+<div class="sourceCode" id="cb40" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a>n <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>nth_partial_sum <span class="op">=</span> (n <span class="op">*</span> (n <span class="op">+</span> <span class="dv">1</span>)) <span class="op">/</span> <span class="dv">2</span> </span>
+<span id="cb40-3"><a href="#cb40-3"></a>iterative_sum_count <span class="op">=</span> <span class="bu">sum</span>([i <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n <span class="op">+</span> <span class="dv">1</span>)])</span>
+<span id="cb40-4"><a href="#cb40-4"></a>contiguous_sublists <span class="op">=</span> <span class="kw">lambda</span> arr: [</span>
+<span id="cb40-5"><a href="#cb40-5"></a>    arr[m: n <span class="op">+</span> <span class="dv">1</span>] </span>
+<span id="cb40-6"><a href="#cb40-6"></a>    <span class="cf">for</span> m <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(arr)) </span>
+<span id="cb40-7"><a href="#cb40-7"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="bu">range</span>(m, <span class="bu">len</span>(arr))</span>
+<span id="cb40-8"><a href="#cb40-8"></a>]</span>
+<span id="cb40-9"><a href="#cb40-9"></a>contiguous_sublist_count <span class="op">=</span> <span class="bu">len</span>(contiguous_sublists([<span class="dv">0</span>] <span class="op">*</span> n ))</span>
+<span id="cb40-10"><a href="#cb40-10"></a></span>
+<span id="cb40-11"><a href="#cb40-11"></a><span class="cf">assert</span> iterative_sum_count <span class="op">==</span> nth_partial_sum <span class="op">==</span> contiguous_sublist_count</span></code></pre></div>
 <h3 id="lattice-paths">Lattice Paths</h3>
 <p>A sequence of ordered pairs <span class="math inline">\((m_1, n_1), (m_2, n_2), \cdots, (m_t, n_t)\)</span> such that a coordinate moves one unit either horizontally or vertically from its previous coordinate, i.e.:</p>
 <ol type="1">
@@ -1705,22 +1722,22 @@
 </ol>
 <p>The construction of lattice paths forms a bijection with <span class="math inline">\(X\)</span>-strings where <span class="math inline">\(X = \{ H, V\}\)</span> with <span class="math inline">\(H,V\)</span> encoding horizontal or vertical moves on a grid. The number of lattice paths from <span class="math inline">\((m_1, n_1)\)</span> to <span class="math inline">\((m_2,n_2)\)</span> is, <span class="math display">\[\binom{m_2 - m_1 + m_2 - m_1}{m_2-m_1}.\]</span></p>
 <p><em>Python Implementation</em></p>
-<div class="sourceCode" id="cb40" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1"></a><span class="im">import</span> math</span>
-<span id="cb40-2"><a href="#cb40-2"></a></span>
-<span id="cb40-3"><a href="#cb40-3"></a><span class="kw">def</span> unique_paths(m, n):</span>
-<span id="cb40-4"><a href="#cb40-4"></a>    <span class="cf">if</span> <span class="kw">not</span> m <span class="kw">or</span> <span class="kw">not</span> n: <span class="cf">return</span> <span class="dv">0</span></span>
-<span id="cb40-5"><a href="#cb40-5"></a>    numerator <span class="op">=</span> math.factorial(m <span class="op">+</span> n <span class="op">-</span> <span class="dv">2</span>)</span>
-<span id="cb40-6"><a href="#cb40-6"></a>    denominator <span class="op">=</span> (math.factorial(n <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> math.factorial(m <span class="op">-</span> <span class="dv">1</span>))</span>
-<span id="cb40-7"><a href="#cb40-7"></a>    <span class="cf">return</span> numerator <span class="op">/</span> denominator</span></code></pre></div>
+<div class="sourceCode" id="cb41" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a><span class="im">import</span> math</span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a><span class="kw">def</span> unique_paths(m, n):</span>
+<span id="cb41-4"><a href="#cb41-4"></a>    <span class="cf">if</span> <span class="kw">not</span> m <span class="kw">or</span> <span class="kw">not</span> n: <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a>    numerator <span class="op">=</span> math.factorial(m <span class="op">+</span> n <span class="op">-</span> <span class="dv">2</span>)</span>
+<span id="cb41-6"><a href="#cb41-6"></a>    denominator <span class="op">=</span> (math.factorial(n <span class="op">-</span> <span class="dv">1</span>) <span class="op">*</span> math.factorial(m <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb41-7"><a href="#cb41-7"></a>    <span class="cf">return</span> numerator <span class="op">/</span> denominator</span></code></pre></div>
 <h3 id="stars-and-bars">Stars and bars</h3>
 <p>The number of ways to put <span class="math inline">\(n\)</span> identical objects into <span class="math inline">\(k\)</span> labeled boxes is, <span class="math display">\[\binom{n+k-1}{n}.\]</span></p>
 <p>We can use this for various counting problems, i.e the number of non-negative integer sums, the number of lower-bound integer sums, etc.</p>
 <p><em>Python Implementation</em></p>
-<div class="sourceCode" id="cb41" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1"></a><span class="im">import</span> itertools</span>
-<span id="cb41-2"><a href="#cb41-2"></a></span>
-<span id="cb41-3"><a href="#cb41-3"></a><span class="kw">def</span> stars_and_bars(n, k):</span>
-<span id="cb41-4"><a href="#cb41-4"></a>    <span class="cf">for</span> c <span class="kw">in</span> itertools.combinations(<span class="bu">range</span>(n <span class="op">+</span> k <span class="op">-</span> <span class="dv">1</span>), k <span class="op">-</span> <span class="dv">1</span>):</span>
-<span id="cb41-5"><a href="#cb41-5"></a>        <span class="cf">yield</span> [b <span class="op">-</span> a <span class="op">-</span> <span class="dv">1</span> <span class="cf">for</span> a, b <span class="kw">in</span> <span class="bu">zip</span>((<span class="op">-</span><span class="dv">1</span>,) <span class="op">+</span> c, c <span class="op">+</span> ( n <span class="op">+</span> k <span class="op">-</span> <span class="dv">1</span>,))]</span></code></pre></div>
+<div class="sourceCode" id="cb42" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1"></a><span class="im">import</span> itertools</span>
+<span id="cb42-2"><a href="#cb42-2"></a></span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="kw">def</span> stars_and_bars(n, k):</span>
+<span id="cb42-4"><a href="#cb42-4"></a>    <span class="cf">for</span> c <span class="kw">in</span> itertools.combinations(<span class="bu">range</span>(n <span class="op">+</span> k <span class="op">-</span> <span class="dv">1</span>), k <span class="op">-</span> <span class="dv">1</span>):</span>
+<span id="cb42-5"><a href="#cb42-5"></a>        <span class="cf">yield</span> [b <span class="op">-</span> a <span class="op">-</span> <span class="dv">1</span> <span class="cf">for</span> a, b <span class="kw">in</span> <span class="bu">zip</span>((<span class="op">-</span><span class="dv">1</span>,) <span class="op">+</span> c, c <span class="op">+</span> ( n <span class="op">+</span> k <span class="op">-</span> <span class="dv">1</span>,))]</span></code></pre></div>
 <p>Steven S. Skiena. 2008. The Algorithm Design Manual (2nd. ed.). Springer Publishing Company, Incorporated.</p>
 <p>Erik Demaine, Srini Devadas. Introduction to Algorithms. Fall 2011. Massachusetts Institute of Technology: MIT OpenCouseWare, https://ocw.mit.edu/. License: Creative Commons</p>
 <p>David Liu, Data Structures and Analysis: Lecture Notes for CSC263, Department of Computer Science, University of Toronto</p>
