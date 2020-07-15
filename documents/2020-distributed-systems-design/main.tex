@@ -12,6 +12,8 @@
 \usepackage{float}
 \usepackage{enumerate}
 \usepackage{multicol}
+\usepackage{graphicx}
+\usepackage{float}
 
 \newcommand{\comment}[1]{}
 
@@ -444,6 +446,10 @@
     \subsubsection{GFS}
     A global file system (GFS), in computer science, is cluster of files that are shared between a number of computers and end systems from which data or services are accessed, stored and fetched. The computer systems may be physically distant or may be a part of same network.
     
+    \subsubsection{Peer-to-peer}
+    Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. Peers make a portion of their resources, such as processing power, disk storage or network bandwidth, directly available to other network participants, without the need for central coordination by servers or stable hosts.
+    
+    
     \subsubsection{Hot-spots}
     Imbalanced load across partitions, such that some partitions have lots of requests or data, and others have much less. Also known as skew.
     
@@ -468,6 +474,41 @@
     In general, failover is switching to a redundant or standby computer server, system, hardware component or network upon the failure or abnormal termination of the previously active application, server, system, hardware component, or network.
     
     At the server level, failover automation usually uses a ``heartbeat" system that connects two servers, either through using a separate cable or a network connection.
+    
+    \subsubsection{High Availability}
+     Availability refers to the ability of a user to access a system. There are three principles of systems design in reliability engineering which can help achieve high availability.
+    \begin{enumerate}[i.]
+        \item Elimination of single points of failure. 
+        \item Reliable crossover. 
+        \item Detection of failures as they occur.
+    \end{enumerate}
+    
+    A \textbf{service level agreement (``SLA")} formalizes an organization's availability objectives and requirements. Some relevant metrics include, estimated time of repair (ETR), a.k.a recovery time objective (RTO) which is the total time required to fully recover from a planned or unplanned outage. Similarly, mean time to recovery (MTTR) captures the averages over some period of time.
+    
+    Percentages of a particular order of magnitude are sometimes referred to by the number of \textbf{nines} or ``class of nines" in the digits.
+
+    \begin{table}[]
+        \centering
+        \begin{tabular}{l|l}
+            \textbf{Availability \%	}& \textbf{Downtime per year} \\ 
+            90\% ("one nine") & 36.53 days \\
+            95\% ("one and a half nines") &	18.26 days \\
+            97\% & 10.96 days	\\
+            98\% & 7.31 days	\\
+            99\% ("two nines")& 3.65 days	\\
+            99.5\% ("two and a half nines") & 1.83 days \\
+            99.8\%	17.53 hours	& 87.66 minutes	\\
+            99.9\% ("three nines")	& 8.77 hours \\
+            99.95\% ("three and a half nines")	& 4.38 hours	\\
+            99.99\% ("four nines") & 52.60 minutes	\\
+            99.995\% ("four and a half nines") & 26.30 minutes \\
+            99.999\% ("five nines") & 5.26 minutes \\
+            99.9999\% ("six nines")	& 31.56 seconds \\
+            99.99999\% ("seven nines")	& 3.16 seconds	\\
+            99.999999\% ("eight nines") & 315.58 milliseconds \\
+            99.9999999\% ("nine nines") & 31.56 milliseconds \\
+        \end{tabular}
+    \end{table}
     
     \subsubsection{Consensus}
     A fundamental problem in distributed computing, concerning getting several nodes to agree on something (for example, which node should be the leader for a database cluster). The problem is much harder than it seems at first glance.
@@ -620,6 +661,24 @@
     \subsubsection{Consistent Hashing}
     A special kind of hashing such that when a hash table is resized, only $n/m$ keys need to be remapped on average, where $n$ is the number of keys and $m$ is the number of slots.
     
+    To expand, if we’re moving from 9 servers to 10, then the new server should be filled with 1/10th of all the keys. And those keys should be evenly chosen from the 9 ``old” servers. And keys should only move to the new server, never between two old servers. Similarly, if we need to remove a server (say, because it crashed), then the keys should be evenly distributed across the remaining live servers.
+    
+    A common algorithm is \textbf{ring-based consistent hashing}, which is often represented by a ``points-on-the-circle” diagram. We may think of the circle as representing all integers $0 \cdots2^{32}-1$. The basic idea is that each server is mapped to a point on a circle with a hash function. To lookup the server for a given key, you hash the key and find that point on the circle. Then you scan forward until you find the first hash value for any server.
+    
+    In practice, each server appears multiple times on the circle. These extra points are called virtual nodes, or vnodes. This reduces the load variance among servers. With a small number of vnodes, different servers could be assigned wildly different numbers of keys.
+    
+    An alternative algorithm, \textbf{Jump Hash}, addresses the two disadvantages of ring hashes: it has no memory overhead and virtually perfect key distribution. To add to this, it is also very fast, executing $\mathcal{O}(ln n)$, faster by a constant amount than the $\mathcal{O}(\log n)$ binary search for Ring Hash.
+    
+    The algorithm works by using a hash of the key as the seed for a random number generator. It then uses the random numbers to ``jump forward” in the list of buckets until it falls off the end. The last bucket it lands in is the result. Jump hash only provides a shard number, not a server name, so the order of the server list must be maintained. This means it doesn't support arbitrary node removal and can’t use it for distributing keys among a set of memcached instances where one of them might crash.
+
+    There are several other consistent hashing functions, each with their own caveats and trade-offs involving balance distribution, memory usage, lookup time, and construction time (including node addition and removal cost). A performance benchmark for a single lookup with different node counts with timings in nanoseconds is provided below.
+    
+    \textbf{Benchmarks (2018)}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=14cm]{consistent-hashing-benchmarks.png}
+    \end{figure}
+    
     \subsubsection{Probabilistic Data Structures}
     A \textbf{Bloom filter} is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either definitely is not in the set or may be in the set, i.e. it has false positives but never false negatives. Because of this, it is commonly used for deduplication, for example when adding a job into a pool.
     
@@ -742,7 +801,7 @@
     
     In a \textbf{distributed cache}, each object is replicated among multiple independent machines, multiple cache nodes.
     
-    Memcached is a commonly used distributed memory-caching system. It caches data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read.
+    \textbf{Memcached} is a commonly used distributed memory-caching system. It caches data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read.
     
     \textbf{Cache coherence} is the uniformity of shared resource data that ends up stored in multiple local caches. When clients in a system maintain caches of a common memory resource, problems may arise with incoherent or inconsistent data.
     
@@ -907,11 +966,15 @@ https://www.somethingsimilar.com/2013/01/14/notes-on-distributed-systems-for-you
 \bibitem{c}
 https://codahale.com/you-cant-sacrifice-partition-tolerance/
 
+
 \bibitem{d}
 https://research.cs.cornell.edu/ladis2009/talks/dean-keynote-ladis2009.pdf
 
 \bibitem{e}
 http://computers-are-fast.github.io/
+
+\bibitem{f}
+https://medium.com/@dgryski/consistent-hashing-algorithmic-tradeoffs-ef6b8e2fcae8
 
 \end{thebibliography}
 \end{document}
