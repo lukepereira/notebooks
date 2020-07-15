@@ -302,7 +302,7 @@ while q:
     
     A \textbf{binary tree} is a tree in which each node has up to two children. A \textbf{binary search tree} is a binary tree in which every node $n$ follows a specific ordering property: all left descendants $\leq n <$ all right descendants. A \textbf{complete} binary tree is a binary tree in which every level of the tree is filled, except for perhaps the last level and all of the nodes in the bottom level are as far to the left as possible. A \textbf{full} binary tree is a binary tree in which every node has either zero or two children. A \textbf{perfect} binary tree is one that is both full and complete.
     
-    A complete tree with $n$ nodes has $\lceil \log n \rceil$ height. There is no ambiguity about where the ''empty`` spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an array. For a node corresponding to index $i$, its left child is stored at index $2i$, and its right child is stored at index $2i + 1$. Going backwards, we can also deduce that the parent of index $i$ (when $i > 1$) is stored at index $\lceil i/2 \rceil$.
+    A complete tree with $n$ nodes has $\lceil \log n \rceil$ height. There is no ambiguity about where the ''empty`` spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an zero-indexed array. For a node corresponding to index $i$, its left child is stored at index $2i + 1$, and its right child is stored at index $2i + 2$. Going backwards, we can also deduce that the parent of index $i$ (when $i > 1$) is stored at index $\lceil (i-1)/2 \rceil$.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -850,6 +850,8 @@ def selection_sort(A):
     Time Complexity: $\bigO(n^2)$ average and worst case. Space Complexity: $\bigO(1)$
     
     Given an array $A$ of size $n$, iterate $i$ from $1$ to $n$ and insert $A[i]$ into a sorted sub array $A[0, i-1]$ until the entire array is sorted. Sorting occurs through pairwise swaps of elements down to their correct positions.
+    
+    Insertion sort can be useful when streaming real-time data in large chunks and building real-time visualization for these data sources.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -870,6 +872,9 @@ def insertion_sort(A):
     Merge sort divides the array in half, sorts each of those halves, and then merges them back together. Each of those halves has the same sorting algorithm applied to it. Eventually, you are merging just two single element arrays. It is the ``merge" part that does all the heavy lifting.
     
     The merge method operates by copying all the elements from the target array segment into a helper array, keeping track of where the start of the left and right halves should be. We then iterate through the helper, copying the smaller element from each half into the array. At the end, we copy any remaining elements into the target array.
+    
+    Merge sort can work well with divide-and-conquer approaches if it comes to large amounts of data stored on different nodes. 
+    
     \begin{align*}
         T(n) &= 
             \underbrace{c_1}_\text{divide}
@@ -907,7 +912,7 @@ def merge_sort(A):
         return _merge_lists(left_sublist, right_sublist)
 \end{lstlisting}
     
-    \subsubsection{QuickSort}
+    \subsubsection{Quick Sort}
      Time Complexity: $\bigO (n \log n)$ average, $\bigO (n^2)$ worst case. Space Complexity: $\bigO (\log n )$
      
      In quick sort, we pick an element and partition the array, such that all numbers that are less than the partitioning element come before all elements that are greater than it. The partitioning can be performed efficiently through a series of swaps.
@@ -1939,7 +1944,21 @@ comb = itertools.combinations([1, 2, 3], 2)
 
 # Get all combinations with an element-to-itself combination included 
 comb = itertools.combinations_with_replacement([1, 2, 3])
+\end{lstlisting}
 
+    \subsection{Cartesian Product}
+    The Cartesian product of two sets $A$ and $B$, is the set of all ordered pairs $(a, b)$ where $a \in A$ and $b \in B$.
+
+\begin{lstlisting}[language=Python]
+import itertools
+A = [1, 2, 3]
+B = [4, 5, 6]
+
+# product of two iterable of size 2, one element from each
+list(itertools.product(A, B))
+
+# product of iterable with itself of size 2
+list(itertools.product(A, repeat=2))
 \end{lstlisting}
 
     \subsubsection{n-th Partial Sum}
