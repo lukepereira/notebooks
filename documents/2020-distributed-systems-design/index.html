@@ -91,6 +91,7 @@
 <li><a href="#strong-and-eventual-consistency">Strong and Eventual Consistency</a></li>
 <li><a href="#horizontal-and-vertical-scaling">Horizontal and Vertical Scaling</a></li>
 <li><a href="#gfs">GFS</a></li>
+<li><a href="#peer-to-peer">Peer-to-peer</a></li>
 <li><a href="#hot-spots">Hot-spots</a></li>
 <li><a href="#shared-nothing">Shared-nothing</a></li>
 <li><a href="#replication-1">Replication</a></li>
@@ -98,6 +99,7 @@
 <li><a href="#follower">Follower</a></li>
 <li><a href="#split-brain">Split Brain</a></li>
 <li><a href="#failover">Failover</a></li>
+<li><a href="#high-availability">High Availability</a></li>
 <li><a href="#consensus">Consensus</a></li>
 <li><a href="#quorum">Quorum</a></li>
 <li><a href="#paxos">Paxos</a></li>
@@ -419,6 +421,8 @@
 <p>Ensure your design works if scale changes by 10X or 20X but the right solution for X often not optimal for 100X</p>
 <h3 id="gfs">GFS</h3>
 <p>A global file system (GFS), in computer science, is cluster of files that are shared between a number of computers and end systems from which data or services are accessed, stored and fetched. The computer systems may be physically distant or may be a part of same network.</p>
+<h3 id="peer-to-peer">Peer-to-peer</h3>
+<p>Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. Peers make a portion of their resources, such as processing power, disk storage or network bandwidth, directly available to other network participants, without the need for central coordination by servers or stable hosts.</p>
 <h3 id="hot-spots">Hot-spots</h3>
 <p>Imbalanced load across partitions, such that some partitions have lots of requests or data, and others have much less. Also known as skew.</p>
 <h3 id="shared-nothing">Shared-nothing</h3>
@@ -435,6 +439,87 @@
 <p>In systems that have a single leader, fail-over is the process of moving the leadership role from one node to another.</p>
 <p>In general, failover is switching to a redundant or standby computer server, system, hardware component or network upon the failure or abnormal termination of the previously active application, server, system, hardware component, or network.</p>
 <p>At the server level, failover automation usually uses a "heartbeat" system that connects two servers, either through using a separate cable or a network connection.</p>
+<h3 id="high-availability">High Availability</h3>
+<p>Availability refers to the ability of a user to access a system. There are three principles of systems design in reliability engineering which can help achieve high availability.</p>
+<ol type="i">
+<li><p>Elimination of single points of failure.</p></li>
+<li><p>Reliable crossover.</p></li>
+<li><p>Detection of failures as they occur.</p></li>
+</ol>
+<p>A <strong>service level agreement ("SLA")</strong> formalizes an organization’s availability objectives and requirements. Some relevant metrics include, estimated time of repair (ETR), a.k.a recovery time objective (RTO) which is the total time required to fully recover from a planned or unplanned outage. Similarly, mean time to recovery (MTTR) captures the averages over some period of time.</p>
+<p>Percentages of a particular order of magnitude are sometimes referred to by the number of <strong>nines</strong> or "class of nines" in the digits.</p>
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Availability %</strong></td>
+<td style="text-align: left;"><strong>Downtime per year</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">90% ("one nine")</td>
+<td style="text-align: left;">36.53 days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">95% ("one and a half nines")</td>
+<td style="text-align: left;">18.26 days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">97%</td>
+<td style="text-align: left;">10.96 days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">98%</td>
+<td style="text-align: left;">7.31 days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">99% ("two nines")</td>
+<td style="text-align: left;">3.65 days</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99.5% ("two and a half nines")</td>
+<td style="text-align: left;">1.83 days</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">99.8% 17.53 hours</td>
+<td style="text-align: left;">87.66 minutes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99.9% ("three nines")</td>
+<td style="text-align: left;">8.77 hours</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">99.95% ("three and a half nines")</td>
+<td style="text-align: left;">4.38 hours</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99.99% ("four nines")</td>
+<td style="text-align: left;">52.60 minutes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">99.995% ("four and a half nines")</td>
+<td style="text-align: left;">26.30 minutes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99.999% ("five nines")</td>
+<td style="text-align: left;">5.26 minutes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">99.9999% ("six nines")</td>
+<td style="text-align: left;">31.56 seconds</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99.99999% ("seven nines")</td>
+<td style="text-align: left;">3.16 seconds</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">99.999999% ("eight nines")</td>
+<td style="text-align: left;">315.58 milliseconds</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">99.9999999% ("nine nines")</td>
+<td style="text-align: left;">31.56 milliseconds</td>
+</tr>
+</tbody>
+</table>
 <h3 id="consensus">Consensus</h3>
 <p>A fundamental problem in distributed computing, concerning getting several nodes to agree on something (for example, which node should be the leader for a database cluster). The problem is much harder than it seems at first glance.</p>
 <h3 id="quorum">Quorum</h3>
@@ -528,6 +613,16 @@
 <p>A function that turns an input into a random-looking number. The same input always returns the same number as output. Two different inputs are very likely to have two different numbers as output, although it is possible that two different inputs produce the same output (this is called a collision).</p>
 <h3 id="consistent-hashing">Consistent Hashing</h3>
 <p>A special kind of hashing such that when a hash table is resized, only <span class="math inline">\(n/m\)</span> keys need to be remapped on average, where <span class="math inline">\(n\)</span> is the number of keys and <span class="math inline">\(m\)</span> is the number of slots.</p>
+<p>To expand, if we’re moving from 9 servers to 10, then the new server should be filled with 1/10th of all the keys. And those keys should be evenly chosen from the 9 “old” servers. And keys should only move to the new server, never between two old servers. Similarly, if we need to remove a server (say, because it crashed), then the keys should be evenly distributed across the remaining live servers.</p>
+<p>A common algorithm is <strong>ring-based consistent hashing</strong>, which is often represented by a “points-on-the-circle” diagram. We may think of the circle as representing all integers <span class="math inline">\(0 \cdots2^{32}-1\)</span>. The basic idea is that each server is mapped to a point on a circle with a hash function. To lookup the server for a given key, you hash the key and find that point on the circle. Then you scan forward until you find the first hash value for any server.</p>
+<p>In practice, each server appears multiple times on the circle. These extra points are called virtual nodes, or vnodes. This reduces the load variance among servers. With a small number of vnodes, different servers could be assigned wildly different numbers of keys.</p>
+<p>An alternative algorithm, <strong>Jump Hash</strong>, addresses the two disadvantages of ring hashes: it has no memory overhead and virtually perfect key distribution. To add to this, it is also very fast, executing <span class="math inline">\(\mathcal{O}(ln n)\)</span>, faster by a constant amount than the <span class="math inline">\(\mathcal{O}(\log n)\)</span> binary search for Ring Hash.</p>
+<p>The algorithm works by using a hash of the key as the seed for a random number generator. It then uses the random numbers to “jump forward” in the list of buckets until it falls off the end. The last bucket it lands in is the result. Jump hash only provides a shard number, not a server name, so the order of the server list must be maintained. This means it doesn’t support arbitrary node removal and can’t use it for distributing keys among a set of memcached instances where one of them might crash.</p>
+<p>There are several other consistent hashing functions, each with their own caveats and trade-offs involving balance distribution, memory usage, lookup time, and construction time (including node addition and removal cost). A performance benchmark for a single lookup with different node counts with timings in nanoseconds is provided below.</p>
+<p><strong>Benchmarks (2018)</strong></p>
+<figure>
+<img src="consistent-hashing-benchmarks.png" style="width:14cm" alt="" /><figcaption>image</figcaption>
+</figure>
 <h3 id="probabilistic-data-structures">Probabilistic Data Structures</h3>
 <p>A <strong>Bloom filter</strong> is a data structure designed to tell you, rapidly and memory-efficiently, whether an element is present in a set. The price paid for this efficiency is that a Bloom filter is a probabilistic data structure: it tells us that the element either definitely is not in the set or may be in the set, i.e. it has false positives but never false negatives. Because of this, it is commonly used for deduplication, for example when adding a job into a pool.</p>
 <p>To briefly explain how bloom filter works, an empty bloom filter is a bit array of m bits (all 0). There are also <span class="math inline">\(k\)</span> hash functions that map each element to one of the m bits. So when we add a new element into the bloom filter, we will get <span class="math inline">\(k\)</span> bits from the hash functions and set all of them to 1. Thus, when we check the existence of an element, we first get the <span class="math inline">\(k\)</span> bits for it and if any of them is not 1, we know immediately that the element doesn’t exist. However, if all of the <span class="math inline">\(k\)</span> bits are 1, this can come from the combination of several other elements.</p>
@@ -721,7 +816,7 @@
 <p>CPUs these days have L1 and L2 caches, which are much faster to access than main memory. This means that accessing memory sequentially (where the CPU can load a bunch of data into a cache) will normally give you faster code than accessing memory out of order.</p>
 <p>In an <strong>in-process cache</strong>, your cache elements are local to a single instance of your application.</p>
 <p>In a <strong>distributed cache</strong>, each object is replicated among multiple independent machines, multiple cache nodes.</p>
-<p>Memcached is a commonly used distributed memory-caching system. It caches data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read.</p>
+<p><strong>Memcached</strong> is a commonly used distributed memory-caching system. It caches data and objects in RAM to reduce the number of times an external data source (such as a database or API) must be read.</p>
 <p><strong>Cache coherence</strong> is the uniformity of shared resource data that ends up stored in multiple local caches. When clients in a system maintain caches of a common memory resource, problems may arise with incoherent or inconsistent data.</p>
 <p>The common solution to concurrency issues is using a lock, but has the downside of greatly affecting performance. An alternative is to use commit logs: we can store all the mutations to the cache into log files rather than update immediately, then a background processes will execute all the logs asynchronously. Writing cached data back to persistent storage is bad. A common presentation of this flaw is user information mysteriously reverting to a previous value.</p>
 <p>A <strong>cache eviction policy</strong> or cache replacement algorithm is a way of deciding which element to evict when the cache is full. Some popular policies include:</p>
@@ -825,6 +920,7 @@
 <p>https://codahale.com/you-cant-sacrifice-partition-tolerance/</p>
 <p>https://research.cs.cornell.edu/ladis2009/talks/dean-keynote-ladis2009.pdf</p>
 <p>http://computers-are-fast.github.io/</p>
+<p>https://medium.com/@dgryski/consistent-hashing-algorithmic-tradeoffs-ef6b8e2fcae8</p>
 <section class="footnotes" role="doc-endnotes">
 <hr />
 <ol>
