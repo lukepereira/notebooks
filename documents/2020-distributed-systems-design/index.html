@@ -36,12 +36,11 @@
 <li><a href="#cap-theorem">CAP Theorem</a></li>
 <li><a href="#online-analytic-processing-olap">Online analytic processing (OLAP)</a></li>
 <li><a href="#online-transaction-processing-oltp">Online transaction processing (OLTP)</a></li>
-<li><a href="#indexed-query">Indexed Query</a></li>
 <li><a href="#acid-sql">ACID (SQL)</a></li>
 <li><a href="#primary-and-foreign-keys">Primary and Foreign Keys</a></li>
-<li><a href="#index-and-secondary-index">Index and Secondary Index</a></li>
 <li><a href="#normalized-data">Normalized Data</a></li>
 <li><a href="#derived-data-joins-materialized-views">Derived Data, Joins, Materialized Views</a></li>
+<li><a href="#index-and-secondary-index">Index and Secondary Index</a></li>
 <li><a href="#base-nosql">BASE (NoSQL)</a></li>
 <li><a href="#types-of-nosql">Types of NoSQL</a></li>
 <li><a href="#denormalized-data">Denormalized Data</a></li>
@@ -73,6 +72,9 @@
 <li><a href="#two-phase-locking-2pl">Two-phase locking (2PL)</a></li>
 <li><a href="#two-phase-commit-2pc">Two-phase commit (2PC)</a></li>
 <li><a href="#total-order">Total order</a></li>
+</ul></li>
+<li><a href="#lamport-timestamps-and-vector-clock">Lamport Timestamps and Vector Clock</a>
+<ul>
 <li><a href="#skew">Skew</a></li>
 </ul></li>
 </ul></li>
@@ -87,26 +89,25 @@
 <li><a href="#distributed">Distributed</a></li>
 <li><a href="#fallacies-of-distributed-computing">Fallacies of Distributed Computing</a></li>
 <li><a href="#partitioning">Partitioning</a></li>
-<li><a href="#consistency">Consistency</a></li>
-<li><a href="#strong-and-eventual-consistency">Strong and Eventual Consistency</a></li>
-<li><a href="#horizontal-and-vertical-scaling">Horizontal and Vertical Scaling</a></li>
-<li><a href="#gfs">GFS</a></li>
-<li><a href="#peer-to-peer">Peer-to-peer</a></li>
 <li><a href="#hot-spots">Hot-spots</a></li>
-<li><a href="#shared-nothing">Shared-nothing</a></li>
+<li><a href="#rebalance">Rebalance</a></li>
+<li><a href="#horizontal-and-vertical-scaling">Horizontal and Vertical Scaling</a></li>
 <li><a href="#replication-1">Replication</a></li>
 <li><a href="#leader">Leader</a></li>
 <li><a href="#follower">Follower</a></li>
 <li><a href="#split-brain">Split Brain</a></li>
-<li><a href="#failover">Failover</a></li>
-<li><a href="#high-availability">High Availability</a></li>
 <li><a href="#consensus">Consensus</a></li>
 <li><a href="#quorum">Quorum</a></li>
 <li><a href="#paxos">Paxos</a></li>
-<li><a href="#rebalance">Rebalance</a></li>
-<li><a href="#byzantine-fault">Byzantine fault</a></li>
+<li><a href="#strong-and-eventual-consistency">Strong and Eventual Consistency</a></li>
+<li><a href="#failover">Failover</a></li>
+<li><a href="#high-availability">High Availability</a></li>
 <li><a href="#partial-availability">Partial Availability</a></li>
+<li><a href="#byzantine-fault">Byzantine fault</a></li>
 <li><a href="#mbtf">MBTF</a></li>
+<li><a href="#gfs">GFS</a></li>
+<li><a href="#peer-to-peer">Peer-to-peer</a></li>
+<li><a href="#shared-nothing">Shared-nothing</a></li>
 </ul></li>
 </ul></li>
 <li><a href="#application-design-and-data-processing">Application Design and Data Processing</a>
@@ -186,7 +187,7 @@
 <h3 id="online-analytical-processing">Online Analytical Processing</h3>
 <p>Online Analytical Processing (OLAP) is the technology behind many Business Intelligence (BI) applications. OLAP is a powerful technology for data discovery, including capabilities for limitless report viewing, complex analytical calculations, and predictive “what if” scenario (budget, forecast) planning.</p>
 <p><strong>Data warehouses</strong> and similar analytic systems are less well known, because they are primarily used by business analysts, not by end users. They handle a much lower volume of queries than OLTP systems, but each query is typically very demanding, requiring many millions of records to be scanned in a short time. Disk bandwidth (not seek time) is often the bottleneck here, and column-oriented storage is an increasingly popular solution for this kind of workload.</p>
-<p>This background illustrated why analytic workloads are so different from OLTP: when your queries require sequentially scanning across a large number of rows, indexes are much less relevant. Instead it becomes important to encode data very compactly, to minimize the amount of data that the query needs to read from disk. We discussed how column-oriented storage helps achieve this goal.</p>
+<p>This background illustrated why analytic workloads are so different from OLTP: when your queries require sequentially scanning across a large number of rows, indexes are much less relevant. Instead it becomes important to encode data very compactly, to minimize the amount of data that the query needs to read from disk. Column-oriented storage helps achieve this goal.</p>
 <h2 id="concepts">Concepts</h2>
 <h3 id="cap-theorem">CAP Theorem</h3>
 <p>The CAP theorem (Brewer’s theorem) implies that in the presence of a network partition, one has to choose between consistency and availability. It is impossible for a distributed data store to simultaneously provide more than two out of the following three guarantees:</p>
@@ -203,8 +204,6 @@
 <p>Online analytic processing (OLAP) is an access pattern characterized by aggregating (e.g., count, sum, average) over a large number of records.</p>
 <h3 id="online-transaction-processing-oltp">Online transaction processing (OLTP)</h3>
 <p>Online transaction processing (OLTP) is an access pattern characterized by fast queries that read or write a small number of records, usually indexed by key</p>
-<h3 id="indexed-query">Indexed Query</h3>
-<p>Indexing is a way to get an unordered table into an order that will maximize the query’s efficiency while searching. An index creates a data structure, typically a B-tree, with values from a specific column. It may then use a search algorithm, typically binary search, to find the value and return a pointer to its true index in the unordered table.</p>
 <h3 id="acid-sql">ACID (SQL)</h3>
 <ol type="i">
 <li><p><strong>Atomicity</strong> – All operations in a transaction succeed or every operation is rolled back.</p></li>
@@ -217,15 +216,15 @@
 <p>A foreign key is a column or group of columns in a relational database table that provides a link between data in two tables. It acts as a cross-reference between tables because it references the primary key of another table, thereby establishing a link between them</p>
 <p>The more ids required to get to a piece of data, the more options you have in partitioning the data. The fewer ids required to get a piece of data, the easier it is to consume your system’s output.</p>
 <p>Watch out for what kind of information you encode in your ids, explicitly and implicitly. Clients may use the structure of your ids to de-anonymize private data, crawl your system in unexpected ways (auto-incrementing ids are a typical sore point), or perform a host of other attacks.</p>
-<h3 id="index-and-secondary-index">Index and Secondary Index</h3>
-<p>An index is a data structure that lets you efficiently search for all records that have a particular value in a particular field.</p>
-<p>A secondary index is an additional data structure that is maintained alongside the primary data storage and which allows you to efficiently search for records that match a certain kind of condition.</p>
 <h3 id="normalized-data">Normalized Data</h3>
-<p>Structured in such a way that there is no redundancy or duplication. In a normalized database, when some piece of data changes, you only need to change it in one place, not many copies in many different places.</p>
+<p>Normalized Data is structured in such a way that there is no redundancy or duplication. In a normalized database, when some piece of data changes, you only need to change it in one place, not many copies in many different places.</p>
 <h3 id="derived-data-joins-materialized-views">Derived Data, Joins, Materialized Views</h3>
 <p>A derived dataset is created from some other data through a repeatable process, which you could run again if necessary. Usually, derived data is needed to speed up a particular kind of read access to the data. Indexes, caches, and materialized views are examples of derived data.</p>
 <p>A join brings together records that have something in common. Most commonly used in the case where one record has a reference to another (a foreign key, a document reference, an edge in a graph) and a query needs to get the record that the reference points to.</p>
 <p>To materialize means to perform a computation preemptively and write out its result, as opposed to calculating it on demand when requested.</p>
+<h3 id="index-and-secondary-index">Index and Secondary Index</h3>
+<p>Indexing is a way to get an unordered table into an order that will maximize the query’s efficiency while searching. An index creates a data structure, typically a B-tree, with values from a specific column. It may then use a search algorithm, typically binary search, to find the value and return a pointer to its true index in the unordered table.</p>
+<p>A secondary index is an additional data structure that is maintained alongside the primary data storage and which allows you to efficiently search for records that match a certain kind of condition.</p>
 <h3 id="base-nosql">BASE (NoSQL)</h3>
 <ol type="i">
 <li><p><strong>Basic availability</strong> – The database appears to work most of the time.</p></li>
@@ -235,14 +234,14 @@
 <h3 id="types-of-nosql">Types of NoSQL</h3>
 <ul>
 <li><p><strong>Key-value</strong> – an in-memory hashtable</p></li>
-<li><p><strong>Wide column</strong> – Cassandra. Names and format of the columns can vary from row to row in the same table.</p></li>
-<li><p><strong>Document Based</strong> – ElasticSearch</p></li>
-<li><p><strong>Graph Based</strong> – Neo4j</p></li>
+<li><p><strong>Wide column</strong> – names and format of the columns can vary from row to row in the same table. ex: Cassandra.</p></li>
+<li><p><strong>Document Based</strong> – relies on internal structure in the document in order to extract metadata for further optimization ex: ElasticSearch</p></li>
+<li><p><strong>Graph Based</strong> – uses graph structures for semantic queries with nodes, edges, and properties to represent and store data. ex: Neo4j</p></li>
 </ul>
 <h3 id="denormalized-data">Denormalized Data</h3>
 <p>A denormalized dataset introduces some amount of redundancy or duplication in a normalized dataset, typically in the form of a cache or index, in order to speed up reads. A denormalized value is a kind of precomputed query result, similar to a materialized view.</p>
 <h3 id="data-warehouse">Data Warehouse</h3>
-<p>A database in which data from several different OLTP systems has been combined and prepared to be used for analytics purposes.</p>
+<p>A database in which data from several different OLTP systems has been combined and prepared to be used for analytics purposes, i.e. as an OLAP.</p>
 <h3 id="extracttransformload">Extract–Transform–Load</h3>
 <p>Extract–Transform–Load (ETL) is the process of extracting data from a source database, transforming it into a form that is more suitable for analytic queries, and loading it into a data warehouse or batch processing system.</p>
 <h3 id="stored-procedure">Stored Procedure</h3>
@@ -265,9 +264,9 @@
 <ol type="i">
 <li><p>Literally executing transactions in a serial order – If you can make each transaction very fast to execute, and the transaction throughput is low enough to process on a single CPU core, this is a simple and effective option.</p></li>
 <li><p>Two-phase locking (2PL) – For decades this has been the standard way of implementing serializability, but many applications avoid using it because of its performance characteristics.</p></li>
-<li><p>Serializable snapshot isolation (SSI) – A fairly new algorithm that avoids most of the downsides of the previous approaches. It uses an optimistic approach, allowing transactions to proceed without blocking. When a transaction wants to commit, it is checked, and it is aborted if the execution was not serializable.</p>
-<p>Transactions are a valuable database feature, no matter which data model is used. Transactions in distributed databases open a new set of difficult challenges.</p></li>
+<li><p>Serializable snapshot isolation (SSI) – A fairly new algorithm that avoids most of the downsides of the previous approaches. It uses an optimistic approach, allowing transactions to proceed without blocking. When a transaction wants to commit, it is checked, and it is aborted if the execution was not serializable.</p></li>
 </ol>
+<p>Transactions are a valuable database feature, no matter which data model is used. Transactions in distributed databases open a new set of difficult challenges.</p>
 <h2 id="concepts-1">Concepts</h2>
 <h3 id="concurrency-1">Concurrency</h3>
 <p>Concurrency is the ability of different parts or units of a program, algorithm, or problem to be executed out-of-order or in partial order, without affecting the final outcome.</p>
@@ -286,11 +285,11 @@
 <h3 id="operational-transformation">Operational transformation</h3>
 <p>Operational transformation (OT) is a technology for supporting a range of collaboration functionalities in advanced collaborative software systems. OT was originally invented for consistency maintenance and concurrency control in collaborative editing of plain text documents. Its capabilities have been extended and its applications expanded to include group undo, locking, conflict resolution, operation notification and compression, group-awareness, HTML/XML and tree-structured document editing, collaborative office productivity tools, application-sharing, and collaborative computer-aided media design tools.</p>
 <h3 id="commit-log">Commit log</h3>
-<p>A commit log is a record of transactions. It’s used to keep track of what’s happening, and help with e.g. disaster recovery - generally, all commits are written to the log before being applied, so transactions that were in flight when the server went down can be recovered and re-applied by checking the log. So when we want to update an entry in machine A, it will first store this request in commit log. And then a separate program will process all the commit logs in order (in a queue). Whenever an operation fails, we can easily recover as we can lookup the commit log.</p>
+<p>A commit log is a record of transactions. It’s used to keep track of what’s happening, and help with disaster recovery. Generally, all commits are written to the log before being applied, so transactions that were in flight when the server went down can be recovered and re-applied by checking the log. So when we want to update an entry in machine A, it will first store this request in commit log. And then a separate program will process all the commit logs in order (in a queue). Whenever an operation fails, we can easily recover as we can lookup the commit log.</p>
 <h3 id="idempotent">Idempotent</h3>
 <p>Describing an operation that can be safely retried; if it is executed more than once, it has the same effect as if it was only executed once.</p>
 <h3 id="atomic">Atomic</h3>
-<p>In the context of concurrent operations: describing an operation that appears to take effect at a single point in time, so another concurrent process can never encounter the operation in a “half-finished” state. See also isolation.</p>
+<p>In the context of concurrent operations: describing an operation that appears to take effect at a single point in time, so another concurrent process can never encounter the operation in a “half-finished” state.</p>
 <p>In the context of transactions: grouping together a set of writes that must either all be committed or all be rolled back, even if faults occur.</p>
 <h3 id="linearizable">Linearizable</h3>
 <p>Behaving as if there was only a single copy of data in the system, which is updated by atomic operations.</p>
@@ -298,6 +297,7 @@
 <p>A guarantee that if several transactions execute concurrently, they behave the same as if they had executed one at a time, in some serial order.</p>
 <h3 id="isolation">Isolation</h3>
 <p>In the context of transactions, describing the degree to which concurrently executing transactions can interfere with each other. Serializable isolation provides the strongest guarantees, but weaker isolation levels are also used.</p>
+<p>Snapshot isolation is a guarantee that all reads made in a transaction will see a consistent snapshot of the database, and the transaction itself will successfully commit only if no updates it has made conflict with any concurrent updates made since that snapshot.</p>
 <h3 id="synchronization">Synchronization</h3>
 <p>Process synchronization refers to the idea that multiple processes are to join up or handshake at a certain point, in order to reach an agreement or commit to a certain sequence of action. Data synchronization refers to the idea of keeping multiple copies of a dataset in coherence with one another, or to maintain data integrity.</p>
 <h3 id="cas">CAS</h3>
@@ -308,6 +308,15 @@
 <p>An algorithm to ensure that several database nodes either all commit or all abort a transaction.</p>
 <h3 id="total-order">Total order</h3>
 <p>A way of comparing things (e.g., time-stamps) that allows you to always say which one of two things is greater and which one is lesser. An ordering in which some things are incomparable (you cannot say which is greater or smaller) is called a partial order.</p>
+<h2 id="lamport-timestamps-and-vector-clock">Lamport Timestamps and Vector Clock</h2>
+<p>The <strong>Lamport timestamp</strong> algorithm is a simple logical clock algorithm used to determine the order of events in a distributed computer system. Conceptually, this logical clock can be thought of as a clock that only has meaning in relation to messages moving between processes. When a process receives a message, it re-synchronizes its logical clock with that sender.</p>
+<p>A <strong>vector clock</strong> extends on Lamport timestamps and is used for generating a partial ordering of events in a distributed system and detecting causality violations.</p>
+<ul>
+<li><p>Initially all clocks are zero.</p></li>
+<li><p>Each time a process experiences an internal event, it increments its own logical clock in the vector by one.</p></li>
+<li><p>Each time a process sends a message, it increments its own logical clock in the vector by one (but not twice for the same event) and then sends a copy of its own vector.</p></li>
+<li><p>Each time a process receives a message, it increments its own logical clock in the vector by one and updates each element in its vector by taking the maximum of the value in its own vector clock and the value in the vector in the received message (for every element).</p></li>
+</ul>
 <h3 id="skew">Skew</h3>
 <p>A timing anomaly that causes events to appear in an unexpected, nonsequential order.</p>
 <h1 id="distributed-computing">Distributed Computing</h1>
@@ -406,27 +415,15 @@
 </ol>
 <h3 id="partitioning">Partitioning</h3>
 <p>Partitioning involves splitting up a large dataset or computation that is too big for a single machine into smaller parts and spreading them across several machines. Also known as sharding.</p>
-<p>A database shard is a horizontal partition of data in a database or search engine</p>
-<p>Horizontal partitioning is a database design principle whereby rows of a database table are held separately, rather than being split into columns (which is what normalization and vertical partitioning do, to differing extents).</p>
-<h3 id="consistency">Consistency</h3>
-<p>Consistency here means that a read request for an entity made to any of the nodes of the database should return the same data.</p>
-<h3 id="strong-and-eventual-consistency">Strong and Eventual Consistency</h3>
-<p>Eventual consistency makes sure that data of each node of the database gets consistent eventually. Time taken by the nodes of the database to get consistent may or may not be defined. Data getting consistent eventually means it will take time for updates to reach other replicas. Eventual consistency offers low latency at the risk of returning stale data</p>
-<p>Strong consistency says data will get passed on to all the replicas as soon as a write request comes to one of the replicas of the database. Strong Consistency offers up-to-date data but at the cost of high latency.</p>
-<h3 id="horizontal-and-vertical-scaling">Horizontal and Vertical Scaling</h3>
-<p>Horizontal scaling means that you scale by adding more machines into your pool of resources whereas Vertical scaling means that you scale by adding more power (CPU, RAM) to an existing machine</p>
-<p>Benefits of Horizontal scaling include: no max threshold on memory, CPU, and better availability.</p>
-<p>While vertical scaling avoids all the complex challenges of distributed systems.</p>
-<p>Coordinating machines should be avoided wherever possible. This is often described as “horizontal scalability”. The real trick of horizontal scalability is independence – being able to get data to machines such that communication and consensus between those machines is kept to a minimum.</p>
-<p>Ensure your design works if scale changes by 10X or 20X but the right solution for X often not optimal for 100X</p>
-<h3 id="gfs">GFS</h3>
-<p>A global file system (GFS), in computer science, is cluster of files that are shared between a number of computers and end systems from which data or services are accessed, stored and fetched. The computer systems may be physically distant or may be a part of same network.</p>
-<h3 id="peer-to-peer">Peer-to-peer</h3>
-<p>Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. Peers make a portion of their resources, such as processing power, disk storage or network bandwidth, directly available to other network participants, without the need for central coordination by servers or stable hosts.</p>
+<p>A database shard is a horizontal partition of data in a database or search engine. Horizontal partitioning is a database design principle whereby rows of a database table are held separately, rather than being split into columns (which is what normalization and vertical partitioning do, to differing extents).</p>
 <h3 id="hot-spots">Hot-spots</h3>
 <p>Imbalanced load across partitions, such that some partitions have lots of requests or data, and others have much less. Also known as skew.</p>
-<h3 id="shared-nothing">Shared-nothing</h3>
-<p>An architecture in which independent nodes – each with their own CPUs, memory, and disks – are connected via a conventional network, in contrast to shared-memory or shared-disk architectures,</p>
+<h3 id="rebalance">Rebalance</h3>
+<p>To move data or services from one node to another in order to spread the load fairly.</p>
+<h3 id="horizontal-and-vertical-scaling">Horizontal and Vertical Scaling</h3>
+<p>Horizontal scaling means that you scale by adding more machines into your pool of resources whereas Vertical scaling means that you scale by adding more power (CPU, RAM) to an existing machine</p>
+<p>Benefits of Horizontal scaling include: no max threshold on memory, CPU, and better availability. While vertical scaling avoids all the complex challenges of distributed systems.</p>
+<p>Coordinating machines should be avoided wherever possible. This is often described as horizontal “scalability”. The real trick of horizontal scalability is independence - being able to get data to machines such that communication and consensus between those machines is kept to a minimum. Ensure your design works if scale changes by 10X or 20X but the right solution for X is often not optimal for 100X.</p>
 <h3 id="replication-1">Replication</h3>
 <p>Keeping a copy of the same data on several nodes (replicas) so that it remains accessible if a node becomes unreachable.</p>
 <h3 id="leader">Leader</h3>
@@ -435,6 +432,17 @@
 <p>A replica that does not directly accept any writes from clients, but only processes data changes that it receives from a leader. Also known as a secondary, slave, read replica, or hot standby.</p>
 <h3 id="split-brain">Split Brain</h3>
 <p>A scenario in which two nodes simultaneously believe themselves to be the leader, and which may cause system guarantees to be violated.</p>
+<h3 id="consensus">Consensus</h3>
+<p>A fundamental problem in distributed computing, concerning getting several nodes to agree on something (for example, which node should be the leader for a database cluster). The problem is much harder than it seems at first glance.</p>
+<h3 id="quorum">Quorum</h3>
+<p>The minimum number of nodes that need to vote on an operation before it can be considered successful.</p>
+<h3 id="paxos">Paxos</h3>
+<p>Paxos is a family of protocols for solving consensus in a network of unreliable processors (that is, processors that may fail). Consensus is the process of agreeing on one result among a group of participants. This problem becomes difficult when the participants or their communication medium may experience failures.</p>
+<p>The Paxos family of protocols includes a spectrum of trade-offs between the number of processors, number of message delays before learning the agreed value, the activity level of individual participants, number of messages sent, and types of failures.</p>
+<h3 id="strong-and-eventual-consistency">Strong and Eventual Consistency</h3>
+<p>Consistency here means that a read request for an entity made to any of the nodes of the database should return the same data.</p>
+<p>Eventual consistency makes sure that data of each node of the database gets consistent eventually. Time taken by the nodes of the database to get consistent may or may not be defined. Data getting consistent eventually means it will take time for updates to reach other replicas. Eventual consistency offers low latency at the risk of returning stale data</p>
+<p>Strong consistency says data will get passed on to all the replicas as soon as a write request comes to one of the replicas of the database. Strong Consistency offers up-to-date data but at the cost of high latency.</p>
 <h3 id="failover">Failover</h3>
 <p>In systems that have a single leader, fail-over is the process of moving the leadership role from one node to another.</p>
 <p>In general, failover is switching to a redundant or standby computer server, system, hardware component or network upon the failure or abnormal termination of the previously active application, server, system, hardware component, or network.</p>
@@ -446,7 +454,7 @@
 <li><p>Reliable crossover.</p></li>
 <li><p>Detection of failures as they occur.</p></li>
 </ol>
-<p>A <strong>service level agreement ("SLA")</strong> formalizes an organization’s availability objectives and requirements. Some relevant metrics include, estimated time of repair (ETR), a.k.a recovery time objective (RTO) which is the total time required to fully recover from a planned or unplanned outage. Similarly, mean time to recovery (MTTR) captures the averages over some period of time.</p>
+<p>A <strong>service level agreement (SLA)</strong> formalizes an organization’s availability objectives and requirements. Some relevant metrics include, estimated time of repair (ETR), a.k.a recovery time objective (RTO) which is the total time required to fully recover from a planned or unplanned outage. Similarly, mean time to recovery (MTTR) captures the averages over some period of time.</p>
 <p>Percentages of a particular order of magnitude are sometimes referred to by the number of <strong>nines</strong> or "class of nines" in the digits.</p>
 <table>
 <tbody>
@@ -520,23 +528,20 @@
 </tr>
 </tbody>
 </table>
-<h3 id="consensus">Consensus</h3>
-<p>A fundamental problem in distributed computing, concerning getting several nodes to agree on something (for example, which node should be the leader for a database cluster). The problem is much harder than it seems at first glance.</p>
-<h3 id="quorum">Quorum</h3>
-<p>The minimum number of nodes that need to vote on an operation before it can be considered successful.</p>
-<h3 id="paxos">Paxos</h3>
-<p>Paxos is a family of protocols for solving consensus in a network of unreliable processors (that is, processors that may fail). Consensus is the process of agreeing on one result among a group of participants. This problem becomes difficult when the participants or their communication medium may experience failures.</p>
-<p>The Paxos family of protocols includes a spectrum of trade-offs between the number of processors, number of message delays before learning the agreed value, the activity level of individual participants, number of messages sent, and types of failures.</p>
-<h3 id="rebalance">Rebalance</h3>
-<p>To move data or services from one node to another in order to spread the load fairly.</p>
-<h3 id="byzantine-fault">Byzantine fault</h3>
-<p>A node that behaves incorrectly in some arbitrary way, for example by sending contradictory or malicious messages to other nodes.</p>
 <h3 id="partial-availability">Partial Availability</h3>
 <p>Partial availability is being able to return some results even when parts of your system is failing. It’s often better to give users limited functionality than an error page.</p>
 <p>A typical search system sets a time limit on how long it will search its documents, and, if that time limit expires before all of its documents are searched, it will return whatever results it has gathered. This makes search easier to scale in the face of intermittent slowdowns, and errors.</p>
 <p>Failing out just a small fraction of the userbase is preferable to missing data for a larger fraction. And, on top of that choice, we probably don’t want an unrelated feature to be affected because one service is having a problem. How much work are we willing to do to keep those failure domains separate? Being able to recognize these kinds of trade-offs in partial availability is good to have in your toolbox.</p>
+<h3 id="byzantine-fault">Byzantine fault</h3>
+<p>A node that behaves incorrectly in some arbitrary way, for example by sending contradictory or malicious messages to other nodes.</p>
 <h3 id="mbtf">MBTF</h3>
 <p>Mean time between failures (MTBF) is a measure of how reliable a hardware product or component is. For most components, the measure is typically in thousands or even tens of thousands of hours between failures. Assume you could start with super reliable servers (MTBF of 30 years). Building a computing system with 10 thousand of those means we will see one fail per day.</p>
+<h3 id="gfs">GFS</h3>
+<p>A global file system (GFS), in computer science, is cluster of files that are shared between a number of computers and end systems from which data or services are accessed, stored and fetched. The computer systems may be physically distant or may be a part of same network.</p>
+<h3 id="peer-to-peer">Peer-to-peer</h3>
+<p>Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. Peers make a portion of their resources, such as processing power, disk storage or network bandwidth, directly available to other network participants, without the need for central coordination by servers or stable hosts.</p>
+<h3 id="shared-nothing">Shared-nothing</h3>
+<p>An architecture in which independent nodes – each with their own CPUs, memory, and disks – are connected via a conventional network, in contrast to shared-memory or shared-disk architectures,</p>
 <h1 id="application-design-and-data-processing">Application Design and Data Processing</h1>
 <h2 id="encoding-and-evolution">Encoding and Evolution</h2>
 <p>There are several ways of turning data structures into bytes on the network or bytes on disk. The details of these encodings affect not only their efficiency, but more importantly they affect architecture of applications and your options for deploying them.</p>
@@ -888,8 +893,7 @@
 <h3 id="l4-and-l7-load-balancers">L4 and L7 Load Balancers</h3>
 <p>A load balancer receives requests and delegates them to servers according to some policy, i.e. round robin, load average.</p>
 <p>Layer4 (L4) works on Layer4 (and Layer3) of the OSI model. When a client makes a request, it creates a TCP connection with the load balancer. The Load Balancer then uses the same TCP connection that the client created with it, to connect with one of the upstream servers. The source and destination IP of each packet is changed by the load balancer using NAT (Network address translation). When a response is received from the server, the same translation is performed again at the load balancer.</p>
-<p>There is another type of L4 load balancer known as TCP/UDP termination load balancers where there are two different TCP connections.</p>
-<p>When using L4 load balancers, we are unaware of the data. This means we cannot make any decisions based on data in our request. The only thing we have is IPs (source and destination)and ports.</p>
+<p>There is another type of L4 load balancer known as TCP/UDP termination load balancers where there are two different TCP connections. When using L4 load balancers, we are unaware of the data. This means we cannot make any decisions based on data in our request. The only thing we have is IPs (source and destination)and ports.</p>
 <p>Cons: No smart load balancing, Doesn’t work with streaming/keep-alive connections, No TLS termination</p>
 <p>Layer7 (L7) works on Layer7 (Layer6 and Layer5) of the OSI model. When a client makes a request, it creates a TCP connection with the load balancer. The Load Balancer then creates a new TCP connection with one of the upstream servers. Thus, there are 2 TCP connections as compared to 1 in a TCP/UDP passthrough L4 Load balancer.</p>
 <p>Since we are at layer7, we are aware of the data in our request. This allows us to perform a variety of operations like: Authentication, Smart Routing, TLS termination</p>
