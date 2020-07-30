@@ -70,7 +70,7 @@ A \textbf{mixin class} is a class that's intended to provide an optional interfa
 This principle of object-oriented design has two main benefits:
 \begin{enumerate}
     \item Clients remain unaware of the specific types of objects they use, as long as the objects adhere to the interface that clients expect.
-    \item Clients remain unaware of the classes that implement these objects. Clients only know about the abstract classes defining the interface.    This greatly reduces implementation dependencies between subsystems
+    \item Clients remain unaware of the classes that implement these objects. Clients only know about the abstract classes defining the interface. This greatly reduces implementation dependencies between subsystems.
 \end{enumerate}
 
 Don't declare variables to be instances of particular concrete classes. Instead, commit only to an interface defined by an abstract class. Though you will need to instantiate concrete classes in order to specify a particular implementation somewhere in your system -- the creational patterns ensure that your system is written in terms of interfaces, not implementations.
@@ -107,6 +107,21 @@ Object composition lets you change the behavior being composed at run-time, but 
 
 Many design patterns (in particular those that have object scope) capture the distinction between compile-time and run-time structures explicitly. Composite and Decorator patterns are especially useful for building complex run-time structures. Observer involves run-time structures that are often hard to understand unless you know the pattern. Chain of Responsibility also results in communication patterns that inheritance doesn't reveal. In general, the run-time structures aren't clear from the code until you understand the patterns.
 
+\subsection{SOLID Principles}
+
+\begin{itemize}
+    \item \textbf{Single-responsibility principle} -- A class should only have a single responsibility, that is, only changes to one part of the software's specification should be able to affect the specification of the class.
+
+    \item \textbf{Open–closed principle} -- Software entities should be open for extension, but closed for modification.
+    
+    \item \textbf{Liskov substitution principle} -- Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
+    
+    \item \textbf{Interface segregation principle} -- Many client-specific interfaces are better than one general-purpose interface.
+    
+    \item \textbf{Dependency inversion principle} -- One should depend upon abstractions, not concretions.
+\end{itemize}
+
+
 \newpage
 \section{Design Patterns}
 
@@ -119,35 +134,35 @@ Creational class patterns defer some part of object creation to subclasses, whil
 Each design pattern lets some aspect of a system's structure vary independently of other aspects, thereby making a system more robust to a particular kind of change.
 
 \begin{enumerate}
-    \item \textbf{Creating an object by specifying a class explicitly}
+    \item \textbf{Creating an object by specifying a class explicitly -- }
     
     Avoid with: Abstract Factory, Factory Method, Prototype. 
     
-    \item \textbf{Dependence on specific operations.}
+    \item \textbf{Dependence on specific operations --}
     
     Avoid with: Chain of Responsibility, Command.
     
-    \item \textbf{Dependence on hardware and software platform.}
+    \item \textbf{Dependence on hardware and software platform --}
     
     Avoid with: Abstract Factory, Bridge.
     
-    \item \textbf{Dependence on object representations or implementations.}
+    \item \textbf{Dependence on object representations or implementations -- }
     
     Avoid with: Abstract Factory, Bridge, Memento, Proxy.
     
-    \item \textbf{Algorithmic dependencies}
+    \item \textbf{Algorithmic dependencies --}
     
     Avoid with: Builder, Iterator, Strategy, Template Method , Visitor.
     
-    \item \textbf{Tight coupling}
+    \item \textbf{Tight coupling --}
     
     Avoid with: Abstract Factory, Bridge, Chain of Responsibility, Command, Facade, Mediator, Observer.
     
-    \item \textbf{Extending functionality by subclassing.}
+    \item \textbf{Extending functionality by subclassing --}
     
     Avoid with: Bridge, Chain of Responsibility, Composite,  Decorator, Observer, Strategy.
     
-    \item \textbf{Inability to alter classes conveniently.}
+    \item \textbf{Inability to alter classes conveniently --}
     
     Avoid with: Adapter, Decorator, Visitor.
 \end{enumerate}
@@ -584,7 +599,7 @@ The Command pattern has the following consequences:
 \newpage
 \subsubsection{Interpreter}
 
-Use the Interpreter pattern when there is a language to interpret, and you can represent statements in the language as abstract syntax trees. The Interpreter pattern works best when
+Use the Interpreter pattern when there is a language to interpret, and you can represent statements in the language as abstract syntax trees.
 
 \textbf{Applicability}
 
@@ -852,7 +867,7 @@ Some of the benefits and liabilities of the Visitor pattern are as follows:
 
 \begin{thebibliography}{}
 \bibitem{}
-Gamma, E., Helm, R., Johnson, R.,, Vlissides, J. M. (1994). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley Professional. ISBN: 0201633612
+Gamma, E., Helm, R., Johnson, R., Vlissides, J. M. (1994). Design Patterns: Elements of Reusable Object-Oriented Software. Addison-Wesley Professional. ISBN: 0201633612
 
 \end{thebibliography}
 \end{document}

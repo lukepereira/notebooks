@@ -64,7 +64,10 @@
 
 \comment{
 TODO: 
-- 
+- Add ML algorithms
+    - regression
+    - minimax
+    - k nearest neighbors
 }
 
 \begin{document}
@@ -157,6 +160,11 @@ TODO:
         A hash function is any function that can be used to map data of arbitrary size to fixed-size values. The values returned by a hash function are called hash values, hash codes, digests, or simply hashes. 
         A good hash function satisfies two basic properties: it should be very fast to compute; it should minimize duplication of output values (\textbf{collisions}). For many use cases, it is useful for every hash value in the output range to be generated with roughly the same probability. Two of the most common hash algorithms are the MD5 (Message-Digest algorithm 5) and the SHA-1 (Secure Hash Algorithm).
 
+    \subsubsection{Stack vs. Heap Memory Allocation}
+    The stack is the memory set aside as scratch space for a thread of execution. When a function is called, a block of fixed size is reserved on the top of the stack for local variables and some bookkeeping data. When that function returns, the block becomes freed for future use. The stack is always reserved in a LIFO (last in first out) order; the most recently reserved block is always the next block to be freed. This makes it really simple and fast to keep track of and access the stack; freeing a block from the stack is nothing more than adjusting one pointer. Also, each byte in the stack tends to be reused very frequently which means it tends to be mapped to the processor's cache, making it very fast.
+
+    The heap is memory set aside for dynamic allocation by the OS through the language runtime. Unlike the stack, there's no enforced pattern to the allocation and deallocation of blocks from the heap. The size of the heap is set on application startup, but can grow as space is needed. This makes it much more complex to keep track of and access which parts of the heap are allocated or free at any given time. Another performance hit for the heap is that the heap, being mostly a global resource, typically has to be multi-threading safe.
+
 \newpage
 \section{Data Structures and ADTs}
     An \textbf{abstract data type (ADT)} is a theoretical model of an entity and the set of operations that can be performed on that entity
@@ -227,6 +235,8 @@ class ListNode:
     
     A queue can be implemented with a linked list and moreover, they are essentially the same thing as long as items are added and removed from opposite sides.
     
+    The deque module (short for double-ended queue), provides a data structure which pops from or pushes to either side of the queue with the same $\bigO(1)$ performance. 
+    
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 # Using a list 
@@ -272,6 +282,8 @@ while len(q):
         \item Fibonacci and pairing heaps. These complicated priority queues are designed to speed up decrease-key operations, where the priority of an item already in the priority queue is reduced. This arises, for example, in shortest path computations when we discover a shorter route to a vertex v than previously established.
     \end{enumerate}
     
+    Note: The Queue.PriorityQueue module is a partial wrapper around the heapq module.
+    
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 # The queue module
@@ -300,9 +312,12 @@ while q:
     \subsection{Trees}
     A tree is an ADT composed of nodes such that there is a root node with zero or more child nodes where each child node also has zero or more child nodes and can be recursively defined as a root node of a sub-tree. Since there are no edges between sibling nodes, a tree cannot contain cycles. Furthermore, nodes can be given a particular order, can have any data type as values, and they may or may not have links back to their parent nodes.
     
-    A \textbf{binary tree} is a tree in which each node has up to two children. A \textbf{binary search tree} is a binary tree in which every node $n$ follows a specific ordering property: all left descendants $\leq n <$ all right descendants. A \textbf{complete} binary tree is a binary tree in which every level of the tree is filled, except for perhaps the last level and all of the nodes in the bottom level are as far to the left as possible. A \textbf{full} binary tree is a binary tree in which every node has either zero or two children. A \textbf{perfect} binary tree is one that is both full and complete.
+    \subsubsection{Binary Trees}
+    A binary tree is a tree in which each node has up to two children. A \textbf{binary search tree} is a binary tree in which every node $n$ follows a specific ordering property: all left descendants $\leq n <$ all right descendants. A \textbf{complete} binary tree is a binary tree in which every level of the tree is filled, except for perhaps the last level and all of the nodes in the bottom level are as far to the left as possible. A \textbf{full} binary tree is a binary tree in which every node has either zero or two children. A \textbf{perfect} binary tree is one that is both full and complete.
     
     A complete tree with $n$ nodes has $\lceil \log n \rceil$ height. There is no ambiguity about where the ''empty`` spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an zero-indexed array. For a node corresponding to index $i$, its left child is stored at index $2i + 1$, and its right child is stored at index $2i + 2$. Going backwards, we can also deduce that the parent of index $i$ (when $i > 1$) is stored at index $\lceil (i-1)/2 \rceil$.
+
+    Note, A full binary tree with $n$ leaves has $n - 1$ internal nodes. Then the number of unique rooted full binary tree with $n + 1$ leaf nodes, equivalently $n$ internal node, can be counted via the $nth$ Catalan number, $C_n$. View section on Catalan numbers for the formula and implementation code.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -919,7 +934,7 @@ def merge_sort(A):
 
     If we repeatedly partition the array (and its sub-arrays) around an element, the array will eventually become sorted. However, as the partitioned element is not guaranteed to be the median (or anywhere near the median), our sorting could be very slow. This is the reason for the 0 ($n^2$) worst case runtime.
     
-    If we allow our algorithm to make random choices, we can turn any input into a “random” input simply by preprocessing it, and then applying the regular quicksort function. To run \textbf{randomized quicksort} on an array $A$ with length $n$, we can define the random variable $T_A$ to be the running time of the algorithm. Now we are considering the probability distribution which the algorithm uses to make its random choices, and not a probability distribution over inputs, $E[T_A] = \Theta(n \log{n})$.
+    If we allow our algorithm to make random choices, we can turn any input into a ``random” input simply by preprocessing it, and then applying the regular quicksort function. To run \textbf{randomized quicksort} on an array $A$ with length $n$, we can define the random variable $T_A$ to be the running time of the algorithm. Now we are considering the probability distribution which the algorithm uses to make its random choices, and not a probability distribution over inputs, $E[T_A] = \Theta(n \log{n})$.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1170,7 +1185,7 @@ def single_pass_lookup(nums, target):
     
     However, using a numerical method we are able to reduce the time complexity to $\bigO(Q + n)$. This technique involves creating a secondary array $B$ and only incrementing the value at the left endpoint, $L$ by 1 and decrementing the value at index $R + 1$ by 1. After repeating this process for all queries, to find the true desired value of $A[i]$ we can find the prefix sum of $B$ from $B[0:i]$.
     
-    If instead we want to find the maximum in the array after performing $Q$ range operations, we can modify the above techinque which will give us an algorithm that runs in $\bigO(n)$. It does this by storing the difference between the current element and the previous element. This means that we add the sum to $A[i]$ showing that $A[i]$ is greater than its previous element by the sum. We subtract sum from $A[j+1]$ to show that $A[j+1]$ is less than $A[j]$ by sum (since $A[j]$ was the last element that was added to sum). By the end of all this, we have an array that shows the difference between every successive element. By adding all the positive differences, we get the value of the maximum element
+    If instead we want to find the maximum in the array after performing $Q$ range operations, we can modify the above technique which will give us an algorithm that runs in $\bigO(n)$. Again, for each range interval we increment the left pointer by 1 and decrement the right by 1. By the end of all this, we have an array that shows the difference between every successive element. From here, we iterate over the array while maintaining a running sum and keeping track of the maximum of the sum.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1183,8 +1198,7 @@ def max_after_operations(n, operations):
     max_value = cur = 0
     for i in B:
         cur = cur + i;
-        if max_value < cur: 
-            max_value = cur;
+        max_value = max(max_value, cur)
     return max_value
 \end{lstlisting}
     
@@ -1504,8 +1518,9 @@ def dfs(adj_list):
     \subsubsection{Dijkstra's algorithm}
     Time Complexity: $\Theta (|E|+|V|\log |V|)$ worst case
     
-    An algorithm for finding the shortest paths between nodes in a positive weighted graphs (directed and undirected) graph. For a given source node in the graph, the algorithm finds the shortest path between that node and every other. Let the node at which we are starting be called the initial node and the distance of node Y be the distance from the initial node to Y. Dijkstra's algorithm will assign some initial distance values and will try to improve them iteratively, prioritizing shorter distances and edges with low weights in its path discovery process.
+    An algorithm for finding the shortest paths between nodes in a positive weighted, directed, acyclic graph. For a given source node in the graph, the algorithm finds the shortest path between that node and every other. Let the node at which we are starting be called the initial node and the distance of node Y be the distance from the initial node to Y. Dijkstra's algorithm will assign some initial distance values and will try to improve them iteratively, prioritizing shorter distances and edges with low weights in its path discovery process.
     
+    Breadth-first search will find you the path with the fewest segments. But in Dijkstra’s algorithm, you assign a number or weight to each segment. Then Dijkstra’s algorithm finds the path with the smallest total weight.
     
     \begin{enumerate}
         \item Mark all nodes unvisited and store them in a set.
@@ -1681,6 +1696,28 @@ def backtrack(candidate):
             backtrack(next_candidate)
             # backtrack/prune
             remove(next_candidate)
+            
+## Generate all combinations of well-formed parentheses with n pairs.
+def generate_parenthesis(n):
+    ans = []
+    def backtrack(S='', left=0, right=0):
+        if len(S) == 2 * n:
+            ans.append(S)
+            return
+        if left < n:
+            backtrack(S + "(", left + 1, right)
+        if right < left:
+            backtrack( S + ")", left, right + 1)
+    backtrack()    
+    return ans
+    
+assert generate_parenthesis(3) == [
+  "((()))",
+  "(()())",
+  "(())()",
+  "()(())",
+  "()()()"
+]
 \end{lstlisting}
     
     \subsubsection{Dynamic Programming \& Memoization}
@@ -1831,33 +1868,108 @@ def lcs_table(X, Y):
     \subsection{Numerical Problems}
     
     \subsubsection{Bit Manipulation}
-    Bit manipulation is the act of algorithmically manipulating bits or other pieces of data shorter than a word. Computer programming tasks that require bit manipulation include low-level device control, error detection and correction algorithms, data compression, encryption algorithms, and optimization. For most other tasks, modern programming languages allow the programmer to work directly with abstractions instead of bits that represent those abstractions. Source code that does bit manipulation makes use of the bitwise operations: AND, OR, XOR, NOT, and bit shifts.
+    1 byte comprises of 8 bits. Any integer or character can be represented using bits, which we call its binary form (containing only 1 or 0) or its base 2 representation.
     
-    Bit manipulation, in some cases, can obviate or reduce the need to loop over a data structure and can give many-fold speed ups, as bit manipulations are processed in parallel, but the code can become more difficult to write and maintain.
+    For example, $14 = (1110)_2 = = 1 * 2^3 + 1 * 2^2 + 1 * 2^1 + 0 * 2^0$  
     
-    At the heart of bit manipulation are the bit-wise operators \begin{itemize}
-        \item \& (and)
-        \item $\vert$ (or)
-        \item $\sim$ (not)
-        \item $\wedge$ (exclusive-or, xor)
-        \item a $<<$ b, a $>>$ b (shift operators)
+    At the heart of bit manipulation are the bit-wise operators: 
+    \begin{itemize}
+        \item \textbf{AND} -- $\And$ 
+        
+        $A = 5 = (101)_2$, $B = 3 = (011)_2$
+
+        $A \And B = (101)_2  \And (011)_2 = (001)_2 = 1$
+        
+        \item \textbf{OR} -- $\vert$ 
+        
+        $A = 5 = (101)_2 , B = 3 = (011)_2$
+        
+        $A \vert B = (101)_2 \  \vert \ (011)_2 = (111)_2 = 7$
+        
+        \item\textbf{NOT} -- $\sim$ 
+        
+        $N = 5 = (101)_2$
+        
+        $\sim N = \sim 5 = \sim (101)_2 = (010)_2 = 2$
+        
+        \item \textbf{XOR} -- $\wedge$ 
+        
+        The exclusive-or operation takes two inputs and returns a 1 if either one or the other of the inputs is a 1, but not if both are.
+        
+        $A = 5 = (101)_2 , B = 3 = (011)_2$
+        
+        $A \wedge B = (101)_2 \wedge (011)_2 = (110)_2 = 6$
+        
+        \item  \textbf{SHIFT} -- a $<<$ b, a $>>$ b
+        
+        Left shift operator shifts some number of bits to the left and appends 0 at the end. Left shift is equivalent to multiplying the bit pattern with $2^k$ (if we are shifting $k$ bits ).
+        
+        $1 << n = 2^n$
+        
+        Right shift operator shifts some number of bits, to the right and appends 1 at the end. Right shift is equivalent to dividing the bit pattern by $2k$ (if we are shifting $k$ bits).
+        
+        $16 >> 4 = 1$
+        
     \end{itemize}
-    The exclusive-or operation takes two inputs and returns a 1 if either one or the other of the inputs is a 1, but not if both are. That is, if both inputs are 1 or both inputs are 0, it returns 0. Bitwise exclusive-or, with the operator of a caret, performs the exclusive-or operation on each pair of bits. Exclusive-or is commonly abbreviated XOR.
+    
+    A big advantage of bit manipulation is that it can help to iterate over all the subsets of an N-element set. If we represent each element in a subset with a bit,which can be either 0 or 1, we can use a bit array to denote whether a corresponding element belongs to this given subset or not. Then, each bit pattern will represent a possible subset. Set operations are listed below,
     
     \begin{itemize}
-        \item Set union: $A \vert B$
-        \item Set intersection: $A \And B$
-        \item Set subtraction: $A \And \sim B$
-        \item Set negation: $\text{ALL BITS } \wedge A$ or $\sim A$
-        \item Set bit: $A \vert= 1 <<  \text{bit}$
-        \item Clear bit: $A \And = \sim (1 << \text{bit})$
-        \item Test bit: $(A \& 1 << \text{bit}) != 0$
-        \item Extract last bit: $A\And-A$ or $A \And \sim (A-1)$ or $x\wedge (x \And (x -1))$
-        \item Remove last bit: $A \And (A-1)$
-        \item Get all 1-bits: $\sim 0$
+        \item \textbf{Set union} -- $A \vert B$
+        \item \textbf{Set intersection} -- $A \And B$
+        \item \textbf{Set subtraction} -- $A \And \sim B$
+        \item \textbf{Set negation} -- $\text{ALL BITS } \wedge A$ or $\sim A$
+        
+        \item \textbf{Set bit}  -- $A \vert= 1 <<  \text{bit}$
+        
+        $(1 << n)$ will return a number with only nth bit set. So if we OR it with $x$ it will set the nth bit of $x$.
+        
+        \item \textbf{Clear bit} -- $A \And = \sim (1 << \text{bit})$
+        \item \textbf{Test bit} -- $(A \And 1 << \text{bit}) != 0$
+        \item \textbf{Extract last bit} -- $A\And-A$ or $A \And \sim (A-1)$ or $x\wedge (x \And (x -1))$
+        
+        $(-x)$ is the two’s complement of $x$ and will have all the bits flipped that are on the left of the rightmost 1 in $x$. So $x \And (-x)$ will return rightmost 1.
+        
+        \item \textbf{Remove last bit} -- $A \And (A-1)$
+        \item \textbf{Get all 1-bits} -- $\sim 0$
     \end{itemize}
     
-    Two's complement is a mathematical operation on binary numbers, and is an example of a radix complement. It is used in computing as a method of signed number representation. The two's complement of an N-bit number is defined as its complement with respect to $2^N$. For instance, for the three-bit number 010, the two's complement is 110, because 010 + 110 = 1000. The two's complement is calculated by inverting the digits and adding one.
+    Basic use cases of bit manipulations are given below,
+    
+    \begin{enumerate}
+        \item \textbf{Check if a given number $x$ is a power of 2} --
+        
+        The binary representation of $(x-1)$ will have all the bits same as $x$, except for the rightmost $1$ in $x$ and all the bits to the right of the rightmost $1$. 
+        
+        $x \And (x-1)$ will have all the bits equal to the $x$ except for the rightmost $1$ in $x$.
+        
+        If the number is neither zero nor a power of two, it will have 1 in more than one place. So if $x$ is a power of 2 then $x \And (x-1)$ will be 0.
+         
+        $x = 4 = (100)_2$
+        
+        $x - 1 = 3 = (011)_2$
+        
+        $x \And (x-1) = 4 \And 3 = (100)_2 \And (011)_2 = (000)_2$
+         
+         \item \textbf{Count the number of ones in the binary representation of the given number} --
+         
+         Recall, $(x-1)$ has the rightmost $1$ and all bits to the right of it are flipped in comparison to $x$. So, setting $x = x \And (x-1)$ will reduce the number of 1 bits by 1. We may do this repeatedly while incrementing a counter until $x = 0$.
+         
+         \item \textbf{Find the largest power of 2 which is less than or equal to the given number N.} -- 
+         
+         Change all the bits which are at the right side of the most significant digit to 1. Then the number will become $x + (x-1) = 2 * x -1$ , where $x$ is the required answer.
+         
+        For a 16 bit integer,
+        $N = N| (N>>1);
+        N = N| (N>>2);
+        N = N| (N>>4);
+        N = N| (N>>8); \text{ return } (N+1)>>1$
+         
+     \end{enumerate}
+    
+    \textbf{Two's complement} is a mathematical operation on binary numbers, and is an example of a radix complement. The two's complement is calculated by inverting the digits and adding one. The two's complement of an N-bit number is defined as its complement with respect to $2^N$. For instance, for the three-bit number 010, the two's complement is 110, because 010 + 110 = 1000. 
+
+    
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1946,7 +2058,7 @@ comb = itertools.combinations([1, 2, 3], 2)
 comb = itertools.combinations_with_replacement([1, 2, 3])
 \end{lstlisting}
 
-    \subsection{Cartesian Product}
+    \subsubsection{Cartesian Product}
     The Cartesian product of two sets $A$ and $B$, is the set of all ordered pairs $(a, b)$ where $a \in A$ and $b \in B$.
 
 \begin{lstlisting}[language=Python]
@@ -1954,7 +2066,13 @@ import itertools
 A = [1, 2, 3]
 B = [4, 5, 6]
 
-# product of two iterable of size 2, one element from each
+# product of two iterables taking one element from each
+## Using nested for loop
+for a in A: 
+    for b in B:
+        results.append((a, b))
+
+## Using itertools module
 list(itertools.product(A, B))
 
 # product of iterable with itself of size 2
@@ -1982,6 +2100,55 @@ contiguous_sublist_count = len(contiguous_sublists([0] * n ))
 assert iterative_sum_count == nth_partial_sum == contiguous_sublist_count
 \end{lstlisting}
 
+    \subsubsection{Derangement}
+    A derangement is a permutation of the elements of a set, such that no element appears in its original position. In other words, a derangement is a permutation that has no fixed points.
+    
+    $!n$ ($n$ subfactorial) is the number of derangements — $n$-permutations where all of the n elements change their initial places.
+    \[
+        !n=(n-1)({!(n-1)}+{!(n-2)})
+    \]
+    \[
+        !n=n!\sum_{i=0}^{n}{\frac {(-1)^{i}}{i!}}
+    \]
+    
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+import random
+
+def random_derangement(n):
+    while True:
+        v = [i for i in range(n)]
+        for j in range(n - 1, -1, -1):
+            p = random.randint(0, j)
+            if v[p] == j:
+                break
+            else:
+                v[j], v[p] = v[p], v[j]
+        else:
+            if v[0] != 0:
+                return tuple(v)
+\end{lstlisting}
+
+    \subsubsection{Fibonacci Numbers}
+    A recursively defined sequence with a strong relation to the golden ratio.
+    
+    \[
+         F_{0}=0, \ F_{1}=1 \ \text{and} \ 
+        F_{n}=F_{n-1}+F_{n-2} \ \text{for}  \ n > 1.
+    \]
+    
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+# Fibonacci Series using Dynamic Programming  
+def fibonacci(n):
+    if n <= 1: return n
+    dp = [1, 2]
+    for i in range(3, n+1):
+        curr = dp[0] + dp[1]
+        dp[0], dp[1] = dp[1], curr
+    return dp[1]
+\end{lstlisting}
+
     \subsubsection{Lattice Paths}
 
     A sequence of ordered pairs $(m_1, n_1), (m_2, n_2), \cdots, (m_t, n_t)$ such that a coordinate moves one unit either horizontally or vertically from its previous coordinate, i.e.:
@@ -2005,7 +2172,55 @@ def unique_paths(m, n):
     return numerator / denominator
 \end{lstlisting}
 
-    \subsubsection{Stars and bars}
+    \subsubsection{Catalan Numbers}
+    Catalan numbers are a sequence of natural numbers that occur in various counting problems,
+    \begin{enumerate}
+        \item The number of lattice paths from $(0, 0)$ to $(n, n)$ that do not go above the diagonal line $y = x$.
+        
+        \item Forming a bijection with up/down movements as characters $X, Y$, shows that $C_n$ counts the number of Dyck words.
+        
+        \item The number of valid arrangement of $n$ pairs of opening and closing parenthesis.
+        
+        \item Re-interpreting the parenthesis as binary operators, i.e. associative multiplication orders, can count the number of possible orderings. 
+        
+        \item We may again re-interpret the binary operations count as being equivalent to the number of unique rooted full binary tree structures with n + 1 leaves.
+        
+        \item The number of ways a convex polygon of $n+2$ sides can split into triangles by connecting vertices.
+    \end{enumerate}
+    Binomial coefficient formula,
+    \[
+        C(n) = \frac{1}{n+1}\binom{2n}{n}.
+    \]
+    
+    Recursive definition,
+    \[
+    C_0 = 1,\ \ C_{n+1} = \frac{2(2n+1)}{n+2} \cdot C_n. 
+    \]
+    
+    The first few Catalan numbers are: $1, 1, 2, 5, 14, 42, 132, 429, 1430, 4862, 16796, 58786, \dots$ 
+    
+    The time complexity of a brute-force computation of a Catalan number is $\bigO(3^n)$ which can be reduced to $\bigO(2^n)$ if recursive calls are memoized.
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def catalan_recursive(n):
+    C = 1
+    for i in range(0, n):
+        C = C * 2*(2*i+1)/(i+2)
+    return int(C)
+    
+def catalan_dp(n): 
+    if n <= 1: return 1
+    dp = [0] * (n + 1) 
+    dp[0] = dp[1] = 1
+    for i in range(2, n + 1): 
+        dp[i] = 0
+        for j in range(i): 
+            dp[i] = dp[i] + dp[j] * dp[i-j-1] 
+    return dp[n]
+\end{lstlisting}
+
+    \subsubsection{Stars and Bars}
 
     The number of ways to put $n$ identical objects into $k$ labeled boxes is,
     \[
@@ -2023,11 +2238,96 @@ def stars_and_bars(n, k):
         yield [b - a - 1 for a, b in zip((-1,) + c, c + ( n + k - 1,))]
 \end{lstlisting}
 
-    % \subsection{Advanced}
-    % \subsubsection{Probabilistic Data Structures}
-    % \subsubsection{Linear Programming}
-    % \subsubsection{Lambda Calculus}
+\newpage
+\section{Appendix}
+
+\subsection{Powers of 2 Table}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=10cm]{powers-of-two.png}
+\end{figure}
+
+\subsection{Array Sorting Algorithms Table}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=13cm]{Array_sorting_algorithms.png}
+\end{figure}
+
+
+\subsection{Algorithm Optimization Checklist}
+\begin{itemize}
+    \item  Best Conceivable Runtime (BCR). Try to derive an approach from an ideal upper bound on the solution
+    \item Consider making a space-time tradeoff, usually in the form of a hashtable or cached results
+    \item Data Structure Brainstorm. Linked List, Array, Stack, Queue, Heap, Binary tree, Hashtables, etc.
+    \item Simplify and Generalize. Simplify problem statement then attempt to generalize solution
+    \item Look for BUD (bottlenecks, unnecessary work, duplicated work)
+    \item DIY (Do It Yourself). Design an algorithm around how you would solve an analgous real-word scenario without programming
     
+\end{itemize}
+
+\subsection{Whiteboard Interview Checklist}
+\begin{enumerate}
+    \item  Restate and reduce problem
+    \begin{itemize}
+        \item  Spend some time simplifying and re-stating problem in your own words
+        \item Can you pre-process the input or re-interpret the desired output solution to simplify or reduce the problem?
+        \item What are problematic or challenging areas that might arise from certain inputs?
+        What are your intuitions about possible solutions? You can revisit these ideas later.
+    \end{itemize}
+    
+    \item State brute-force solution
+    \begin{itemize}
+        \item Give overview of approach
+        \item Find time and space complexity
+        \item If you don't have any immediate ideas for an optimized solution, spend time elaborating on the brute force algorithm, otherwise mention that we can do better and can move on
+    \end{itemize}
+    
+     \item Optimize previous approach or introduce new, better approach
+
+    \begin{itemize}
+        \item Give overview of approach
+        \item Find time and space complexity
+        \item Brainstorm using Algorithm Optimization Checklist. Avoid getting stuck on memory recall.
+        \item Repeat or expand, always spend extra time considering alternative approaches before settling on solution
+        \item When out of ideas or if able to meet best conceivable runtime, prompt interviewer for approval: ``If you're happy with this approach, I can go into the finer details and begin implemention''
+    \end{itemize}
+    
+     \item Consider more granular implementation details
+
+    \begin{itemize}
+        \item Describe edge cases: (ex: empty input, invalid inputs, large inputs)
+        \item Consider boundary conditions if dealing with iterations, indexed arrays, ranges
+        \item Describe sufficiently complex test case if none are given, consider problem areas
+        \item Reconsider minor optimizations to general approach (short-circuiting, data structures, caching)
+        \item If using recursion, note limitations of relying on call stack
+    \end{itemize}
+    
+    \item Implement
+    \begin{itemize}
+        \item Speak aloud your thinking process, even when stuck
+        \item Add base case, i.e. empty inputs, invalid input error checks
+        \item Use descriptive variable and function names
+        \item Add inline comments when necessary
+        \item Do not repeat yourself (DRY)
+        \item Use modular code when possible
+        \item Follow coding principles (Correct, Efficient, Simple, Readable, Maintainable)
+    \end{itemize}
+    
+     \item Validate and test with dry runs
+    \begin{itemize}
+        \item Double check for any syntax errors
+        \item Walk through code using sufficiently complex test cases
+        \item Ensure boundary conditions don't cause errors
+    \end{itemize}
+    
+     \item Re-state final analysis
+    \begin{itemize}
+        \item State time and space complexity of implementation
+        \item Consider further optimizations if time complexity is not BCR and space complexity is not constant
+    \end{itemize}
+\end{enumerate}
+
     
 % \section{Notable Problems}
 %     \subsection{Increment Sub-array}
@@ -2059,6 +2359,10 @@ David Liu, Data Structures and Analysis: Lecture Notes for CSC263, Department of
 McDowell, Gayle Laakmann, Cracking The Coding Interview: 150 Programming Questions and Solutions. Palo Alto, CA :CareerCup, LLC, 2011.
 
 \bibitem{e}
+Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, and Clifford Stein. 2009. Introduction to Algorithms, Third Edition (3rd. ed.). The MIT Press.
+
+
+\bibitem{f}
 Keller, M.T. and Trotter, W.T., Applied Combinatorics, Open Textbook Library,
 
 ISBN9781534878655
