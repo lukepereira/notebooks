@@ -345,6 +345,8 @@ class TreeNode:
     \end{itemize}
     
     A heap will be better at findMin/findMax ($\bigO(1)$), while a BST is performant at all finds ($\bigO(\log n)$). A heap is especially good at basic ordering and keeping track of max and mins.
+    
+    Note, heapq creates a min-heap by default. To create a max-heap, you will need to invert value before storing and after retrieving. Alternatively, you can define a class to wrap the module and override and invert the comparison method.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -991,7 +993,16 @@ def heapsort(A):
     
     Instead of using comparison operations as in previous sorting algorithms, counting sort uses integer sorting and relies on a sorting technique based on keys between a specific range. It works by counting the number of objects having distinct key values (a kind of hashing), then doing some arithmetic to calculate the position of each object in the output sequence.
     
-    Its running time is linear in the number of items and the difference between the maximum and minimum key values, so it is only suitable for direct use in situations where the variation in keys is not significantly greater than the number of items. However, it is often used as a subroutine in another sorting algorithm, radix sort, that can handle larger keys more efficiently.
+    Its running time is linear in the number of items and the difference between the maximum and minimum key values, so it is only suitable for use in situations where the variation in keys is not significantly greater than the number of items. 
+    
+    
+     Counting sort is a \textbf{stable} sorting algorithm, meaning the order in which identical values appear in the sorted result will be the same as in the unsorted array. Because of this property, it is often used as a subroutine in another sorting algorithm, radix sort, that can handle larger keys more efficiently.
+   
+    \begin{enumerate}
+        \item In the auxiliary array, add counts of the number in its corresponding index. Note, the index of the auxiliary array represents the numeric value in the original array. Knowing the count of repeated numeric values will help us discern the contiguous indices needed to store each number. 
+        \item Iterate over the auxiliary array, add the number to left of the current number, generating an accumulative sum. This will later give us the starting position of the current number since the counts of the previous numbers will need be allocated in the indices to the left in a sorted array.
+        \item Shift all the elements of the auxiliary array to right with the left-most value being zero. This will give us our finalized zero-indexed mapping of array indices (representing a numeric value) to a value representing the starting index in a sorted array.
+    \end{enumerate}
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1023,9 +1034,9 @@ def count_sort(A):
     \subsubsection{Radix Sort}
     Time Complexity: $\bigO(w \cdot n)$ average and worst case, Space Complexity: $\bigO(w + n)$ (where $w$ is the number of bits required to store each key and $n$ is the length of the array to be sorted)
     
-    Radix is a Latin word for ``root" which can be considered a synonym for an arithmetical base, where decimal is base 10. For simplicity, say you want to use the decimal radix (= 10) for sorting. Then you would start by separating the numbers by units and then putting them together again; next you would separate the numbers by tens and then put them together again; then by hundreds and so on until all the numbers are sorted. Each time you loop, just read the list from left to right. You can also imagine you are separating the numbers into buckets. 
+    Radix is a Latin word for ``root" which can be considered a synonym for an arithmetical base, where decimal is base 10. For simplicity, say you want to use the decimal radix (= 10) for sorting. Radix sort, sometimes called bucket sort, makes use of the stable sorting property by iteratively applying counting sort on a single digit of all the elements, i.e. by sorting the numbers by tens and then putting them together again; then by hundreds and so on,  which will eventually produce an array sorted ascending order. 
     
-    Radix sort can be applied to data that can be sorted lexicographically, i.e integers, words, playing cards, etc. Unlike radix sort, quicksort is universal, while radix sort is only useful for fixed length integer keys. $w$ can be interpreted as the length of the longest value in an array of length $n$. If $k = n$, then  $\bigO(k * n) = \bigO(n^2)$. We see that radix sort will only outperform quicksort when the longest value can be interpreted in less values (digits) than the size of the given array.
+    Radix sort, can be applied to data that can be sorted lexicographically, i.e integers, words, playing cards, etc. Unlike radix sort, quicksort is universal, while radix sort is only useful for fixed length integer keys. $w$ can be interpreted as the length of the longest value in an array of length $n$. If $k = n$, then  $\bigO(k * n) = \bigO(n^2)$. We see that radix sort will only outperform quicksort when the longest value can be interpreted in less values (digits) than the size of the given array.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1068,7 +1079,7 @@ def radix_sort(A):
     \subsubsection{Two Pointer Technique}
     Time complexity: $\bigO(n^2)$, Space Complexity: $\bigO(1)$
     
-    The two pointer technique uses two references to values in a given array to check if they satisfy a condition otherwise the pointers usually move towards the middle of the array being iterated over.
+    The two pointer technique uses two references to values in a given array to check if they satisfy a condition, otherwise the pointers usually move towards the middle of the array being iterated over.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1087,11 +1098,9 @@ def left_right_boundary(self, seq):
     \subsubsection{Fast and Slow Pointers}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(1)$
     
-    The fast and slow pointers/runners pattern (a.k.a. Floyd’s Tortoise and Hare Algorithm) is very useful when dealing with cyclic linked lists or arrays. By moving at different speeds, the algorithm proves that the two pointers are going to meet eventually. The fast pointer should catch the slow pointer once both the pointers are in a cyclic loop.
-     
-    If the list has $n$ nodes, then in $\leq n$ steps, either the fast pointer will find the end of the list, or there is a loop and the slow pointer will be in the loop.
+    The fast and slow pointers/runners technique (a.k.a. Floyd’s Tortoise and Hare Algorithm) is useful when dealing with cyclic linked lists or arrays. By moving at different rates, the algorithm proves that the two pointers are either going to meet eventually or one will reach the end of the list. That is, the fast pointer should catch the slow pointer once both the pointers are in a cyclic loop. 
     
-    Lets say the loop is of length $m \leq n$: Once the slow pointer is in the loop, both the fast and slow pointers will be stuck in the loop forever. Each step, the distance between the fast and the slow pointers will increase by 1. When the distance is divisible by $m$, then the fast and slow pointers will be on the same node and the algorithm terminates. The distance will reach a number divisible by $m$ in $\leq m$ steps.
+    If the list has $n$ nodes, then in $\leq n$ steps, either the fast pointer will find the end of the list, or there is a loop and the slow pointer will be in the loop. Suppose the loop is of length $m \leq n$, then once the slow pointer is in the loop, both the fast and slow pointers will be stuck in the loop forever. Each step, the distance between the fast and the slow pointers will increase by 1. When the distance is divisible by $m$, then the fast and slow pointers will be on the same node and the algorithm terminates. The distance will reach a number divisible by $m$ in $\leq m$ steps.
 
     So, getting the slow pointer to the loop, and then getting the fast and slow pointers to meet takes $\leq n + m \leq 2n$ steps, and that is in $\bigO(n)$.
 
@@ -1112,13 +1121,13 @@ def has_cycle(self, head):
     \subsubsection{Sliding Window Technique}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(k)$, where $k$ is the length of a pattern or restrict sequence 
     
-    \begin{enumerate}
-        \item Use two pointers, start and end, to represent a window.
-        \item Move end to find a valid window.
-        \item When a valid window is found, move start to find a smaller window.
-    \end{enumerate}
+    Sliding windows are commonly used to find a match or maximum/minimum in a given subarray or substring. It uses two pointers as the boundary of a sliding window to traverse and can also use a counter dictionary to maintain current state.
     
-    Sliding windows are commonly used to find a match or maximum/minimum in a given subarray or substring. It uses two pointers as the boundary of a sliding window to traverse and may also use a counter dictionary to maintain current state.
+    \begin{enumerate}
+        \item Define two pointers, start and end, to represent the sliding window.
+        \item Move end to search for a valid window.
+        \item When a valid window is found, move start to find a smaller valid window, continuing until the smallest valid window is found.
+    \end{enumerate}
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1211,8 +1220,9 @@ def max_after_operations(n, operations):
     This problem can be solved using several different techniques, including brute force, divide and conquer, dynamic programming, and reduction to shortest paths. Kadane's algorithm can be viewed as a trivial example of dynamic programming which will be visited in more detail later.
     
     \begin{enumerate}
-        \item Use the input vector nums to store the candidate subarrays sum (i.e. the greatest contiguous sum so far).
+        \item Use the input array of nums to store the candidate subarrays sum (i.e. the greatest contiguous sum so far).
         \item Ignore cumulative negatives, as they don't contribute positively to the sum.
+        \item Return the max value of the mutated nums array, which will be the maximum contiguous subararry sum.
     \end{enumerate} 
     
 \vspace{8pt} \emph{Python Implementation}
@@ -1223,6 +1233,45 @@ def maxSubArray(self, nums: List[int]) -> int:
             nums[i] += nums[i-1]
     return max(nums)
 \end{lstlisting}
+    
+    \subsubsection{Merge Intervals}
+    Time Complexity: $\bigO(n \log n)$, Space Complexity: $\bigO(n)$
+    
+    An interval problem has an input of a 2d array in which each nested array represents a start and an end value. The interval can also be represented as an object with start and end attributes.
+    
+    Given two intervals A and B, there will be six different ways the two intervals can relate to each other:
+    \begin{enumerate}
+        \item A and B do not overlap, A before B
+        \item A and B overlap, B ends after A
+        \item A completely overlaps B
+        \item A and B overlap, A ends after B
+        \item  A and B do not overlap, B before A
+    \end{enumerate}
+    If a.start $\leq$ b.start, only 1, 2 and 3 are possible from the above scenarios.  Our goal is to merge the intervals whenever they overlap.
+    
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def merge_intervals(self, intervals):
+    if len(intervals) < 2: return intervals
+
+    intervals.sort(key=lambda x: x[0])
+    merged = []
+    start = intervals[0][0]
+    end = intervals[0][1]
+
+    for i in range(1, len(intervals)):
+        interval = intervals[i]
+        if interval[0] <= end:  # overlapping intervals
+            end = max(interval[1], end)
+        else:  # non-overlapping interval, add the previous interval and reset
+            merged.append([start, end])
+            start = interval[0]
+            end = interval[1]
+
+    merged.append([start, end])  # add the last interval
+    return merged
+\end{lstlisting}
+    
     
     \subsection{String Analysis Methods}
     A string is a sequence of ASCII characters. Many analysis techniques that apply to arrays can also be used on string inputs when they are interpreted as character arrays.
@@ -1276,69 +1325,7 @@ class KMP:
         \item The \textbf{Damerau–Levenshtein distance} allows insertion, deletion, substitution, and the transposition of two adjacent characters.
         \item The \textbf{Jaro distance} allows only transposition.
     \end{enumerate}
-
-    \subsubsection{Merge Intervals}
-    Time Complexity: $\bigO(n \log n)$, Space Complexity: $\bigO(n)$
     
-    An interval problem has an input of a 2d array in which each nested array represents a start and an end value. The interval can also be represented as an object with start and end attributes.
-    
-    Given two intervals A and B, there will be six different ways the two intervals can relate to each other:
-    \begin{enumerate}
-        \item A and B do not overlap, A before B
-        \item A and B overlap, B ends after A
-        \item A completely overlaps B
-        \item A and B overlap, A ends after B
-        \item  A and B do not overlap, B before A
-    \end{enumerate}
-    If a.start $\leq$ b.start, only 1, 2 and 3 are possible from the above scenarios.  Our goal is to merge the intervals whenever they overlap.
-    
-\vspace{8pt} \emph{Python Implementation}
-\begin{lstlisting}[language=Python]
-def merge_intervals(self, intervals):
-    if len(intervals) < 2: return intervals
-
-    intervals.sort(key=lambda x: x[0])
-    merged = []
-    start = intervals[0][0]
-    end = intervals[0][1]
-
-    for i in range(1, len(intervals)):
-        interval = intervals[i]
-        if interval[0] <= end:  # overlapping intervals
-            end = max(interval[1], end)
-        else:  # non-overlapping interval, add the previous interval and reset
-            merged.append([start, end])
-            start = interval[0]
-            end = interval[1]
-
-    merged.append([start, end])  # add the last interval
-    return merged
-\end{lstlisting}
-    
-    \subsection{Tree Traversal}
-    Given a binary tree, an \textbf{in-order traversal} (LNR) means to visit the left branch, then the current node, and finally, the right branch. A \textbf{pre-order traversal} (NLR) visits the current node before its child nodes, i.e. the root is always the first node visited. A \textbf{post-order traversal} (LRN) visits the current node after its child nodes, i.e. the root node is always the last node visited.
-
-\vspace{8pt} \emph{Python Implementation}
-\begin{lstlisting}[language=Python]  
-def inorder(root): 
-    if root: 
-        inorder(root.left) 
-        print(root.val)
-        inorder(root.right) 
-  
-def postorder(root): 
-    if root: 
-        postorder(root.left) 
-        postorder(root.right) 
-        print(root.val)
-        
-def preorder(root): 
-    if root: 
-        print(root.val)
-        preorder(root.left) 
-        preorder(root.right) 
-\end{lstlisting}
- 
     \subsection{Heap Use Cases}
     \subsubsection{Top K Numbers}
     The best data structure to keep track of top $K$ elements is a heap. If we iterate through an array, one element at a time, and keep $K$-th largest element in a heap such that each time we find a larger number than the smallest number in the heap, we do two things:
@@ -1346,7 +1333,7 @@ def preorder(root):
         \item Take out the smallest number from the heap
         \item Insert the larger number into the heap
     \end{enumerate}
-    This will ensure that we always have top $K$ largest numbers in the heap. We may use a min-heap for this.
+    This will ensure that we always have top $K$ largest numbers in the heap. To easily remove the smallest value we may use a min-heap.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1403,6 +1390,29 @@ class MedianFinder:
         return (large[0] - small[0]) / 2.0
 \end{lstlisting}
 
+    \subsection{Tree Traversal}
+    Given a binary tree, an \textbf{in-order traversal} (LNR) means to visit the left branch, then the current node, and finally, the right branch. A \textbf{pre-order traversal} (NLR) visits the current node before its child nodes, i.e. the root is always the first node visited. A \textbf{post-order traversal} (LRN) visits the current node after its child nodes, i.e. the root node is always the last node visited.
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]  
+def inorder(root): 
+    if root: 
+        inorder(root.left) 
+        print(root.val)
+        inorder(root.right) 
+  
+def postorder(root): 
+    if root: 
+        postorder(root.left) 
+        postorder(root.right) 
+        print(root.val)
+        
+def preorder(root): 
+    if root: 
+        print(root.val)
+        preorder(root.left) 
+        preorder(root.right) 
+\end{lstlisting}
     \subsection{Graph Traversal}
     
     \subsubsection{Breadth-First Search}
@@ -1412,14 +1422,14 @@ class MedianFinder:
     
     In BFS, node x visits each of x's neighbors before visiting any of their neighbors. You can think of this as searching level by level out from x. An iterative solution involving a \textbf{queue} usually works best, this means that you should avoid using recursion which will have a stack LIFO ordering.
     
-    When implemented with an Adjacency List, the time complexity of BFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix it will be $\bigO(|V|^2)$. The complexity difference occurs due to the fact that in an Adjacency Matrix we must iterate through all possible adjacent edges to find existing outgoing edges, which takes $O(|V|)$ time summed over $|V|$ vertices. So $\bigO(|V| + |E|) = \bigO(|V| + |V|^2) = \bigO(|V|^2)$.
+    When a graph is implemented with an Adjacency List, the time complexity of BFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix it will be $\bigO(|V|^2)$. The complexity difference occurs due to the fact that in an Adjacency Matrix we must iterate through all possible adjacent edges to find existing outgoing edges, which takes $O(|V|)$ time summed over $|V|$ vertices. So $\bigO(|V| + |E|) = \bigO(|V| + |V|^2) = \bigO(|V|^2)$.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 
 from collections import deque
 
-# Using an adjacency matrix graph representation
+# BFS on graph represented as an adjacency matrix
 def bfs(adj_matrix):
     if not adj_matrix: return []
     rows, cols = len(adj_matrix), len(adj_matrix[0])
@@ -1444,7 +1454,7 @@ def bfs(adj_matrix):
         for j in range(cols):
             traverse(i, j)
             
-# Using a python dictionary as an adjacency list
+# BFS on graph represented by an adjacency list 
 adj_list = {
     'A' : ['B','C'],
     'B' : ['A', 'C'],
@@ -1453,7 +1463,7 @@ adj_list = {
 def bfs(adj_list):
     visited = set()
     
-    traverse(node):
+    def traverse(node):
         queue = deque([node])
         while queue:
             cur = queue.popleft()
@@ -1520,7 +1530,7 @@ def dfs(adj_list):
     
     An algorithm for finding the shortest paths between nodes in a positive weighted, directed, acyclic graph. For a given source node in the graph, the algorithm finds the shortest path between that node and every other. Let the node at which we are starting be called the initial node and the distance of node Y be the distance from the initial node to Y. Dijkstra's algorithm will assign some initial distance values and will try to improve them iteratively, prioritizing shorter distances and edges with low weights in its path discovery process.
     
-    Breadth-first search will find you the path with the fewest segments. But in Dijkstra’s algorithm, you assign a number or weight to each segment. Then Dijkstra’s algorithm finds the path with the smallest total weight.
+    Breadth-first search will find the path with the fewest segments. But in Dijkstra’s algorithm, you assign a number or weight to each segment. Then Dijkstra’s algorithm finds the path with the smallest total weight.
     
     \begin{enumerate}
         \item Mark all nodes unvisited and store them in a set.
@@ -1570,11 +1580,11 @@ def dijkstra(edges, start, end):
             for weight, v2 in graph.get(v1, ()):
                 if v2 in visited: continue
                 
-                next = cost + weight
-                prev = mins.get(v2, None)
-                if prev is None or next < prev:
-                    mins[v2] = next
-                    heapq.heappush(q, (next, v2, path))
+                next_cost = cost + weight
+                prev_cost = mins.get(v2, None)
+                if prev_cost is None or next_cost < prev_cost:
+                    mins[v2] = next_cost
+                    heapq.heappush(q, (next_cost, v2, path))
 
     return float("inf")
 \end{lstlisting}
@@ -1664,7 +1674,7 @@ def topological_sort(graph):
     Greedy algorithms are only ideal for problems which have optimal substructure. A problem is said to have \textbf{optimal substructure} if an optimal solution can be constructed efficiently from optimal solutions of its subproblem. Typically, a greedy algorithm is used to solve a problem with optimal substructure if it can be proven by induction that it is optimal at each step. Otherwise, provided the problem exhibits overlapping subproblems, then dynamic programming is preferable. If there are no appropriate greedy algorithms and the problem fails to exhibit overlapping subproblems, often a lengthy but straightforward search of the solution space is the best alternative.
     
     \subsubsection{Backtracking}
-    Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons a candidate (``backtracks") as soon as it determines that the candidate cannot possibly be completed to a valid solution. 
+    Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons a candidate as soon as it determines that the candidate cannot possibly be completed to a valid solution. 
     
     It is useful for exhaustive recursive problems in which the solution must follow some constraints. We may define a policy for recursion and when a computation does not meet the constraints, we halt or backtrack on the exhaustive recursion.
     
@@ -1677,7 +1687,6 @@ def topological_sort(graph):
         \item Our goal -- What's our target? What are we trying to find?
     \end{enumerate}
     
-    Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions, and abandons a candidate as soon as it determines that the candidate cannot possibly be completed to a valid solution.
 
     The difference between backtracking and depth-first search is that backtracking traverses in the solution space whereas DFS traverses in data structure space. DFS is a special type of backtracking paradigm where the process of backtracking only takes place in the leaf nodes whereas general backtracking algorithms can also preemptively reject useless branches of the state-space tree. Thus, DFS maintains the entire tree structure while backtracking creates a pruned tree.
     
@@ -1721,7 +1730,7 @@ assert generate_parenthesis(3) == [
 \end{lstlisting}
     
     \subsubsection{Dynamic Programming \& Memoization}
-    Dynamic programming (DP) is a general, powerful algorithm design technique. It is mostly just a matter of taking a recursive algorithm and finding the overlapping subproblems (that is, the repeated calls). You then cache those results for future recursive calls. Alternatively, you can study the pattern of the recursive calls and implement something iterative. You still cache previous work. A dynamical programming solution can only be used if the problem possesses the optimal substructure property, i.e. its global optimal solution can be constructed efficiently from optimal solutions of its subproblems. 
+    Dynamic programming (DP) is a general, powerful algorithm design technique. It is mostly just a matter of taking a recursive algorithm and finding the overlapping subproblems (that is, the repeated calls). You then cache those results for future recursive calls. Alternatively, you can study the pattern of the recursive calls and implement something iterative. You still cache previous work. A dynamic programming solution can only be used if the problem possesses the\textbf{ optimal substructure property}, i.e. its global optimal solution can be constructed efficiently from optimal solutions of its subproblems. 
     
     A problem is said to have \textbf{overlapping subproblems} if the problem can be broken down into subproblems which are reused several times or a recursive algorithm for the problem solves the same subproblem over and over rather than always generating new subproblems. DP corresponds to a careful bruteforce approach, taking an exponential algorithm and making it polynomial. The basic idea of dynamic programming is to take a problem, split it into subproblems, solve the subproblems, and re-use the solutions to the subproblems.
 
@@ -1735,7 +1744,7 @@ assert generate_parenthesis(3) == [
     
     % To prevent cycles in a cyclic graph, we can expand it into k layers where we may think of the layered axis as time and all edges connect a layer to one below it. This prevents any cycles from occuring. We want to find $S_k(s,v)$ = the weight of the shortest path from s to v that uses $\leq k$ edges. We now want to find, $S_k(s,v) = min_ (S_{k-1} (u,v) + w(u,v))$. By adding k parameter, the recurrence on subproblems is acyclic but the number of subproblems has increased to $v^2$ and the total running time is $\Theta (|V| |E|)$. This algorithm is analogous to the Bellman-Ford algorithm.
     
-    Defining subproblems for strings, sequences:
+    Subproblems for strings or sequences will be one of the following:
     \begin{itemize}
         \item \textbf{Suffixes} -- x[i:] for all i. Time complexity: $\bigO(n)$
         \item \textbf{Prefixes} -- x[:i] for all i. Time complexity: $\bigO(n)$
@@ -1769,11 +1778,11 @@ assert generate_parenthesis(3) == [
 \begin{lstlisting}[language=Python]
 # It takes n steps to reach to the top of a set of stairs. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
 
-def climbStairs(n):
-        dp = [1, 1]
-        for i in range(2, n + 1):
-            dp.append(dp[i-1] + dp[i-2])
-        return dp[n]
+def climbStairs(n): ## Fibonacci
+    dp = [1, 1]
+    for i in range(2, n + 1):
+        dp.append(dp[i-1] + dp[i-2])
+    return dp[n]
 
 # Compute the fewest number of coins that are needed to sum to an amount
 
@@ -1782,14 +1791,15 @@ def coinChange(coins, amount):
     dp = [0] + [MAX] * amount
 
     for i in range(1, amount + 1):
-        dp[i] = min(dp[i - c] if i - c >= 0 else MAX for c in coins) + 1
+        dp[i] = min(dp[i - c] if i - c >= 0 else MAX for c in coins) + 1 
 
     return [dp[-1], -1][dp[-1] == MAX]
+    # return dp[-1] if dp[-1] == MAX else -1
 
 # Given a knapsack with a maximum weight capacity and a list of items with value and weights, maximize the amount of value we can fit within the knapsacks weight capacity.
 
 def knapsack(capacity, weight, values, n):
-    if n == 0 or capacity == 0 :
+    if n == 0 or capacity == 0:
         return 0
     # If weight is higher than capacity then it is not included
     if (weight[n-1] > capacity):
@@ -1799,7 +1809,6 @@ def knapsack(capacity, weight, values, n):
         return max(
             values[n-1] + knapsack(capacity-weight[n-1], weight, values, n-1),
             knapsack(capacity, weight, values, n-1)
-
 
 # Given an unsorted array of integers, find the length of longest increasing subsequence.
 
@@ -1816,7 +1825,6 @@ def lengthOfLIS(nums):
     return max(dp)
 
 # Given two strings text1 and text2, return the length of their longest common subsequence.
-
 
 import functools
 def lcs_cache(text1: str, text2: str) -> int:
@@ -1845,7 +1853,7 @@ def lcs_table(X, Y):
     return L[m][n] 
 \end{lstlisting}
 
-       \subsubsection{DAGs}
+   \subsubsection{DAG model}
     
     Many problems involve finding a solution by processing the state space, i.e. the space of all possible results, in order to find the optimal result. An algorithm processes the state space by making a series of decisions and completes when it knows it has found the best resulting set of decisions. We can think of this decision space in terms of a graph structure in which each node being traversed is an inclusion to our resulting decision which is represented by a path and each outgoing edges indicates a reachable link from one state to another. 
     
@@ -1910,17 +1918,7 @@ def lcs_table(X, Y):
         
         $16 >> 4 = 1$
         
-    \end{itemize}
-    
-    A big advantage of bit manipulation is that it can help to iterate over all the subsets of an N-element set. If we represent each element in a subset with a bit,which can be either 0 or 1, we can use a bit array to denote whether a corresponding element belongs to this given subset or not. Then, each bit pattern will represent a possible subset. Set operations are listed below,
-    
-    \begin{itemize}
-        \item \textbf{Set union} -- $A \vert B$
-        \item \textbf{Set intersection} -- $A \And B$
-        \item \textbf{Set subtraction} -- $A \And \sim B$
-        \item \textbf{Set negation} -- $\text{ALL BITS } \wedge A$ or $\sim A$
-        
-        \item \textbf{Set bit}  -- $A \vert= 1 <<  \text{bit}$
+        \item \textbf{Set a bit}  -- $A \vert= 1 <<  \text{bit}$
         
         $(1 << n)$ will return a number with only nth bit set. So if we OR it with $x$ it will set the nth bit of $x$.
         
@@ -1932,6 +1930,16 @@ def lcs_table(X, Y):
         
         \item \textbf{Remove last bit} -- $A \And (A-1)$
         \item \textbf{Get all 1-bits} -- $\sim 0$
+        
+    \end{itemize}
+    
+    A big advantage of bit manipulation is that it can help to iterate over all the subsets of an N-element set. If we represent each element in a subset with a bit, which can be either 0 or 1, we can use a bit array to denote whether a corresponding element belongs to this given subset or not. Then, each bit pattern will represent a possible subset and set operations can be performed with bit operations. Basic operations are outlined below,
+    
+    \begin{itemize}
+        \item \textbf{Set union} -- $A \vert B$
+        \item \textbf{Set intersection} -- $A \And B$
+        \item \textbf{Set subtraction} -- $A \And \sim B$
+        \item \textbf{Set negation} -- $\text{ALL BITS } \wedge A$ or $\sim A$
     \end{itemize}
     
     Basic use cases of bit manipulations are given below,
@@ -1939,9 +1947,9 @@ def lcs_table(X, Y):
     \begin{enumerate}
         \item \textbf{Check if a given number $x$ is a power of 2} --
         
-        The binary representation of $(x-1)$ will have all the bits same as $x$, except for the rightmost $1$ in $x$ and all the bits to the right of the rightmost $1$. 
+        The binary representation of $(x-1)$ will have all the same bits as $x$ except for the rightmost $1$ in $x$ and all the bits to the right of the rightmost $1$. 
         
-        $x \And (x-1)$ will have all the bits equal to the $x$ except for the rightmost $1$ in $x$.
+        Thus, $x \And (x-1)$ will have all the bits equal to the $x$ except for the rightmost $1$ in $x$.
         
         If the number is neither zero nor a power of two, it will have 1 in more than one place. So if $x$ is a power of 2 then $x \And (x-1)$ will be 0.
          
@@ -2042,6 +2050,9 @@ perm = permutations([1, 2, 3], 2)
         \item Collection of counts could be stored in \emph{sets}.
     \end{enumerate}
     
+    \[
+       C(n, k) = \binom{n}{k} = \frac{P(n,k)}{k!} = \frac{n!}{k!(n-k)!} = \binom{n}{n-k}
+    \]
     
     \[
         \binom{n+1}{k} = \binom{n}{k} + \binom{n}{k+1}
@@ -2187,12 +2198,12 @@ def unique_paths(m, n):
         
         \item The number of ways a convex polygon of $n+2$ sides can split into triangles by connecting vertices.
     \end{enumerate}
-    Binomial coefficient formula,
+    Catalan number from binomial coefficients,
     \[
         C(n) = \frac{1}{n+1}\binom{2n}{n}.
     \]
     
-    Recursive definition,
+    Catalan number from recursive definition,
     \[
     C_0 = 1,\ \ C_{n+1} = \frac{2(2n+1)}{n+2} \cdot C_n. 
     \]
@@ -2257,74 +2268,74 @@ def stars_and_bars(n, k):
 
 \subsection{Algorithm Optimization Checklist}
 \begin{itemize}
-    \item  Best Conceivable Runtime (BCR). Try to derive an approach from an ideal upper bound on the solution
-    \item Consider making a space-time tradeoff, usually in the form of a hashtable or cached results
-    \item Data Structure Brainstorm. Linked List, Array, Stack, Queue, Heap, Binary tree, Hashtables, etc.
-    \item Simplify and Generalize. Simplify problem statement then attempt to generalize solution
-    \item Look for BUD (bottlenecks, unnecessary work, duplicated work)
-    \item DIY (Do It Yourself). Design an algorithm around how you would solve an analgous real-word scenario without programming
-    
+    \item Consider Best Conceivable Runtime (BCR). Try to derive an approach from an ideal upper bound on the solution.
+    \item Consider making a space-time trade off, usually in the form of a hash-table or cached results.
+    \item Data Structure Brainstorm. Linked List, Stack, Queue, Priority Queue, Heap, Dictionary, Set, Binary tree, Graph etc.
+    \item Simplify and Generalize. Simplify problem statement then attempt to generalize solution to original problem.
+    \item Look for BUD (bottlenecks, unnecessary work, duplicated work).
+    \item DIY (Do It Yourself). Design an algorithm around how you would solve an analogous real-word scenario without programming.
 \end{itemize}
 
 \subsection{Whiteboard Interview Checklist}
 \begin{enumerate}
     \item  Restate and reduce problem
     \begin{itemize}
-        \item  Spend some time simplifying and re-stating problem in your own words
-        \item Can you pre-process the input or re-interpret the desired output solution to simplify or reduce the problem?
+        \item Spend some time simplifying and re-stating problem in your own words.
+        \item What is the best conceivable run time?
+        \item Can you pre-process the input or re-interpret the desired output to simplify or reduce the problem?
         \item What are problematic or challenging areas that might arise from certain inputs?
-        What are your intuitions about possible solutions? You can revisit these ideas later.
+        \item What are your intuitions about possible solutions? You can revisit these ideas later.
     \end{itemize}
     
     \item State brute-force solution
     \begin{itemize}
-        \item Give overview of approach
-        \item Find time and space complexity
-        \item If you don't have any immediate ideas for an optimized solution, spend time elaborating on the brute force algorithm, otherwise mention that we can do better and can move on
+        \item Give overview of approach.
+        \item Find time and space complexity.
+        \item If you don't have any immediate ideas for an optimized solution, spend time elaborating on the brute force algorithm, otherwise mention that we can do better and can move on.
     \end{itemize}
     
      \item Optimize previous approach or introduce new, better approach
 
     \begin{itemize}
-        \item Give overview of approach
-        \item Find time and space complexity
+        \item Give overview of approach.
+        \item Find time and space complexity.
         \item Brainstorm using Algorithm Optimization Checklist. Avoid getting stuck on memory recall.
-        \item Repeat or expand, always spend extra time considering alternative approaches before settling on solution
-        \item When out of ideas or if able to meet best conceivable runtime, prompt interviewer for approval: ``If you're happy with this approach, I can go into the finer details and begin implemention''
+        \item Repeat or expand. Always spend extra time considering alternative approaches before implementing a solution.
+        \item When out of ideas or if able to match the best conceivable run time, prompt the interviewer for approval: ``If you're happy with this approach, I can go into the finer details and begin implemention''
     \end{itemize}
     
      \item Consider more granular implementation details
 
     \begin{itemize}
-        \item Describe edge cases: (ex: empty input, invalid inputs, large inputs)
-        \item Consider boundary conditions if dealing with iterations, indexed arrays, ranges
-        \item Describe sufficiently complex test case if none are given, consider problem areas
-        \item Reconsider minor optimizations to general approach (short-circuiting, data structures, caching)
-        \item If using recursion, note limitations of relying on call stack
+        \item Describe edge cases, i.e. empty input, invalid inputs, large inputs.
+        \item Consider boundary conditions if dealing with iterations, indexed arrays, or ranges.
+        \item Describe sufficiently complex test case if none are given, consider problem areas.
+        \item Consider minor optimizations to general approach, i.e. short-circuiting, more performant data structures, caching.
+        \item If using recursion, note the limitations of relying on the call stack.
     \end{itemize}
     
     \item Implement
     \begin{itemize}
-        \item Speak aloud your thinking process, even when stuck
-        \item Add base case, i.e. empty inputs, invalid input error checks
-        \item Use descriptive variable and function names
-        \item Add inline comments when necessary
-        \item Do not repeat yourself (DRY)
-        \item Use modular code when possible
-        \item Follow coding principles (Correct, Efficient, Simple, Readable, Maintainable)
+        \item Speak aloud your thinking process, even when stuck.
+        \item Handle base/empty cases, i.e. empty inputs, invalid input error checks.
+        \item Use descriptive variable and function names.
+        \item Add inline comments when necessary.
+        \item Do not repeat yourself (DRY).
+        \item Use modular code when possible.
+        \item Follow coding principles (Correct, Efficient, Simple, Readable, Maintainable).
     \end{itemize}
     
      \item Validate and test with dry runs
     \begin{itemize}
-        \item Double check for any syntax errors
-        \item Walk through code using sufficiently complex test cases
-        \item Ensure boundary conditions don't cause errors
+        \item Double check for any syntax errors.
+        \item Walk through code using sufficiently complex test cases.
+        \item Ensure boundary conditions don't cause errors.
     \end{itemize}
     
      \item Re-state final analysis
     \begin{itemize}
-        \item State time and space complexity of implementation
-        \item Consider further optimizations if time complexity is not BCR and space complexity is not constant
+        \item State time and space complexity of implementation.
+        \item Consider further optimizations if time complexity is not BCR and space complexity is not constant.
     \end{itemize}
 \end{enumerate}
 
