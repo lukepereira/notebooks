@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>SQL Notes</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SQL Notes</h1>
+</header>
+<ul>
+<li><a href="#pre-requsite-concepts">Pre-requsite Concepts</a>
+<ul>
+<li><a href="#types-of-sql-commands">Types of SQL Commands</a></li>
+<li><a href="#acid-sql">ACID (SQL)</a></li>
+<li><a href="#primary-and-foreign-keys">Primary and Foreign Keys</a></li>
+<li><a href="#normalized-data">Normalized Data</a></li>
+<li><a href="#derived-data-joins-materialized-views">Derived Data, Joins, Materialized Views</a></li>
+<li><a href="#index-and-secondary-index">Index and Secondary Index</a></li>
+<li><a href="#distributed-databases">Distributed Databases</a></li>
+</ul></li>
+<li><a href="#reading-data">Reading Data</a>
+<ul>
+<li><a href="#select-statement">SELECT Statement</a>
+<ul>
+<li><a href="#select-all">Select all</a></li>
+<li><a href="#select-specific-columns">Select specific columns</a></li>
+<li><a href="#de-duplicate-rows">De-duplicate rows</a></li>
+<li><a href="#aliasing">Aliasing</a></li>
+</ul></li>
+<li><a href="#where-conditions-and-comparators">WHERE, Conditions and Comparators</a>
+<ul>
+<li><a href="#numeric-comparison">Numeric comparison</a></li>
+<li><a href="#string-comparison">String comparison</a></li>
+<li><a href="#and-and-or">AND and OR</a></li>
+<li><a href="#in-a-given-list-of-values">In a given list of values</a></li>
+<li><a href="#inclusive-ranges">Inclusive ranges</a></li>
+<li><a href="#exists-any-all">Exists, Any, All</a></li>
+</ul></li>
+<li><a href="#string-pattern-matching">String Pattern Matching</a>
+<ul>
+<li><a href="#quotes">Quotes</a></li>
+<li><a href="#like-string-operators">LIKE string operators</a></li>
+</ul></li>
+<li><a href="#operations-on-retrieved-records">Operations on Retrieved Records</a>
+<ul>
+<li><a href="#sort-rows">Sort rows</a></li>
+<li><a href="#limit-the-number-of-rows">Limit the number of rows</a></li>
+<li><a href="#filter-rows">Filter rows</a></li>
+</ul></li>
+<li><a href="#aggregate-functions">Aggregate Functions</a>
+<ul>
+<li><a href="#the-count-function">The COUNT Function</a></li>
+<li><a href="#nulls">NULLS</a></li>
+<li><a href="#subsets">Subsets</a></li>
+<li><a href="#cumulative-sum">Cumulative Sum</a></li>
+<li><a href="#case-when">CASE WHEN</a></li>
+<li><a href="#the-group-by-block">The GROUP BY Block</a></li>
+<li><a href="#the-having-block">The HAVING Block</a></li>
+<li><a href="#averages">Averages</a></li>
+<li><a href="#rolling-average">Rolling Average</a></li>
+<li><a href="#percentage">Percentage</a></li>
+<li><a href="#mom-percent-change">MoM Percent Change</a></li>
+<li><a href="#retained-users-per-month">Retained Users Per Month</a></li>
+</ul></li>
+<li><a href="#joining-tables">Joining Tables</a>
+<ul>
+<li><a href="#nested-queries">Nested Queries</a></li>
+<li><a href="#mapreduce">MapReduce</a></li>
+<li><a href="#union">Union</a></li>
+<li><a href="#joins">Joins</a></li>
+<li><a href="#self-joins">Self Joins</a></li>
+<li><a href="#multiple-join-conditions">Multiple Join Conditions</a></li>
+<li><a href="#cross-joins">Cross-Joins</a></li>
+</ul></li>
+<li><a href="#window-function">Window Function</a>
+<ul>
+<li><a href="#get-the-id-with-the-highest-value">Get the ID with the highest value</a></li>
+</ul></li>
+<li><a href="#materialized-views">Materialized Views</a></li>
+</ul></li>
+<li><a href="#writing-data">Writing Data</a>
+<ul>
+<li><a href="#databases">Databases</a>
+<ul>
+<li><a href="#create-database">Create database</a></li>
+<li><a href="#delete-database">Delete database</a></li>
+</ul></li>
+<li><a href="#tables">Tables</a>
+<ul>
+<li><a href="#data-types">Data types</a></li>
+<li><a href="#constraints">Constraints</a></li>
+<li><a href="#creating-tables">Creating tables</a></li>
+<li><a href="#alter-table">Alter table</a></li>
+<li><a href="#deleting-tables">Deleting tables</a></li>
+</ul></li>
+<li><a href="#indexes">Indexes</a>
+<ul>
+<li><a href="#b-trees">B-Trees</a></li>
+<li><a href="#create-index">Create index</a></li>
+<li><a href="#delete-index">Delete index</a></li>
+</ul></li>
+<li><a href="#records">Records</a>
+<ul>
+<li><a href="#insert-records">Insert Records</a></li>
+<li><a href="#update-records">Update Records</a></li>
+<li><a href="#delete-records">Delete Records</a></li>
+<li><a href="#copy-with-select-and-insert">Copy with select and insert</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#transactions">Transactions</a>
+<ul>
+<li><a href="#commit">COMMIT</a></li>
+<li><a href="#rollback">ROLLBACK</a></li>
+<li><a href="#savepoint">SAVEPOINT</a></li>
+<li><a href="#set-transaction">SET TRANSACTION</a></li>
+</ul></li>
+</ul>
+<h1 id="pre-requsite-concepts">Pre-requsite Concepts</h1>
+<h2 id="types-of-sql-commands">Types of SQL Commands</h2>
+<p>SQL commands are mainly categorized into four categories as:</p>
+<ol type="1">
+<li><p>DDL – Data Definition Language</p></li>
+<li><p>DQl – Data Query Language</p></li>
+<li><p>DML – Data Manipulation Language</p></li>
+<li><p>DCL – Data Control Language</p></li>
+<li><p>TCL – Transaction Control Language</p></li>
+</ol>
+<figure>
+<img src="dbms-sql-command.png" style="width:14cm" alt="" /><figcaption>image</figcaption>
+</figure>
+<h2 id="acid-sql">ACID (SQL)</h2>
+<ol type="1">
+<li><p><strong>Atomicity</strong> – All operations in a transaction succeed or every operation is rolled back.</p></li>
+<li><p><strong>Consistency</strong> – On the completion of a transaction, the database is structurally sound.</p></li>
+<li><p><strong>Isolation</strong> – Transactions do not contend with one another. Contentious access to data is moderated by the database so that transactions appear to run sequentially.</p></li>
+<li><p><strong>Durability</strong> – The results of applying a transaction are permanent, even in the presence of failures.</p></li>
+</ol>
+<h2 id="primary-and-foreign-keys">Primary and Foreign Keys</h2>
+<p>A primary key is a value (typically a number or a string) that uniquely identifies a record. In many applications, primary keys are generated by the system when a record is created (e.g., sequentially or randomly); they are not usually set by users.</p>
+<p>A foreign key is a column or group of columns in a relational database table that provides a link between data in two tables. It acts as a cross-reference between tables because it references the primary key of another table, thereby establishing a link between them</p>
+<p>The more ids required to get to a piece of data, the more options you have in partitioning the data. The fewer ids required to get a piece of data, the easier it is to consume your system’s output.</p>
+<p>Watch out for what kind of information you encode in your ids, explicitly and implicitly. Clients may use the structure of your ids to de-anonymize private data, crawl your system in unexpected ways (auto-incrementing ids are a typical sore point), or perform a host of other attacks.</p>
+<h2 id="normalized-data">Normalized Data</h2>
+<p>Normalized Data is structured in such a way that there is no redundancy or duplication. In a normalized database, when some piece of data changes, you only need to change it in one place, not many copies in many different places.</p>
+<h2 id="derived-data-joins-materialized-views">Derived Data, Joins, Materialized Views</h2>
+<p>A derived dataset is created from some other data through a repeatable process, which you could run again if necessary. Usually, derived data is needed to speed up a particular kind of read access to the data. Indexes, caches, and materialized views are examples of derived data.</p>
+<p>A join brings together records that have something in common. Most commonly used in the case where one record has a reference to another (a foreign key, a document reference, an edge in a graph) and a query needs to get the record that the reference points to.</p>
+<p>To materialize means to perform a computation preemptively and write out its result, as opposed to calculating it on demand when requested.</p>
+<h2 id="index-and-secondary-index">Index and Secondary Index</h2>
+<p>Indexing is a way to get an unordered table into an order that will maximize the query’s efficiency while searching. An index creates a data structure, typically a B-tree, with values from a specific column. It may then use a search algorithm, typically binary search, to find the value and return a pointer to its true index in the unordered table.</p>
+<p>A secondary index is an additional data structure that is maintained alongside the primary data storage and which allows you to efficiently search for records that match a certain kind of condition.</p>
+<h2 id="distributed-databases">Distributed Databases</h2>
+<p>See Distributed Systems Notebook<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<h1 id="reading-data">Reading Data</h1>
+<h2 id="select-statement">SELECT Statement</h2>
+<h3 id="select-all">Select all</h3>
+<div class="sourceCode" id="cb1" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="kw">FROM</span> students;</span></code></pre></div>
+<h3 id="select-specific-columns">Select specific columns</h3>
+<div class="sourceCode" id="cb2" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="kw">SELECT</span> name, age</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="kw">FROM</span> students;</span></code></pre></div>
+<h3 id="de-duplicate-rows">De-duplicate rows</h3>
+<div class="sourceCode" id="cb3" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> name</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">FROM</span> students;</span></code></pre></div>
+<h3 id="aliasing">Aliasing</h3>
+<p>In the SELECT block, <span class="math inline">\(&lt;\)</span>expression<span class="math inline">\(&gt;\)</span> AS <span class="math inline">\(&lt;\)</span>alias<span class="math inline">\(&gt;\)</span> provides an alias that can be referred to later in the query. This saves us from having to write out long expressions again, and can clarify the purpose of the expression.</p>
+<div class="sourceCode" id="cb4" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="kw">SELECT</span> name, age, location <span class="kw">AS</span> personal_info</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="kw">FROM</span> students;</span></code></pre></div>
+<h2 id="where-conditions-and-comparators">WHERE, Conditions and Comparators</h2>
+<h3 id="numeric-comparison">Numeric comparison</h3>
+<div class="sourceCode" id="cb5" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="op">=</span>    <span class="co">/* equals */</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="op">&lt;</span>    <span class="co">/* less-than */</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="op">&lt;=</span>   <span class="co">/* less-than or equals */</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true"></a><span class="op">&gt;</span>    <span class="co">/* greater-than */</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true"></a><span class="op">&gt;=</span>   <span class="co">/* greater-than or equals */</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true"></a><span class="op">!=</span>   <span class="co">/* does not equal */</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true"></a><span class="op">&lt;&gt;</span>   <span class="co">/* does not equal */</span></span></code></pre></div>
+<h3 id="string-comparison">String comparison</h3>
+<p>Note that string values in the condition should be put between single quotes. Also note that any uppercase letter is smaller (i.e. comes before) any lowercase letter.</p>
+<div class="sourceCode" id="cb6" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="op">=</span>    <span class="co">/* equals */</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="op">&lt;</span>    <span class="co">/* before in dictionary order */</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="op">&lt;=</span>   <span class="co">/* before or the same */</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="op">&gt;</span>    <span class="co">/* after in dictionary order */</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true"></a><span class="op">&gt;=</span>   <span class="co">/* after or the same */</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true"></a><span class="op">!=</span>   <span class="co">/* does not equal */</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true"></a><span class="op">&lt;&gt;</span>   <span class="co">/* does not equal */</span> </span></code></pre></div>
+<h3 id="and-and-or">AND and OR</h3>
+<p>Complex clauses can be made out of simple ones using Boolean operators like NOT, AND and OR. SQL gives most precedence to NOT and then AND and finally OR. But if you’re too lazy to remember the order of precedence, you can use parenthesis to clarify the order you want.</p>
+<div class="sourceCode" id="cb7" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="kw">SELECT</span> product</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="kw">FROM</span> inventory</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="kw">WHERE</span> amount <span class="op">&lt;</span> <span class="dv">5</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="kw">OR</span> name <span class="op">=</span> <span class="st">&#39;paper&#39;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="kw">AND</span> price <span class="op">&gt;</span> <span class="dv">1</span>;</span></code></pre></div>
+<p>When using both AND and OR it’s important to know that AND has higher precedence.</p>
+<p>If we want the OR to be evaluated first, we can use brackets ( ).</p>
+<div class="sourceCode" id="cb8" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="kw">SELECT</span> product</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="kw">FROM</span> inventory</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="kw">WHERE</span> (amount <span class="op">&lt;</span> <span class="dv">5</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="kw">OR</span> name <span class="op">=</span> <span class="st">&#39;paper&#39;</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true"></a><span class="kw">AND</span> price <span class="op">&gt;</span> <span class="dv">1</span>;</span></code></pre></div>
+<h3 id="in-a-given-list-of-values">In a given list of values</h3>
+<div class="sourceCode" id="cb9" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="kw">SELECT</span> product</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="kw">FROM</span> inventory</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true"></a><span class="kw">WHERE</span> amount <span class="kw">IN</span> (<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>);</span></code></pre></div>
+<h3 id="inclusive-ranges">Inclusive ranges</h3>
+<div class="sourceCode" id="cb10" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="kw">SELECT</span> product</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="kw">FROM</span> inventory</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="kw">WHERE</span> amount <span class="kw">BETWEEN</span> <span class="dv">5</span> <span class="kw">AND</span> <span class="dv">9</span>;</span></code></pre></div>
+<p>is the equivalent condition to</p>
+<div class="sourceCode" id="cb11" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true"></a><span class="kw">SELECT</span> product</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true"></a><span class="kw">FROM</span> inventory</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true"></a><span class="kw">WHERE</span> amount <span class="op">&gt;=</span> <span class="dv">5</span> <span class="kw">AND</span> amount <span class="op">&lt;=</span> <span class="dv">9</span></span></code></pre></div>
+<h3 id="exists-any-all">Exists, Any, All</h3>
+<div class="sourceCode" id="cb12" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true"></a><span class="kw">FROM</span> table_name</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true"></a><span class="kw">WHERE</span> <span class="kw">EXISTS</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true"></a>(<span class="kw">SELECT</span> column_name <span class="kw">FROM</span> table_name <span class="kw">WHERE</span> condition);</span></code></pre></div>
+<div class="sourceCode" id="cb13" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true"></a><span class="kw">FROM</span> table_name</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true"></a><span class="kw">WHERE</span> column_name <span class="kw">operator</span> <span class="kw">ANY</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true"></a>(<span class="kw">SELECT</span> column_name <span class="kw">FROM</span> table_name <span class="kw">WHERE</span> condition);</span></code></pre></div>
+<div class="sourceCode" id="cb14" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true"></a><span class="kw">FROM</span> table_name</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true"></a><span class="kw">WHERE</span> column_name <span class="kw">operator</span> <span class="kw">ALL</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true"></a>(<span class="kw">SELECT</span> column_name <span class="kw">FROM</span> table_name <span class="kw">WHERE</span> condition);</span></code></pre></div>
+<h2 id="string-pattern-matching">String Pattern Matching</h2>
+<h3 id="quotes">Quotes</h3>
+<p>In SQL, strings are denoted by single quotes. Backticks can be used to denote column and table names. This is useful when the column or table name is the same as a SQL keyword and when they have a space in them.</p>
+<h3 id="like-string-operators">LIKE string operators</h3>
+<p>The most powerful string operators is probably LIKE. It allows us to use wildcards such as % and _ to match various characters. For instance, first_name LIKE ‘%roy’ will return true for rows with first names ‘roy’, ‘Troy’, and ‘Deroy’ but not ‘royman’. The wildcard _ will match a single character so first_name LIKE ‘_roy’ will only match ‘Troy’.</p>
+<div class="sourceCode" id="cb15" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="kw">SELECT</span> first_name, last_name, ex_number</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true"></a><span class="kw">WHERE</span> first_name <span class="op">=</span> <span class="st">&#39;Raymond&#39;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true"></a>  <span class="kw">AND</span> last_name <span class="kw">LIKE</span> <span class="st">&#39;%Landry%&#39;</span></span></code></pre></div>
+<h2 id="operations-on-retrieved-records">Operations on Retrieved Records</h2>
+<h3 id="sort-rows">Sort rows</h3>
+<div class="sourceCode" id="cb16" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="kw">SELECT</span> name, age</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a><span class="kw">FROM</span> friends</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> name, age <span class="kw">DESC</span>, last_name <span class="kw">ASC</span>;</span></code></pre></div>
+<h3 id="limit-the-number-of-rows">Limit the number of rows</h3>
+<div class="sourceCode" id="cb17" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="kw">SELECT</span> name, grade</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true"></a><span class="kw">FROM</span> course_grades</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> grade <span class="kw">DESC</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true"></a><span class="kw">LIMIT</span> <span class="dv">5</span>;</span></code></pre></div>
+<h3 id="filter-rows">Filter rows</h3>
+<div class="sourceCode" id="cb18" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="kw">SELECT</span> product</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true"></a><span class="kw">FROM</span> inventory</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true"></a><span class="kw">WHERE</span> code <span class="op">=</span> <span class="st">&#39;ABC123&#39;</span>;</span></code></pre></div>
+<h2 id="aggregate-functions">Aggregate Functions</h2>
+<p>To aggregate means to combine multiple elements into a whole. Similarly, aggregation functions take multiple rows of data and combine them into one number.</p>
+<h3 id="the-count-function">The COUNT Function</h3>
+<p>COUNT(<span class="math inline">\(&lt;\)</span>column<span class="math inline">\(&gt;\)</span>) returns the number of non-null rows in the column.</p>
+<div class="sourceCode" id="cb19" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(first_name) <span class="kw">FROM</span> executions</span></code></pre></div>
+<h3 id="nulls">NULLS</h3>
+<p>In SQL, NULL is the value of an empty entry. This is different from the empty string ’’ and the integer 0, both of which are not considered NULL. To check if an entry is NULL, use IS and IS NOT instead of = and !=.</p>
+<p>What if we don’t know which columns are NULL-free? Worse still, what if none of the columns are NULL-free? The solution is COUNT(). This is reminiscent of SELECT where the represents all columns. In practice COUNT() counts rows as long as any one of their columns is non-null. This helps us find table lengths because a table shouldn’t have rows that are completely null.</p>
+<div class="sourceCode" id="cb20" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> executions</span></code></pre></div>
+<h3 id="subsets">Subsets</h3>
+<p>Another common variation is to count a subset of the table. For instance, counting Harris county executions.</p>
+<div class="sourceCode" id="cb21" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> executions <span class="kw">WHERE</span> county<span class="op">=</span><span class="st">&#39;Harris&#39;</span></span></code></pre></div>
+<h3 id="cumulative-sum">Cumulative Sum</h3>
+<p>Write a query to get cumulative cash flow for each day such that we end up with a table in the form below:</p>
+<div class="sourceCode" id="cb22" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true"></a><span class="co">/*</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true"></a><span class="co">| date       | cumulative_cf |</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true"></a><span class="co">|------------|---------------|</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true"></a><span class="co">| 2018-01-01 | -1000         |</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true"></a><span class="co">| 2018-01-03 | -1050         |</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true"></a><span class="co">| ...        | ...           |</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true"></a><span class="co">*/</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true"></a><span class="kw">SELECT</span> </span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true"></a>    a.<span class="dt">date</span> <span class="dt">date</span>, </span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true"></a>    <span class="fu">SUM</span>(b.cash_flow) <span class="kw">as</span> cumulative_cf </span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true"></a><span class="kw">FROM</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true"></a>    transactions a</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true"></a><span class="kw">JOIN</span> b </span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true"></a>    transactions b <span class="kw">ON</span> a.<span class="dt">date</span> <span class="op">&gt;=</span> b.<span class="dt">date</span> </span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true"></a><span class="kw">GROUP</span> <span class="kw">BY</span> </span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true"></a>    a.<span class="dt">date</span> </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> </span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true"></a>    <span class="dt">date</span> <span class="kw">ASC</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true"></a><span class="co">/* </span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true"></a><span class="co">    Alternate solution using a window function (more efficient!)</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true"></a><span class="co">*/</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true"></a></span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true"></a><span class="kw">SELECT</span> </span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true"></a>    <span class="dt">date</span>, </span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true"></a>    <span class="fu">SUM</span>(cash_flow) <span class="kw">OVER</span> (<span class="kw">ORDER</span> <span class="kw">BY</span> <span class="dt">date</span> <span class="kw">ASC</span>) <span class="kw">as</span> cumulative_cf </span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true"></a><span class="kw">FROM</span></span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true"></a>    transactions </span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> </span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true"></a>    <span class="dt">date</span> <span class="kw">ASC</span></span></code></pre></div>
+<h3 id="case-when">CASE WHEN</h3>
+<p>What if we want to simultaneously find the number of Bexar county executions? The solution is to apply a CASE WHEN block which acts as a big if-else statement.</p>
+<div class="sourceCode" id="cb23" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="cf">CASE</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a>    <span class="cf">WHEN</span> <span class="op">&lt;</span>clause<span class="op">&gt;</span> <span class="cf">THEN</span> <span class="op">&lt;</span>result<span class="op">&gt;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a>    <span class="cf">WHEN</span> <span class="op">&lt;</span>clause<span class="op">&gt;</span> <span class="cf">THEN</span> <span class="op">&lt;</span>result<span class="op">&gt;</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a>    <span class="op">..</span>.</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a>    <span class="cf">ELSE</span> <span class="op">&lt;</span>result<span class="op">&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a><span class="cf">END</span></span></code></pre></div>
+<p>A common mistake is to miss out the END command and the ELSE condition which is a catchall in case all the prior clauses are false. Also recall that clauses are expressions that can be evaluated to be true or false. This makes it important to think about the boolean value of whatever you stuff in there.</p>
+<div class="sourceCode" id="cb24" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> county<span class="op">=</span><span class="st">&#39;Harris&#39;</span> <span class="cf">THEN</span> <span class="dv">1</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true"></a>        <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true"></a>    <span class="fu">SUM</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> county<span class="op">=</span><span class="st">&#39;Bexar&#39;</span> <span class="cf">THEN</span> <span class="dv">1</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true"></a>        <span class="cf">ELSE</span> <span class="dv">0</span> <span class="cf">END</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true"></a><span class="kw">FROM</span> executions</span></code></pre></div>
+<div class="sourceCode" id="cb25" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true"></a>    <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> county<span class="op">=</span><span class="st">&#39;Harris&#39;</span> <span class="cf">THEN</span> <span class="dv">1</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true"></a>        <span class="cf">ELSE</span> <span class="kw">NULL</span> <span class="cf">END</span>),</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true"></a>    <span class="fu">COUNT</span>(<span class="cf">CASE</span> <span class="cf">WHEN</span> county<span class="op">=</span><span class="st">&#39;Bexar&#39;</span> <span class="cf">THEN</span> <span class="dv">1</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true"></a>        <span class="cf">ELSE</span> <span class="kw">NULL</span> <span class="cf">END</span>)</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true"></a><span class="kw">FROM</span> executions</span></code></pre></div>
+<ol type="1">
+<li><p>With a WHERE block,</p></li>
+<li><p>With a COUNT and CASE WHEN block,</p></li>
+<li><p>With two COUNT functions.</p></li>
+</ol>
+<p>The WHERE version had it filter down to a small table first before aggregating while in the other two, it had to look through the full table. In the COUNT + CASE WHEN version, it only had to go through once, while the double COUNT version made it go through twice. So even though the output was identical, the performance was probably best in the first and worse in the other versions.</p>
+<h3 id="the-group-by-block">The GROUP BY Block</h3>
+<p>The GROUP BY block allows us to split up the dataset and apply aggregate functions within each group, resulting in one row per group. Its most basic form is GROUP BY <span class="math inline">\(&lt;\)</span>column<span class="math inline">\(&gt;\)</span>, <span class="math inline">\(&lt;\)</span>column<span class="math inline">\(&gt;\)</span>, ... and comes after the WHERE block.</p>
+<div class="sourceCode" id="cb26" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true"></a>  county,</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> county_executions</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true"></a><span class="kw">GROUP</span> <span class="kw">BY</span> county</span></code></pre></div>
+<p>Filtering via the WHERE block happens before grouping and aggregation. This is reflected in the order of syntax. After all, the WHERE block always precedes the GROUP BY block.</p>
+<p>We generally do not want to mix aggregated and non-aggregated columns. The difference here is that grouping columns are the only columns allowed to be non-aggregate. After all, all the rows in that group must have the same values on those columns so there’s no ambiguity in the value that should be returned.</p>
+<h3 id="the-having-block">The HAVING Block</h3>
+<p>What happens if we want to filter on the result of the grouping and aggregation? Surely we can’t jump forward into the future and grab information from there. To solve this problem, we use HAVING.</p>
+<p>We need an additional filter—one that uses the result of the aggregation. This means it cannot exist in the WHERE block because those filters are run before aggregation. You can think of it as a post-aggregation WHERE block.</p>
+<div class="sourceCode" id="cb27" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true"></a><span class="kw">SELECT</span> county</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true"></a><span class="kw">WHERE</span> ex_age <span class="op">&gt;=</span> <span class="dv">50</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true"></a><span class="kw">GROUP</span> <span class="kw">BY</span> county</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true"></a><span class="kw">HAVING</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">&gt;</span> <span class="dv">2</span></span></code></pre></div>
+<h3 id="averages">Averages</h3>
+<p>Note: you can compose functions.</p>
+<div class="sourceCode" id="cb28" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="fu">AVG</span>(<span class="fu">LENGTH</span>(last_statement)) <span class="kw">FROM</span> executions</span></code></pre></div>
+<h3 id="rolling-average">Rolling Average</h3>
+<p>To write a query to get 7-day rolling (preceding) average of daily sign ups.</p>
+<div class="sourceCode" id="cb29" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true"></a><span class="co">/*</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true"></a><span class="co">| date       | sign_ups |</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true"></a><span class="co">|------------|----------|</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true"></a><span class="co">| 2018-01-01 | 10       |</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true"></a><span class="co">| 2018-01-02 | 20       |</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true"></a><span class="co">| 2018-01-03 | 50       |</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true"></a><span class="co">| ...        | ...      |</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true"></a><span class="co">| 2018-10-01 | 35       |</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true"></a><span class="co">*/</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true"></a><span class="kw">SELECT</span> </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true"></a>  a.<span class="dt">date</span>, </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true"></a>  <span class="fu">AVG</span>(b.sign_ups) average_sign_ups </span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true"></a><span class="kw">FROM</span> </span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true"></a>  signups a </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true"></a><span class="kw">JOIN</span> </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true"></a>  signups b </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true"></a>  <span class="kw">ON</span> a.<span class="dt">date</span> <span class="op">&lt;=</span> b.<span class="dt">date</span> <span class="op">+</span> <span class="dt">interval</span> <span class="st">&#39;6 days&#39;</span> </span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true"></a>  <span class="kw">AND</span> a.<span class="dt">date</span> <span class="op">&gt;=</span> b.<span class="dt">date</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true"></a><span class="kw">GROUP</span> <span class="kw">BY</span> </span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true"></a>  a.<span class="dt">date</span></span></code></pre></div>
+<h3 id="percentage">Percentage</h3>
+<p>To calculate percentages, we need two separate queries, one which aggregates with a GROUP BY (to get the numerator) and another that aggregates without (to get the denominator).</p>
+<div class="sourceCode" id="cb30" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true"></a>  county,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true"></a>  <span class="fl">100.0</span> <span class="op">*</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="op">/</span> (<span class="kw">SELECT</span> <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">FROM</span> executions)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true"></a>    <span class="kw">AS</span> percentage</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true"></a><span class="kw">GROUP</span> <span class="kw">BY</span> county</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> percentage <span class="kw">DESC</span></span></code></pre></div>
+<h3 id="mom-percent-change">MoM Percent Change</h3>
+<p>Find the month-over-month percentage change for monthly active users (MAU).</p>
+<div class="sourceCode" id="cb31" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true"></a><span class="co">/*</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true"></a><span class="co">| user_id | date       |</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true"></a><span class="co">|---------|------------|</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true"></a><span class="co">| 1       | 2018-07-01 |</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true"></a><span class="co">| 3       | 2018-07-02 |</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true"></a><span class="co">| ...     | ...        |</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true"></a><span class="co">| 234     | 2018-10-04 |</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true"></a><span class="co">*/</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true"></a><span class="kw">WITH</span> mau <span class="kw">AS</span> </span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true"></a>(</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true"></a>  <span class="kw">SELECT</span> </span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true"></a>    DATE_TRUNC(<span class="st">&#39;month&#39;</span>, <span class="dt">date</span>) month_timestamp,</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> user_id) mau</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true"></a>  <span class="kw">FROM</span> </span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true"></a>    logins </span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true"></a>  <span class="kw">GROUP</span> <span class="kw">BY</span> </span>
+<span id="cb31-18"><a href="#cb31-18" aria-hidden="true"></a>    DATE_TRUNC(<span class="st">&#39;month&#39;</span>, <span class="dt">date</span>)</span>
+<span id="cb31-19"><a href="#cb31-19" aria-hidden="true"></a>  )</span>
+<span id="cb31-20"><a href="#cb31-20" aria-hidden="true"></a> <span class="kw">SELECT</span> </span>
+<span id="cb31-21"><a href="#cb31-21" aria-hidden="true"></a>    a.month_timestamp previous_month, </span>
+<span id="cb31-22"><a href="#cb31-22" aria-hidden="true"></a>    a.mau previous_mau, </span>
+<span id="cb31-23"><a href="#cb31-23" aria-hidden="true"></a>    b.month_timestamp current_month, </span>
+<span id="cb31-24"><a href="#cb31-24" aria-hidden="true"></a>    b.mau current_mau, </span>
+<span id="cb31-25"><a href="#cb31-25" aria-hidden="true"></a>    <span class="fu">ROUND</span>(<span class="fl">100.0</span><span class="op">*</span>(b.mau <span class="op">-</span> a.mau)<span class="op">/</span>a.mau,<span class="dv">2</span>) <span class="kw">AS</span> percent_change </span>
+<span id="cb31-26"><a href="#cb31-26" aria-hidden="true"></a> <span class="kw">FROM</span></span>
+<span id="cb31-27"><a href="#cb31-27" aria-hidden="true"></a>    mau a </span>
+<span id="cb31-28"><a href="#cb31-28" aria-hidden="true"></a> <span class="kw">JOIN</span> </span>
+<span id="cb31-29"><a href="#cb31-29" aria-hidden="true"></a>    mau b <span class="kw">ON</span> a.month_timestamp <span class="op">=</span> b.month_timestamp </span>
+<span id="cb31-30"><a href="#cb31-30" aria-hidden="true"></a>        <span class="op">-</span> <span class="dt">interval</span> <span class="st">&#39;1 month&#39;</span> </span></code></pre></div>
+<h3 id="retained-users-per-month">Retained Users Per Month</h3>
+<div class="sourceCode" id="cb32" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true"></a><span class="kw">SELECT</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true"></a>    DATE_TRUNC(<span class="st">&#39;month&#39;</span>, a.<span class="dt">date</span>) month_timestamp, </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true"></a>    <span class="fu">COUNT</span>(<span class="kw">DISTINCT</span> a.user_id) retained_users </span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true"></a> <span class="kw">FROM</span> </span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true"></a>    logins a </span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true"></a> <span class="kw">JOIN</span> </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true"></a>    logins b <span class="kw">ON</span> a.user_id <span class="op">=</span> b.user_id </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true"></a>        <span class="kw">AND</span> DATE_TRUNC(<span class="st">&#39;month&#39;</span>, a.<span class="dt">date</span>) <span class="op">=</span> </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true"></a>        DATE_TRUNC(<span class="st">&#39;month&#39;</span>, b.<span class="dt">date</span>)  <span class="op">+</span> <span class="dt">interval</span> <span class="st">&#39;1 month&#39;</span></span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true"></a>    date_trunc(<span class="st">&#39;month&#39;</span>, a.<span class="dt">date</span>)</span></code></pre></div>
+<h2 id="joining-tables">Joining Tables</h2>
+<h3 id="nested-queries">Nested Queries</h3>
+<p>We can combine multiple queries using a technique called “nesting”. The parentheses are important for demarcating the boundary between the inner query and the outer one:</p>
+<div class="sourceCode" id="cb33" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true"></a><span class="kw">SELECT</span> first_name, last_name</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true"></a><span class="kw">WHERE</span> <span class="fu">LENGTH</span>(last_statement) <span class="op">=</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true"></a>    (<span class="kw">SELECT</span> <span class="fu">MAX</span>(<span class="fu">LENGTH</span>(last_statement))</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true"></a>     <span class="kw">FROM</span> executions)</span></code></pre></div>
+<h3 id="mapreduce">MapReduce</h3>
+<p>An interesting addendum is that we’ve actually just learned to do MapReduce in SQL, i.e. how to map various operations out to all the rows. For example, SELECT LENGTH(last_statement) FROM executions maps the length function out to all the rows.</p>
+<h3 id="union">Union</h3>
+<p>The UNION operator is used to combine the result-set of two or more SELECT statements. Each SELECT statement within UNION must have the same number of columns. The columns must also have similar data types. The columns in each SELECT statement must also be in the same order. The UNION operator selects only distinct values by default.</p>
+<p>To allow duplicate values, use UNION ALL.</p>
+<div class="sourceCode" id="cb34" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s) <span class="kw">FROM</span> table_name1</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true"></a><span class="kw">UNION</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s) <span class="kw">FROM</span> table_name2</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true"></a></span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s) <span class="kw">FROM</span> table_name1</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true"></a><span class="kw">UNION</span> <span class="kw">ALL</span></span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true"></a><span class="kw">SELECT</span> column_name(s) <span class="kw">FROM</span> table_name2</span></code></pre></div>
+<h3 id="joins">Joins</h3>
+<p>If we wish to combine data from multiple queries but our desired table has the same length as the original executions table, we can rule out aggregations which produce a smaller table.</p>
+<p>JOIN creates a big combined table which is then fed into the FROM block just like any other table. The big idea behind JOINs is to create an augmented table because the original doesn’t contain the information we need.</p>
+<p>This is a powerful concept because it frees us from the limitations of a single table and allows us to combine multiple tables in potentially complex ways. We’ve also seen that with this extra complexity, meticulous bookkeeping becomes important. Aliasing tables, renaming columns and defining good JOIN ON clauses are all techniques that help us maintain order.</p>
+<div class="sourceCode" id="cb35" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true"></a>  last_ex_date <span class="kw">AS</span> <span class="kw">start</span>,</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true"></a>  ex_date <span class="kw">AS</span> <span class="cf">end</span>,</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true"></a>  ex_date <span class="op">-</span> last_ex_date <span class="kw">AS</span> day_difference</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true"></a><span class="kw">JOIN</span> <span class="kw">previous</span></span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true"></a>  <span class="kw">ON</span> executions.ex_number <span class="op">=</span> <span class="kw">previous</span>.ex_number</span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> day_difference <span class="kw">DESC</span></span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code></pre></div>
+<div class="sourceCode" id="cb36" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true"></a>  last_ex_date <span class="kw">AS</span> <span class="kw">start</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true"></a>  ex_date <span class="kw">AS</span> <span class="cf">end</span>,</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true"></a>  JULIANDAY(ex_date) <span class="op">-</span> JULIANDAY(last_ex_date)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true"></a>    <span class="kw">AS</span> day_difference</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true"></a><span class="kw">JOIN</span> <span class="kw">previous</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true"></a>  <span class="kw">ON</span> executions.ex_number <span class="op">=</span> <span class="kw">previous</span>.ex_number</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> day_difference <span class="kw">DESC</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true"></a><span class="kw">LIMIT</span> <span class="dv">5</span></span></code></pre></div>
+<p>The query above is also notable because the clause executions.ex_number = previous.ex_number uses the format <span class="math inline">\(&lt;\)</span>table<span class="math inline">\(&gt;\)</span>.<span class="math inline">\(&lt;\)</span>column<span class="math inline">\(&gt;\)</span> to specify columns. This is only necessary here because both tables have a column called ex_number.</p>
+<p>The JOIN block takes the form of <span class="math inline">\(&lt;\)</span>table1<span class="math inline">\(&gt;\)</span> JOIN <span class="math inline">\(&lt;\)</span>table2<span class="math inline">\(&gt;\)</span> ON <span class="math inline">\(&lt;\)</span>clause<span class="math inline">\(&gt;\)</span>. The clause works the same way as in WHERE <span class="math inline">\(&lt;\)</span>clause<span class="math inline">\(&gt;\)</span>. That is, it is a statement that evaluates to true or false, and anytime a row from the first table and another from the second line up with the clause being true, the two are matched.</p>
+<p>The JOIN command defaults to performing what is called an “inner join” in which unmatched rows are dropped.</p>
+<p>To preserve all the rows of the left table, we use a LEFT JOIN in in place of the vanilla JOIN. The empty parts of the row are left alone, which means they evaluate to NULL.</p>
+<p>The RIGHT JOIN can be used to preserve unmatched rows in the right table, and the OUTER JOIN can be used to preserve unmatched rows in both.</p>
+<p>The final subtlety is handling multiple matches. The join creates enough rows of executions so that each matching row of duplicated_previous gets its own partner. In this way, joins can create tables that are larger than the their constituents.</p>
+<h3 id="self-joins">Self Joins</h3>
+<p>Remember to use aliases to form the column names (ex_number, last_ex_date). Notice that we are using a table alias here, naming the result of the nested query "previous".</p>
+<div class="sourceCode" id="cb37" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true"></a>  last_ex_date <span class="kw">AS</span> <span class="kw">start</span>,</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true"></a>  ex_date <span class="kw">AS</span> <span class="cf">end</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true"></a>  JULIANDAY(ex_date) <span class="op">-</span> JULIANDAY(last_ex_date) <span class="kw">AS</span> day_difference</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true"></a><span class="kw">JOIN</span> (</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true"></a>    <span class="kw">SELECT</span></span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true"></a>      ex_number <span class="op">+</span> <span class="dv">1</span> <span class="kw">AS</span> ex_number,</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true"></a>      ex_date <span class="kw">AS</span> last_ex_date</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true"></a>    <span class="kw">FROM</span> executions</span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true"></a>  ) <span class="kw">previous</span></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true"></a>  <span class="kw">ON</span> executions.ex_number <span class="op">=</span> <span class="kw">previous</span>.ex_number</span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> day_difference <span class="kw">DESC</span></span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code></pre></div>
+<p>“previous” is derived from executions, so we’re effectively joining executions to itself. This is called a “self join” and is a powerful technique for allowing rows to get information from other parts of the same table.</p>
+<p>We’ve created the previous table to clarify the purpose that it serves. But we can actually write the query more elegantly by joining the executions table directly to itself. Note that we still need to give one copy an alias to ensure that we can refer to it unambiguously.</p>
+<div class="sourceCode" id="cb38" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true"></a>  <span class="kw">previous</span>.ex_date <span class="kw">AS</span> <span class="kw">start</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true"></a>  executions.ex_date <span class="kw">AS</span> <span class="cf">end</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true"></a>  JULIANDAY(executions.ex_date) <span class="op">-</span> JULIANDAY(<span class="kw">previous</span>.ex_date)</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true"></a>    <span class="kw">AS</span> day_difference</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true"></a><span class="kw">FROM</span> executions</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true"></a><span class="kw">JOIN</span> executions <span class="kw">previous</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true"></a>  <span class="kw">ON</span> executions.ex_number <span class="op">=</span> <span class="kw">previous</span>.ex_number <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true"></a><span class="kw">ORDER</span> <span class="kw">BY</span> day_difference <span class="kw">DESC</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true"></a><span class="kw">LIMIT</span> <span class="dv">10</span></span></code></pre></div>
+<h3 id="multiple-join-conditions">Multiple Join Conditions</h3>
+<p>Write a query to get the response time per email (id) sent to zach@g.com. Do not include ids that did not receive a response from zach@g.com. Assume each email thread has a unique subject. Keep in mind a thread may have multiple responses back-and-forth between zach@g.com and another email address.</p>
+<div class="sourceCode" id="cb39" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true"></a><span class="co">/*</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true"></a><span class="co">| id | subject  | from         | to           | timestamp      |</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true"></a><span class="co">|----|----------|--------------|--------------|----------------|</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true"></a><span class="co">| 1  | Yosemite | zach@g.com   | thomas@g.com | 01-02 12:45:03 |</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true"></a><span class="co">| 2  | Yosemite | thomas@g.com | zach@g.com   | 01-02 16:35:04 |</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true"></a><span class="co">| .. | ..       | ..           | ..           | ..             |</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true"></a><span class="co">*/</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true"></a><span class="kw">SELECT</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true"></a>    a.<span class="kw">id</span>, </span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true"></a>    <span class="fu">MIN</span>(b.<span class="dt">timestamp</span>) <span class="op">-</span> a.<span class="dt">timestamp</span> <span class="kw">as</span> time_to_respond </span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true"></a><span class="kw">FROM</span> </span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true"></a>    emails a </span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true"></a><span class="kw">JOIN</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true"></a>    emails b </span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true"></a>        <span class="kw">ON</span> </span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true"></a>            b.subject <span class="op">=</span> a.subject </span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true"></a>        <span class="kw">AND</span> </span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true"></a>            a.<span class="kw">to</span> <span class="op">=</span> b.<span class="kw">from</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true"></a>        <span class="kw">AND</span> </span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true"></a>            a.<span class="kw">from</span> <span class="op">=</span> b.<span class="kw">to</span> </span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true"></a>        <span class="kw">AND</span> </span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true"></a>            a.<span class="dt">timestamp</span> <span class="op">&lt;</span> b.<span class="dt">timestamp</span> </span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true"></a> <span class="kw">WHERE</span> </span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true"></a>    a.<span class="kw">to</span> <span class="op">=</span> <span class="st">&#39;zach@g.com&#39;</span> </span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true"></a> <span class="kw">GROUP</span> <span class="kw">BY</span> </span>
+<span id="cb39-26"><a href="#cb39-26" aria-hidden="true"></a>    a.<span class="kw">id</span> </span></code></pre></div>
+<h3 id="cross-joins">Cross-Joins</h3>
+<p>The CROSS JOIN is used to combine each row of the first table with each row of the second table. It is also known as the Cartesian join since it returns the Cartesian product of the sets of rows from the joined tables.</p>
+<p>Say we have a table state_streams where each row is a state and the total number of hours of streaming from a video hosting service. We want to write a query to get the pairs of states with total streaming amounts within 1000 of each other.</p>
+<div class="sourceCode" id="cb40" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true"></a><span class="kw">SELECT</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true"></a>    a.state <span class="kw">as</span> state_a, </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true"></a>    b.state <span class="kw">as</span> state_b </span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true"></a> <span class="kw">FROM</span>   </span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true"></a>    state_streams a</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true"></a> <span class="kw">CROSS</span> <span class="kw">JOIN</span> </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true"></a>    state_streams b </span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true"></a> <span class="kw">WHERE</span> </span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true"></a>    <span class="fu">ABS</span>(a.total_streams <span class="op">-</span> b.total_streams) <span class="op">&lt;</span> <span class="dv">1000</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true"></a>    <span class="kw">AND</span> </span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true"></a>    a.state <span class="op">&lt;&gt;</span> b.state </span></code></pre></div>
+<h2 id="window-function">Window Function</h2>
+<p>A window function performs a calculation across a set of table rows that are somehow related to the current row. This is comparable to the type of calculation that can be done with an aggregate function. But unlike regular aggregate functions, use of a window function does not cause rows to become grouped into a single output row — the rows retain their separate identities.</p>
+<h3 id="get-the-id-with-the-highest-value">Get the ID with the highest value</h3>
+<p>Write a query to get the empno with the highest salary. Make sure your solution can handle ties!</p>
+<div class="sourceCode" id="cb41" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true"></a><span class="co">/*</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true"></a><span class="co">  depname  | empno | salary |     </span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true"></a><span class="co">-----------+-------+--------+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true"></a><span class="co"> develop   |    11 |   5200 | </span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true"></a><span class="co"> ...</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true"></a><span class="co">*/</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true"></a><span class="kw">WITH</span> max_salary <span class="kw">AS</span> (</span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true"></a>    <span class="kw">SELECT</span> </span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true"></a>        <span class="fu">MAX</span>(salary) max_salary</span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true"></a>    <span class="kw">FROM</span> </span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true"></a>        salaries</span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true"></a>    )</span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true"></a><span class="kw">SELECT</span> </span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true"></a>    s.empno</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true"></a><span class="kw">FROM</span> </span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true"></a>    salaries s</span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true"></a><span class="kw">JOIN</span> </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true"></a>    max_salary ms <span class="kw">ON</span> s.salary <span class="op">=</span> ms.max_salary </span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true"></a>    </span></code></pre></div>
+<h2 id="materialized-views">Materialized Views</h2>
+<p>In a materialized view, data is being persisted into a virtual table which is maintained by the SQL Server. Views can be used to encapsulate and index commonly used queries or precompute aggregations in order to improve read performance.</p>
+<p>The database engine recreates the data, using the view’s SQL statement, every time a user queries a view. Though this can negatively impact write performance because with each operation, the engine will have to update all of the relevant views.</p>
+<div class="sourceCode" id="cb42" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true"></a><span class="kw">CREATE</span> <span class="kw">VIEW</span> view_name <span class="kw">AS</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true"></a><span class="kw">SELECT</span> column1, column2, <span class="op">..</span>.</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true"></a><span class="kw">FROM</span> table_name</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true"></a><span class="kw">WHERE</span> condition;</span></code></pre></div>
+<h1 id="writing-data">Writing Data</h1>
+<h2 id="databases">Databases</h2>
+<h3 id="create-database">Create database</h3>
+<div class="sourceCode" id="cb43" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true"></a><span class="kw">CREATE</span> <span class="kw">DATABASE</span> database_name</span></code></pre></div>
+<h3 id="delete-database">Delete database</h3>
+<div class="sourceCode" id="cb44" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true"></a><span class="kw">DROP</span> <span class="kw">DATABASE</span> database_name</span></code></pre></div>
+<h2 id="tables">Tables</h2>
+<h3 id="data-types">Data types</h3>
+<p>Some common data types for columns of a table:</p>
+<p>2</p>
+<ul>
+<li><p>CHAR(size)</p></li>
+<li><p>VARCHAR(size)</p></li>
+<li><p>BINARY(size)</p></li>
+<li><p>TEXT(size)</p></li>
+<li><p>BLOB(size)</p></li>
+<li><p>ENUM(val1, val2, val3, ...)</p></li>
+<li><p>SET(val1, val2, val3, ...)</p></li>
+<li><p>BIT(size)</p></li>
+<li><p>BOOL or BOOLEAN</p></li>
+<li><p>INT(size) or INTEGER(size)</p></li>
+<li><p>FLOAT(size, d)</p></li>
+<li><p>DATE</p></li>
+<li><p>DATETIME(fsp)</p></li>
+<li><p>TIMESTAMP(fsp)</p></li>
+<li><p>YEAR</p></li>
+</ul>
+<h3 id="constraints">Constraints</h3>
+<p>SQL constraints are used to specify rules for data in a table and can be specified either when the table is created with the CREATE TABLE statement, or after the table is created with the ALTER TABLE statement.</p>
+<ul>
+<li><p>NOT NULL – Ensures that a column cannot have a NULL value</p></li>
+<li><p>UNIQUE – Ensures that all values in a column are different</p></li>
+<li><p>PRIMARY KEY – A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table</p></li>
+<li><p>FOREIGN KEY – Uniquely identifies a row/record in another table</p></li>
+<li><p>CHECK – Ensures that all values in a column satisfies a specific condition</p></li>
+<li><p>DEFAULT – Sets a default value for a column when no value is specified</p></li>
+<li><p>INDEX – Used to create and retrieve data from the database very quickly</p></li>
+</ul>
+<h3 id="creating-tables">Creating tables</h3>
+<p>Each column in a database table is required to have a name and a data type.</p>
+<div class="sourceCode" id="cb45" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> pet (name <span class="dt">VARCHAR</span>(<span class="dv">20</span>), owner <span class="dt">VARCHAR</span>(<span class="dv">20</span>),</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a>       species <span class="dt">VARCHAR</span>(<span class="dv">20</span>), sex <span class="dt">CHAR</span>(<span class="dv">1</span>), birth <span class="dt">DATE</span>, death <span class="dt">DATE</span>)</span></code></pre></div>
+<h3 id="alter-table">Alter table</h3>
+<div class="sourceCode" id="cb46" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> table_name</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true"></a><span class="kw">ADD</span> column_name datatype</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true"></a></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true"></a><span class="co">/* or */</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> table_name</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true"></a><span class="kw">DROP</span> <span class="kw">COLUMN</span> column_name</span></code></pre></div>
+<h3 id="deleting-tables">Deleting tables</h3>
+<div class="sourceCode" id="cb47" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> table_name</span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true"></a><span class="kw">WHERE</span> some_column<span class="op">=</span>some_value</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true"></a></span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true"></a><span class="co">/* Delete full table */</span></span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> table_name</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="op">*</span> <span class="kw">FROM</span> table_name</span></code></pre></div>
+<div class="sourceCode" id="cb48" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true"></a><span class="kw">CREATE</span> <span class="kw">TABLE</span> table_name (</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true"></a>    column1 datatype <span class="kw">constraint</span>,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true"></a>    column2 datatype <span class="kw">constraint</span>,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true"></a>    column3 datatype <span class="kw">constraint</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true"></a>    <span class="op">....</span></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true"></a>);</span></code></pre></div>
+<h2 id="indexes">Indexes</h2>
+<p>Indexes are used to retrieve data from the database more quickly than otherwise. The users cannot see the indexes, they are just used to speed up searches/queries</p>
+<p>Updating a table with indexes takes more time than updating a table without (because the indexes also need an update). So, only create indexes on columns that will be frequently searched against.</p>
+<p>Some recommendations involving indexes are:</p>
+<ul>
+<li><p>disable constraints and indexes during bulk loads.</p></li>
+<li><p>avoid indexes on columns with low selectivity.</p></li>
+<li><p>use partial indexes.</p></li>
+<li><p>index columns with high correlation using BRIN (Block Range Index)</p></li>
+</ul>
+<h3 id="b-trees">B-Trees</h3>
+<p>A B-tree is a self-balancing tree data structure that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time. B-trees and B+trees are commonly used to create indexes in relational databases.</p>
+<p>See Data Structures and Algorithms Notebook <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> for more details.</p>
+<h3 id="create-index">Create index</h3>
+<p>By default, duplicate values are allowed. Use UNIQUE keyword if duplicate values are not allowed.</p>
+<div class="sourceCode" id="cb49" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> index_name</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true"></a><span class="kw">ON</span> table_name (column1, column2, <span class="op">..</span>.);</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true"></a><span class="kw">CREATE</span> <span class="kw">UNIQUE</span> <span class="kw">INDEX</span> index_name</span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true"></a><span class="kw">ON</span> table_name (column1, column2, <span class="op">..</span>.);</span></code></pre></div>
+<h3 id="delete-index">Delete index</h3>
+<div class="sourceCode" id="cb50" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true"></a><span class="co">/* SQL Server */</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true"></a><span class="kw">DROP</span> <span class="kw">INDEX</span> table_name.index_name;</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true"></a></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true"></a><span class="co">/* MySQL */</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true"></a><span class="kw">ALTER</span> <span class="kw">TABLE</span> table_name</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true"></a><span class="kw">DROP</span> <span class="kw">INDEX</span> index_name;</span></code></pre></div>
+<h2 id="records">Records</h2>
+<h3 id="insert-records">Insert Records</h3>
+<p>It is possible to write the INSERT INTO statement in two ways.</p>
+<p>The first way specifies both the column names and the values to be inserted. If you are adding values for all the columns of the table, you do not need to specify the column names in the SQL query.</p>
+<div class="sourceCode" id="cb51" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> table_name (column1, column2, column3, <span class="op">..</span>.)</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true"></a><span class="kw">VALUES</span> (value1, value2, value3, <span class="op">..</span>.);</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true"></a></span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> table_name</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true"></a><span class="kw">VALUES</span> (value1, value2, value3, <span class="op">..</span>.);</span></code></pre></div>
+<p>The next time you load data into a table, think about how the data is going to be queried, and make sure you sort it in a way that indexes used for range scan can benefit from.</p>
+<h3 id="update-records">Update Records</h3>
+<p>UPDATE is a relatively expensive operation. To speed up an UPDATE command it’s best to make sure you only update what needs updating.</p>
+<div class="sourceCode" id="cb52" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true"></a><span class="co">/* Likely slower */</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true"></a><span class="kw">UPDATE</span> users <span class="kw">SET</span> email <span class="op">=</span> <span class="fu">lower</span>(email); </span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true"></a></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true"></a><span class="co">/* Likely faster */</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true"></a><span class="kw">UPDATE</span> users <span class="kw">SET</span> email <span class="op">=</span> <span class="fu">lower</span>(email)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true"></a><span class="kw">WHERE</span> email <span class="op">!=</span> <span class="fu">lower</span>(email);</span></code></pre></div>
+<h3 id="delete-records">Delete Records</h3>
+<div class="sourceCode" id="cb53" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> table_name <span class="kw">WHERE</span> condition;</span></code></pre></div>
+<h3 id="copy-with-select-and-insert">Copy with select and insert</h3>
+<p>Copy all columns into an existing table.</p>
+<div class="sourceCode" id="cb54" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true"></a><span class="kw">INSERT</span> <span class="kw">INTO</span> table2</span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> table1</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true"></a><span class="kw">WHERE</span> condition;</span></code></pre></div>
+<p>The SELECT INTO statement copies data from one table into a new table.</p>
+<div class="sourceCode" id="cb55" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true"></a><span class="kw">SELECT</span> <span class="op">*</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true"></a><span class="kw">INTO</span> newtable [<span class="kw">IN</span> externaldb]</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true"></a><span class="kw">FROM</span> oldtable</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true"></a><span class="kw">WHERE</span> condition;</span></code></pre></div>
+<h1 id="transactions">Transactions</h1>
+<p>Transactional control commands are only used with the DML Commands such as INSERT, UPDATE and DELETE. They cannot be used while creating tables or dropping them because these operations are automatically committed in the database.</p>
+<ul>
+<li><p>COMMIT – to save the changes.</p></li>
+<li><p>ROLLBACK – to roll back the changes.</p></li>
+<li><p>SAVEPOINT – creates points within the groups of transactions in which to ROLLBACK.</p></li>
+<li><p>SET TRANSACTION – Places a name on a transaction.</p></li>
+</ul>
+<h2 id="commit">COMMIT</h2>
+<p>The COMMIT command is the transactional command used to save changes invoked by a transaction to the database.</p>
+<div class="sourceCode" id="cb56" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> CUSTOMERS</span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true"></a>   <span class="kw">WHERE</span> AGE <span class="op">=</span> <span class="dv">25</span>;</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true"></a><span class="kw">COMMIT</span>;</span></code></pre></div>
+<h2 id="rollback">ROLLBACK</h2>
+<p>The ROLLBACK command is the transactional command used to undo transactions that have not already been saved to the database. This command can only be used to undo transactions since the last COMMIT or ROLLBACK command was issued.</p>
+<div class="sourceCode" id="cb57" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> CUSTOMERS</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true"></a>   <span class="kw">WHERE</span> AGE <span class="op">=</span> <span class="dv">25</span>;</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true"></a><span class="kw">ROLLBACK</span>;</span></code></pre></div>
+<h2 id="savepoint">SAVEPOINT</h2>
+<p>A SAVEPOINT is a point in a transaction when you can roll the transaction back to a certain point without rolling back the entire transaction.</p>
+<div class="sourceCode" id="cb58" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true"></a><span class="kw">SAVEPOINT</span> SP1;</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true"></a><span class="co">/* Savepoint created. */</span></span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> CUSTOMERS <span class="kw">WHERE</span> <span class="kw">ID</span><span class="op">=</span><span class="dv">1</span>;</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true"></a><span class="co">/* 1 row deleted. */</span></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true"></a><span class="kw">SAVEPOINT</span> SP2;</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true"></a><span class="co">/* Savepoint created. */</span></span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true"></a><span class="kw">DELETE</span> <span class="kw">FROM</span> CUSTOMERS <span class="kw">WHERE</span> <span class="kw">ID</span><span class="op">=</span><span class="dv">2</span>;</span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true"></a><span class="co">/* 1 row deleted. */</span></span>
+<span id="cb58-9"><a href="#cb58-9" aria-hidden="true"></a><span class="kw">ROLLBACK</span> <span class="kw">TO</span> SP2;</span></code></pre></div>
+<p>The RELEASE SAVEPOINT command is used to remove a SAVEPOINT that you have created.</p>
+<div class="sourceCode" id="cb59" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true"></a>RELEASE <span class="kw">SAVEPOINT</span> SAVEPOINT_NAME;</span></code></pre></div>
+<h2 id="set-transaction">SET TRANSACTION</h2>
+<p>The SET TRANSACTION command can be used to initiate a database transaction. This command is used to specify characteristics for the transaction that follows. For example, you can specify a transaction to be read only or read write.</p>
+<div class="sourceCode" id="cb60" data-language="SQL"><pre class="sourceCode sql"><code class="sourceCode sql"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true"></a><span class="kw">SET</span> <span class="kw">TRANSACTION</span> [ <span class="kw">READ</span> <span class="kw">WRITE</span> | <span class="kw">READ</span> <span class="kw">ONLY</span> ];</span></code></pre></div>
+<p>https://selectstarsql.com/</p>
+<p>https://www.w3schools.com/sql</p>
+<p>https://www.tutorialspoint.com/sql/sql-transactions.htm</p>
+<p>https://quip.com/2gwZArKuWk7W</p>
+<p>https://hakibenita.com/sql-tricks-application-dba</p>
+<p>https://use-the-index-luke.com/</p>
+<p>http://docshare01.docshare.tips/files/29375/293750304.pdf</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>https://github.com/lukepereira/notebooks<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>https://github.com/lukepereira/notebooks<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
