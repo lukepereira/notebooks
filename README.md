@@ -2,12 +2,27 @@
 
 ## Contents
 
+<!--
+To add a new row to table, copy/update and prettify:
+
+|
+    _<doc_name>_
+|
+    <date>
+|
+    [\[pdf\]](https://lukepereira.github.io/notebooks/documents/<date>-<doc_name>/main.pdf)
+    [\[md\]](documents/<date>-<doc_name>/main.md)
+    [\[html\]](https://lukepereira.github.io/notebooks/documents/<date>-<doc_name>/index.html)
+|
+-->
+
 | Computer Science                                | Date | Documents                                                                                                                                                                                                                                                                              |
 | ----------------------------------------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | _Stochastic Modeling and Queuing Theory_        | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-performance-analysis/main.pdf)                                                                                                                                                                                        |
 | _Data Structures and Algorithms_                | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/main.pdf) [\[md\]](documents/2020-data-structures-and-algorithms/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-data-structures-and-algorithms/index.html) |
 | _Object-Oriented Programming & Design Patterns_ | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/main.pdf) [\[md\]](documents/2020-OOP-design-patterns/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-OOP-design-patterns/index.html)                                  |
 | _Distributed Systems Design and Concepts_       | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-distributed-systems-design/main.pdf) [\[md\]](documents/2020-distributed-systems-design/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-distributed-systems-design/index.html)             |
+| _SQL_                                           | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-sql/main.pdf) [\[md\]](documents/2020-sql/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2020-sql/index.html)                                                                                  |
 | _RSA Encryption Essay_                          | 2017 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/main.pdf) [\[md\]](documents/2017-rsa-essay/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2017-rsa-essay/index.html)                                                                |
 | _Machine Learning Essay_                        | 2017 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/main.pdf) [\[md\]](documents/2017-machine-learning-essay/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/index.html)                         |
 
