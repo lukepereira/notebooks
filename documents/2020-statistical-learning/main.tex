@@ -12,7 +12,9 @@
 \usepackage{float}
 \usepackage{hyperref}
 
+
 \newcommand{\comment}[1]{}
+\numberwithin{equation}{section}
 
 \title{\vspace{-3cm} Statistical Learning Notes (ISLR)}
 \author{}
@@ -25,6 +27,7 @@
 Outline:
 - Go over statistical learning book and add code snippets with python scikit learn
 - Go over VC theory paper
+- Add definition in margin https://tex.stackexchange.com/questions/518603/theorem-and-definition-name-in-margin
 
 2: Basics of stat learning and K Nearest Neighbor
 3: Linear Regression
@@ -50,18 +53,19 @@ Outline:
         \item  At the beginning of the nineteenth century, Legendre and Gauss published papers on the method of least squares, which implemented the earliest form of what is now known as linear regression.
         \item In 1936 Fisher proposed linear discriminant analysis.
         \item In the 1940s, various authors put forth an alternative approach, logistic regression.
-        \item In the 1950's, Frank Rosenblatt introduced the Perceptron and Neural Networks
+        \item In the 1950's, Frank Rosenblatt introduced the Perceptron and Neural Networks.
         \item In the 1960's, various authors introduced Nearest Neighbor and K-means clustering.
         \item In the early 1970s, Nelder and Wedderburn coined the term generalized linear models for an entire class of statistical learning methods that include both linear and logistic regression as special cases.
         \item By the end of the 1970s, many more techniques for learning from data were available but all were almost all linear because of computational limitations.
-        \item By the 1980s, computing technology had finally improved sufficiently that non-linear methods were no longer computationally prohibitive
-        \item In mid 1980s Breiman, Friedman, Olshen and Stone introduced classification and regression trees,  including cross-validation for model selection.
+        \item By the 1980s, computing technology had finally improved sufficiently that non-linear methods were no longer computationally prohibitive.
+        \item In the mid 1980s, Breiman, Friedman, Olshen and Stone introduced classification and regression trees,  including cross-validation for model selection.
         \item In 1986,  Hastie and Tibshirani introduced generalized additive models for a class of non-linear extensions to generalized linear models.
-        \item In the 1990's Vapnik introduced Support Vector Machines.
-        \item In the 2000's Brieman introduced Random Forest
-        \item In the 2000's Hinton popularized Deep Learning and Artificial Neural Networks. 
+        \item In the 1990's, Vapnik introduced Support Vector Machines.
+        \item In the 2000's, Brieman introduced Random Forest
+        \item In the 2000's, Hinton popularized Deep Learning and Artificial Neural Networks.
     \end{enumerate}
-
+    
+\newpage
 \section{Statistical Learning}
 \subsection{What is Statistical Learning}
 $n$ -- number of observations or training data.
@@ -85,43 +89,36 @@ There are two main reasons for estimating $f$: prediction and inference.
 
 \subsubsection*{Prediction}
 
-We can predict $Y$ using $\hat Y = \hat f(X)$ where $\hat f$ represents an estimate of $f$ and $\hat Y$ represents the resulting prediction for $Y$.
+We can predict $Y$ using $\hat Y = \hat f(X)$ where $\hat f$ represents an estimate of $f$ and $\hat Y$ represents the resulting prediction for $Y$. The accuracy of $\hat Y$ as a prediction for $Y$ depends on two quantities, the reducible error and the irreducible error. 
 
-The accuracy of $\hat Y$ as a prediction for $Y$ depends on two quantities, the reducible error and the irreducible error. 
+\textit{Reducible error} is the result of an inaccurate statistical learning technique.
 
-Reducible error is the result of an inaccurate statistical learning technique.
+\textit{Irreducible error} occurs because $Y$ is a function of $\epsilon$ which has variability that is dependent of $X$, so cannot be reduced via a statistical learning technique. Irreducible error may be larger than zero because of unmeasured variables or unmeasurable variation. The irreducible error will always provide an upper bound on the accuracy of our prediction for Y and is almost always unknown in practice.
 
-Irreducible error occurs because $Y$ is a function of $\epsilon$ which has variability that is dependent of $X$, so cannot be reduced via a statistical learning technique. Irreducible error may be larger than zero because of unmeasured variables or unmeasurable variation. The irreducible error will always provide an upper bound on the accuracy of our prediction for Y and is almost always unknown in practice.
-
-\[
+\begin{equation}
     E[(Y - \hat f (x))^2 | X = x] = \underbrace{[f(x) - \hat f(x)]^2}_{\text{Reducible}} + \underbrace{Var(\epsilon)}_{\text{Irreducible}} 
-\]
+\end{equation}
 
-Note, $E(Y - \hat Y)^2 = E[(Y - \hat f (x))^2 | X = x] = E[f(X) + \epsilon - \hat f(X)]^2$ represents the average, or expected value, of the squared difference between the predicted and actual value of $Y$ and $Var()$ represents the variance associated with the error term  $\epsilon$. We square the values in order to ignore the resulting sign when finding averages.
+Note, $E(Y - \hat Y)^2 = E[(Y - \hat f (x))^2 | X = x] = E[f(X) + \epsilon - \hat f(X)]^2$ represents the average, or expected value, of the squared difference between the predicted and actual value of $Y$ and $Var(\epsilon)$ represents the variance associated with the error term  $\epsilon$. We square the values in order to ignore the resulting sign when finding averages.
 
 
 \subsubsection*{Inference}
 Often, we are interested in understanding how $Y$ changes as a function of $X_1,\dots,X_p$. That is, when we vary the value of a given feature, what should the result look like. Now $\hat f$ cannot be treated as a black box, because we need to know its exact form.
 
-Common questions occurring in this setting include,
+Common questions occurring in this setting include:
 \begin{itemize}
     \item Which predictors are associated with the response?
     \item What is the relationship between the response and each predictor?
     \item Can the relationship between Y and each predictor be adequately summarized using a linear equation, or is the relationship more complicated? 
 \end{itemize}
 
-Depending on whether our ultimate goal is prediction, inference, or a combination of the two, different methods for estimating $f$ may be appropriate though some modeling could be conducted both for prediction and inference.
-
-Linear models allow for relatively simple and interpretable inference, but may not yield as accurate predictions as some other
-approaches. In contrast, some highly non-linear approaches can potentially provide quite accurate predictions for $Y$ at the expense of a less interpretable model, for which inference is more challenging.
+Depending on whether our ultimate goal is prediction, inference, or a combination of the two, different methods for estimating $f$ may be appropriate. Linear models allow for relatively simple and interpretable inference, but may not yield as accurate predictions as some other approaches. In contrast, some highly non-linear approaches can potentially provide quite accurate predictions for $Y$ at the expense of a less interpretable model, which makes inference more challenging.
 
 \subsubsection{How Do We Estimate \texorpdfstring{$f$}{f}?}
 
 Our training data or observations can be represented as ${(x_1, y_1),(x_2, y_2),...,(x_n, y_n)}$ where $x_i = (x_{i_1}, x_{i_2},...,x_{i_p})^T$ are vectors and $y_i$ are typically scalars.
 
-Then, we want to find a function $\hat f$ such that $Y \approx \hat f(X)$ for any observation $(X, Y)$
-
-Broadly speaking, most statistical learning methods for this task can be characterized as either parametric or non-parametric
+Then, we want to find a function $\hat f$ such that $Y \approx \hat f(X)$ for any observation $(X, Y)$. Broadly speaking, most statistical learning methods for this task can be characterized as either \textit{parametric} or \textit{non-parametric}.
 
 \subsubsection*{Parametric Methods}
 
@@ -159,11 +156,10 @@ methods.
 \subsubsection{Supervised Versus Unsupervised Learning}
 Most statistical learning problems fall into one of two categories: supervised or unsupervised.
 
-In supervised learning, for each observation of the
-predictor measurement(s) $x_i, i = 1,...,n$ there is an associated response measurement $y_i$. We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future
+In \textit{supervised learning}, for each observation of the predictor measurement(s) $x_i$, for $ i = 1,...,n$, there is an associated response measurement $y_i$. We wish to fit a model that relates the response to the predictors, with the aim of accurately predicting the response for future
 observations (prediction) or better understanding the relationship between the response and the predictors (inference).
 
-In contrast, unsupervised learning describes the situation in which for every observation $i = 1,...,n$, we observe a vector of measurements $x_i$ but no associated response $y_i$. It is not possible to fit a linear regression model, since there is no response variable to predict.  One statistical learning tool that we may use in this setting is cluster analysis which aims to ascertain, on the basis of $x_1,..., x_n$, whether the observations fall into relatively distinct groups.
+In contrast, \textit{unsupervised learning} describes the situation in which for every observation $i = 1,...,n$, we observe a vector of measurements $x_i$ but no associated response $y_i$. It is not possible to fit a linear regression model, since there is no response variable to predict.  One statistical learning tool that we may use in this setting is cluster analysis which aims to ascertain, on the basis of $x_1,..., x_n$, whether the observations fall into relatively distinct groups.
 
 In a semi-supervised learning problem, we wish to use a statistical learning method that can incorporate the $m$ observations for which response measurements are available as well as the $n - m$ observations for which they are not. 
 
@@ -176,154 +172,137 @@ performed.
 \subsubsection{Measuring the Quality of Fit}
 In order to evaluate the performance of a statistical learning method on a given data set, we need to quantify the extent to which the predicted response value for a given observation is close to the true response value for that observation.
 
-The most commonly-used measure is the mean squared error (MSE), given by
-\[
+The most commonly-used measure is the \textit{mean squared error} (MSE), given by
+\begin{equation}
     MSE = \frac{1}{n} \sum_{i=1}^n (y_i - \hat f(x_i))^2.
-\]
+\end{equation}
 
 The MSE computed using the training data that was used to fit the model can be referred to as the training
 MSE. We want to choose the method that gives
 the lowest test MSE, i.e. we want $\hat f(x_0)$ to be approximately equal to $y_0$, where $(x_0, y_0)$ is a previously unseen test observation not used to train the statistical learning method.
 
 As model flexibility increases, training MSE will decrease, but the test MSE may not. When a given method yields a small training MSE but a large test MSE, we are said to be overfitting the data. This is a fundamental property of statistical learning that holds regardless of the particular data set at hand and regardless of the statistical method being used. When we overfit
-the training data, the test MSE will be very large because the supposed patterns that the method found in the training data simply don’t exist in the test data. 
-
-One important method for estimating test MSE using the training data is cross-validation. 
+the training data, the test MSE will be very large because the supposed patterns that the method found in the training data simply don’t exist in the test data. One important method for estimating test MSE using the training data is cross-validation, examined later. 
 
 \subsubsection{The Bias-Variance Trade-Off}
 
-The expected test MSE, for a given value $x_0$, can always be decomposed into the sum of three fundamental quantities: the variance of $\hat f(x0)$, the squared bias of $\hat f(x_0)$ and the variance of the error variance bias terms. That is,
+The expected test MSE, for a given value $x_0$, can always be decomposed into the sum of three fundamental quantities: the variance of $\hat f(x_0)$, the squared bias of $\hat f(x_0)$ and the variance of the error terms. That is,
 
-\[
-    E \big (y_0 - \hat f(x_0) \big )^2 = Var( \hat f(x_0)) + [Bias( \hat f(x_0))]^2 + Var(\epsilon).
-\]
+\begin{equation}
+    E \Big (y_0 - \hat f(x_0) \Big )^2 = Var( \hat f(x_0)) + [Bias( \hat f(x_0))]^2 + Var(\epsilon).
+\end{equation}
 
-$E \big (y_0 - \hat f(x_0) \big )^2$ defines the expected test MSE, computed by averaging the term over all possible values of $x_0$ in the test set.
+Here, $E \Big (y_0 - \hat f(x_0) \Big )^2$ defines the expected test MSE, computed by averaging the term over all possible values of $x_0$ in the test set. In order to minimize the expected test error, we need to select a statistical learning method that simultaneously achieves low variance and low bias. 
 
-In order to minimize the expected test error, we need to select a statistical learning method that simultaneously achieves low variance and low bias. 
+\textit{Variance} refers to the amount by which $\hat f$ would change if we estimated it using a different training data set. In general, more flexible statistical methods have higher variance. This is because changing any one of the data points may cause the estimate $\hat f$ to change considerably. A model with high variance does not generalize on the data which it hasn't seen before and is said to be overfitting.
 
-Variance refers to the amount by which $\hat f$ would change if we estimated it using a different training data set. In general, more flexible statistical methods have higher variance. This is because changing any one of the data points may cause the estimate $\hat f$ to change considerably. A model with high variance does not generalize on the data which it hasn't seen before.
-
-Bias refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias
-
-As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases. As we increase the flexibility of a class of methods, the bias tends to initially decrease faster than the variance increases. Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance. When this happens the test MSE increases. 
-% (A model's assumption errors decrease faster than its ability to generalize to new observations)
-
-The relationship between bias, variance, and test set MSE is referred to as the bias-variance trade-off. 
+\textit{Bias} refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. A model with high bias will be making overly strong assumptions about the training data and is said to be underfitting. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=13cm]{bias-variance-tradeoff.png}
 \end{figure}
+The relationship between bias, variance, and test set MSE is referred to as the \textit{bias-variance trade-off}. 
+
+As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases. As we increase the flexibility of a class of methods, the bias tends to initially decrease faster than the variance increases. Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance. When this happens the test MSE increases. 
+% (A model's assumption errors decrease faster than its ability to generalize to new observations)
 
 
 \subsubsection{The Classification Setting}
 Many of the previous concepts, including the bias-variance trade-off, transfer over to the classification setting with only some modifications due to the fact that $y_i$ is no longer numerical. Suppose that we seek to estimate $f$ on the basis of training observations $\{(x_1, y_1),...,(x_n, y_n)\}$, where now $y_1,...,y_n$ are qualitative.
 
-The most common approach for quantifying the accuracy of our estimate $\hat f$ is the \textit{training error rate}, the proportion of mistakes that are made if we apply error rate our estimate $\hat f$ to the training observations:
+The most common approach for quantifying the accuracy of our estimate $\hat f$ is the \textit{training error rate}, the proportion of mistakes that are made if we apply our estimated $\hat f$ to the training observations:
 
-\[
+\begin{equation}
     \frac{1}{n} \sum_{i=1}^n I(y_i  \neq \hat y_i)
-\]
+\end{equation}
 
-Here $\hat y_i$ is the predicted class label for the $i$th observation using $\hat f$. And $I(y_i \neq \hat y_i)$ is an indicator variable that equals 1 if the $i$th observation was misclassified, i.e. $y_i \neq \hat y_i$, and zero it was was classified correctly, i.e.$y_i = \hat y_i$.
+Here $\hat y_i$ is the predicted class label for the $i$th observation using $\hat f$, and $I(y_i \neq \hat y_i)$ is an indicator variable that equals 1 if the $i$th observation was misclassified, i.e. $y_i \neq \hat y_i$, and equals zero if it was was classified correctly, i.e. $y_i = \hat y_i$.
 
 
-The \textit{test error rate} associated with a set of test observations of the form $(x_0, y_0)$ is given by
-\[
+The \textit{test error rate} associated with a set of test observations of the form $(x_0, y_0)$ is given by,
+\begin{equation}
     Ave(I(y_0 \neq \hat y_0)),
-\]
+\end{equation}
 where $\hat y_0$ is the predicted class label. A good classifier minimizes the test error.
 
 \subsubsection{The Bayes Classifier}
 To minimize the test error rate, on average, we should simply assign a test observation with predictor vector $x_0$ to the class $j$ for which the conditional probability
-\[
+\begin{equation}
     \Pr(Y = j|X = x_0)
-\]
+\end{equation}
 is largest. This very simple classifier is called the \textit{Bayes classifier}. In a two-class problem the classification will be class one if $Pr(Y = 1|X = x_0) > 0.5$, and class two otherwise. The line where the probability is exactly 0.5 is called the \textit{Bayes decision boundary}.
 
-The Bayes classifier produces the lowest possible test error rate, called \textit{the Bayes error rate} given by,
-\[
-1 - E \big( \max_j \Pr(Y = j|X) \big ),
-\]
+The Bayes classifier produces the lowest possible test error rate, called \textit{the Bayes error rate}, given by,
+\begin{equation}
+1 - E \Bigg( \max_j \Pr(Y = j|X) \Bigg ),
+\end{equation}
 where the expectation averages the probability over all possible values of $X$. The Bayes error rate is analogous to the irreducible error.
 
 In theory we would always like to predict qualitative responses using the Bayes classifier. But for real data, we do not know the conditional distribution of $Y$ given $X$, and so computing the Bayes classifier is impossible. Therefore, the Bayes classifier serves as an unattainable gold standard against which to compare other methods.
 
 \subsubsection{K-Nearest Neighbors}
-Given a positive integer $K$ and a test observation $x_0$, the K-nearest neighbors (KNN) classifier first identifies the K points in the training data that are closest to $x_0$, represented by $ \mathcal N_0$. It then estimates the conditional probability for class j as the fraction of points in $ \mathcal N_0$ whose response values equal j:
+Given a positive integer $K$ and a test observation $x_0$, the \textit{K-nearest neighbors} (KNN) classifier first identifies the $K$ points in the training data that are closest to $x_0$, represented by $\mathcal N_0$. It then estimates the conditional probability for class $j$ as the fraction of points in $\mathcal N_0$ whose response values equal $j$:
 
-\[
+\begin{equation}
     \Pr(Y = j|X = x_0) = \frac{1}{K} \sum_{i \in \mathcal N_0} I(y_i = j).
-\]
+\end{equation}
 
 Finally, KNN applies Bayes rule and classifies the test observation $x_0$ to the class with the largest probability.
 
 The choice of $K$ has a drastic effect on the KNN classifier obtained. As $K$ grows, the method becomes less flexible and produces a decision boundary that is close to linear. This corresponds to a low-variance but high-bias classifier. In
-general, as we use more flexible classification methods, the training error rate will decline but the test error rate may not.
+general, as we use more flexible classification methods, the training error rate will decline but the test error rate may not. In both the regression and classification settings, choosing the correct level of flexibility is critical to the success of any statistical learning method. The bias-variance tradeoff, and the resulting U-shape in the test error, can make this a difficult task. 
 
-In both the regression and classification settings, choosing the correct level of flexibility is critical to the success of any statistical learning method. The bias-variance tradeoff, and the resulting U-shape in the test error, can make this a difficult task. 
-
-Nearest Neighbors can be good when the number of variables, $p$, is small, i.e. $p \leq 4$ and for a large number of sample points. It is one of many techniques called smoothers, like kernel and spline smoothing. Unfortunately this method is very poor when $p$ is large, since possible nearby neighbors tend to be far away in high dimensions. This is known as the curse of dimensionality. We need to get a reasonable fraction of the $N$ values of $y_i$ to average in order to bring the variance of our model down. However, as we increase the dimensions, the radius we need to search increases and we lose the efficacy of estimating using local averages
+Nearest Neighbors can be good when the number of variables, $p$, is small, i.e. $p \leq 4$ and for a large number of sample points. It is one of many techniques called smoothers, like kernel and spline smoothing. Unfortunately this method is very poor when $p$ is large, since possible nearby neighbors tend to be far away in high dimensions. This is known as the \textit{curse of dimensionality}. We need to get a reasonable fraction of the $N$ values of $y_i$ to average in order to bring the variance of our model down. However, as we increase the dimensions, the radius we need to search increases and we lose the efficacy of estimating using local averages.
 
 \newpage
-
 \section{Linear Regression}
-Linear regression is a very simple approach for supervised learning and is a useful tool for predicting a quantitative response.
+\textit{Linear regression} is a very simple approach for supervised learning and is a useful tool for predicting a quantitative response.
 
 \subsection{Simple Linear Regression}
 
 Simple linear regression  is a very straightforward approach for predicting a quantitative response $Y$ on the basis of a single predictor variable $X$. It assumes that there is approximately a linear relationship between $X$ and $Y$. We will sometimes describe this by saying that we are regressing $Y$ on $X$.
-
-\[
+\begin{equation}
     Y \approx \beta_0 + \beta_1 X
-\]
-
-$\beta_0$ and $\beta_1$ are two unknown constants that represent the intercept and slope terms in the linear model and are known as its coefficients or parameters.
-
-
-We may use our training data to produce estimates $\hat \beta_0$ and $\hat \beta_1$ for prediction.
-
-\[
-    \hat y  \approx \hat \beta_0 + \hat \beta_1 x
-\]
-
+\end{equation}
+$\beta_0$ and $\beta_1$ are two unknown constants that represent the intercept and slope terms in the linear model and are known as its coefficients or parameters. We may use our training data to produce estimates $\hat \beta_0$ and $\hat \beta_1$ for prediction,
+\begin{equation}
+    \hat y  \approx \hat \beta_0 + \hat \beta_1 x,
+\end{equation}
 where $\hat y$ indicates a prediction of $Y$ on the basis of $X = x$.
 
 
 \subsubsection{Estimating the Coefficients}
-Let $(x_1, y_1), (x_2, y_2),..., (x_n, y_n)$ represent $n$ observation pairs, each of which consists of a measurement of $X$ and a measurement of $Y$.
-
-We want to find an intercept $\hat \beta_0 $ and a slope $\hat \beta_1$ such that the resulting line is as close as possible to the $n$ data points. The most common definition of closeness involves minimizing the least squares criterion.
+Let $(x_1, y_1), (x_2, y_2),..., (x_n, y_n)$ represent $n$ observation pairs, each of which consists of a measurement of $X$ and a measurement of $Y$. We want to find an intercept $\hat \beta_0 $ and a slope $\hat \beta_1$ such that the resulting line is as close as possible to the $n$ data points. The most common definition of closeness involves minimizing the least squares criterion.
 
 Let $\hat y_i = \hat \beta_0 + \hat \beta_1 x_i$ be the prediction for $Y$ based on the $i$th value of $X$. Then $e_i = y_i - \hat y_i$ represents the $i$th residual -- this is the difference between $i$th observed response and its prediction. 
 
 We define the \textit{residual sum of squares (RSS)} as,
-\begin{align*}
+\begin{align}\label{eq:RSS}
+\begin{split}
      RSS &= e_1^2 + e_2^2 + \dots + e_n^2\\
      &=  (y_1 - \hat \beta_0 - \hat \beta_1 x_1)^2 + \cdots + 
      (y_n - \hat \beta_0 - \hat \beta_1 x_n)^2
-\end{align*}
+\end{split}
+\end{align}
 
 The least squares approach chooses $\hat \beta_0 $ and $\hat \beta_1$ to minimize the RSS.
 
-Let $ y \equiv \frac{1}{n} \sum^n_{i=1} y_i$ and $\bar x \equiv \frac{1}{n} \sum_{i=1}^n x_i$ be the sample means. Then the the \textit{least squares coefficient estimates} are given by,
+Let $ \bar y \equiv \frac{1}{n} \sum^n_{i=1} y_i$ and $\bar x \equiv \frac{1}{n} \sum_{i=1}^n x_i$ be the sample means. Then the the \textit{least squares coefficient estimates} are given by,
 
 \begin{align*}
-    \hat \beta_0 &= \frac{\sum_{i=1}^n (x_i - \bar x) (y_i - \bar y)}{\sum_{i=1}^n (x_i - \bar x)^2} \\ 
-    \hat \beta_1 &= \bar y - \hat \beta_1 \bar x
+    \hat \beta_0 &= \frac{\sum_{i=1}^n (x_i - \bar x) (y_i - \bar y)}{\sum_{i=1}^n (x_i - \bar x)^2}, \\ 
+    \hat \beta_1 &= \bar y - \hat \beta_1 \bar x.
 \end{align*}
 
  
 \subsubsection{Assessing the Accuracy of the Coefficient Estimates}
 
 If $f$ is to be approximated by a linear function, then we can write this relationship as a \textit{population regression line},
-
 \begin{align*}
  Y &= f(X) +  \epsilon \\
  Y  &= \beta_0 +  \beta_1 X + \epsilon
 \end{align*}
- 
 Where $\beta_0$ is the intercept, i.e. the expected value of $Y$ when $X = 0$, $\beta_1$ is the slope, i.e.  the average increase in $Y$ in a unit of increase of $X$, and $\epsilon$ is a catch-all error term.
  
 The \textit{least squares line} can always be computed using the coefficient estimates, however, the population regression line is unobserved. Fundamentally, the concept of these two lines is a natural extension of the standard statistical approach of using information from a sample to estimate characteristics of an unmeasured large population.
@@ -331,46 +310,42 @@ The \textit{least squares line} can always be computed using the coefficient est
 The analogy between linear regression and estimation of the mean of a
 random variable is an apt one based on the concept of bias. if we could average a huge number of estimates $\hat \mu$ of the true population mean $\mu$ obtained from a huge number of sets of observations, then this average would exactly equal $\mu$. Thus it is an unbiased estimator, i.e. it does not systematically over- or under-estimate the true parameter. 
 
-To determine the accuracy of a sample mean $\hat \mu$ as an estimate of $\mu$, we can find the \textit{standard error}, which roughly tells us the average amount that this estimate differs from the actual value of $\mu$. 
-
-\[
+To determine the accuracy of a sample mean $\hat \mu$ as an estimate of $\mu$, we can find the \textit{standard error}, which roughly tells us the average amount that this estimate differs from the actual value of $\mu$,
+\begin{equation}
     \text{Var} (\hat \mu) = \text{SE} (\hat \mu ) ^2 = \frac{\sigma^2}{n},
-\]
-
+\end{equation}
 where $\sigma$ is the standard deviation of each of the realizations $y_i$ of $Y$.
 
 To compute the standard errors associated with $\hat \beta_0$ and $\hat \beta_1$,
 
 \begin{align*}
-    \text{SE} ( \hat \beta_0 )^2 &= \sigma^2 \big (  \frac{\bar x^2}{(x_i - \bar x)^2}  \big )\\ 
+    \text{SE} ( \hat \beta_0 )^2 &= \sigma^2 \Bigg (  \frac{\bar x^2}{(x_i - \bar x)^2}  \Bigg )\\ 
     \text{SE} ( \hat \beta_1 )^2 &= \frac{\sigma^2}{\sum_{i=1}^n (x_i - \bar x)^2} 
 \end{align*}
 
-where $\sigma^2 = \text{Var}()$. In general, $\sigma^2$ is not known, but can be estimated from the data. The estimate of $\sigma$ is known as the \textit{residual standard error}, and is given by the formula,
-\[
+where $\sigma^2 = \text{Var}(\epsilon)$. In general, $\sigma^2$ is not known, but can be estimated from the data. The estimate of $\sigma$ is known as the \textit{residual standard error}, and is given by the formula,
+\begin{equation}\label{eq:RSE-1}
     RSE = \sqrt{RSS/(n - 2)}
-\]
+\end{equation}
 
-Standard errors can be used to compute \textit{confidence intervals}. For example, a  95\% confidence interval is defined as a range of values such that with  95\% probability, the range will contain the true unknown value of the parameter.
-
-For linear regression the confidence interval of the coefficients is given by,
+Standard errors can be used to compute \textit{confidence intervals}. For example, a  95\% confidence interval is defined as a range of values such that with  95\% probability, the range will contain the true unknown value of the parameter.For linear regression the confidence interval of the coefficients is given by,
 \begin{align*}
     \hat \beta_1 &\pm 2 \cdot \text{SE}(\hat \beta_1)  \\
     \hat \beta_0 &\pm 2 \cdot \text{SE}(\hat \beta_0).
 \end{align*}
+Standard errors can also be used to perform hypothesis tests on the coefficients. The null hypotheses --  $H_0$ : There is no relationship between $X$ and $Y$, i.e. $\beta_1 = 0$. The alternative hypothesis -- $H_a$ : There is some relationship between $X$ and $Y$, i.e. $\beta_1 \neq 0$. 
 
-Standard errors can also be used to perform hypothesis tests on the coefficients. The null hypotheses --  $H_0$ : There is no relationship between $X$ and $Y$, i.e. $\beta_1 = 0$. The alternative hypothesis -- $H_a$ : There is some relationship between $X$ and $Y$, i.e. $\beta_1 \neq 0$. Setting $\beta_1$ removes the $X$ term in  $Y = \beta_0 + \beta_1 X + \epsilon$.  
+Notice that setting $\beta_1 = 0$ removes the $X$ term in $Y = \beta_0 + \beta_1 X + \epsilon$ and $X$ is not associated with $Y$. So if $\hat \beta_1$ is sufficiently far from zero and $\text{SE}(\hat \beta_1)$ is small, then our estimates of the parameter our accurate and give strong evidence that the null hypotheses is true. if $SE(\hat\beta_1)$ is large, then $SE(\hat\beta_1)$ must be large in absolute value in order for us to reject the null hypothesis.
 
-
-If $\text{SE}(\hat \beta_1)$ is small, then even relatively small values of $\hat \beta_1$ may provide strong evidence that $\hat \beta_1 \neq 0$  and hence that there is a relationship between $X$ and $Y$. The \textit{t-statistic} given by,
-\[
+In practice, we compute the \textit{t-statistic}, given by,
+\begin{equation}
     t = \frac{\hat \beta_1 - 0}{\text{SE}(\hat \beta_1)}
-\]
-measures the number of standard deviations that $\hat \beta_1$ is away from 0. If there is no relationship between $X$ and $Y$, the t-statistics will have a distribution with n - 2 degrees of freedom. 
+\end{equation}
+which measures the number of standard deviations that $\hat \beta_1$ is away from 0. If there is no relationship between $X$ and $Y$, the t-statistics will have a distribution with $n - 2$ degrees of freedom. 
 
 The \textit{p-value} corresponds to the probability of observing any number equal to $|t|$ or larger in absolute value, assuming $\beta_1= 0$. A small p-value indicates that it is unlikely to observe such a substantial association between the predictor and the response due to chance, in the absence of any real association, so we can infer that there is an association between the predictor and the response. Then, we can reject the null hypothesis and may declare a relationship between $X$ and $Y$ if the p-value is small enough.
 
-Simply put, a p-value is the probability that random chance generated the data, or (+) another event else that is equal or rarer. The traditional threshold for determining significance of a p-value is $< 0.05$.
+Simply put, a p-value is the probability that random chance generated the data, or (plus) it was the result of another event that is of equal or rarer probability. The traditional threshold for determining significance of a p-value is $< 0.05$.
 
 \subsubsection{Assessing the Accuracy of the Model}
 Given the alternative hypothesis holds, we likely want to quantify the extent to which the model fits the data. A linear regression fit is typically assessed using two related quantities: the residual standard error (RSE) and the $R^2$ statistic.
@@ -379,19 +354,19 @@ Given the alternative hypothesis holds, we likely want to quantify the extent to
 The RSE is an estimate of the standard deviation of the irreducible error term $\epsilon$. Roughly speaking, it is the average amount that the response
 will deviate from the true regression line and is considered a measure of the lack of fit of the model to the data. 
 
-Recall, RSS is the residual sum of squares. Then the RSE is given by,
-\[
+Recall, RSS is the residual sum of squares \eqref{eq:RSS} and the RSE was previously used to estimate $\sigma$ \eqref{eq:RSE-1}. Then, the RSE can be written as,
+\begin{equation}
     RSE = \sqrt{\frac{1}{(n-2)} \text{RSS} } 
     = \sqrt{\frac{1}{(n-2)} \sum_{i=1}^n (y_i - \hat y_i)^2 }.
-\]
+\end{equation}
 
-\subsubsection*{R2 Statistic} 
-The $R^2$ statistic provides an alternative measure of fit in terms of the proportion of variance explained and so it always takes on a value between 0 and 1, and is independent of the scale of $Y$ like the RSE. The $R^2$ statistic is a measure of the linear relationship between $X$ and $Y$.
+\subsubsection*{\texorpdfstring{$R^2$}{R-Squared} Statistic} 
+The $R^2$ statistic provides an alternative measure of fit in terms of the proportion of explained variance, i.e. not residual, and so it always takes on a value between 0 and 1. Moreover, it is independent of the scale of $Y$, unlike the RSE. The $R^2$ statistic is a measure of the linear relationship between $X$ and $Y$.
 
-Let $\text{TSS} = (y_i - \hat y)^2$ be the \textit{total sum of squares} and , RSS is the residual sum of squares. Then $R^2$ is given by,
-\[
+Let $\text{TSS} = (y_i - \hat y)^2$ be the \textit{total sum of squares} and RSS be the residual sum of squares \eqref{eq:RSS}. Then $R^2$ is given by,
+\begin{equation}
     R^2 =  \frac{\text{TSS} - \text{RSS}}{\text{TSS}} = 1 - \frac{RSS}{TSS}
-\]
+\end{equation}
 
 TSS can be thought of as the amount of variability inherent in the response before the regression is performed while RSS measures the amount of variability that is left unexplained after performing the regression. TSS - RSS measures the amount of variability in the response that is explained (or
 removed) by performing the regression, and $R^2$ measures the proportion of variability in $Y$ that can be explained using $X$.
@@ -400,19 +375,18 @@ An $R^2$ statistic that is close to 1 indicates that a large proportion of the v
 
 \subsection{Multiple Linear Regression}
 We can handle multiple predictors by giving each predictor a separate slope coefficient in a single model. In general, suppose that we have $p$ distinct predictors. Then the multiple linear regression model takes the form,
-
-\[
+\begin{equation}
     Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \dots + \beta_p X_p + \epsilon,
-\]
-where $X_j$ represents the $j$th predictor and $\beta_j$ quantifies the association between that variable and the response, namely the average effect on $Y$ of a one unit increase in $X_j$ , holding all other predictors fixed.
+\end{equation}
+where $X_j$ represents the $j$th predictor and $\beta_j$ quantifies the association between that variable and the response, namely the average effect on $Y$ of a one unit increase in $X_j$  while holding all other predictors fixed.
 
 \subsubsection{Estimating the Regression Coefficients}
 
 Given estimates $\hat \beta_0, \hat \beta_1,..., \hat \beta_p$, we can make predictions using the formula,
-\[
+\begin{equation}
      \hat y= \hat \beta_0, \hat \beta_1 x_1,..., \hat \beta_p x_p.
-\]
-We choose $\beta_0, \beta_1,...,\beta_p$ to minimize the sum of squared residuals,
+\end{equation}
+Again, we choose $\beta_0, \beta_1,...,\beta_p$ to minimize the residual sum of squared,
 \begin{align*}
     RSS &= \sum_{i=1}^{n} (y_i - \hat y_i)^2 \\
     &=  \sum_{i=1}^{n}(y_i - \hat \beta_0 - \hat \beta_1 x_1,..., \hat \beta_p x_p)^2.
@@ -429,30 +403,30 @@ The values $\hat \beta_0, \hat \beta_1 x_1,..., \hat \beta_p x_p$ that minimize 
 
 \subsubsection*{Is There a Relationship Between the Response and Predictors?}
 In the multiple regression setting with $p$ predictors, we need to ask whether all of the regression coefficients are zero. The null hypothesis becomes,
-\[
+\begin{equation}
     H_0 : \beta_1 = \beta_2 = \dots = \beta_p = 0.
-\]
+\end{equation}
 
 This hypothesis test is performed by computing the \textit{F-statistic}.
-\[
+\begin{equation}
     F = \frac{(\text{TSS} - \text{RSS})/p }{\text{RSS}/ (n-p-1)}
-\]
+\end{equation}
 
 When there is no relationship between the response and predictors, one would expect the F-statistic to take on a value close to 1. On the other hand, if $H_a$ is true (i.e. at least one $\beta_j$ is non-zero.), then $E{(\text{TSS} - \text{RSS})/p} > \sigma^2$, so we expect $F$ to be greater than $1$.
 
-The approach of using an F-statistic to test for any association between the predictors and the response works when $p$ is relatively small, and certainly small compared to $n$. However, sometimes we have a very large number of variables. If $p>n$ then there are more coefficients $\beta_j$ to estimate than observations from which to estimate them. In this case we cannot even fit the multiple linear regression model using least squares, so the F-statistic cannot be used. Approaches like forward selection, discussed later, can be used instead.
+The approach of using an F-statistic to test for any association between the predictors and the response works when $p$ is relatively small, and certainly small compared to $n$. However, sometimes we have a very large number of variables. If $p>n$ then there are more coefficients $\beta_j$ to estimate than observations from which to estimate them. In this case we cannot even fit the multiple linear regression model using least squares, so the F-statistic cannot be used. Approaches like \textit{forward selection} can be used instead.
 
 \subsubsection{Deciding on Important Variables}
 The first step in a multiple regression analysis is to compute the F-statistic and to examine the associated p-value. If we conclude on the basis of the p-value that at least one of the predictors is related to the response, then it is natural to wonder which are the relevant ones. The task of determining which predictors are associated with the response, in order to fit a single model involving only those predictors, is referred to as \textit{variable selection}, discussed more in detail in chapter 6.
 
-There are a total of $2^p$ models that contain subsets of $p$ variables. . In general, we cannot consider all $2^p$ models, and instead we need an automated and efficient approach to choose a smaller set of models to consider. There
+There are a total of $2^p$ models that contain subsets of $p$ variables. In general, we cannot consider all $2^p$ models, and instead we need an automated and efficient approach to choose a smaller set of models to consider. There
 are three classical approaches for this task:
 \begin{enumerate}
-    \item \textit{Forward selection} -- We begin with the null model, i.e. a model that contains an intercept but no predictors. We then fit p simple linear regressions and add to the null model the variable that results in the lowest RSS. We then add to that model the variable that results in the lowest RSS for the new two-variable model. This approach is continued until some stopping rule is satisfied.
+    \item \textit{Forward selection} -- We begin with the null model, i.e. a model that contains an intercept (i.e $\beta_0$) but no predictors. We then fit $p$ simple linear regressions and add to the null model the variable that results in the lowest RSS. We then add to that model the variable that results in the lowest RSS for the new two-variable model. This approach is continued until some stopping rule is satisfied.
     
     \item \textit{Backward selection} -- We start with all variables in the model, and remove the variable with the largest p-value—that is, the variable  that is the least statistically significant. The new ($p - 1$)-variable model is fit, and the variable with the largest p-value is removed. This procedure continues until a stopping rule is reached, i.e. when  all remaining variables have a p-value below some threshold.
     
-    \item Mixed selection -- This is a combination of forward and backward selection. We start with no variables in the model, and as with forward selection, we add the variable that provides the best fit. Since the p-values for variables can become larger as new predictors are added to the model, if at any point the p-value for one of the variables in the model rises above a certain threshold, then we remove that variable from the model. We continue to perform these forward and backward steps until all variables in the model have a sufficiently low p-value.
+    \item \textit{Mixed selection} -- This is a combination of forward and backward selection. We start with no variables in the model, and as with forward selection, we add the variable that provides the best fit. Since the p-values for variables can become larger as new predictors are added to the model, if at any point the p-value for one of the variables in the model rises above a certain threshold, then we remove that variable from the model. We continue to perform these forward and backward steps until all variables in the model have a sufficiently low p-value.
 \end{enumerate}
 
 Backward selection cannot be used if $p>n$, while forward selection can
@@ -461,14 +435,14 @@ variables early that later become redundant. Mixed selection can remedy
 this.
 
 \subsubsection*{Model Fit}
-In multiple linear regression, $R^2 =  Cor(Y, \hat Y)^2$,  the square of the correlation between the response and the fitted linear model. $R^2$ will always increase when more variables are added to the model, even if they are only weakly associated with the response.  This is due to the fact that adding another variable to the least squares equations must allow us to fit the training data more accurately, so the R2 statistic, which is also computed on the training data, must increase.
+In multiple linear regression, $R^2 =  Cor(Y, \hat Y)^2$,  the square of the correlation between the response and the fitted linear model. $R^2$ will always increase when more variables are added to the model, even if they are only weakly associated with the response.  This is due to the fact that adding another variable to the least squares equations must allow us to fit the training data more accurately, so the $R^2$ statistic, which is also computed on the training data, must increase.
 
 \subsubsection*{Predictions}
 After fitting a regression model, there are three sorts of uncertainty associated with a prediction.
 \begin{enumerate}
-    \item There will be some inaccuracy in the coefficient estimates related to the reducible error of using the least squares plane. We can compute a confidence interval in order to determine how close $\hat Y$ will be to $f(X)$.
+    \item There will be some inaccuracy in the coefficient estimates related to the reducible error of using the least squares plane. We can compute a \textit{confidence interval} in order to determine how close $\hat Y$ will be to $f(X)$.
     \item There is potentially an additional source of reducible error, called \textit{model bias}, from using a linear model to represent complex non-linear data.
-    \item The will be some amount of irreducible or random error in the model.  \textit{Prediction intervals} are used to incorporate both the error in the estimate for $f(X)$ (the reducible error) and the uncertainty as to how much an individual point will differ from the population regression plane (the irreducible error). 
+    \item There will be some amount of irreducible or random error in the model.  \textit{Prediction intervals} are used to incorporate both the error in the estimate for $f(X)$ (the reducible error) as is done in a confidence interval, as well as the uncertainty as to how much an individual point will differ from the population regression plane (the irreducible error). 
 \end{enumerate}
 
 
@@ -484,7 +458,7 @@ In this situation, we can create additional dummy variables. There will always b
 Two of the most impactful assumptions in the standard linear regression model state that the relationship between the predictors and response are additive and linear. The \textit{additive} assumption means that the effect of changes in a predictor $X_j$ on the response Y is independent of the values of the other predictors. The \textit{linear} assumption states that the change in the response $Y$ due to a one-unit change in $X_j$ is constant, regardless of the value of $X_j$.
 
 \subsubsection*{Removing the Additive Assumption}
-One way of extending this model to allow for interaction effects is to include a third predictor, called an interaction term, which is constructed by computing the product of X1 and X2.
+One way of extending this model to allow for interaction effects is to include a third predictor, called an \textit{interaction term} $\Tilde \beta_1$, which is constructed by computing the product of X1 and X2.
 \begin{align*}
     Y &= \beta_0 + \beta_1 X_ 1 + \beta_2 X_2 + \beta_3 X_1 X_2 + \epsilon \\
     &= \beta_0 + (\beta_1 + \beta_3 X_2)X_1 + \beta_2 X_2 + \epsilon \\
@@ -497,11 +471,11 @@ The \textit{hierarchical principle} states that if we include an interaction in 
 \subsubsection*{Non-linear Relationships}
 In some cases, the true relationship between the response and the predictors may be nonlinear. A simple way to directly extend the linear model to accommodate non-linear relationships is to use \textit{polynomial regression}, in which we include polynomial functions of the predictors in the regression model.
 
-\subsubsection{Potential Problems}
+\subsubsection{Potential Problems and Troubleshooting}
 \begin{enumerate}
     \item Non-linearity of the response-predictor relationships.
     
-        Residual plots are useful graphical tool for identifying non-linearity. If there is a strong pattern in the  plot of the residuals, $e_i = y_i - \hat y_i$, versus the predictor $x_i$, there may be a problem with some aspect of the linear mode.
+        Residual plots are useful graphical tool for identifying non-linearity. If there is a strong pattern in the  plot of the residuals, $e_i = y_i - \hat y_i$, versus the predictor $x_i$, there may be a problem with some aspect of the linear model.
     
     \item Correlation of error terms.
     
@@ -513,7 +487,7 @@ In some cases, the true relationship between the response and the predictors may
     
     \item Non-constant variance of error terms.
         
-        An important assumption is that error terms have constant variance, i.e. $ \text{Var}(i) = \sigma^2$.  One can identify non-constant variance, a.k.a. heteroscedasticity, from the presence of a funnel shape in the residual plot.
+        An important assumption is that error terms have constant variance, i.e. $ \text{Var}(\epsilon_i) = \sigma^2$.  One can identify non-constant variance, a.k.a. \textit{heteroscedasticity}, from the presence of a funnel shape in the residual plot.
         
         A simple remedy may be to fit our model by \textit{weighted least squares}, with weights proportional to the inverse weighted variances.
     
@@ -529,19 +503,19 @@ In some cases, the true relationship between the response and the predictors may
     In contrast to outliers, observations with \textit{high leverage} have an unusual value for $x_i$. Removing a high leverage observation has a much more substantial impact on the least squares line than removing the outlier.
     
     To quantify an observation’s leverage, we compute the \textit{leverage statistic}. The leverage statistic $h_i$ is always between $1/n$ and $1$, and the average leverage for all the observations is always equal to $(p + 1)/n$. For a simple linear regression,
-    \[
+    \begin{equation}
         h_i =  \frac{1}{n} \frac{(x_i - \bar x)^2}{\sum_{i' = 1}^n (x_i - \bar x)^2}
-    \]
+    \end{equation}
     
     \item Collinearity.
     
     \textit{Collinearity} refers to the situation in which two or more predictor variables are closely related to one another. In the regression context, it can be difficult to separate out the individual effects of collinear variables on the response and reduces the accuracy of the estimates of the regression coefficients. This causes the standard error for $\hat \beta_j$ to grow and the t-statistic to decline which in turn means the power of the hypothesis test - the probability of correctly detecting a non-zero coefficient - is reduced by collinearity.
     
-    A simple way to detect collinearity is to look at the correlation matrix of the predictors, though this may not always work. In particular, it is possible for collinearity to exist between three or more variables in what's called \textit{multicollinearity}. In this situation it's better to compute the \textit{variance inflation factor} (VIF), the ratio of the variance of $\hat \beta_j$ when fitting the full model divided by the variance of $\hat \beta_j$ if fit on its own. A VIF value of 1indicates the complete absence of collinearity, a VIF value that exceeds 5 or 10 indicates a problematic amount of collinearity.
+    A simple way to detect collinearity is to look at the correlation matrix of the predictors, though this may not always work. In particular, it is possible for collinearity to exist between three or more variables in what's called \textit{multicollinearity}. In this situation it's better to compute the \textit{variance inflation factor} (VIF), the ratio of the variance of $\hat \beta_j$ when fitting the full model divided by the variance of $\hat \beta_j$ if fit on its own. A VIF value of 1 indicates the complete absence of collinearity, a VIF value that exceeds 5 or 10 indicates a problematic amount of collinearity.
     
-    \[
+    \begin{equation}
         VIF(\hat \beta_j ) = \frac{1}{1-R^2_{X_j|X_{-j}}}
-    \]
+    \end{equation}
     where $R^2_{X_j|X_{-j}}$ is the $R^2$ from a regression of $X_j$ onto all of the other predictors.
     
     To mitigate collinerarity, we may drop one of the problematic variables from the regression, which will also reduce redundancy. Alternatively, we may combine the collinear variables together into a single predictor.
@@ -553,26 +527,249 @@ In contrast, non-parametric methods do not explicitly assume a parametric form f
 
 One of the simplest and best-known non-parametric methods is \textit{K-nearest neighbors regression} (KNN regression), which is closely related to the KNN classifier.
 
-Given a value for $K$ and a prediction point $x_0$, KNN regression first identifies the $K$ training observations that are closest to $x_0$, represented by $\mathcal N_0$. It then estimates $f(x_0)$ using the average of all the training responses in $mathcal N_0$. In general, the optimal value for K will depend on the bias-variance tradeoff.
+Given a value for $K$ and a prediction point $x_0$, KNN regression first identifies the $K$ training observations that are closest to $x_0$, represented by $\mathcal N_0$. It then estimates $f(x_0)$ using the average of all the training responses in $\mathcal N_0$. In general, the optimal value for K will depend on the bias-variance tradeoff.
 
-\[
+\begin{equation}
     \hat f (x_0) = \frac{1}{K} \sum_{x_i \in \mathcal N_0} y_i.
-\]
+\end{equation}
 
 The parametric approach will outperform the nonparametric approach if the parametric form that has been selected is close to the true form of $f$. Even when the true relationship is highly non-linear, KNN may still provide inferior results to linear regression. A decrease in performance as the dimension increases is a common problem for KNN, and results from the fact that in higher dimensions there is effectively a reduction in sample size. As a general rule, parametric methods will tend to outperform non-parametric approaches when there is a small number of observations per predictor.
 
+\newpage
 \section{Classification}
 
+\subsection{An Overview of Classification}
+The linear regression model assumes that the response variable $Y$ is quantitative. But in many situations, the response variable is instead qualitative. Though just as in the regression setting, in the classification setting we have a set of training observations $(x_1, y_1),\dots,(x_n, y_n)$.
+
+\subsection{Why Not Linear Regression}
+Linear regression is not appropriate in the case of a qualitative response since codings of qualtative states into numeric values may produce unwarranted implicit relations with each of the codings depending on their orderings. This can produce fundamentally different linear models that would ultimately lead to different sets of predictions on test observations.
+
+For a binary (two level) qualitative response we could potentially use the dummy variable approach to code the response and could then fit a linear regression to it. However, if we use linear regression, some of our estimates might beoutside the [0, 1] interval, making them hard to interpret as probabilities. Nevertheless, the predictions provide an ordering and can be interpreted as crude probability estimates. It turns out that the classifications that we get if we use linear regression to predict a binary response will be the same as for the linear discriminant analysis (LDA) procedure discussed later.
+
+\subsection{Logistic Regression}
+\subsubsection{The Logistic Model}
+Any time a straight line is fit to a binary response that is coded as $0$ or $1$, in principle we can always predict $p(X) < 0$ for some values of $X$ and $p(X) > 1$ for others (unless the range of $X$ is limited). Instead, we must model $p(X)$ using a function that gives outputs between $0$ and $1$ for all values of $X$. Many functions meet this description. In logistic regression, we use the logistic function,
+\begin{equation}
+    p(X) = \frac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}}
+\end{equation}
+To fit the model, we use a method called \textit{maximum likelihood}, discussed in the next section. The logistic function will always produce an S-shaped curve, and so regardless of the value of $X$, we will obtain a sensible prediction. After a bit of manipulation, we find that,
+\begin{equation}
+    \frac{p(X)}{1-p(X)} = e^{\beta_0+\beta_1 X}
+\end{equation}
+The quantity on the left-hand side is called the \textit{odds} and can take on any value between 0 and $\infty$, indicating very low and high probabilities. Odds are traditionally used instead of probabilities in horse-racing, since they relate more naturally to the correct betting strategy.
+
+By taking the logarithm of both sides,
+\begin{equation}
+    \log \Bigg ( \frac{p(X)}{1-p(X)} \Bigg ) = \beta_0+\beta_1 X
+\end{equation}
+
+The left-hand side is called the \textit{log-odds} or \textit{logit}. We see that the logistic regression model has a logit that is linear in $X$.
+
+Recall that in a linear regression model, $\beta_1$ gives the average change in $Y$ associated with a one-unit increase in $X$. In contrast, in a logistic regression model, increasing $X$ by one unit changes the log odds by $\beta_1$, or equivalently it multiplies the odds by $e^{\beta_1}$. The amount that $p(X)$ changes due to a one-unit change in $X$ will depend on the current value of $X$, though if $\beta_1$ is positive then increasing $X$ will be associated with increasing $p(X)$,
+and if $\beta_1$ is negative then increasing $X$ will be associated with decreasing $p(X)$.
+
+\subsubsection{Estimating the Regression Coefficients}
+The coefficients $\beta_0$ and $\beta_1$  are unknown, and must be estimated based on the available training data. \textit{Maximum likelihood} is used to fit a logistic regression model instead of least squares. The estimates $\hat \beta_0$ and $\hat\beta_1$ are chosen to maximize what's called the \textit{likelihood function}:
+\begin{equation}
+    l(\beta_0,\beta_1) = \prod_{i:y_i = 1} p(x_i) \prod_{i':y_{i' = 1}} (1-p(x_{i'}))  
+\end{equation}
+Maximum likelihood is a very general approach that is used to fit many non-linear models. In the linear regression setting, the least squares approach is in fact a special case of maximum likelihood.
+
+Many aspects of the logistic regression are similar to the linear regression output. For example, we can measure the accuracy of the coefficient estimates by computing their standard errors. The \textit{ $z$-statistic} plays the same role as the $t$-statistic in the linear regression output. the $z$-statistic associated with $\beta_1$ is equal to $\hat \beta_1/SE(\hat\beta_1)$, and so a large (absolute) value of the $z$-statistic indicates evidence against the null hypothesis $H_0 : \beta_1 = 0$. This null hypothesis implies that $p(X) = \frac{e^{\beta_0}}{1+e^{\beta_0}}$.
+
+\subsubsection{Making Predictions}
+Once the coefficients have been estimated, it is a simple matter to compute
+the probability. We can then use qualitative predictors with the logistic regression model to fit the model by using the dummy variable approach mentioned previously, i.e. the variable takes on a value of 1 or 0. If the coefficient associated with the dummy variable is positive and the associated p-value is statistically significant, this will validate that there is a higher probability associated with the encoded qualitative state.
+
+\subsubsection{Multiple Logistic Regression}
+By analogy with the extension from simple to multiple linear
+regression, we can generalize the logistic model as follows,
+\begin{equation}
+    \log \Bigg ( \frac{p(X)}{1-p(X)} \Bigg ) = \beta_0+\beta_1 X_1 + \dots + \beta_pX_p,
+\end{equation}
+where $X = (X_1,...,X_p)$ are $p$ predictors. This can be rewritten as,
+\begin{equation}
+    p(X) = \frac{e^{\beta_0+\beta_1 X_1 + \dots + \beta_pX_p}}{1+e^{\beta_0+\beta_1 X_1 + \dots + \beta_pX_p}}
+\end{equation}
+Just as before, we use the maximum likelihood method to estimate $\beta_0, \beta_1,\dots,\beta_p$.
+
+\subsubsection{Logistic Regression for \texorpdfstring{$>2$}{greater than 2} Response Classes}
+
+Suppose we want to classify a response variable that has more than two classes. The two-class logistic regression models discussed in the previous sections have multiple-class extensions, but in practice they tend not to be used all that often. Instead, a more popular multiple-class classification method known as, \textit{discriminant analysis}, is used.
+
+\subsection{Linear Discriminant Analysis}
+Logistic regression involves directly modeling $Pr(Y = k|X = x)$ using the logistic function to model the conditional distribution of the response $Y$, given the predictor(s) $X$. In an alternative and less direct approach to estimating these probabilities, we model the distribution of the predictors $X$ separately in each of the response classes (i.e. given $Y$), and then use Bayes’ theorem \eqref{eq:bayes} to flip these around into estimates for $Pr(Y = k|X = x)$. When these distributions are assumed to be normal the model is very similar in form to logistic regression.
+
+Linear discriminant analysis is a useful alternative to logistic regression because:
+\begin{itemize}
+    \item When the classes are well-separated, the parameter estimates for the logistic regression model are surprisingly unstable. Linear discriminant analysis does not suffer from this problem.
+    \item If $n$ is small and the distribution of the predictors $X$ is approximately normal in each of the classes, the linear discriminant model is again more stable than the logistic regression model.
+    \item As mentioned, linear discriminant analysis is popular when we have more than two response classes.
+\end{itemize}
+
+\subsubsection{Using Bayes’ Theorem for Classification}
+Suppose the qualitative response variable $Y$ can take on $K>2$ possible distinct and unordered values. Let $\pi_k$ represent the overall or \textit{prior} probability that a randomly chosen observation comes from the $k$th class or category of the response variable $Y$.
+
+If $X$ is a discrete random variable, Let $f_k(X) = \Pr(X = x|Y = k)$ denote
+the \textit{density function} of $X$ for an observation that comes from the $k$th class. The densiity function is relatively large if there is a high probability that an observation in the kth class has $X \approx x$ and small otherwise. Then \textit{Bayes’ theorem} states that,
+
+\begin{equation}\label{eq:bayes}
+    \Pr(Y = k| X = x) = \frac{\pi_k f_k (x) }{ \sum_{l=1}^{K} \pi_l f_l(x)}.
+\end{equation}
+
+Recall, $p_k(X) = \Pr(Y = k|X)$. We refer to $p_k(x)$ as the \textit{posterior} probability that an observation belongs to the kth class, given the predictor value for that observation, i.e. $X = x$. This suggests that instead of directly computing $p_k(X)$ as was done in previous methods, we can plug in estimates of $\pi_k$ and $f_k(X)$ into the above formula. Estimating the pripor probabilities $\pi_k$ is easy if we have a random sample of $Y$s from the population: we simply compute the fraction of the training observations that belong to the $k$th class. However, estimating $f_k(X)$ tends to be more challenging, unless we assume some simple forms for these densities. 
+
+Recall the Bayes classifier, which classifies an observation to the class for which $p_k(X)$ is largest, has the lowest possible error rate out of all classifiers. Therefore, if we can find a way to estimate $f_k(X)$, then we can develop a classifier that approximates the Bayes classifier. 
+
+\subsubsection{Linear Discriminant Analysis for \texorpdfstring{$p=1$}{p = 1}}
+Assume that we only have one predictor, i.e. $p=1$. To obtain an estimate for $f_k(x)$ to plug into the Linear Discriminant Analysis formula we will first make some assumptions about its form.
+
+Suppose we assume that $f_k(x)$ is \textit{normal} or \textit{Gaussian}. In the one-dimensional setting, the normal density takes the form,
+\begin{equation}\label{eq:gaussian}
+    f_k(x) = \frac{1}{\sqrt{2\pi} \sigma_k} \exp \Bigg ( -\frac{1}{2\sigma^2_k} (x-\mu_k)^2 \Bigg) 
+\end{equation}
+
+where $\mu_k$ and  $\sigma^2_k$ are the mean and variance parameters for the $k$th class. We may assume there is a shared variance term across all $K$ classes, i.e. $\sigma^2_1 = \dots = \sigma^2_K$, which for simplicity we can denote by $\sigma^2$. 
+
+We can then plug this into Bayes' theorem \eqref{eq:bayes},
+\begin{equation}
+    p_k(x) = \frac{
+        \pi_k \frac{1}{\sqrt(2\pi) \sigma_k} \exp \Big ( -\frac{1}{2\sigma^2_k} (x-\mu_k)^2 \Big)  
+    }{
+         \sum_{l=1}^{K} \pi_l \frac{1}{\sqrt(2\pi) \sigma_k} \exp \Big ( -\frac{1}{2\sigma^2_k} (x-\mu_k)^2 \Big) 
+    }.  
+\end{equation}
+
+Taking the log and rearranging the terms shows us that assigning an observation in a Bayes' classifier is equivalent to assigning the observation to the class for which the following equation is the largest:
+
+\begin{equation}\label{eq:lda-delta}
+    \delta_k(x) = x \cdot \frac{\mu_k}{\sigma^2} -\frac{\mu_k^2}{2\sigma^2} + \log(\pi_k)
+\end{equation}
+
+In practice, even if we are quite certain of our assumption that $X$ is drawn from a Gaussian distribution within each class, we still have to estimate the parameters $\mu_1,...,\mu_K$, $\pi_1,..., \pi_K$, and $\sigma^2$. The \textit{linear discriminant analysis} (LDA) method approximates the Bayes classifier by plugging estimates for $\pi_k, \mu_k$, and $\sigma^2$ into the above \eqref{eq:lda-delta}.  In particular, the following estimates are used:
+\begin{align}
+\begin{split}
+    \hat \mu &=  \frac{1}{n^k} \sum_{i:y_i = k} x_i \\
+    \hat \sigma^2 &= \frac{1}{n-K} \sum_{k=1}^K \sum_{i:y_i = k} (x_i - \hat \mu_k)^2 
+\end{split}
+\end{align}
+where $n$ is the total number of training observations and $n_k$ is the number
+of training observations in the $k$th class. The estimate for $\mu_k$ is simply the average of all the training observations from the $k$th class, while $\hat\sigma^2$ can be seen as a weighted average of the sample variances for each of the $K$ classes.
+
+Sometimes we have knowledge of the class membership probabilities $\pi_1,...,\pi_K$, otherwise LDA estimates $\pi_k$ using the proportion of the training observations that belong to the $k$th class, i.e,
+\begin{equation}
+    \hat \pi_k = \frac{n_k}{n}.
+\end{equation}
+
+When plugging the above estimates into $\delta_k$ \eqref{eq:lda-delta}, they become the \textit{discriminant functions}, $\hat \delta_k(x)$. The word linear in the classifier’s name stems from the fact that the discriminant functions $\hat \delta_k$ are linear functions of $x$. Again, we assign an observation $X = x$ to the class for which $\hat \delta_k$ is largest:
+\begin{equation}
+    \hat \delta_k(x) = x \cdot \frac{\hat \mu_k}{\hat \sigma^2} -\frac{\hat \mu_k^2}{2 \hat \sigma^2} + \log(\hat \pi_k).
+\end{equation}
+
+To reiterate, the LDA classifier results from assuming that the observations within each class come from a normal distribution with a class-specific mean vector and a common variance $\sigma^2$, then plugging estimates for these parameters into the Bayes classifier. 
+
+\subsubsection{Linear Discriminant Analysis for \texorpdfstring{$p>1$}{p greater than 1}}
+To extend the LDA classifier to the case of multiple predictors we will assume that $X = (X_1, X_2,...,X_p)$ is drawn from a \textit{multivariate Gaussian} (or \textit{multivariate normal}) distribution, with a class-specific mean vector and a common covariance matrix.
+
+The multivariate Gaussian distribution assumes that each individual predictor follows a one-dimensional normal distribution with some correlation between each pair of predictors. To indicate that a p-dimensional random variable $X$ has a multivariate Gaussian distribution, we write $X \sim N(\mu, \Sigma)$. Here $E(X) = \mu$ is the mean of $X$ (a vector with $p$ components), and $Cov(X) = \Sigma$ is the $p \times p$ covariance matrix of $X$. 
+
+The Gaussian density is defined as,
+\begin{equation}
+    f(x) = \frac{1}{(2\pi)^{p/2} |\Sigma|^{1/2}} \exp \Bigg( -\frac{1}{2} (x-\mu)^T \Sigma^{-1} (x-\mu) \Bigg)
+\end{equation}
+
+Then, in the case of $p > 1$ predictors, the LDA classifier assumes observations in the $k$th class are drawn from a multivariate Gaussian distribution $N(\mu_k, \Sigma)$, where $\mu_k$ is a class-specific mean vector, and $\Sigma$ is a covariance matrix that is common to all $K$ classes.
+
+
+Using this density function we see the Bayes classifier now assigns an observation $X = x$ to the class for which $\delta_k(x)$ is the largest. This is essentially the vector/matrix version of the discriminant functions,
+\begin{equation}
+    \delta_k(x) = x^T \Sigma^{-1}\mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1}\mu_k + \log \pi_k.
+\end{equation}
+
+The formulas for estimating the unknown parameters $\mu_1,\dots,\mu_K$, $\pi_1,...,\pi_K$, and $\Sigma$ are similar to those used in the one-dimensional case. To assign a new observation X = x, LDA plugs these estimates into the multi-dimensional discriminant functions and classifies to the class for which
+$\hat \delta_k(x)$ is largest. Note, the LDA decision rule still only depends on $x$ only through a linear combination of its elements.
+
+Class-specific performance is also important in medicine and biology, where the terms \textit{sensitivity}, corresponding to true positive classifications, and \textit{specificity}, corresponding to true negative classifications, characterize the performance of a model or screening test.
+
+The Bayes classifier works by assigning an observation to the class for which the posterior probability $p_k(X)$ is greatest. Thus, the Bayes classifier, and by extension LDA, uses a threshold of 50\% for the posterior probability in order to assign an observation to a class. However, if we are more concerned about incorrectly predicting the class status, then we can consider lowering this threshold. This may increase the overall error but may make for more accurate identification of a certain class.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{err-threshold.png}
+\end{figure}
+Using a threshold of 0.5 minimizes the overall error rate, shown as a black solid line. This is to be expected, since the Bayes classifier uses a threshold of 0.5 and is known to have the lowest overall error rate. As the threshold is reduced, the error rate among a specific classification decreases steadily (orange dotted line), but the error rate among the observations who do not belong to the class increases (blue dotted line).
+
+Varying the classifier threshold changes its true positive and false positive rate. These are also called the sensitivity and one minus the specificity of our classifier. Below are tables of classifier names and measures.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=10cm]{classifier-names.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+\includegraphics[width=10cm]{classifier-measures.png}
+\end{figure}
+The denominators for the false positive and true positive rates
+are the actual population counts in each class. In contrast, the denominators for the positive predictive value and the negative predictive value are the total predicted counts for each class.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{roc-curve.png}
+\end{figure}
+The \textit{ROC curve} (receiver operating characteristics) above is a popular graphic for simultaneously displaying the two types of errors for all possible thresholds. The overall performance of a classifier, summarized over all possible thresholds, is given by the \textit{area under the curve} (AUC). An ideal ROC curve will hug the top left corner, so the larger the AUC the better the classifier.
+
+\subsubsection{Quadratic Discriminant Analysis}
+Similarly to LDA, the \textit{quadratic discriminant analysis} (QDA) classifier results from assuming that the observations from each class are drawn from a Gaussian distribution, and from plugging estimates for the parameters into Bayes’ theorem in order to perform prediction.  However, unlike LDA, QDA assumes that each class has its own covariance matrix, i.e. $X \sim N(\mu_k, \Sigma_k)$ where $\Sigma_k$ is a covariance matrix for the $k$th class.
+
+Now, the Bayes classifier assigns an observation $X = x$ to the class for which $\delta_k$ is largest.
+\begin{align}
+\begin{split}
+    \delta_k &= - \frac{1}{2}(x-\mu_k)^T \Sigma_k^{-1} (x-\mu_k) - \frac{1}{2}\log|\Sigma_k | + \log \pi_k \\
+    &= - \frac{1}{2} x^T \Sigma^{-1}_k x + x^T \Sigma^{-1}_k \mu_k - \frac{1}{2} \mu_k^T \Sigma^{-1}_k  \mu_k - \frac{1}{2} \log |\Sigma_k| + \log \pi_k
+\end{split}
+\end{align}
+
+The QDA classifier involves plugging estimates for $\Sigma_k, \mu_k$, and $\pi_k$ into the above equation and then assigning an observation $X = x$ to the class for which this quantity is largest. Though unlike in the LDA, the quantity $x$ appears as a quadratic function.
+
+The reason for using QDA over LDA involves the bias-variance tradeoff. When
+there are $p$ predictors, QDA must estimate $K$ covariance matrices which requires estimating $K \frac{p(p+1)}{2}$ quadratic parameters. Alternatively, LDA only estimates $Kp$ linear parameters. 
+
+This means that LDA is a much less flexible classifier than QDA, and so has substantially lower variance, i.e. it's less prone to overfitting. This can potentially lead to improved prediction performance, but there is a trade-off: if LDA’s assumption that the $K$ classes share a common covariance matrix is badly off, then LDA can suffer from high bias. Roughly speaking, LDA tends to be a better bet than QDA if there are relatively few training observations and so reducing variance is crucial. In contrast, QDA is recommended if the training set is very large, so that the variance of the classifier is not a major concern, or if the assumption of a common covariance matrix for the $K$ classes is clearly untenable.
+
+\subsection{A Comparison of Classification Methods}
+So far we have covered 4 classification methods:  K-nearest neighbors (KNN) logistic regression, linear discriminant analysis (LDA), and quadratic discriminant analysis QDA. To describe a simple playbook: when the true decision boundaries are linear, then the LDA and logistic regression approaches will tend to perform well. When the boundaries are moderately non-linear, QDA may give better results. Finally, for much more complicated decision boundaries, a non-parametric approach such as KNN can be superior. But the level of smoothness for a non-parametric approach must be chosen carefully.
+
+The logistic regression and LDA methods are closely connected in their linearity but differ in fitting procedures and their assumptions about the distributions in the data. To understand how, consider the two-class setting with $p = 1$ predictor, and let $p_1(x)$ and $p_2(x)=1-p1(x)$ be the probabilities that the observation $X = x$ belongs to class 1 and class 2 respectively. In the LDA framework, the log odds is given by,
+\begin{equation}
+    \log \Bigg( \frac{p_1(x)}{1 -p_1(x)}\Bigg) = \log \Bigg( \frac{p_1(x)}{p_2(x)}\Bigg) = c_0 + c_1 x,
+\end{equation}
+where $c_0$ and $c_1$ are functions of $\mu_1, \mu_2$, and $\sigma2$. In logistic regression we have,
+\begin{equation}
+    \log \Bigg( \frac{p_1(x)}{1 -p_1(x)}\Bigg) = \beta_0 + \beta_1 x.
+\end{equation}
+Both of these equations are linear functions of x so both logistic regression and LDA produce linear decision boundaries. The only difference is the fact that $\beta_0$ and $\beta_1$ are estimated using maximum likelihood, whereas $c_0$ and $c_1$ are computed using the estimated mean and variance from a normal distribution. This connection also holds for multidimensional data with $p > 1$.
+
+Though logistic regression and LDA differ only in their fitting procedures, one may outperform the other depending on whether the LDA distribution assumptions are met, i.e. that observations are drawn from a Gaussian distribution with a common covariance matrix.
+
+Recall that KNN is non-parametric approach: no assumptions are made about the shape of the decision boundary. Therefore, we can expect this approach to dominate LDA and logistic regression when the decision boundary is highly non-linear.  On the other hand, KNN does not tell us which predictors are important; we don’t get a table of coefficients.
+
+Finally, QDA serves as a compromise between the non-parametric KNN method and the linear LDA and logistic regression approaches. QDA can accurately model a wider range of problems than the linear methods, and though it's not as flexible as KNN, it can perform better in the presence of a limited number of training observations because it does make some assumptions about the form of the decision boundary.
+
+\newpage
 \section{Resampling Methods}
 
+\newpage
 \section{Linear Model Selection and Regularization}
 
+\newpage
 \section{Moving Beyond Linearity}
 
+\newpage
 \section{Tree-based Methods}
 
+\newpage
 \section{Support Vector Machines}
 
+\newpage
 \section{Unsupervised Learning}
 
 \end{enumerate}
@@ -584,6 +781,7 @@ The parametric approach will outperform the nonparametric approach if the parame
 }
 
 
+\newpage
 \begin{thebibliography}{}
 \bibitem[]{}
 Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani. An Introduction to Statistical Learning : with Applications in R. New York :Springer, 2013.
