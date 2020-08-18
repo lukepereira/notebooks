@@ -190,8 +190,40 @@ TODO:
     \subsubsection{Arrays}
     An array is a data structure implementing a list ADT, consisting of a collection of elements (values or variables), each identified by at least one array index or key. 
     
+    A \textbf{bit array} (a.k.a bit map) is a data structure which uses an array of 0's and 1's to compactly store information. An index $j$ with a value of 1 indicates the presence of an integer corresponding to $j \in \mathbb Z$. When given a constraint on possible values that need to be stored and analyzed, we can initialize a bit array with a size of the max possible value and record frequencies directly in their corresponding index, eliminating the need to re-order an unsorted array or maintain a sorted order on every insertion. We can extend the bit array to store arbitrary integers, i.e. an int of value 3 in index 10 may indicate we've encountered 3 values of 10. 
+    
     \subsubsection{Dynamic Arrays}
     A dynamic array is a data structure that allocates all elements contiguously in memory and keeps a count of the current number of elements. If the space reserved for the dynamic array is exceeded, it is reallocated and (possibly) copied, which is an expensive operation. Though tt's amortized insertion cost is equal to a static array, $\Theta(1)$. Python's  ``List'' data structure is a dynamic array.
+    
+    \vspace{8pt} \emph{Time Complexity of List operations}
+    \begin{table}[H]
+        % \centering
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Operation} & \textbf{Average Case} & \textbf{Amortized Worst Case} \\
+            \hline
+            Copy & $\bigO(n)$ & $\bigO(n)$ \\
+            Append & $\bigO(1)$ & $\bigO(1)$\\
+            Pop last & $\bigO(1)$ & $\bigO(1)$ \\
+            Pop intermediate & $\bigO(k)$ & $\bigO(k)$ \\
+            Insert & $\bigO(n)$ & $\bigO(n)$ \\
+            Get Item & $\bigO(1)$ & $\bigO(1)$ \\
+            Set Item & $\bigO(1)$ & $\bigO(1)$ \\
+            Delete Item & $\bigO(n)$ & $\bigO(n)$ \\
+            Iteration & $\bigO(n)$ & $\bigO(n)$ \\
+            Get Slice & $\bigO(k)$ & $\bigO(k)$\\
+            Del Slice & $\bigO(n)$ & $\bigO(n)$ \\
+            Set Slice & $\bigO(k+n)$ & $\bigO(k+n)$\\
+            Extend & $\bigO(k)$ & $\bigO(k)$\\
+            Sort & $\bigO(n\log n)$ &$\bigO(n\log n)$\\
+            Multiply & $\bigO(nk)$ & $\bigO(nk)$ \\
+            x in s & $\bigO(n)$ &  \\
+            min(s), max(s) & $\bigO(n)$ & \\
+            Get Length & $\bigO(1)$ & $\bigO(1)$ \\
+            \hline
+        \end{tabular}
+    \end{table}
+
     
     \subsubsection{Linked Lists}
     A linked list is a data structure that represents a sequence of nodes. In a singly linked list each node maintains a pointer to the next node in the linked list. A doubly linked list gives each node pointers to both the next node and the previous node. Unlike an array, a linked list does not provide constant time access to a particular ``index'' within the list, i.e. to access the $K$th index you will need to iterate through $K$ elements. The benefit of a linked list is that inserting and removing items from the beginning of the list can be done in constant time. For specific applications, this can be useful. Linked structures can have poor cache performance compared with arrays. Maintaining a sorted linked list is costly and not usually worthwhile since we cannot perform binary searches.
@@ -260,6 +292,27 @@ while len(q):
     print(next_item)
 
 \end{lstlisting}
+
+    \vspace{8pt} \emph{Time Complexity of collections.deque operations}
+    \begin{table}[H]
+        % \centering
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Operation} & \textbf{Average Case} & \textbf{Amortized Worst Case} \\
+            \hline
+            Copy & $\bigO(n)$ & $\bigO(n)$ \\
+            append & $\bigO(1)$ & $O(1)$ \\
+            appendleft & $\bigO(1)$ & $\bigO(1)$ \\
+            pop & $\bigO(1)$ & $\bigO(1)$ \\
+            popleft & $\bigO(1)$ & $\bigO(1)$ \\
+            extend & $\bigO(k)$ & $\bigO(k)$ \\
+            extendleft & $\bigO(k)$ & $\bigO(k)$ \\
+            rotate & $\bigO(k)$ & $\bigO(k)$\\
+            remove & $\bigO(n)$ & $\bigO(n)$\\
+            \hline
+        \end{tabular}
+    \end{table}
+
     
     \subsubsection{Priority Queue}
     A priority queue is an ADT container that retrieves items not by the insertion time (as in a stack or queue), nor by a key match (as in a dictionary), but instead retrieves items with the highest priority value. Priority queues provide more flexibility than simple sorting because they allow new elements to enter a system at arbitrary intervals. It is much more cost-effective to insert a new job into a priority queue than to re-sort everything on each such arrival. The basic priority queue supports three primary operations:
@@ -308,6 +361,106 @@ while q:
     next_item = heapq.heappop(q)
     print(next_item)
 \end{lstlisting}
+
+    \subsubsection{Indexed Priority Queue}
+    An Indexed Priority Queue gives us the ability to change the priority of an element without having to go through all the elements. It can be thought of as a combination of a hash table, used for quick lookups of values, and a priority queue, to maintain a heap ordering.
+
+
+    \subsection{Hash Tables}
+    A hash table is a data structure that maps keys to values for highly efficient lookup. There are a number of ways of implementing this. First, we will describe a simple but common implementation known as \textbf{separate chaining}. In this implementation, we use an array of linked lists and a hash code function. To insert a key (which might be a string or essentially any other data type) and value, we do the following: 
+    \begin{enumerate}
+        \item 
+        First, compute the key's hash code, which will usually be an \textit{int} or \textit{long}. Note that two different keys could have the same hash code, as there may be an infinite number of keys and a finite number of hash codes.
+        \item
+        Then, map the hash code to an index in the array. This could be done with something like $hash(key)\mod array\_length$. Two different hash codes could map to the same index.
+        \item
+        At this index, there is a linked list of keys and values. Store the key and value in this index. We must use a linked list because of collisions: you could have two different keys with the same hash code, or two different hash codes that map to the same index.
+    \end{enumerate}
+    To retrieve the value pair by its key, you repeat this process. Compute the hash code from the key, and then compute the index from the hash code. Then, search through the linked list for the value with this key. If the number of collisions is very high, the worst case runtime is $\bigO(n)$, where $n$ is the number of keys. However, we generally assume a good implementation that keeps collisions to a minimum, in which case the lookup time is $\bigO(1)$. Alternatively, we can implement the hash table with a balanced binary search tree. This gives us an $\bigO(\log n)$ lookup time. The advantage of this is potentially using less space, since we no longer allocate a large array. We can also iterate through the keys in order, which can be useful sometimes.
+
+    The other strategy used to resolve collisions is to require each array element to contain only one key, but to also allow keys to be mapped to alternate indices when their original spot is already occupied. This is known as \textbf{open addressing}. In this type of hashing, we have a parameterized hash function $h$ that takes two arguments, a key and a positive integer. Searching or \textbf{probing} for an item requires examining not just one spot, but many spots until either we find the key, or reach a None value. After we delete an item, we replace it with a special value Deleted, rather than simply None. This way, the Search algorithm will not halt when it reaches an index that belonged to a deleted key.
+    
+    The simplest implementation of open addressing is \textbf{linear probing}: start at a given hash value and then keep adding some fixed offset to the index until an empty spot is found. The main problem with linear probing is that the hash values in the middle of a cluster will follow the exact same search pattern as a hash value at the beginning of the cluster. As such, more and more keys are absorbed into this long search pattern as clusters grow. We can solve this problem using \textbf{quadratic probing}, which causes the offset between consecutive indices in the probe sequence to increase as the probe sequence is visited. \textbf{Double hashing} resolves the problem of a form of clustering occurs where if many items have the same initial hash value, they still follow the exact same probe sequence. It does this by using a hash function for both the initial value and its offset.
+
+    A useful hash function for strings is,
+    \[
+        H(S,j) = \sum_{i=0}^{m-1} \alpha^{m-(i+1)} \cdot char(s_{i+j}) \mod m
+    \]
+    where $\alpha$ is the size of the alphabet and $char(x)$ is the ASCII character code. This hash function has the useful property allowing hashes of successive m-character windows of a string to be computed in constant time instead of $\bigO(m)$.
+    \[
+        H(S, j+1) = (H(S,j) - \alpha^{m-1}char(s_j))\alpha + s_{j+m}
+    \]
+    
+    \subsubsection{Dictionaries}
+    The dictionary data type (a.k.a. hash table or hash map) permits access to data items based on its content. You insert an item into a dictionary so you can retrieve it when you need it.
+    
+    Python dicts use open addressing to resolve hash collisions which uses random probing in which the next slot is picked in a pseudo random order. The entry is then added to the first empty slot.
+    
+    The primary operations a dictionary supports are:
+    \begin{itemize}
+        \item  \textbf{search(D, k)} – Given a search key $k$, return a pointer to the element in dictionary $D$ whose key value is $k$, if one exists.
+        \item \textbf{insert(D, x)} – Given a data item $x$, add it to the set in the dictionary $D$.
+        \item \textbf{delete(D, x)} – Given a pointer to a given data item $x$ in the dictionary $D$, remove it from $D$.
+        \item \textbf{max(D)} or \textbf{min(D)} – Retrieve the item with the largest (or smallest) key from $D$. This enables the dictionary to serve as a priority queue.
+        \item \textbf{predecessor(D, k)} or \textbf{successor(D, k)} – Retrieve the item from $D$ whose key is immediately before (or after) $k$ in sorted order. These enable us to iterate through the elements of the data structure.
+    \end{itemize}
+    
+   \vspace{8pt} \emph{Time Complexity of dict operations}
+    \begin{table}[H]
+        % \centering
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Operation} & \textbf{Average Case} & \textbf{Amortized Worst Case} \\
+            \hline
+            k in d & $\bigO(1)$ & $\bigO(n)$ \\
+            Copy & $\bigO(n)$ & $\bigO(n)$ \\
+            Get Item & $\bigO(1)$ & $\bigO(n)$ \\
+            Set Item & $\bigO(1)$ & $\bigO(n)$ \\
+            Delete Item & $\bigO(1)$ & $\bigO(n)$ \\
+            Iteration[2] & $\bigO(n)$ & $\bigO(n)$ \\
+            \hline
+        \end{tabular}
+    \end{table}
+    
+    \subsubsection{Sets}
+    In mathematical terms, a set is an unordered collection of unique objects drawn from a fixed universal set. A hash set implements the set ADT using a hash table. Sorted order turns the problem of finding the union or intersection of two subsets into a linear-time operation, just sweep from left to right and see what you are missing. It makes possible element searching in sublinear time. Finally, printing the elements of a set in a canonical order paradoxically reminds us that order really doesn’t matter.
+     
+    If each subset contains exactly two elements, they can be thought of as edges in a graph whose vertices represent the universal set. A system of subsets with no restrictions on the cardinality of its members is called a hypergraph.
+    
+    \begin{enumerate}
+        \item Test whether $u_i \in S_j$
+        \item Compute the union or intersection of $S_i$ and $S_j$
+        \item Insert or delete members of $S$
+    \end{enumerate}
+    
+    Although sets are commonly implemented with hash tables, other data structures that can be used:
+    
+    \begin{enumerate}
+        \item Containers or dictionaries – A subset can also be represented using a linked list, array, or dictionary containing exactly the elements in the subset.
+        \item Bit vectors – An n-bit vector or array can represent any subset $S$ on a universal set $U$ containing $n$ items. Bit $i$ will be 1 if $i \in S$, and $0$ if not.
+        \item Bloom filters – We can emulate a bit vector in the absence of a fixed universal set by hashing each subset element to an integer from $0$ to $n$ and setting the corresponding bit.
+    \end{enumerate}
+    
+    \vspace{8pt} \emph{Time Complexity of set operations}
+    \begin{table}[H]
+        % \centering
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Operation} & \textbf{Average Case} & \textbf{Amortized Worst Case} \\
+            \hline
+            x in s & $\bigO(1)$ & $\bigO(n)$ \\
+            Union & $\bigO(len(s)+len(t))$  & \\
+            Intersection & $\bigO(min(len(s), len(t))$ & $\bigO(len(s) * len(t))$ \\
+            Multiple intersection & $\bigO(n-1)*\bigO(max(len(s_i)))$ &\\
+            Difference & $\bigO(len(s))$ & \\
+            Difference Update & $\bigO(len(t))$ & \\
+            Symmetric Difference & $\bigO(len(s))$ & $\bigO(len(s) * len(t))$ \\
+            Symmetric Difference Update & $\bigO(len(t))$ & $\bigO(len(t) * len(s))$\\
+            \hline
+        \end{tabular}
+    \end{table}
+
+
     
     \subsection{Trees}
     A tree is an ADT composed of nodes such that there is a root node with zero or more child nodes where each child node also has zero or more child nodes and can be recursively defined as a root node of a sub-tree. Since there are no edges between sibling nodes, a tree cannot contain cycles. Furthermore, nodes can be given a particular order, can have any data type as values, and they may or may not have links back to their parent nodes.
@@ -742,71 +895,15 @@ class Graph:
             print(key + str(self.vertices[key].neighbors))
 \end{lstlisting}
 
-    \subsection{Hash Tables}
-    A hash table is a data structure that maps keys to values for highly efficient lookup. There are a number of ways of implementing this. First, we will describe a simple but common implementation known as \textbf{separate chaining}. In this implementation, we use an array of linked lists and a hash code function. To insert a key (which might be a string or essentially any other data type) and value, we do the following: 
-    \begin{enumerate}
-        \item 
-        First, compute the key's hash code, which will usually be an \textit{int} or \textit{long}. Note that two different keys could have the same hash code, as there may be an infinite number of keys and a finite number of hash codes.
-        \item
-        Then, map the hash code to an index in the array. This could be done with something like $hash(key)\mod array\_length$. Two different hash codes could map to the same index.
-        \item
-        At this index, there is a linked list of keys and values. Store the key and value in this index. We must use a linked list because of collisions: you could have two different keys with the same hash code, or two different hash codes that map to the same index.
-    \end{enumerate}
-    To retrieve the value pair by its key, you repeat this process. Compute the hash code from the key, and then compute the index from the hash code. Then, search through the linked list for the value with this key. If the number of collisions is very high, the worst case runtime is $\bigO(n)$, where $n$ is the number of keys. However, we generally assume a good implementation that keeps collisions to a minimum, in which case the lookup time is $\bigO(1)$. Alternatively, we can implement the hash table with a balanced binary search tree. This gives us an $\bigO(\log n)$ lookup time. The advantage of this is potentially using less space, since we no longer allocate a large array. We can also iterate through the keys in order, which can be useful sometimes.
-
-    The other strategy used to resolve collisions is to require each array element to contain only one key, but to also allow keys to be mapped to alternate indices when their original spot is already occupied. This is known as \textbf{open addressing}. In this type of hashing, we have a parameterized hash function $h$ that takes two arguments, a key and a positive integer. Searching or \textbf{probing} for an item requires examining not just one spot, but many spots until either we find the key, or reach a None value. After we delete an item, we replace it with a special value Deleted, rather than simply None. This way, the Search algorithm will not halt when it reaches an index that belonged to a deleted key.
-    
-    The simplest implementation of open addressing is \textbf{linear probing}: start at a given hash value and then keep adding some fixed offset to the index until an empty spot is found. The main problem with linear probing is that the hash values in the middle of a cluster will follow the exact same search pattern as a hash value at the beginning of the cluster. As such, more and more keys are absorbed into this long search pattern as clusters grow. We can solve this problem using \textbf{quadratic probing}, which causes the offset between consecutive indices in the probe sequence to increase as the probe sequence is visited. \textbf{Double hashing} resolves the problem of a form of clustering occurs where if many items have the same initial hash value, they still follow the exact same probe sequence. It does this by using a hash function for both the initial value and its offset.
-
-    A useful hash function for strings is,
-    \[
-        H(S,j) = \sum_{i=0}^{m-1} \alpha^{m-(i+1)} \cdot char(s_{i+j}) \mod m
-    \]
-    where $\alpha$ is the size of the alphabet and $char(x)$ is the ASCII character code. This hash function has the useful property allowing hashes of successive m-character windows of a string to be computed in constant time instead of $\bigO(m)$.
-    \[
-        H(S, j+1) = (H(S,j) - \alpha^{m-1}char(s_j))\alpha + s_{j+m}
-    \]
-    
-    \subsubsection{Dictionaries}
-    The dictionary data type (a.k.a. hash table or hash map) permits access to data items based on its content. You insert an item into a dictionary so you can retrieve it when you need it.
-    
-    Python dicts use open addressing to resolve hash collisions which uses random probing in which the next slot is picked in a pseudo random order. The entry is then added to the first empty slot.
-    
-    The primary operations a dictionary supports are:
-    \begin{itemize}
-        \item  \textbf{search(D, k)} – Given a search key $k$, return a pointer to the element in dictionary $D$ whose key value is $k$, if one exists.
-        \item \textbf{insert(D, x)} – Given a data item $x$, add it to the set in the dictionary $D$.
-        \item \textbf{delete(D, x)} – Given a pointer to a given data item $x$ in the dictionary $D$, remove it from $D$.
-        \item \textbf{max(D)} or \textbf{min(D)} – Retrieve the item with the largest (or smallest) key from $D$. This enables the dictionary to serve as a priority queue.
-        \item \textbf{predecessor(D, k)} or \textbf{successor(D, k)} – Retrieve the item from $D$ whose key is immediately before (or after) $k$ in sorted order. These enable us to iterate through the elements of the data structure.
-    \end{itemize}
-    
-    \subsubsection{Sets}
-    In mathematical terms, a set is an unordered collection of unique objects drawn from a fixed universal set. A hash set implements the set ADT using a hash table. Sorted order turns the problem of finding the union or intersection of two subsets into a linear-time operation, just sweep from left to right and see what you are missing. It makes possible element searching in sublinear time. Finally, printing the elements of a set in a canonical order paradoxically reminds us that order really doesn’t matter.
-     
-    If each subset contains exactly two elements, they can be thought of as edges in a graph whose vertices represent the universal set. A system of subsets with no restrictions on the cardinality of its members is called a hypergraph.
-    
-    \begin{enumerate}
-        \item Test whether $u_i \in S_j$
-        \item Compute the union or intersection of $S_i$ and $S_j$
-        \item Insert or delete members of $S$
-    \end{enumerate}
-    
-    Although sets are commonly implemented with hash tables, other data structures that can be used:
-    
-    \begin{enumerate}
-        \item Containers or dictionaries – A subset can also be represented using a linked list, array, or dictionary containing exactly the elements in the subset.
-        \item Bit vectors – An n-bit vector or array can represent any subset $S$ on a universal set $U$ containing $n$ items. Bit $i$ will be 1 if $i \in S$, and $0$ if not.
-        \item Bloom filters – We can emulate a bit vector in the absence of a fixed universal set by hashing each subset element to an integer from $0$ to $n$ and setting the corresponding bit.
-    \end{enumerate}
-
 \newpage    
 \section{Algorithms and Techniques}
-    \subsection{String and Array Sorting}
+    \subsection{Sequence Search and Sorting}
     \subsubsection{Binary Search}
     Time Complexity: $\bigO(\log n)$ average and worst case.  Space Complexity: $\bigO(1)$
     
     In binary search, we look for an element $x$ in a sorted array by first comparing $x$ to the midpoint of the array. If $x$ is less than the midpoint, then we search the left half of the array. If $x$ is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subarrays. Again, we compare $x$ to the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find $x$ or the subarray has size 0.
+    
+    In general, if we can discover some kind of monotonicity, for example, i.e. if condition(k) is True then condition(k + 1) is also True, then we can consider binary search.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1125,6 +1222,8 @@ def has_cycle(self, head):
         \item Move end to search for a valid window.
         \item When a valid window is found, move start to find a smaller valid window, continuing until the smallest valid window is found.
     \end{enumerate}
+    
+    A possible variation is to use two sliding windows. This may be necessary when a question asks to find the number of valid sub-sequence of \textit{exactly} $K$ elements. Then we want to find $exactly(K) = atMost(K) - atMost(K-1)$ and may define two sliding windows, one which counts subsequences with length $<= k$ and another with length $<= k-1$.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1145,32 +1244,26 @@ def basic_sliding_window(self, seq):
 # Using a counter
 from collections import Counter
 
-# s - target sequence, p - pattern or restrict sequence
-def sliding_window_with_counter(s, p):
-    counter = Counter(p)
-    start, end, count, res = 0, 0, 0, 0
-    while end < len(s):
-        counter[s[end]] += 1
-        if counter[s[end]] > 1:
-            count += 1
-        end += 1
-        while count > 0:
-            # update res here if finding minimum
-            # increase start to make it invalid or valid again
-            counter[s[start]] -= 1
-            # update count based on some condition
-            if counter[s[start]] > 0:
-                count -= 1
+def sliding_window_with_counter(sequence, max_length):
+    ans = start = 0
+    count = collections.Counter()
+    for end, x in enumerate(sequence):
+        count[x] += 1
+        while len(count) >= max_length:
+            count[sequence[start]] -= 1
+            if count[sequence[start]] == 0:
+                del count[sequence[start]]
             start += 1
-        # update res here if finding maximum
-        res = max(res, end - start)
-    return res
+        ans = max(ans, j - i + 1)
+    return ans
 \end{lstlisting}
 
     \subsubsection{Single-pass with Lookup Table}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(n)$
     
     A lookup table is an example of making a time-space tradeoff. This technique is useful when searching an array for a pair of values, though the method can be extrapolated to triples and more. Given an array and a target we first initialize a lookup table, usually as a hash table or dictionary. Next, we iterate over the array checking if the complement to the current value needed to satisfy the target exists in our lookup table. If it exists, meaning we've visited the complement before, we retrieve the value from the pointer in the lookup and return it with the current index. Otherwise we add the compliment with the current index as a key value pair in the lookup table.
+
+    The key takeaway is that when finding pairs to meet a condition, we typically require nested for loops to run $\bigO(\frac{n(n-1)}{2}) = \bigO(n^2)$ comparisons. By instead storing and searching a hashmap only for the desired pairing, we reduce our operations to $\bigO(n)$. When we need to find triples we can reduce 3 for loops and a running time of $\bigO(n^3)$ to only two loops and running time of $\bigO(n^2))$. Similar  optimizations hold for larger groups.
 
 
 \vspace{8pt} \emph{Python Implementation}
@@ -1281,30 +1374,61 @@ def merge_intervals(self, intervals):
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]    
 class KMP:
-    def partial(self, pattern):
-        """ Calculate partial match table: String -> [Int]"""
-        ret = [0]
-        for i in range(1, len(pattern)):
-            j = ret[i - 1]
-            while j > 0 and pattern[j] != pattern[i]:
-                j = ret[j - 1]
-            ret.append(j + 1 if pattern[j] == pattern[i] else j)
-        return ret
-        
-    def search(self, T, P):
-        """ KMP search main algorithm: String -> String -> [Int] 
-        Return all the matching position of pattern string P in T
+    def build_lps(self, pattern):
+        """ Helper function for strStr.
+        Returns longest proper suffix array for string pattern.
+        Each lps_array[i] is the length of the longest proper prefix
+        which is equal to suffix for pattern ending at character i.
+        Proper means that whole string cannot be prefix or suffix.
+
+        Time complexity: O(m). Space complexity: O(1), where
+        m is the length of the pattern, space used for lps array isn't included.
         """
-        partial, ret, j = self.partial(P), [], 0
+        m = len(pattern)
+        lps_array = [0] * m
+        i, j = 1, 0  # start from the 2nd character in pattern
+        while i < m:
+            if pattern[i] == pattern[j]:
+                lps_array[i] = j + 1
+                j += 1
+                i += 1
+            else:
+                if j > 0:
+                    j = lps_array[j - 1]
+                else:
+                    lps_array[i] = 0
+                    i += 1
         
-        for i in range(len(T)):
-            while j > 0 and T[i] != P[j]:
-                j = partial[j - 1]
-            if T[i] == P[j]: j += 1
-            if j == len(P): 
-                ret.append(i - (j - 1))
-                j = partial[j - 1]
-        return ret
+    def search(self, text, pattern):
+        """ Returns index of 1st occurence of pattern in text.
+        Returns -1 if pattern is not in the text.
+        Knuth-Morris-Pratt algorithm.
+        Time complexity: O(n + m). Space complexity: O(m).
+        """
+        # special cases
+        if not text or not pattern : return 0
+        # build longest proper suffix array for pattern
+        lps_array = self.build_lps(pattern)
+        n, m = len(text), len(pattern)
+        i, j = 0, 0
+        while i < n:
+            # current characters match, move to the next characters
+            if text[i] == pattern[j]:
+                i += 1
+                j += 1
+            # current characters don't match
+            else:
+                if j > 0:  # try start with previous longest prefix
+                    j = lps_array[j - 1]
+                # 1st character of pattern doesn't match character in text
+                # go to the next character in text
+                else:
+                    i += 1
+            # whole pattern matches text, match is found
+            if j == m:
+                return i - m
+        # no match was found
+        return -1
 \end{lstlisting}
     
     \subsubsection{Rabin–Karp}
@@ -1387,7 +1511,7 @@ class MedianFinder:
 \end{lstlisting}
 
     \subsection{Tree Traversal}
-    Given a binary tree, an \textbf{in-order traversal} (LNR) means to visit the left branch, then the current node, and finally, the right branch. A \textbf{pre-order traversal} (NLR) visits the current node before its child nodes, i.e. the root is always the first node visited. A \textbf{post-order traversal} (LRN) visits the current node after its child nodes, i.e. the root node is always the last node visited.
+    Given a binary tree, an \textbf{in-order traversal} (LNR) means to visit the left branch, then the current node, and finally, the right branch. A \textbf{pre-order traversal} (NLR) visits the current node before its child nodes, i.e. the root is always the first node visited. A \textbf{post-order traversal} (LRN) visits the current node after its child nodes, i.e. the root node is always the last node visited. A \textbf{breadth-first search} of a tree, a.k.a. level order tree traversal, iteratively visits all the nodes at the same height from left to right.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]  
@@ -1407,7 +1531,22 @@ def preorder(root):
     if root: 
         print(root.val)
         preorder(root.left) 
-        preorder(root.right) 
+        preorder(root.right)
+        
+def levelorder(root):
+    q, level = collections.deque(), 0
+    q.append(root)
+    while q:
+        level += 1
+        for _ in range(len(q)):
+            node = q.popleft()
+            print(node.val)
+            if node.left:
+                q.append(node.left)
+            if node.right:
+                q.append(node.right)
+        # perform a level based condition check here
+    return
 \end{lstlisting}
     \subsection{Graph Traversal}
     
@@ -1417,6 +1556,8 @@ def preorder(root):
     In a breadth-first search (BFS), we start at the root (or another arbitrarily selected node) and explore each neighbor before going on to any of their children. That is, we go wide before we go deep. 
     
     In BFS, node x visits each of x's neighbors before visiting any of their neighbors. You can think of this as searching level by level out from x. An iterative solution involving a \textbf{queue} usually works best, this means that you should avoid using recursion which will have a stack LIFO ordering.
+    
+    In an unweighted graph, since BFS explores all neighbors at the same depth, it can be used to find the shortest path between a start and a target node.
     
     When a graph is implemented with an Adjacency List, the time complexity of BFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix it will be $\bigO(|V|^2)$. The complexity difference occurs due to the fact that in an Adjacency Matrix we must iterate through all possible adjacent edges to find existing outgoing edges, which takes $O(|V|)$ time summed over $|V|$ vertices. So $\bigO(|V| + |E|) = \bigO(|V| + |V|^2) = \bigO(|V|^2)$.
     
@@ -1521,7 +1662,7 @@ def dfs(adj_list):
     \subsubsection{Bidirectional Search}
     Bidirectional search is used to find the shortest path between a source and destination node. It operates by essentially running two simultaneous breadth-first searches, one from each node. When their searches collide, we have found a path.  If every node has at most $k$ adjacent nodes and the shortest path from node $s$ to node $t$ has length $d$. Then, in a traditional breadth-first search we visit $\mathcal{O}(k^d)$ nodes while bidrectional search visits $\mathcal{O}(k^{d/2})$
 
-    \subsubsection{Dijkstra's algorithm}
+    \subsubsection{Dijkstra's Shortest Path Algorithm}
     Time Complexity: $\Theta (|E|+|V|\log |V|)$ worst case
     
     An algorithm for finding the shortest paths between nodes in a positive weighted, directed, acyclic graph. For a given source node in the graph, the algorithm finds the shortest path between that node and every other. Let the node at which we are starting be called the initial node and the distance of node Y be the distance from the initial node to Y. Dijkstra's algorithm will assign some initial distance values and will try to improve them iteratively, prioritizing shorter distances and edges with low weights in its path discovery process.
@@ -1597,8 +1738,88 @@ def dijkstra(edges, start, end):
     
     A major practical drawback is its $\bigO(b^d)$ space complexity, as it stores all generated nodes in memory.
    
+    \subsubsection{Bellman-Ford Shortest Path Algorithm}
+    Time Complexity: $\bigO (|E||V|)$ worst case. Space Complexity: $\bigO(|V|)$.
     
+    The Bellman-Ford (BF) algorithm is a Single Source Shortest Path (SSSP) algorithm, i.e. it can find the shortest path from one node to any other. It is slower than Djikstra's algorithm, but is capable of handling graph's with negative edges, in particular negative weighted cycles.
+    \begin{enumerate}
+        \item Let $S$ be the start node and $D$ be an array of length $|V|$ to record distances. Initialized every entry in $D$ to $\infty$
+        \item Set $D[S] = 0$. Traverse the graph from adjacencies of $S$ in any order. 
+        \item Relax each edge $V-1$ times, i,e. $D[edge.to] = min(D[edge.to], D[edge.from] + edge.cost)$.
+        \item After traversing the graph $V-1$ times, repeat previous step and if any edge is still updated to a new minimum then there exists a negative cycle. So we set that node to $-\infty$.
+    \end{enumerate}
+    
+    
+    \subsubsection{Floyd-Warshall All-Pairs Shortest Path Algorithm}
+    Time Complexity: $\bigO(|V|^3)$ worst case. Space Complexity: $\bigO(|V|^2)$.
+    
+    The Floyd-Warshall (FW) algorithm is an (All-Pairs Shortest Path) algorithm. This means it can find the shortest path between all pairs of nodes. With its high cubic time complexity, it's generally only ideal for graphs with less than a couple hundred nodes.
+    
+    FW works well with a 2D adjacency matrix with $\infty$ representing no adjacency. The main idea of FW is to build up all possible intermediary paths between node $i$ and $j$ to find the optimal path. We use dynamic programming, covered in more details later, to cache previous optimal solutions in a 3D $n\times n$ memo table. 
+    
+    \begin{enumerate}
+        \item Define $dp$ table where $dp[i][j] =$ shortest path from $i$ to $j$ routing through nodes $\{ 0, 1, \dots, k \}$.
+    
+        \item Iterate over 3 nested loops $k,i,j$ to fill the $dp$ table.
+        
+        \item Transitions will be, $dp[i][j] =$ $m[i][j]$ if $k = 0$. Otherwise $dp[i][j] = min(dp[i][j], dp[i][k] + dp[k-1][k][j])$. where we compute the solution for $k$ in place, saving us a  dimension of space.
+        
+        Note, the first term in the minimization is reusing the previous best distance routing through $0, \dots, k-1$. The second term is essentially measures the path from $i$ to $k$ plus the path from $k$ to $j$. 
+        
+        \item If negative cycles are possible, add a subroutine to detect them
+        
+        \item Return $dp$, the 2D matrix containing the shortest path pairs.
+    \end{enumerate}
+     
     \subsection{Graph Analysis Methods}
+    \subsubsection{Tarjan's Strongly Connected Component Algorithm}
+    Time Complexity: $\bigO (|E| + |V|)$ worst case.
+    
+    A \textit{strongly connected component} (SCC) can be thought of as self-contained cycles within a directed graph where every vertex in a given cycle can reach every other vertex in the same cycle. 
+    
+    A \textit{low-link} of a node is the smallest node id reachable from that node where the id corresponds to a rank obtained by performing a DFS with some starting node being 0. The low-link value is highly dependent on the order of traversal in a DFS, which is random.
+    
+    To cope with the random traversal order of a DFS, Tarjan's algorithm maintains a stack of valid nodes from which to update low-link values from. Nodes are added to the stack of valid nodes as they're explored for the first time and are removed each time a complete SCC is found. To update node $u$'s low-link value to node $v$'s low-link value, there must be a path of edges from $u$ to $v$ and $v$ must be on the stack. Then we find that each strongly connected component will contain the same low-link value. 
+    
+    \begin{enumerate}
+        \item Mark the id of each node as unvisited.
+        \item Perform a DFS from an arbitrary node. Upon visiting a node, assign it an id and a low-link value. Mark current nodes as visited and add them to a seen stack.
+        \item On DFS callback, i.e. after reaching a leaf or already vising all neighbors, we begin backtracking. If the previous node is on the seen stack, then minimize the current node's low-link value with the last node's low-link vaue. This allows low-link values to propegate through cycles being tracked in the stack.
+        \item After visiting all neighbors, if the current node started a connected component started a connected component, i.e. if its id equals its low-link value, then pop all nodes off the stack until the current node is reached. This will remove all the nodes associated with the current connected component and reset our stack reference.
+        \item Pick another node at random and continue this process until all nodes are visited.
+    \end{enumerate}
+    
+    \subsubsection{Prim's Minimum Spanning Tree Algorithm}
+    Time Complexity: Varies on implementation $\bigO(|E|\log(|V|)$
+    
+    Given an undirected, connected graph, a \textbf{Minimum Spanning Tree} (MST) is a subset of the edges which connects all vertices together (without creating cycles) while minimizing the total edge cost. It is possible for graphs to have multiple MSTs. In an unconnected graph, multiple sets of MSTs will form a \textbf{Minimum Spanning Forrest} (MSF).
+    
+    Prim's algorithm is a greedy MST algorithm that works well on dense graphs. On these graphs, it meets or rivals other popular MST/MSF algorithms like Kruskal's and Boruvka's. The lazy version of Prim's algorithm uses a priority queue and has running time of $\bigO(|E| \log(|E|))$, while the eager version has running time of $\bigO(|E| \log(|V|))$ 
+    
+    Lazy Prim's MST
+    \begin{enumerate}
+        \item Maintain a min Priority Queue ($PQ$) that sorts edges based on min edge cost. This will be used to determine the next node to visit and the edges used to get there.
+        
+        \item Start the algorthm on any node $s$. Mark $s$ as visited and iterate over all edges of $s$, adding them to $PQ$.
+        
+        \item While the $PQ$ is not empty and MST has not been formed, dequeue the next cheapest edge from $PQ$. If the dequeued edge is stale, i.e. it has already be visited, then skip it and poll again. Otherwise mark the current node as visited and add it to the MST.
+        
+        \item Iterate over the new current node's edges and add all its edges to the $PQ$. Do not add edges to the $PQ$ which point to already visited nodes.
+    \end{enumerate}
+    
+    In the eager version, instead of adding edges to the priority queue as we iterate over the edges of a node, we update the destinations node's most promising incoming edge. We do this using an indexed priorty queue (IPQ).
+    
+    
+    \subsubsection{Kruskal's Minimum Spanning Tree Algorithm}
+     Complexity: $\bigO(|E|\log(|V|)$
+     
+    \begin{enumerate}
+        \item Sort edges by ascending edge weight.
+        \item Walk through sorted edges and look at the two nodes the edges belong to. If the nodes area already unified we don't include this edge, otherwise we include and unify the nodes. Unified edges are groupings of sub-trees in the graph. The algorithm makes use of the \textit{union find} data structure to efficiently determine if an edge belongs to an existing group.
+        \item The algorithm terminates when every edge has been processed or all the vertices have been unified.
+    \end{enumerate}
+    
+    
     \subsubsection{Topological Sort}
     Time Complexity: $\bigO(|V| + |E|)$ worst case,  Space Complexity: $\bigO(|V|)$
     
@@ -1663,9 +1884,9 @@ def topological_sort(graph):
     
     A problem is said to have \textbf{overlapping subproblems} if the problem can be broken down into subproblems which are reused several times or a recursive algorithm for the problem solves the same subproblem over and over rather than always generating new subproblems. For example, consider the recursive generation of the $n$th Fibonacci number.
     
-    A problem is said to have \textbf{optimal substructure} if an optimal solution can be constructed efficiently from optimal solutions of its subproblem. Another way to view this is that given the optimal solution, the solution of the sub-problems will also be optimal. For example: if a path (A, B, C, D) is the shortest possible distance, then the shortest path from B to D must also pass through C.
+    A problem is said to have \textbf{optimal substructure} if an optimal solution can be constructed efficiently from optimal solutions of its subproblem. Another way to view this is that when given the optimal solution, the solution of the sub-problems will also be optimal. For example: if we know a path (A, B, C, D) is the shortest possible distance between A and D, then the shortest path from B to D must also pass through C.
     
-   \subsubsection{DAG model}
+   \subsubsection{The DAG Model}
     Many problems involve finding a solution by processing the state space, i.e. the space of all possible results, in order to find the optimal result. An algorithm processes the state space by making a series of decisions and completes when it knows it has found the best resulting set of decisions. We can think of this decision space in terms of a graph structure in which each node being traversed is an inclusion to our resulting decision sequence which is represented by a path. Then, each of the outgoing edges in the graph indicates a reachable link from one state to another. 
     
     Recall that a \textbf{directed acyclic graph (DAG)} is a directed graph that does not contain any cycles. This can be understood as a state space in which no decision chosen from a unique subset of choices can be reached again or included multiple times, i.e. there are no infinite loops.
@@ -1743,7 +1964,7 @@ assert generate_parenthesis(3) == [
 
     Even though a greedy algorithm follows the problem-solving heuristic of making the locally optimal choice at each stage with the intent of finding a global optimum, there are cases where locally optimal solutions or maxima are not the global optimal solution which will cause the algorithm to product incorrect solutions. Nonetheless a greedy heuristic may yield locally optimal solutions that approximate a globally optimal solution in a reasonable amount of time.
     
-    Greedy algorithms are only ideal for problems which have optimal substructure. Typically, a greedy algorithm is used to solve a problem with optimal substructure if it can be proven by induction that it is optimal at each step. Otherwise, provided the problem exhibits overlapping subproblems, then dynamic programming is preferable. If there are no appropriate greedy algorithms and the problem fails to exhibit overlapping subproblems, often a lengthy but straightforward search of the solution space is the best alternative.
+    Greedy algorithms are only ideal for problems which have optimal substructure. Typically, a greedy algorithm is used to solve a problem with optimal substructure if it can be proven by induction that it is optimal at each step. Otherwise, provided the problem exhibits overlapping subproblems, then dynamic programming is preferable. If there are no appropriate greedy algorithms and the problem fails to exhibit overlapping subproblems, often a lengthy but straightforward search of the solution space is the best alternative. If the problem is NP-Complete, a greedy algorithm is likely the best approximation function.
     
     
     \subsubsection{Dynamic Programming \& Memoization}
@@ -2084,7 +2305,6 @@ for a in A:
         results.append((a, b))
 
 ## Using itertools module
-list(itertools.product(A, B))
 
 # product of iterable with itself of size 2
 list(itertools.product(A, repeat=2))
@@ -2282,26 +2502,27 @@ def stars_and_bars(n, k):
 \begin{enumerate}
     \item  Restate and reduce problem
     \begin{enumerate}
-        \item Spend some time simplifying and re-stating problem in your own words.
-        \item What is the best conceivable run time?
-        \item Can you pre-process the input or re-interpret the desired output to simplify or reduce the problem?
-        \item What are problematic or challenging areas that might arise from certain inputs?
+        \item Carefully read the problem. If constraints on input are given, be sure to make a mental note of them.
+        \item Spend some time simplifying and re-stating problem in your own words. This helps solidify your understanding, plus translating the problem into its most essential form may reveal possible reductions.
+        \item Can you pre-process the input or re-interpret the desired output to simplify or reduce the problem? This may involve sorting a sequence, converting a matrix to a graph, etc.
+        \item What is the best conceivable run time? If it's not yet obvious, this can be examined later during the optimization phase.
+        \item What are problematic or challenging areas that might arise from certain inputs? For example, an input that causes a naive approach to traverse the decision tree toward an incorrect solution. These inputs can be converted into sufficiently complex test cases later.
         \item What are your intuitions about possible solutions? You can revisit these ideas later.
     \end{enumerate}
     
     \item State brute-force solution
     \begin{enumerate}
-        \item Give overview of approach.
-        \item Find time and space complexity.
+        \item Give an overview of the approach.
+        \item Find the time and space complexity.
         \item If you don't have any immediate ideas for an optimized solution, spend time elaborating on the brute force algorithm, otherwise mention that we can do better and can move on.
     \end{enumerate}
     
      \item Optimize previous approach or introduce new, better approach
 
     \begin{enumerate}
-        \item Give overview of approach.
-        \item Find time and space complexity.
-        \item Brainstorm using Algorithm Optimization Checklist. Avoid getting stuck on memory recall.
+        \item Give an overview of the approach.
+        \item Find the time and space complexity.
+        \item Brainstorm using Algorithm Optimization Checklist. Avoid getting stuck on memory recall for too long, even you recognize the problem.
         \item Repeat or expand. Always spend extra time considering alternative approaches before implementing a solution.
         \item When out of ideas or if able to match the best conceivable run time, prompt the interviewer for approval: ``If you're happy with this approach, I can go into the finer details and begin implemention''
     \end{enumerate}
