@@ -68,6 +68,9 @@ TODO:
     - regression
     - minimax
     - k nearest neighbors
+- Add Flow networks to DS
+    - Ford fulkerson max-flow algorithm
+    - http://www.cs.sjtu.edu.cn/~jiangli/teaching/CS222/files/materials/Algorithm%20Design.pdf
 }
 
 \begin{document}
@@ -192,8 +195,8 @@ TODO:
     
     A \textbf{bit array} (a.k.a bit map) is a data structure which uses an array of 0's and 1's to compactly store information. An index $j$ with a value of 1 indicates the presence of an integer corresponding to $j \in \mathbb Z$. When given a constraint on possible values that need to be stored and analyzed, we can initialize a bit array with a size of the max possible value and record frequencies directly in their corresponding index, eliminating the need to re-order an unsorted array or maintain a sorted order on every insertion. We can extend the bit array to store arbitrary integers, i.e. an int of value 3 in index 10 may indicate we've encountered 3 values of 10. 
     
-    \subsubsection{Dynamic Arrays}
-    A dynamic array is a data structure that allocates all elements contiguously in memory and keeps a count of the current number of elements. If the space reserved for the dynamic array is exceeded, it is reallocated and (possibly) copied, which is an expensive operation. Though tt's amortized insertion cost is equal to a static array, $\Theta(1)$. Python's  ``List'' data structure is a dynamic array.
+    
+    A \textbf{dynamic array} is a data structure that allocates all elements contiguously in memory and keeps a count of the current number of elements. If the space reserved for the dynamic array is exceeded, it is reallocated and (possibly) copied, which is an expensive operation. Though its amortized insertion cost is equal to a static array, $\Theta(1)$. Python's  ``List'' data structure is a dynamic array.
     
     \vspace{8pt} \emph{Time Complexity of List operations}
     \begin{table}[H]
@@ -365,6 +368,27 @@ while q:
     \subsubsection{Indexed Priority Queue}
     An Indexed Priority Queue gives us the ability to change the priority of an element without having to go through all the elements. It can be thought of as a combination of a hash table, used for quick lookups of values, and a priority queue, to maintain a heap ordering.
 
+    \subsubsection{Monotonic Queue and Stack (Deque)}
+    This structure maintains an ordering so that its elements are either strictly increasing or strictly decreasing. It differs from a heap in that instead of re-ordering elements as they're processed, it will discard previous numbers that do not follow the monotonic condition before appending a new number. 
+    
+    It can be useful for finding the index of next larger or smaller number given an unordered list of numbers. In some application we might further need to remove element from the front. Thus a double-ended queue (deque from collections) can be used. In an increasing queue, we find the first element smaller than current, either in the left (from pushing in) or in the right (from popping out). In a decreasing queue we find the first element larger than current, either in the left (from pushing in) or in the right (from popping out).
+    
+    A monotonic queue can also useful for implementing a variant of the sliding window. See section for example.
+    
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+import collections
+def increasing_queue(A):
+    queue = collections.deque()
+    smaller_to_left, smaller_to_right = [-1]*len(A), [-1]*len(A)
+    for i,v in enumerate(A):
+        while queue and A[queue[-1]] >= v: 
+            smaller_to_right[queue.pop()] = v 
+        if queue:  
+            smaller_to_left[i] = A[queue[-1]]
+        queue.append(i)
+    return smaller_to_left, smaller_to_right
+\end{lstlisting}
 
     \subsection{Hash Tables}
     A hash table is a data structure that maps keys to values for highly efficient lookup. There are a number of ways of implementing this. First, we will describe a simple but common implementation known as \textbf{separate chaining}. In this implementation, we use an array of linked lists and a hash code function. To insert a key (which might be a string or essentially any other data type) and value, we do the following: 
@@ -593,7 +617,13 @@ class MaxHeap:
     \subsubsection{Tries (Prefix Trees)}
     A trie is a variant of an n-ary tree in which alphanumeric characters are stored at each node. Each path down the tree may represent a word. The * nodes (sometimes called ``null nodes") are often used to indicate complete words. The actual implementation of these * nodes might be a special type of child (i.e. a TerminatingTrieNode class which inherits from TrieNode) or we can use a boolean flag. A node in a trie could have anywhere from 1 through size of alphabet + 1 children (or, 0 through size of alphabet if a boolean flag is used instead of a * node). 
     
-    Very commonly, a trie is used to store the entire English language for quick prefix lookups. A trie can check if a string is a valid prefix in $\bigO(K)$ time, where $K$ is the length of the string. Many problems involving lists of valid words leverage a trie as an optimization.
+    The complexity of creating a trie is $\bigO(|W| L)$, where $W$ is the number of words, and $L$ is an average length of the word: you need to perform $L$ lookups on average for each of the $W$ words in the set. Same goes for looking up words later: you perform $L$ steps for each of the $W$ words.
+    
+    Very commonly, a trie is used to store the entire English language for quick prefix lookups. A trie can check if a string is a valid prefix in $\bigO(K)$ time, where $K$ is the length of the string. Many problems involving lists of valid words leverage a trie as an optimization. 
+    
+    To get matched suggestions, it helps to store the word along with the end indicator. We can then search the trie up to the prefix end and perform a recursive DFS to all word end points while appending the results to an array of suggestions. To handle misspellings, a function considers four types of edits: deletion (remove one letter), a transposition (swap two adjacent letters), a replacement (change one letter to another) or an insertion (add a letter). The edit function returns a list of words within a max $N$ edits from the specified word that exist in a dictionary of known words. We can then find suggestions with DFS as before.
+    
+    Note, most methods in the trie follow a similar traversal pattern, create a pointer to the root of the tree, iterate over characters of a given word, check if the character is not in the current pointers children and then move the pointer forward to the corresponding child.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -631,6 +661,7 @@ class Trie:
                 return False
             node = node.children[char]
         return True
+    
 \end{lstlisting}
 
     \subsubsection{Suffix Trees/Arrays}
@@ -897,7 +928,7 @@ class Graph:
 
 \newpage    
 \section{Algorithms and Techniques}
-    \subsection{Sequence Search and Sorting}
+    \subsection{Sequence Search and Sort}
     \subsubsection{Binary Search}
     Time Complexity: $\bigO(\log n)$ average and worst case.  Space Complexity: $\bigO(1)$
     
@@ -910,7 +941,6 @@ class Graph:
 def binary_search(nums, target):
     if len(nums) == 0:
         return -1
-
     left, right = 0, len(nums) - 1
     while left <= right:
         mid = (left + right) // 2
@@ -921,6 +951,17 @@ def binary_search(nums, target):
         else:
             right = mid - 1
     return -1
+
+# Bisect module    
+import bisect
+A = [-14, -10, 2, 108, 108, 243, 285, 285, 285, 401]
+
+## return index to left or right of first found element in O(logn)
+bisect.bisect_left(A, -10)
+bisect.bisect_right(A, -10)
+
+## insert into sorted array while maintaining order in O(logn)
+bisect.insort(A, 20)
 \end{lstlisting}
     
     \subsubsection{Bubble Sort}
@@ -1223,7 +1264,9 @@ def has_cycle(self, head):
         \item When a valid window is found, move start to find a smaller valid window, continuing until the smallest valid window is found.
     \end{enumerate}
     
-    A possible variation is to use two sliding windows. This may be necessary when a question asks to find the number of valid sub-sequence of \textit{exactly} $K$ elements. Then we want to find $exactly(K) = atMost(K) - atMost(K-1)$ and may define two sliding windows, one which counts subsequences with length $<= k$ and another with length $<= k-1$.
+    A possible variation is to use two sliding windows. This may be necessary when a question asks to find the number of valid sub-sequence of \textit{exactly} $K$ elements.\footnote{https://leetcode.com/problems/subarrays-with-k-different-integers/} Then we want to find $exactly(K) = atMost(K) - atMost(K-1)$ and may define two sliding windows, one which counts subsequences with length $<= k$ and another with length $<= k-1$.
+    
+    Another challenging variation involves finding the length of a window in which the absolute difference is maximized but under a given limit.\footnote{https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/} In this case, we maintain two double-ended queues (deque), one of minimums that is kept monotonically increasing and the other of maximums that is kept monotonically decreasing. After appending elements on to the end of both queues while maintaining monotonic order, we then update the front of the deques so that the difference between their first elements does not exceede the given limit, increment a counter if we popleft. This counter corresponds to the left pointer of a sliding window and we want the max valid window. 
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1249,13 +1292,30 @@ def sliding_window_with_counter(sequence, max_length):
     count = collections.Counter()
     for end, x in enumerate(sequence):
         count[x] += 1
+        # while invalid condition, reduce counter and shorten window 
         while len(count) >= max_length:
             count[sequence[start]] -= 1
             if count[sequence[start]] == 0:
                 del count[sequence[start]]
             start += 1
-        ans = max(ans, j - i + 1)
+        ans = max(ans, end - start + 1)
     return ans
+    
+# Using monotonic double-ended queues
+def longest_subarray(A, limit):
+    maxdq = collections.deque()
+    mindq = collections.deque()
+    i = 0 
+    for a in A:
+        while len(maxdq) and a > maxdq[-1]: maxdq.pop()
+        while len(mindq) and a < mindq[-1]: mindq.pop()
+        maxdq.append(a)
+        mindq.append(a)
+        if maxdq[0] - mindq[0] > limit:
+            if maxdq[0] == A[i]: maxdq.popleft()
+            if mindq[0] == A[i]: mindq.popleft()
+            i += 1
+    return len(A) - i
 \end{lstlisting}
 
     \subsubsection{Single-pass with Lookup Table}
@@ -1300,8 +1360,7 @@ def max_after_operations(n, operations):
         max_value = max(max_value, cur)
     return max_value
 \end{lstlisting}
-    
-    
+
     \subsubsection{Kadane's Algorithm}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(1)$
     
@@ -1323,7 +1382,30 @@ def maxSubArray(self, nums: List[int]) -> int:
             nums[i] += nums[i-1]
     return max(nums)
 \end{lstlisting}
+
+    \subsubsection{Prefix Sums with Binary Search}
+    Similar to Kadane's algorithm, we can create an alternative representation of a given array of numbers which will speed up finding a solution. For each number in a sequence, its corresponding prefix sum, also known as cumulative sum, is the sum of all previous numbers in the sequence plus the number itself. The trick here, is to relate the original list of numbers to a corresponding list of prefix sums using their index.
     
+    If all numbers are positive, then we see that the list of prefix sums would be strictly monotonically increasing. If we are given a list of positive numbers and we want to find which offset or range a new number corresponds to, we can convert the numbers (which represent some kind of weight) to list of relative offsets (i.e. prefix sums). Our task is then to fit the target offset into the list so that the ascending order is maintained using binary search ($\bigO(\log(n))$).
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def prefix_sum(self, weights: List[int], target: int) -> int:
+    cumulative, prefix_sums = 0, []
+    for w in weights:
+        cumulative += w
+        prefix_sums.append(cumulative)
+        
+    low, high = 0, len(prefix_sums)
+    while low <= high:
+        mid = low + (high - low) // 2
+        if target > prefix_sums[mid]:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return low
+\end{lstlisting}
+
     \subsubsection{Merge Intervals}
     Time Complexity: $\bigO(n \log n)$, Space Complexity: $\bigO(n)$
     
@@ -1338,6 +1420,8 @@ def maxSubArray(self, nums: List[int]) -> int:
         \item  A and B do not overlap, B before A
     \end{enumerate}
     If a.start $\leq$ b.start, only 1, 2 and 3 are possible from the above scenarios.  Our goal is to merge the intervals whenever they overlap.
+    
+    For unweighted job scheduling, see the greedy programming section. For weighted job scheduling, see dynamic programming. 
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1549,7 +1633,7 @@ def levelorder(root):
     return
 \end{lstlisting}
     \subsection{Graph Traversal}
-    
+
     \subsubsection{Breadth-First Search}
     Time Complexity: $\bigO(|V| + |E|)$ worst case, Space Complexity: $\bigO(|V|)$
     
@@ -1616,6 +1700,8 @@ def bfs(adj_list):
     Time Complexity: $\bigO(|V| + |E|)$ worst case, Space Complexity: $\bigO(|V|)$
     
     In depth-first search (DFS), we start at the root (or another arbitrarily selected node) and explore each branch completely before moving on to the next branch. That is, we go deep first before we go wide. 
+    
+    In general, DFS often has similar function to BFS. However, only DFS is optimal as a single-source shortest path algorithm in an unweighted graph.
     
     Note that pre-order and other forms of tree traversal are a form of DFS. The key difference is that when implementing this algorithm for a graph, we must check if the node has been visited. If we don't, we risk getting stuck in an infinite loop. 
     
@@ -2487,12 +2573,29 @@ def stars_and_bars(n, k):
     \includegraphics[width=13cm]{Array_sorting_algorithms.png}
 \end{figure}
 
+\subsection{Single-Source Shortest Path Table}
+\begin{table}[H]
+    \resizebox{\columnwidth}{!}{%
+    % \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+         Graph type & Algorithm & Time Complexity & Sparse $E=\bigO(V)$ & Dense $E=\bigO(V^2)$ \\
+         \hline
+         Unweighted & BFS & $\bigO(V + E)$ & $\bigO(V)$ & $\bigO(V^2)$  \\
+         Positive Weights & Dijkstra & $\bigO(V \log V + E)$ & $\bigO(V \log V)$ & $\bigO(V^2)$\\
+         General Weights & Bellman-Ford & $\bigO(V E)$ & $\bigO(V^2)$ & $\bigO(V^2)$ \\
+         DAGs & Top. Sort + B-F & $\bigO(V + E)$  & $\bigO(V)$ & $\bigO(V^2)$ \\
+         \hline
+    \end{tabular}
+    }
+\end{table}
+
 
 \subsection{Algorithm Optimization Checklist}
 \begin{enumerate}
     \item Consider Best Conceivable Runtime (BCR). Try to derive an approach from an ideal upper bound on the solution.
     \item Consider making a time-space trade off, usually in the form of a hash-table or cached results.
-    \item Data Structure Brainstorm. Linked List, Stack, Queue, Priority Queue, Heap, Dictionary, Set, Binary tree, Graph etc.
+    \item Data Structure Brainstorm. Linked List, Stack, Queue, Priority Queue, Heap, Dictionary, Set, Binary tree, Graph, etc.
     \item Simplify and Generalize. Simplify problem statement then attempt to generalize solution to original problem.
     \item Look for BUD (bottlenecks, unnecessary work, duplicated work).
     \item DIY (Do It Yourself). Design an algorithm around how you would solve an analogous real-word scenario without programming.
@@ -2504,9 +2607,9 @@ def stars_and_bars(n, k):
     \begin{enumerate}
         \item Carefully read the problem. If constraints on input are given, be sure to make a mental note of them.
         \item Spend some time simplifying and re-stating problem in your own words. This helps solidify your understanding, plus translating the problem into its most essential form may reveal possible reductions.
+        \item What are problematic or challenging areas that might arise from certain inputs? For example, an input that causes a naive approach to traverse the decision tree toward an incorrect solution. These inputs can be converted into sufficiently complex test cases later.
         \item Can you pre-process the input or re-interpret the desired output to simplify or reduce the problem? This may involve sorting a sequence, converting a matrix to a graph, etc.
         \item What is the best conceivable run time? If it's not yet obvious, this can be examined later during the optimization phase.
-        \item What are problematic or challenging areas that might arise from certain inputs? For example, an input that causes a naive approach to traverse the decision tree toward an incorrect solution. These inputs can be converted into sufficiently complex test cases later.
         \item What are your intuitions about possible solutions? You can revisit these ideas later.
     \end{enumerate}
     
@@ -2520,11 +2623,11 @@ def stars_and_bars(n, k):
      \item Optimize previous approach or introduce new, better approach
 
     \begin{enumerate}
+        \item Brainstorm using Algorithm Optimization Checklist. Avoid getting stuck on memory recall for too long, even you recognize the problem.
         \item Give an overview of the approach.
         \item Find the time and space complexity.
-        \item Brainstorm using Algorithm Optimization Checklist. Avoid getting stuck on memory recall for too long, even you recognize the problem.
         \item Repeat or expand. Always spend extra time considering alternative approaches before implementing a solution.
-        \item When out of ideas or if able to match the best conceivable run time, prompt the interviewer for approval: ``If you're happy with this approach, I can go into the finer details and begin implemention''
+        \item When out of ideas or if able to match the best conceivable run time with low/linear space complexity, prompt the interviewer for approval: ``If you're happy with this approach, I can go into the finer details and begin implemention''
     \end{enumerate}
     
      \item Consider more granular implementation details
@@ -2550,7 +2653,7 @@ def stars_and_bars(n, k):
     
      \item Validate and test with dry runs
     \begin{enumerate}
-        \item Double check for any syntax errors.
+        \item Scan over code and double check for any syntax errors.
         \item Walk through code using sufficiently complex test cases.
         \item Ensure boundary conditions don't cause errors.
         \item Clean up code if possible.
