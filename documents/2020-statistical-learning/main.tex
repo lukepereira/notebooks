@@ -66,6 +66,17 @@ Outline:
     \end{enumerate}
     
 \newpage
+\subsection{Misc Concepts}
+\subsubsection{Box-plots}
+One should also look at box-plots for each individual features. The box plot displays the distribution of data based on the five number summary: minimum, first quartile, median, third quartile, and maximum.
+
+We can look for outliers beyond 3*IQR (Inter Quartile Range). Bootstrapping the data set also provides some insight on outliers.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=6cm]{box-plot.png}
+\end{figure}
+
+\newpage
 \section{Statistical Learning}
 \subsection{What is Statistical Learning}
 $n$ -- number of observations or training data.
@@ -201,6 +212,10 @@ Here, $E \Big (y_0 - \hat f(x_0) \Big )^2$ defines the expected test MSE, comput
 \begin{figure}[h]
     \centering
     \includegraphics[width=13cm]{bias-variance-tradeoff.png}
+\end{figure}
+\vspace{-1cm} \begin{figure}[h]
+    \centering
+    \includegraphics[width=7cm]{bias-variance-tuning.jpg}
 \end{figure}
 The relationship between bias, variance, and test set MSE is referred to as the \textit{bias-variance trade-off}. 
 
@@ -387,9 +402,10 @@ Given estimates $\hat \beta_0, \hat \beta_1,..., \hat \beta_p$, we can make pred
      \hat y= \hat \beta_0, \hat \beta_1 x_1,..., \hat \beta_p x_p.
 \end{equation}
 Again, we choose $\beta_0, \beta_1,...,\beta_p$ to minimize the residual sum of squared,
-\begin{align*}
+\begin{align*} \label{eq:RSS-sum}
     RSS &= \sum_{i=1}^{n} (y_i - \hat y_i)^2 \\
-    &=  \sum_{i=1}^{n}(y_i - \hat \beta_0 - \hat \beta_1 x_1,..., \hat \beta_p x_p)^2.
+    &=  \sum_{i=1}^{n}(y_i - \hat \beta_0 - \hat \beta_1 x_1,..., \hat \beta_p x_p)^2 \\
+    &= \sum_{i=1}^n \Bigg ( y_i - \beta_0 - \sum_{j=1}^p \beta_j x_{ij} \Bigg)^2
 \end{align*}
 The values $\hat \beta_0, \hat \beta_1 x_1,..., \hat \beta_p x_p$ that minimize the above equation are the multiple least squares regression coefficient estimates. These values are most easily represented using matrix algebra and will be revisited later.
 
@@ -503,7 +519,7 @@ In some cases, the true relationship between the response and the predictors may
     In contrast to outliers, observations with \textit{high leverage} have an unusual value for $x_i$. Removing a high leverage observation has a much more substantial impact on the least squares line than removing the outlier.
     
     To quantify an observation’s leverage, we compute the \textit{leverage statistic}. The leverage statistic $h_i$ is always between $1/n$ and $1$, and the average leverage for all the observations is always equal to $(p + 1)/n$. For a simple linear regression,
-    \begin{equation}
+    \begin{equation}\label{eq:leverage}
         h_i =  \frac{1}{n} \frac{(x_i - \bar x)^2}{\sum_{i' = 1}^n (x_i - \bar x)^2}
     \end{equation}
     
@@ -717,6 +733,14 @@ are the actual population counts in each class. In contrast, the denominators fo
 \end{figure}
 The \textit{ROC curve} (receiver operating characteristics) above is a popular graphic for simultaneously displaying the two types of errors for all possible thresholds. The overall performance of a classifier, summarized over all possible thresholds, is given by the \textit{area under the curve} (AUC). An ideal ROC curve will hug the top left corner, so the larger the AUC the better the classifier.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=8cm]{confusion-matrix.png}
+\end{figure}
+
+ A \textit{confusion matrix} is a way of visualizing predictions made by a classifier and is just a table showing the distribution of predictions for a specific class. The x-axis indicates the true class of each observation while the y-axis corresponds to the class predicted by the model.
+
+
 \subsubsection{Quadratic Discriminant Analysis}
 Similarly to LDA, the \textit{quadratic discriminant analysis} (QDA) classifier results from assuming that the observations from each class are drawn from a Gaussian distribution, and from plugging estimates for the parameters into Bayes’ theorem in order to perform prediction.  However, unlike LDA, QDA assumes that each class has its own covariance matrix, i.e. $X \sim N(\mu_k, \Sigma_k)$ where $\Sigma_k$ is a covariance matrix for the $k$th class.
 
@@ -756,9 +780,322 @@ Finally, QDA serves as a compromise between the non-parametric KNN method and th
 
 \newpage
 \section{Resampling Methods}
+Resampling methods involve repeatedly drawing samples from a training set and refitting a model of interest on each sample in order to obtain additional information about the fitted model. Resampling approaches can be computationally expensive, because they involve fitting the same statistical method multiple times using different subsets of the training data. However, due to recent advances in computing power, the computational requirements of resampling methods generally are not prohibitive. Two of the most commonly used resampling methods are \textit{cross-validation} and the \textit{bootstrap}.
+
+Cross-validation can be used to estimate the test error associated with a given statistical learning method, or to select the appropriate level of flexibility. The process of evaluating a model’s performance is known as \textit{model assessment}, whereas the process of selecting the proper level of flexibility for a model is known as \textit{model selection}. The bootstrap is most commonly used to provide a measure of accuracy of a parameter estimate or of a given statistical learning method.
+
+\subsection{Cross-Validation}
+In the absence of a very large designated test set that can be used to directly estimate the test error rate some methods make a mathematical adjustment to the training error rate in order to estimate the test error rate, examined later. Alternatively, we now consider a class of methods that estimate the test error rate by holding out a subset of the training observations from the fitting process, and then applying the statistical learning method to those held out observations.
+
+\subsubsection{The Validation Set Approach}
+The \textit{validation set approach}  is a very simple strategy that involves randomly dividing the available set of observations into two parts, a \textit{training set} and a \textit{validation set} or hold-out set. The model is fit on the training set, and the fitted model is used to predict the responses for the observations in the validation set which provides an estimate of the test error rate.
+
+The validation set approach has two potential drawbacks which will be addressed in cross-validation:
+\begin{enumerate}
+    \item The validation estimate of the test error rate can be highly variable, depending on precisely which observations are included in the training set and which observations are included in the validation set.
+    \item In the validation approach, only a subset of the observations that are included in the training set are used to fit the model. This suggests that the validation set error rate may tend to overestimate the test error rate.
+\end{enumerate}
+
+\subsubsection{Leave-One-Out Cross-Validation}
+\textit{Leave-one-out cross-validation} (LOOCV) also involves splitting the set of observations into two parts but instead of creating two subsets of comparable size, a single observation $(x_1, y_1)$ is used for the validation set, and the remaining observations $\{(x_2, y_2),...,(x_n, y_n)\}$ make up the training set. 
+
+Although $MSE_1 = (y_1 - \hat y_1)^2$ provides an approximately unbiased estimate for the test error, it is a poor estimate because it is highly variable since it is based upon a single observation. We can repeat the procedure by selecting $(x_2, y_2)$  for the validation data, training the statistical learning procedure on the other $n - 1$ observations, repeating this approach $n$ times. The LOOCV estimate for the test MSE is the average of these $n$ test error
+estimates:
+\begin{equation}
+     CV_{(n)} = \frac{1}{n} \sum_{i=1}^n MSE_i.
+\end{equation}
+Using all but one of the observations for training results in less bias and tends not to overestimate the test error rate as much as the validation set approach does. in contrast to the validation approach, performing LOOCV multiple times will always yield the same results: there is no randomness in the training/validation set splits.
+
+LOOCV can be expensive and time consuming if $n$ is large or the model is slow to fit since the model has to be fit $n$ times. With least squares linear or polynomial regression, an amazing shortcut makes the cost of LOOCV the same as that of a single model fit.
+\begin{equation}
+     CV_{(n)} = \frac{1}{n} \sum_{i=1}^n \Bigg ( \frac{y_i-\hat y_i}{1-h_i} \Bigg )^2.
+\end{equation}
+where $\hat y_i$ is the $i$th fitted value from the original least squares fit, and $h_i$ is the leverage defined previously \eqref{eq:leverage}. This is like the ordinary MSE, except the ith residual is divided by $1 - h_i$ The leverage lies between $1/n$ and $1$, and reflects the amount that an observation influences its own fit. Hence the residuals for high-leverage points are inflated in this formula by exactly the right amount for this equality to hold. LOOCV is a very general method, and can be used with any kind of predictive modeling.
+
+\subsubsection{k-Fold Cross-Validation}
+\textit{k-fold CV} involves randomly dividing the set of observations into k groups, or folds, of approximately equal size.  The first fold is treated as a validation set, and the method is fit on the remaining $k - 1$ folds, then the mean squared error is computed on the held-out fold. This is repeated $k$ times on different groups of observations.
+\begin{equation}
+    CV_{(k)} = \frac{1}{k} \sum_{i=1}^k MSE_i.
+\end{equation}
+LOOCV is a special case of k-fold CV in which $k$ equals $n$. In practice, one typically performs k-fold CV using k = 5 or k = 10 depending on computational costs and the bias-variance trade-off. 
+The actual estimate of the test MSE is may not be of interest, and we're instead interested in only in the location of
+the minimum point in the estimated test MSE curve corresponding to the correct flexibility level.
+
+\subsubsection{Bias-Variance Trade-Off for k-Fold Cross-Validation}
+
+A more important advantage of k-fold CV is that it often gives more accurate estimates of the test error rate than does LOOCV. This has to do with a bias-variance trade-off. Since LOOCV trains on $n-1$ observations, it seems preferable to  k-fold CV from the perspective of bias reduction. However, we must also consider the procedure’s variance. It turns out that LOOCV has higher variance than does k-fold CV with $k<n$.
+
+When we perform LOOCV, we are in effect averaging the
+outputs of $n$ fitted models, each of which is trained on an almost identical set of observations; therefore, these outputs are highly (positively) correlated with each other. In contrast, with k-fold CV we are averaging the outputs of k fitted models that are somewhat less correlated with each other, since the overlap between the training sets in each model is smaller. Since the mean of many highly correlated quantities has higher variance than does the mean of many quantities that are not as highly correlated, the test error estimate resulting from LOOCV tends to have higher variance.
+
+\subsubsection{Cross-Validation on Classification Problems}
+Cross-validation can also be a very useful approach in the classification setting when $Y$ is qualitative. Rather than using MSE to quantify test error, we instead use the number of misclassified observations. The LOOCV error rate becomes,
+\begin{equation}
+    CV_{(n)} = \frac{1}{n}\sum_{i=1}^n Err_i,
+\end{equation}
+where $Err_i = I(y_i \neq \hat y_i)$. The k-fold CV error rate and validation set error rates are defined analogously.
+
+\subsection{ The Bootstrap}
+The \textit{bootstrap} can be used to quantify the uncertainty associated with a given estimator or statistical learning method, some for which a measure of variability is otherwise difficult to obtain and is not automatically output by
+statistical software.
+
+the bootstrap approach allows us to use a computer to emulate the process of obtaining new sample sets. s. Rather than repeatedly obtaining independent data sets from the population, we instead obtain distinct data sets by repeatedly sampling observations from the original data set.
+
+Given a simple data set $Z$ that contains $n$ observations, We randomly select $n$ observations from the data set in order to produce a bootstrap data set, $Z^{*1}$.  The sampling is performed with \textit{replacement}, which means that the same observation can occur more than once. This procedure is repeated $B$ times for some large value of $B$, in order to produce
+$B$ different bootstrap data sets, $Z^{*1}, Z^{*2},\dots,Z^{*B}$ and $B$ corresponding $\alpha$ estimates, $\hat \alpha^{*1},\dots, \hat \alpha^{*B}$. We can compute the standard error of these bootstrap estimates using the formula,
+\begin{equation}
+    \text{SE}_B(\hat \alpha) = \sqrt{\frac{1}{B-1} \sum_{r=1}^{B} \Bigg ( \hat \alpha ^{*r} - \frac{1}{B} \sum_{r'=1}^{B} \hat \alpha^{*r'} \Bigg )^2 } .  
+\end{equation}
+
 
 \newpage
 \section{Linear Model Selection and Regularization}
+Alternative fitting procedures to least squares can yield better prediction accuracy and model interpretability.
+
+Prediction Accuracy -- If $n$, the number of observations, is much larger than $p$, the number of variables, i.e. $n >>p$, then the least squares estimates tend to have low variance and will perform well on test observations. If $n$ is not much larger than $p$, then there can be a lot of variability in the least squares fit, resulting in overfitting and poor predictions on unseen future observations. If $p>n$, then there is no longer a unique least squares coefficient estimate: the variance is infinite so the method cannot be used at all.
+
+Model Interpretability -- Often some or many of the variables used in a multiple regression model are not associated with the response and their inclusion leads to unnecessary complexity in the resulting model. By setting the corresponding coefficient estimates to zero, we can obtain a model that is more easily interpreted. However, least squares is extremely unlikely to yield any coefficient estimates that are exactly zero. There exist alternative approaches for automatically performing \textit{feature selection} or \textit{variable selection}.
+
+\begin{enumerate}
+    \item Subset Selection -- This approach involves identifying a subset of the p predictors that we believe to be related to the response. We then fit a model using least squares on the reduced set of variables.
+    
+    \item Shrinkage --  This approach involves fitting a model involving all p predictors. However, the estimated coefficients are shrunken towards zero relative to the least squares estimates which has the effect of reducing variance. Some coefficients may be estimated to be exactly zero, resulting in variable selection.
+    
+    \item Dimension Reduction -- This approach involves projecting the $p$ predictors into a M-dimensional subspace, where $M<p$. This is achieved by computing $M$ different linear combinations, or projections, of the variables. Then these $M$ projections are used as predictors to fit a linear regression model by least squares.
+    
+\end{enumerate}
+
+\subsection{Subset Selection}
+\subsubsection{Best Subset Selection}
+To perform \textit{best subset selection}, we fit a separate least squares regression for each possible combination of the $p$ predictors. That is, we fit all $p$ models that contain exactly one predictor, then all $\binom{p}{2}= p(p-1)/2$ models that contain exactly two predictors, and so forth up to $\binom{p}{2}$ . We then try to identify the one that is best model out of the $2^p$ possibilities. Here best is defined as having the smallest RSS, or equivalently largest $R^2$.
+
+The algorithm is as follows:
+\begin{enumerate}
+    \item Let $M_0$ denote the null model, which contains no predictors. This model simply predicts the sample mean for each observation.
+    \item For $k = 1, 2,...p$:
+    \begin{enumerate}
+        \item Fit all $\binom{p}{k}$ models that contain exactly $k$ predictors.
+        \item Pick the best  among these $\binom{p}{k}$ models, and call it $M_k$. Here best is defined as having the smallest RSS, or equivalently largest $R^2$.
+    \end{enumerate}
+    \item Select a single best model from among $M_0,\dots,M_p$ using cross-validated prediction error, $C_p$ (AIC), BIC, or adjusted $R^2$.
+\end{enumerate}
+
+As the number of features included in the models increases, the RSS of these $p + 1$ models decreases monotonically, and the $R^2$ increases monotonically which indicates a model with a low training error, whereas we wish to choose a model that has a low test error. So if we use these statistics to select the best model, then we will always end up with a model involving all of the variables. This is why in in Step 3, we use cross-validated prediction error in order to select among the models.
+
+The same ideas used with least squares applies to other types of models, such as logistic regression, where instead of ordering models by RSS in Step 2, we use the \textit{deviance}, a measure that plays the role of RSS for a broader class of models. The deviance is negative two times the maximized log-likelihood; the smaller the deviance, the better the fit. 
+
+Best subset selection becomes computationally infeasible for values of $p$ greater than around 40.
+
+\subsubsection{Stepwise Selection}
+An enormous search space can lead to overfitting and high variance of the coefficient estimates which makes \textit{stepwise} methods, which explore a far more restricted set of models, an attractive alternative to best subset selection.
+
+\subsubsection*{Forward Stepwise Selection}
+Forward stepwise selection considers a much smaller set of models. begins with a model containing no predictors, and then adds predictors to the model, one-at-a-time, until all of the predictors are in the model. In particular, at each step the variable that gives the greatest additional improvement to the fit is added to the model.
+\begin{enumerate}
+    \item Let $M_0$ denote the null model, which contains no predictors.
+    \item For $k = 1, 2,...p$:
+    \begin{enumerate}
+        \item Consider all $p - k$ models that augment the predictors in $M_k$ with one additional predictor.
+        \item  Choose the best among these $p - k$ models, and call it $M_{k+1}$. Here best is defined as having smallest RSS or highest $R^2$.
+    \end{enumerate}
+    \item Select a single best model from among $M_0,\dots,M_p$ using cross-validated prediction error, $C_p$ (AIC), BIC, or adjusted $R^2$.
+\end{enumerate}
+
+This amounts to a total of $1 +\sum_{k=0}^{p-1} (p-k) = 1 + p(p-1)/2$ models, though it is not guaranteed to find the best possible model out of all $2^p$ models containing subsets of the $p$ predictors.  In Step 3, we must identify the best model among a set of models with different numbers of variables, presenting some challenges.
+
+Forward stepwise selection can be applied even in the high-dimensional setting where $n<p$; however, in this case, it is possible to construct submodels $M_0,\dots,M_{n-1}$ only, since each submodel is fit using least squares, which will not yield a unique solution if $p \geq n$.
+
+\subsubsection*{Backward Stepwise Selection}
+Unlike forward stepwise selection, \textit{backward stepwise selection} begins with the full least squares model containing all $p$ predictors, and then iteratively removes the least useful predictor, one-at-a-time.
+\begin{enumerate}
+    \item Let $M_0$ denote the null model, which contains no predictors.
+    \item For $k = p, p-1,...1$:
+    \begin{enumerate}
+        \item Consider all $k$ models that contain all but one of the predictors in $M_k$, for a total of $k-1$ predictors.
+        \item  Choose the best among these $k$ models, and call it $M_{k+1}$. Here best is defined as having smallest RSS or highest $R^2$.
+    \end{enumerate}
+    \item Select a single best model from among $M_0,\dots,M_p$ using cross-validated prediction error, $C_p$ (AIC), BIC, or adjusted $R^2$.
+\end{enumerate}
+
+This produces the same number of models as forward selection, i.e. $1 +\sum_{k=0}^{p-1} (p-k)$, and is also not guaranteed to yield the best model containing a subset of the $p$ predictors.
+
+\subsubsection*{Hybrid Approaches}
+Hybrid versions of forward and backward stepwise selection are available, in which variables are added to the model sequentially, as in forward selection, and after adding each new variable, the method may also remove any variables that no longer provide an improvement in the model fit, as in backward selection.
+
+\subsubsection{Choosing the Optimal Model}
+If we wish to choose a model with a low test error, the training error can be a poor estimate of the test error. Therefore, RSS and $R^2$ are not suitable for selecting the best mode among a collection of models with different numbers of predictors. There are two common approaches to estimate this test error:
+\begin{enumerate}
+    \item We can indirectly estimate test error by making an adjustment to the training error to account for the bias due to overfitting.
+    \item  We can directly estimate the test error, using either a validation set approach or a cross-validation approach.
+\end{enumerate}
+
+\subsubsection*{\texorpdfstring{$C_p$}{Cp}, AIC, BIC, and Adjusted \texorpdfstring{$R^2$}{ R2}}
+Using least squares, we  estimate the regression coefficients such that the training RSS (but not the test RSS) is as small as possible. So the training error will decrease as more variables are included in the model, but the test error may not. We now consider four alternative approaches: $C_p$, \textit{Akaike information criterion} (AIC), \textit{Bayesian information criterion} (BIC), and \textit{adjusted $R^2$}.
+
+For a fitted least squares model containing d predictors, the $C_p$ estimate of test MSE is computed using the equation,
+\begin{equation}
+    C_p = \frac{1}{n}(RSS + 2d\hat\sigma^2)
+\end{equation}
+where $\hat\sigma2$ is an unbiased estimate of the variance of the error $\epsilon$ associated with each response measurement in the standard linear model. Essentially, the $C_p$ statistic adds a penalty of $2d\hat\sigma^2$ to the training RSS in order to adjust for the fact that the training error tends to underestimate the test error, where the penalty increases as the number of predictors in the model increases. When determining which of a set of models is best, we choose the model with the lowest $C_p$ value.
+
+The AIC criterion is defined for a large class of models fit by maximum
+likelihood In the case of the model with Gaussian errors, maximum likelihood and least squares are the same thing. In this case AIC is given by
+
+\begin{equation}
+    AIC = \frac{1}{n\hat\sigma^2} (RSS + 2d\hat\sigma^2)
+\end{equation}
+
+BIC is derived from a Bayesian point of view, but ends up looking similar
+to $C_p$ (and AIC) as well. For the least squares model with $d$ predictors, the
+BIC is, up to irrelevant constants, given by
+\begin{equation}
+    BIC = \frac{1}{n \hat\sigma^2} (RSS  + \log(n)d\hat\sigma^2)
+\end{equation}
+Like $C_p$, we select the model that has the lowest BIC value.  Since $\log n > 2$ for any $n > 7$, the BIC statistic generally places a heavier penalty on models with many variables.
+
+The adjusted $R^2$ statistic is another popular approach for selecting among a set of models that contain different numbers of variables. Recall the usual $R^2$ is defined as $1 - RSS/TSS$, which always decreases as more variables are added to the mode. For a least squares model with $d$ variables, the adjusted $R^2$ statistic is calculated as,
+\begin{equation}
+\text{Adjusted }R^2 = 1 - \frac{RSS/(n-d-1)}{TSS/(n-1)}
+\end{equation}
+Here, a large value of adjusted $R^2$ indicates a model with a small test error. The intuition behind the adjusted R2 is that once all of the correct variables have been included in the model, adding additional noise variables will increase d and increase the denominater while only leading to only a very small decrease in RSS.
+
+\subsubsection*{Validation and Cross-Validation}
+AIC, BIC, and $C_p$  can also be defined for more general types of models. As an alternative to the approaches just discussed, We can compute the validation set error or the cross-validation error for each model under consideration, and then select the model for which the resulting estimated test error is smallest. This has the advantage of providing a direct estimate of the test error, and makes fewer assumptions about the true underlying model. It can also be used in a wider range of model selection tasks where it is hard to pinpoint the model
+degrees of freedom i.e. predictors, or to estimate the error variance $\sigma^2$. 
+
+In the \textit{one-standard-error rule}, we first calculate the standard error of the estimated test MSE for each model size, and then select the smallest model for which the estimated test error is within one standard error of the lowest point on the curve. The rationale here is that if a set of models appear to be more or less equally good, then we might as well choose the simplest model—that is, the model with the smallest number of predictors.
+
+\subsection{Shrinkage Methods}
+As an alternative, we can fit a model containing all $p$ predictors using a technique that constrains or regularizes the coefficient estimates, or equivalently, that shrinks the coefficient estimates towards zero, which can significantly reduce their variance. The two best-known techniques for shrinking the regression coefficients towards zero are ridge regression and the lasso
+
+\subsubsection{Ridge Regression}
+Recall the least squares fitting procedure estimates coefficients $\beta_j$ that minimize the RSS \eqref{eq:RSS}. Similarly, \textit{Ride Regression} estimates the coefficients $B^R$ that minimize,
+\begin{equation}
+    RSS + \lambda + \lambda \sum_{j=1}^{p} \beta_j^2  
+    = \sum_{i=1}^{n} \Bigg( y_i - \beta_0 - \sum_{j=1}^{p} \beta_j x_{ij} \Bigg )^2  
+    + \lambda \sum_{j=1}^{p} \beta_j^2,
+\end{equation}
+where $\lambda \geq 0$ is a \textit{tuning parameter}, to be determined separately. the second term $\lambda \sum \beta_j^2$, called a \textit{shrinkage penalty}, is small when $\beta_1,\dots,\beta_p$ are close to zero, and so it has the effect of shrinking the estimates of $\beta_j$ towards zero. The tuning parameter $\lambda$ serves to control the relative impact of these two terms on the regression coefficient estimates excluding the intercept coefficient $\beta_0$. Ridge regression will produce a different set of coefficient estimates, $\beta^R_\lambda$, for each value of $\lambda$, so selecting a good value tuning parameter via cross validation is critical.
+
+The value $X_j\beta^R_{j,\lambda}$ will not only depend on the value of $\lambda$, but also on the scaling of the $j$th predictor. In fact, the value of $X_j\beta^R_{j,\lambda}$ may even depend on the scaling of the other predictors. Therefore, it is best to apply ridge regression after standardizing the predictors by applying the estimated standard deviation of the $j$th predictor with the formula,
+\begin{equation}
+    \Tilde{x_{ij}} = \frac{x_{ij}}{\sqrt{\frac{1}{n} \sum{i=1}^{n} (x_{ij} - \bar x_j)^2}}.
+\end{equation}
+Ridge regression’s advantage over least squares is rooted in the bias-variance trade-of. As $\lambda$ increases, the flexibility of the ridge regression fit decreases, leading to decreased variance but increased bias. This leads to a decrease in the  mean squared error (MSE), which is a function of the variance plus the squared bias.
+
+When the number of variables $p$ is almost as large as the number of observations $n$, the least squares estimates will be extremely variable. And if $p>n$, then the least squares estimates do not even have a unique solution, whereas ridge regression can still perform well by trading off a small increase in bias for a large decrease in variance.  Hence, ridge regression works best in situations where the least squares estimates have high variance.
+
+Though the penalty can shrink some of the coefficients towards zero, ridge regression will include all $p$ predictors in the final model. This can create a challenge in model interpretation
+
+\subsubsection{The Lasso}
+The \textit{lasso} is a relatively recent alternative to ridge regression that overcomes the disadvantage of uninterpretable models with a large number of predictors. The lasso coefficients, $ \Tilde{\beta^L_\lambda}$, minimize the quantity
+\begin{equation}
+    RSS + \lambda \sum_{j=1}^{p} |\beta_j| 
+    = \sum_{i=1}^{n} \Bigg( y_i - \beta_0 - \sum_{j=1}^{p} \beta_j x_{ij} \Bigg )^2 +  \lambda \sum_{j=1}^{p} |\beta_j| .
+\end{equation}
+The difference between ridge regression and lasso is the penalty $\beta_j^2$ has been replaced with $|\beta_j|$. The lasso uses an $\ell_1$ (pronounced ``ell 1") penalty instead of an $\ell_2$ penalty. The $\ell_1$ norm of a coefficient vector $\beta$ is given by $||\beta||_1 = \sum |\beta_j|$. This has the effect of forcing some of the coefficient estimates to be exactly equal to zero when the tuning parameter $\lambda$ is sufficiently large. Thus, the lasso performs variable selection, resulting in more interpretable and \textit{sparse} models, involving only a subset of the variables.
+
+\subsubsection*{The Variable Selection Property of the Lasso}
+When we perform the lasso we are trying to find the set of coefficient estimates that lead to the smallest RSS, subject to the constraint that there is a budget $s$ for how large 
+$\sum_{j=1}^p |\beta_j |$ can be. Ridge regression more or less shrinks every dimension of the data by the same proportion, whereas the lasso more or less shrinks all coefficients toward zero by a similar amount, and sufficiently small coefficients are shrunken all the way to zero, known as \textit{soft thresholding}.
+
+
+\subsubsection*{Comparing the Lasso and Ridge Regression}
+Neither ridge regression nor the lasso will universally dominate the other. In general, one might expect the lasso to perform better in a setting where a relatively small number of predictors have substantial coefficients, and the remaining predictors have coefficients that are very small or that equal zero. Ridge regression will perform better when the response is a function of many predictors, all with coefficients of roughly equal size. However, the number of predictors that is related to the response is never known a priori for real data sets. A technique such as cross-validation can be used in order to determine which approach is better on a particular data set.
+
+\subsubsection*{Bayesian Interpretation for Ridge Regression and the Lasso}
+A Bayesian viewpoint for regression assumes that the coefficient vector $\beta$ has some prior distribution, say $p(\beta)$, where $\beta = (\beta_0, \dots, \beta_p )^T$. The likelihood of the data is $f(Y |X, \beta)$ where $X= (X_1, \dots, X_p)^T$.  Multiplying the prior distribution by the likelihood gives us the \textit{posterior distribution},
+\begin{equation}
+    p(\beta|X, Y ) \propto f(Y |X, \beta) p(\beta|X) = f(Y |X, \beta)p(\beta),
+\end{equation}
+which follows from Bayes’ theorem. We assume the usual linear model, and suppose that the errors are independent and drawn from a normal distribution. We also assume $p(\beta) = \prod^{p}+{j=1} g(\beta_j)$, for some density function $g$. Then,  ridge regression and the lasso follow from two special cases of $g$:
+\begin{enumerate}
+    \item If $g$ is a Gaussian distribution with mean zero and standard deviation a function of $\lambda$, then it follows that the posterior mode for $\beta$, i.e. the most likely value for $\beta$, given the data, is given by the ridge regression solution.
+    
+    \item If $g$ is a double-exponential (Laplace) distribution with mean zero and scale parameter a function of $\lambda$, then it follows that the posterior mode for $\beta$ is the lasso solution.
+\end{enumerate}
+
+\subsubsection{Selecting the Tuning Parameter}
+Implementing ridge regression and the lasso requires a method for selecting a value for the tuning parameter $\lambda$.  Cross-validation provides a simple way to tackle this problem. We choose a grid of $\lambda$ values, and compute the cross-validation error for each value of $\lambda$. We then select the tuning parameter value for which the cross-validation error is smallest. Finally, the model is re-fit using all of the available observations and the selected value of the tuning parameter.
+
+
+\subsection{Dimension Reduction Methods}
+\textit{Dimension reduction methods} transform the predictors and then fit a least squares model using the transformed variables. Let $Z_1, Z_2,\dots, Z_M$ represent $M<p$ linear combinations of our original $p$ predictors. That is,
+\begin{equation}
+    Z_m = \sum_{j=0}^p \phi_{jm}X_j
+\end{equation}
+for some constants $\phi_{1m}, \phi_{2m},\dots,\phi_{pm}, m = 1,...,M$. We can then fit the linear regression model,
+\begin{equation}
+    y_i = \theta_0 + \sum_{m=1}^M \theta_m z_{im} + \epsilon_i, \ \ i = 1,\dots, n
+\end{equation}
+using least squares, which can possibly outperform the standard linear model with wisely chosen coefficients. The term dimension reduction comes from the fact that this approach reduces the problem of estimating the $p+1$ to $M+1$ coefficients, where $M < p$. The model can be thought of as a special case of the linear model, with coeffecients $\theta_m$ being related by $\beta_j = \sum_{m=1}^M \theta_m \phi_{jm}$. Methods for obtaining the tranformed predictors are examined next.
+
+\subsubsection{Principal Component Regression}
+\textit{Principal components analysis} (PCA) is a popular approach for deriving a low-dimensional set of features from a large set of variables and is examined in more detail later. PCA is a technique for reducing the dimension of a $n \times n$ data matrix $X$.
+
+The first principal component, $Z_1$, moves along the  data in the direction which the observations vary the most, where directions corresponds to linear combinations. Alternatively, we can think of the first principal component as a vector that defines the line that is as close as possible to the data. The first principal component score measures this distance by selecting linear combinations of $X_i, X_j$ predictors with $\sigma_{11}^2 + \sigma_{21}^2 = 1$ that yield the highest variance. With two-dimensional data and two predictors $X_1, X_2$, this looks like,
+\begin{equation}
+    Z_1 = Var(\sigma_{11} \times (X_1 - \bar X )  + \sigma_{21} \times (X_2  - \bar X)).
+\end{equation}
+The second principal component $Z^2$ is a linear combination of the variables that are uncorrelated with $Z^1$, and has largest variance subject to this constraint, i.e. the direction must be perpendicular, or perpendicular orthogonal, to the first principal component direction.
+\begin{equation}
+    Z_2 = Var(\sigma_{21} \times (X_1 - \bar X )  + \sigma_{11} \times (X_2  - \bar X)) 
+\end{equation}
+With more predictors, additional components could be constructed.  They would successively maximize variance, subject to the constraint of being uncorrelated with the preceding components.
+
+\subsubsection*{The Principal Components Regression Approach}
+
+The \textit{principal components regression} (PCR) approach involves constructing the first $M$ principal components, $Z_1,\dots,Z_M$, and then using these components as the predictors in a linear regression model that is fit using least squares.  Often a small number of principal components suffice to explain most of the variability in the data, as well as the relationship with the response, i.e. the directions in which $X_1,...,X_p$ show the most variation are the directions that are associated with $Y$. If this assumption holds, our PCR model will lead to better results since using less coefficients will mitigate overfitting. PCR will tend to do well in cases when the first few principal components are sufficient to capture most of the variation in the predictors as well as the relationship with the response.
+
+Yet PCR is not considered a feature selection method, since the $M$ principal components used in the regression is a linear combination of all $p$ of the original features. In this sense, PCR is more closely related to ridge regression than to the lasso, where ridge regression can be thought of as a continuous version of PCR. It's recommended to standardize each predictor prior to generating the principal components with PCR because high-variance variables will tend to play a larger role in the principal components obtained
+
+The directions or linear combinations are identified in an unsupervised way, since the response $Y$ is not used to help determine or supervise the indentification of the principal component directions. Consequently, PCR suffers from the drawback that there is no guarantee that the
+directions that best explain the predictors will also be the best directions to use for predicting the response.
+
+\subsubsection{Partial Least Squares}
+
+\textit{Partial least squares} (PLS) is a supervised alternative to PCR. That is, PLS is also a dimension reduction method which identifies a set of features that are linear combinations of the original features and then fits a linear model via least squares. But unlike PCR, PLS uses a supervised method to identifiy features that not only approximate the old features well, but also that are related to the response by attempting to find directions that help explain both the response and the predictors.
+
+After standardizing the p predictors,  PLS computes the first direction $Z_1$ by setting each $\phi_{j1}$ in the dimension reduction features equal to the coefficient from the simple linear regression of $Y$ onto $X_j$. One can show that this coefficient is proportional to the correlation between $Y$ and $X_j$. Hence, in computing $Z_1 = \sum_{j=1}^{p} \phi_{j1}X_j$, PLS places the highest weight on the variables that are most strongly related to the response.
+
+To identify the second PLS direction we first adjust each of the variables for $Z_1$, by regressing each variable on $Z_1$ and taking residuals. These residuals can be interpreted as the remaining information that has not been explained by the first PLS direction. We then compute $Z_2$ using this orthogonalized data in exactly the same fashion as $Z_1$ was computed based on the original data. This iterative approach can be repeated $M$ times to identify multiple PLS components $Z_1,\dots,Z_M$. Finally, at the end of this procedure, we use least squares to fit a linear model to predict $Y$ using $Z_1,\dots,Z_M$ in exactly the same fashion as for PCR. As with PCR, the number $M$ of partial least squares directions used in
+PLS is a tuning parameter that is typically chosen by cross-validation.
+
+In practice PLS often performs no better than ridge regression or PCR. While the supervised dimension reduction of PLS can reduce bias, it also has the potential to increase variance.
+
+\subsection{Considerations in High Dimensions}
+\subsubsection{High-Dimensional Data}
+
+A \textit{low-dimensional} setting is one in which $n$, the number of observations, is much greater than $p$, the number of features, i.e. $n>>p$.
+
+Data sets containing more features than observations are often referred to as \textit{high-dimensional}. Classical approaches such as least squares linear regression are not appropriate in this setting. Challenges like the bias-variance trade-off and the danger of overfitting are still relevant and can become particularly important in this setting.
+
+
+\subsubsection{What Goes Wrong in High Dimensions?}
+
+When the number of features $p$ is as large as, or larger than, the number of observations n, least squares should not be performed. Regardless of whether or not there truly is a relationship between the features and the response, least squares will yield a set of coefficient estimates that result in a perfect fit to the data, such that the residuals are zero.  When $p>n$ or $p \approx n$, a simple least squares regression line is too flexible and hence overfits the data.
+
+Care must be taken when analyzing data sets with a large number of variables, accurate evaluations of models performance must be done on an independent test set, otherwise the training set MSE can create false confidence.
+
+Additionally, techniques visited earlier, like $C_p$, AIC, and BIC, which were useful for adjusting the training set RSS or $R^2$ in order to account for the number of variables used to fit a least squares model are also not appropriate in the high-dimensional setting. This is because estimating $\hat\sigma^2$ can be problematic and one can easily obtain a model with an adjusted $R^2$ value of 1.
+
+\subsubsection{Regression in High Dimensions}
+
+We can avoid overfitting by using a less flexible fitting approach
+than least squares. Forward stepwise selection, ridge
+regression, the lasso, and principal components regression, are particularly useful for performing regression in the high-dimensional setting
+
+We find that (1) regularization or shrinkage plays a key role in high-dimensional problems, (2) appropriate tuning parameter selection is crucial for good predictive performance, and (3) the test error tends to increase as the dimensionality of the problem
+(i.e. the number of features or predictors) increases, unless the additional features are truly associated with the response) this is also known as the curse of dimensionality. noise features increase the dimensionality of the problem, exacerbating the risk of overfitting.  Even if excess features are relevant, the variance incurred in fitting their coefficients may outweigh the reduction in bias that they bring.
+
+
+\subsubsection{Interpreting Results in High Dimensions}
+In the high-dimensional setting, the multicollinearity problem is extreme: any variable in the model can be written as a linear combination of all of the other variables in the model. This
+means that we can never know exactly which variables truly are predictive of the outcome, and we can never identify the best coefficients for use in the regression and can only hope to assign appropriate regression coefficients to correlated variables.
+
+As mentioned before, one should never use sum of squared errors, p-values, $R^2$ statistics  or other traditional measures of model fit on the training data as evidence of a good model fit in the high-dimensional setting. It is important to instead report results on an independent test set, or cross-validation errors. For instance, the MSE or $R^2$ on an independent test set is a valid measure of model fit, but the MSE on the training set is not.
+
+
 
 \newpage
 \section{Moving Beyond Linearity}
@@ -790,7 +1127,6 @@ Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani. An Introduction 
 http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR\%20Seventh\%20Printing.pdf
 
 % https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/
-
 
 \bibitem[]{}
 https://arxiv.org/pdf/1010.3162.pdf
