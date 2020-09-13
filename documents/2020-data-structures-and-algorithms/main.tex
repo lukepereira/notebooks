@@ -56,6 +56,16 @@
 %%%%%% End code snippet config %%%%%% 
 
 
+% Book headers
+% \usepackage{fancyhdr}
+
+% \pagestyle{fancy}
+% \fancyhf{}
+% \fancyhead[L]{\rightmark}
+% \fancyhead[R]{\thepage}
+% \renewcommand{\headrulewidth}{0pt}
+
+
 \newcommand{\comment}[1]{}
 \newcommand{\bigO}{\mathcal{O}}
 \title{\vspace{-3cm} Data Structures and Algorithms}
@@ -91,7 +101,7 @@ TODO:
     \begin{itemize}
         \item[] $\bigO(1)$ - constant time
         \item[] $\bigO(\log(n))$ - logarithmic time
-        \item[] $\bigO((\log(n))c)$ - polylogarithmic time
+        \item[] $\bigO((\log(n))^c)$ - polylogarithmic time
         \item[] $\bigO(n)$ - linear time
         \item[] $\bigO(n^2)$ - quadratic time
         \item[] $\bigO(n^c)$ - polynomial time
@@ -196,7 +206,7 @@ TODO:
     A \textbf{bit array} (a.k.a bit map) is a data structure which uses an array of 0's and 1's to compactly store information. An index $j$ with a value of 1 indicates the presence of an integer corresponding to $j \in \mathbb Z$. When given a constraint on possible values that need to be stored and analyzed, we can initialize a bit array with a size of the max possible value and record frequencies directly in their corresponding index, eliminating the need to re-order an unsorted array or maintain a sorted order on every insertion. We can extend the bit array to store arbitrary integers, i.e. an int of value 3 in index 10 may indicate we've encountered 3 values of 10. 
     
     
-    A \textbf{dynamic array} is a data structure that allocates all elements contiguously in memory and keeps a count of the current number of elements. If the space reserved for the dynamic array is exceeded, it is reallocated and (possibly) copied, which is an expensive operation. Though its amortized insertion cost is equal to a static array, $\Theta(1)$. Python's  ``List'' data structure is a dynamic array.
+    A \textbf{dynamic array} is a data structure that allocates all elements contiguously in memory and keeps a count of the current number of elements. If the space reserved for the dynamic array is exceeded, it is reallocated and (possibly) copied, which is an expensive operation. Though its amortized insertion cost is equal to a static array, $\Theta(1)$. Python's  ``List'' data structure is a dynamic array which uses table doubling to support its constant amortized operations. It is possible to implement real-time table doubling to support constant worst-caseRa insertions by incrementally building up a larger array by some to quickly switch to when the original array is full.
     
     \vspace{8pt} \emph{Time Complexity of List operations}
     \begin{table}[H]
@@ -255,7 +265,7 @@ class ListNode:
         \item \textbf{peek()}: Return the top of the stack.
         \item \textbf{isEmpty()}: Return true if and only if the stack is empty.
     \end{itemize}
-    Unlike an array, a stack does not offer constant-time access to the $i$th item. However, it does allow constant time adds and removes as it doesn't require shifting elements around. One case where stacks are often useful is in certain recursive algorithms where we need to push temporary data onto a stack as we recurse and then remove them as we backtrack (for example, because the recursive check failed). A stack offers an intuitive way to do this. A stack can also be used to implement a recursive algorithm iteratively which is what's otherwise done in a function's call stack.
+    Unlike an array, a stack does not offer constant-time access to the $i$th item. However, it does allow constant time adds and removes as it doesn't require shifting elements around. One case where stacks are often useful is in certain recursive algorithms where we need to push temporary data onto a stack as we recurse and then remove them as we backtrack (for example, because the recursive check failed). A stack offers an intuitive way to do this. A stack can also be used to implement a recursive algorithm iteratively which is what's otherwise done in a functions call stack.
     
     \subsubsection{Queues}
     A queue is an ADT container that implements FIFO (first-in first-out) ordering, i.e. items are removed in the same order that they are added. It supports the following operations: 
@@ -274,16 +284,6 @@ class ListNode:
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
-# Using a list 
-q = []
-for item in data:
-    q.append(item) 
-
-while len(q):
-    next_item = queue.pop(0)
-    print(next_item)
-
-# Using deque module 
 from collections import deque 
 
 q = deque() 
@@ -291,7 +291,7 @@ for item in data:
     q.append(item) 
  
 while len(q):
-    next_item = q.popleft() 
+    next_item = q.popleft() # array.pop(0)
     print(next_item)
 
 \end{lstlisting}
@@ -318,7 +318,9 @@ while len(q):
 
     
     \subsubsection{Priority Queue}
-    A priority queue is an ADT container that retrieves items not by the insertion time (as in a stack or queue), nor by a key match (as in a dictionary), but instead retrieves items with the highest priority value. Priority queues provide more flexibility than simple sorting because they allow new elements to enter a system at arbitrary intervals. It is much more cost-effective to insert a new job into a priority queue than to re-sort everything on each such arrival. The basic priority queue supports three primary operations:
+    A priority queue is an ADT container that retrieves items not by the insertion time (as in a stack or queue), nor by a key match (as in a dictionary), but instead retrieves items with the highest priority value. Priority queues provide more flexibility than simple sorting because they allow new elements to enter a system at arbitrary intervals. It is much more cost-effective to insert a new job into a priority queue than to re-sort everything on each arrival. Max-priority queues order values in descending order with higher priority first and are typically implemented with a max-heap. Min-priority queues sort values in ascending order with lower priority values first and are typically implemented with a min-heap.
+    
+    The basic priority queue supports three primary operations:
     \begin{itemize}
         \item \textbf{insert(Q, x)}: Given an item x with key k, insert it into the priority queue Q.
         \item \textbf{findMinimum(Q)} or \textbf{findMaximum(Q)}: Return a pointer to the item whose key value is smaller (larger) than any other key in the priority queue Q.
@@ -327,71 +329,80 @@ while len(q):
 
     There are several choices in which underlying data structures can be used for a basic priority queue implementation:
     \begin{enumerate}
+        \item Binary heaps are the right answer when the upper bound on the number of items in your priority queue is known, since you must specify array size at creation time. Though this constraint can be mitigated by using dynamic arrays
+    
+        \item Binary search trees make effective priority queues, since the smallest element is always the leftmost leaf, while the largest element is always the rightmost leaf. The min (max) is found by simply tracing down left (right) pointers until the next pointer is nil. Binary tree heaps prove most appropriate when you need other dictionary operations, or if you have an unbounded key range and do not know the maximum priority queue size in advance.
+        
         \item Sorted arrays are very efficient in both identifying the smallest element and deleting it by decrementing the top index. However, maintaining the total order makes inserting new elements slow. Sorted arrays are only suitable when there will be few insertions into the priority queue.
         
-        \item Binary heaps are the right answer when the upper bound on the number of items in your priority queue is known, since you must specify array size at creation time. Though this constraint can be mitigated by using dynamic arrays
-        
         \item Bounded height priority queue
-        
-        \item Binary search trees make effective priority queues, since the smallest element is always the leftmost leaf, while the largest element is always the rightmost leaf. The min (max) is found by simply tracing down left (right) pointers until the next pointer is nil. Binary tree heaps prove most appropriate when you need other dictionary operations, or if you have an unbounded key range and do not know the maximum priority queue size in advance.
         
         \item Fibonacci and pairing heaps. These complicated priority queues are designed to speed up decrease-key operations, where the priority of an item already in the priority queue is reduced. This arises, for example, in shortest path computations when we discover a shorter route to a vertex v than previously established.
     \end{enumerate}
     
-    Note: The Queue.PriorityQueue module is a partial wrapper around the heapq module.
+    Note: The Queue.PriorityQueue module is a partial wrapper around the heapq module. Max priority queues can be created by inverting priority values before insertion. See binary heap section for more details about heapq.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
-# The Queue module
-from Queue import PriorityQueue
+# The queue module for a min-priority queue
+from queue import PriorityQueue
 
-q = PriorityQueue()
+pq = PriorityQueue()
 for item in data:
-    q.put((item.priority, item))
+    pq.put((item.priority, item))
 
-while not q.empty():
-    next_item = q.get()
+while not pq.empty():
+    next_item = pq.get()
     print(next_item)
-
-# The heapq module
+    
+# The heapq module for a min-priority queue
 import heapq
-
-q = []
-for item in data:
-    heapq.heappush(q, (item.priority, item))
-
-while q:
-    next_item = heapq.heappop(q)
+pq = []
+for entry_count, item in enumerate(data):
+    heapq.heappush(pq, (item.priority, entry_count, item))
+    
+while pq:
+    next_item = heapq.heappop(pq)
     print(next_item)
 \end{lstlisting}
 
     \subsubsection{Indexed Priority Queue}
     An Indexed Priority Queue gives us the ability to change the priority of an element without having to go through all the elements. It can be thought of as a combination of a hash table, used for quick lookups of values, and a priority queue, to maintain a heap ordering.
 
-    \subsubsection{Monotonic Queue and Stack (Deque)}
+    \subsubsection{Monotonic Stack and Queue}
     This structure maintains an ordering so that its elements are either strictly increasing or strictly decreasing. It differs from a heap in that instead of re-ordering elements as they're processed, it will discard previous numbers that do not follow the monotonic condition before appending a new number. 
     
-    It can be useful for finding the index of next larger or smaller number given an unordered list of numbers. In some application we might further need to remove element from the front. Thus a double-ended queue (deque from collections) can be used. In an increasing queue, we find the first element smaller than current, either in the left (from pushing in) or in the right (from popping out). In a decreasing queue we find the first element larger than current, either in the left (from pushing in) or in the right (from popping out).
+    A monotonic decreasing stack can be useful for finding the index distance of the next smaller number given an unordered list of numbers. Instead of searching for the next smallest number for every number, resulting in an $\bigO(n^2)$ runtime, we only need to check the top of the stack of indicies of previously visited numbers, giving us a $\bigO(n)$ runtime. 
     
-    A monotonic queue can also useful for implementing a variant of the sliding window. See section for example.
+    In some application we might also need to remove elements from the front and back, thus a double-ended queue (deque from collections module) should be used. In an increasing queue, we find the first element smaller than current, either in the left (from pushing in) or in the right (from popping out). In a decreasing queue we find the first element larger than current, either in the left (from pushing in) or in the right (from popping out). A monotonic queue can also useful for implementing a variant of the sliding window. See sliding window section for an example.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
+def monotonic_stack(A):
+    smaller_to_right = [-1] * len(A)
+    stack = []
+    for i, v in enumerate(A):
+        while stack and A[stack[-1]] < v:
+            cur = stack.pop()
+            smaller_to_right[cur] = i - cur
+        stack.append(i)
+    return smaller_to_right
+
 import collections
-def increasing_queue(A):
-    queue = collections.deque()
-    smaller_to_left, smaller_to_right = [-1]*len(A), [-1]*len(A)
-    for i,v in enumerate(A):
-        while queue and A[queue[-1]] >= v: 
-            smaller_to_right[queue.pop()] = v 
-        if queue:  
-            smaller_to_left[i] = A[queue[-1]]
-        queue.append(i)
+def monotonic_deque(A):
+    dq = collections.deque()
+    smaller_to_left, smaller_to_right = [-1] * len(A), [-1] * len(A)
+    for i, v in enumerate(A):
+        while dq and A[dq[-1]] >= v: 
+            smaller_to_right[dq.pop()] = v 
+        if dq:  
+            smaller_to_left[i] = A[dq[-1]]
+        dq.append(i)
     return smaller_to_left, smaller_to_right
 \end{lstlisting}
 
     \subsection{Hash Tables}
-    A hash table is a data structure that maps keys to values for highly efficient lookup. There are a number of ways of implementing this. First, we will describe a simple but common implementation known as \textbf{separate chaining}. In this implementation, we use an array of linked lists and a hash code function. To insert a key (which might be a string or essentially any other data type) and value, we do the following: 
+    A hash table is a data structure that maps keys to values for highly efficient lookup. There are a number of ways of implementing this, but a simple but common implementation is known as \textbf{separate chaining}. In this implementation, we use an array of linked lists and a hash code function. To insert a key (which might be a string or essentially any other data type) and value, we do the following: 
     \begin{enumerate}
         \item 
         First, compute the key's hash code, which will usually be an \textit{int} or \textit{long}. Note that two different keys could have the same hash code, as there may be an infinite number of keys and a finite number of hash codes.
@@ -429,7 +440,7 @@ def increasing_queue(A):
         \item \textbf{predecessor(D, k)} or \textbf{successor(D, k)} – Retrieve the item from $D$ whose key is immediately before (or after) $k$ in sorted order. These enable us to iterate through the elements of the data structure.
     \end{itemize}
     
-   \vspace{8pt} \emph{Time Complexity of dict operations}
+   \vspace{8pt} \emph{Time Complexity of dict Operations}
     \begin{table}[H]
         % \centering
         \begin{tabular}{|l|l|l|}
@@ -441,7 +452,7 @@ def increasing_queue(A):
             Get Item & $\bigO(1)$ & $\bigO(n)$ \\
             Set Item & $\bigO(1)$ & $\bigO(n)$ \\
             Delete Item & $\bigO(1)$ & $\bigO(n)$ \\
-            Iteration[2] & $\bigO(n)$ & $\bigO(n)$ \\
+            Iteration & $\bigO(n)$ & $\bigO(n)$ \\
             \hline
         \end{tabular}
     \end{table}
@@ -484,17 +495,17 @@ def increasing_queue(A):
         \end{tabular}
     \end{table}
 
-
-    
     \subsection{Trees}
     A tree is an ADT composed of nodes such that there is a root node with zero or more child nodes where each child node also has zero or more child nodes and can be recursively defined as a root node of a sub-tree. Since there are no edges between sibling nodes, a tree cannot contain cycles. Furthermore, nodes can be given a particular order, can have any data type as values, and they may or may not have links back to their parent nodes.
     
     \subsubsection{Binary Trees}
-    A binary tree is a tree in which each node has up to two children. A \textbf{binary search tree} is a binary tree in which every node $n$ follows a specific ordering property: all left descendants $\leq n <$ all right descendants. A \textbf{complete} binary tree is a binary tree in which every level of the tree is filled, except for perhaps the last level and all of the nodes in the bottom level are as far to the left as possible. A \textbf{full} binary tree is a binary tree in which every node has either zero or two children. A \textbf{perfect} binary tree is one that is both full and complete.
+    A binary tree is a tree in which each node has up to two children. 
     
-    A complete tree with $n$ nodes has $\lceil \log n \rceil$ height. There is no ambiguity about where the ``empty'' spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an zero-indexed array. For a node corresponding to index $i$, its left child is stored at index $2i + 1$, and its right child is stored at index $2i + 2$. Going backwards, we can also deduce that the parent of index $i$ (when $i > 1$) is stored at index $\lceil (i-1)/2 \rceil$.
-
-    Note, A full binary tree with $n$ leaves has $n - 1$ internal nodes. Then the number of unique rooted full binary tree with $n + 1$ leaf nodes, equivalently $n$ internal node, can be counted via the $nth$ Catalan number, $C_n$. View section on Catalan numbers for the formula and implementation code.
+    A \textbf{binary search tree} is a binary tree in which every node $n$ follows a specific ordering property: all left descendants $\leq n <$ all right descendants. An inorder traversal (Left-Node-Right) of a binary search tree will always result in a monotonically increasingly ordered sequence.
+    
+    A \textbf{complete} binary tree is a binary tree in which every level of the tree is filled, except for perhaps the last level and all of the nodes in the bottom level are as far to the left as possible. A complete tree with $n$ nodes has $\lceil \log n \rceil$ height. There is no ambiguity about where the ``empty'' spots in a complete tree are so we do not need to use up space to store references between nodes, as we do in a standard binary tree implementation. This means that we can store its nodes inside an zero-indexed array. For a node corresponding to index $i$, its left child is stored at index $2i + 1$, and its right child is stored at index $2i + 2$. Going backwards, we can also deduce that the parent of index $i$ (when $i > 0$) is stored at index $\lfloor (i-1)/2 \rfloor$.
+    
+    A \textbf{full} binary tree is a binary tree in which every node has either zero or two children. A \textbf{perfect} binary tree is one that is both full and complete. A full binary tree with $n$ leaves has $n - 1$ internal nodes. Then the number of unique rooted full binary tree with $n + 1$ leaf nodes, equivalently $n$ internal node, can be counted using the $nth$ Catalan number, $C_n$. View section on Catalan numbers for more details.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -523,41 +534,42 @@ class TreeNode:
     
     A heap will be better at findMin/findMax ($\bigO(1)$), while a BST is performant at all finds ($\bigO(\log n)$). A heap is especially good at basic ordering and keeping track of max and mins.
     
-    Note, heapq creates a min-heap by default. To create a max-heap, you will need to invert value before storing and after retrieving. Alternatively, you can define a class to wrap the module and override and invert the comparison method.
+    Note, heapq creates a min-heap by default. To create a max-heap, you will need to invert values before storing and after retrieving them. Alternatively, you can define a class to wrap the module and override and invert the comparison method.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 # Using heapq module
 import heapq
 
-items = [1,2,3,4,5,6,7,8,9,10]    
+items = [1, 6, 4, 2, 5, 7, 3, 9, 8, 10]    
 
-## Min heap
-min_heap = heapq.heapify(items)            
-min_item = heapq.heappop(min_heap)      
+## Min-heap
+min_heap = []
+for item in items:
+    heapq.heappush(min_heap, item)
 
-class MinHeap(object):
-  def __init__(self): self.h = []
-  def heappush(self, x): heapq.heappush(self.h, x)
-  def heappop(self): return heapq.heappop(self.h)
-  def __getitem__(self, i): return self.h[i]
-  def __len__(self): return len(self.h)
+in_place = items.copy()
+heapq.heapify(in_place)
+heapq.nsmallest(3, in_place)
+while in_place:
+    min_item = heapq.heappop(in_place) 
+    print(min_item)
 
-## Max heap
-max_heap = heapq._heapify_max(items)       
-max_item = heapq._heappop_max(max_heap) 
+## Max-heap
+max_heap = []
+for item in items:
+    heapq.heappush(max_heap, -item)
 
-class MaxHeapObj(object):
-  def __init__(self, val): self.val = val
-  def __lt__(self, other): 
-    """Invert comparison logic"""
-    return self.val > other.val
-  
-class MaxHeap(MinHeap):
-  def heappush(self, x): heapq.heappush(self.h, MaxHeapObj(x))
-  def heappop(self): return heapq.heappop(self.h).val
-  def __getitem__(self, i): return self.h[i].val
-
+while max_heap:
+    max_item = -heapq.heappop(max_heap) 
+    print(max_item)
+    
+in_place = items.copy()
+heapq._heapify_max(in_place)
+heapq.nlargest(3, in_place)
+while in_place:
+    max_item = heapq._heappop_max(in_place)
+    print(max_item)
 
 # Max heap full implementation
 class MaxHeap:
@@ -610,8 +622,26 @@ class MaxHeap:
         if largest != index:
             self.__swap(index, largest)
             self.__bubbleDown(largest)
-
 \end{lstlisting}
+
+\vspace{8pt} \emph{Time Complexity of heapq operations}
+    \begin{table}[H]
+        % \centering
+        \begin{tabular}{|l|l|l|}
+            \hline
+            \textbf{Operation} & \textbf{Average Case} & \textbf{Amortized Worst Case} \\
+            \hline
+            heapify & $\bigO(n)$ & $\bigO(n)$ \\
+            heappush & $\bigO(1)$ & $O(\log n)$ \\
+            heappop & $\bigO(\log n)$ & $O(\log n)$ \\
+            peek & $\bigO(1)$ & $\bigO(1)$\\
+            heappushpop & TBD & TBD \\
+            heapreplace & TBD & TBD \\
+            nlargest & TBD & TBD \\
+            nsmallest & TBD & TBD\\
+            \hline
+        \end{tabular}
+    \end{table}
 
 
     \subsubsection{Tries (Prefix Trees)}
@@ -621,47 +651,50 @@ class MaxHeap:
     
     Very commonly, a trie is used to store the entire English language for quick prefix lookups. A trie can check if a string is a valid prefix in $\bigO(K)$ time, where $K$ is the length of the string. Many problems involving lists of valid words leverage a trie as an optimization. 
     
-    To get matched suggestions, it helps to store the word along with the end indicator. We can then search the trie up to the prefix end and perform a recursive DFS to all word end points while appending the results to an array of suggestions. To handle misspellings, a function considers four types of edits: deletion (remove one letter), a transposition (swap two adjacent letters), a replacement (change one letter to another) or an insertion (add a letter). The edit function returns a list of words within a max $N$ edits from the specified word that exist in a dictionary of known words. We can then find suggestions with DFS as before.
+    To get autocomplete suggestions, it helps to store the cumulative word along with the end indicator. We can then search the trie up to the prefix end and perform a recursive DFS to find all word end points while appending the results to an array of suggestions. To handle misspellings, a function considers four types of edits: a deletion (remove one letter), a transposition (swap two adjacent letters), a replacement (change one letter to another) or an insertion (add a letter). The edit function returns a list of words within a max $N$ edits from the specified word that exist in a dictionary of known words. We can then find suggestions with DFS as before.
     
     Note, most methods in the trie follow a similar traversal pattern, create a pointer to the root of the tree, iterate over characters of a given word, check if the character is not in the current pointers children and then move the pointer forward to the corresponding child.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
+# Trie node as lambda function
 import collections
+TrieNode = lambda: collections.defaultdict(Trie)
 
+# Trie node as class with end of word attribute
 class TrieNode:
     def __init__(self):
         self.word = False
         self.children = {}
-
+        
+# Trie dict with end of word indicated by special character
 class Trie:
     def __init__(self):
-        self.root = TrieNode()
+        self.root = {}
 
     def insert(self, word):
         node = self.root
         for char in word:
-            if char not in node.children:
-                node.children[char] = TrieNode()
-            node = node.children[char]
-        node.word = True
+            if char not in node:
+                node[char] = {}
+            node = node[char]
+        node['$'] = word
 
     def search(self, word):
         node = self.root
         for char in word:
-            if char not in node.children:
+            if char not in node:
                 return False
-            node = node.children[char]
-        return node.word
+            node = node[char]
+        return '$' in node
 
     def startsWith(self, prefix):
         node = self.root
         for char in prefix:
-            if char not in node.children:
+            if char not in node:
                 return False
-            node = node.children[char]
+            node = node[char]
         return True
-    
 \end{lstlisting}
 
     \subsubsection{Suffix Trees/Arrays}
@@ -798,26 +831,30 @@ def isSubtree(s, t):
         \item Every path from a given node to any of its descendant NIL nodes goes through the same number of black nodes.
     \end{enumerate}
     
-    \subsubsection{B-Trees}
-    A B-tree is a self-balancing tree data structure that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time ($\bigO(\log n)$). The B-tree generalizes the binary search tree, allowing for nodes with more than two children and multiple keys. It is commonly used in databases and file systems.
+    \subsubsection{2-3 trees and B-Trees}
+    A B-tree is a self-balancing tree data structure that maintains sorted data and allows searches, sequential access, insertions, and deletions in logarithmic time ($\bigO(\log n)$). The B-tree generalizes the binary search tree, allowing for nodes with more than two children and multiple keys. It is commonly used in databases and file systems. 
     
-    The idea behind a B-tree is to collapse several levels of a binary search tree into a single large node, so that we can make the equivalent of several search steps before another disk access is needed. With B-trees we can access enormous numbers of keys using only a few disk accesses. To get the full benefit from using a B-tree, it is important to understand how the secondary storage device and virtual memory interact, through constants such as page size and virtual/real address space. Cache-oblivious algorithms can mitigate such concerns.
+    The idea behind a B-tree is to collapse several levels of a binary search tree into a single large node containing multiple keys, so that we can make the equivalent of several search steps before another disk access is needed. This is because we utilize whole blocks of disk memory per level of B-tree when the CPU performs low-bandwidth reads from disk memory. This is in contrast to the CPU performing high-bandwidth reads of word from cache memory.
     
-    A B-tree of order $m$ is a tree which satisfies the following properties:
-    \begin{enumerate}
-        \item The root has at least two children if it is not a leaf node.
-        \item Every non-leaf node (except the root) has at least $ \lceil \frac{m}{2} \rceil$ child nodes.
-        \item All leaves appear in the same level and carry no information.
-        \item Every node has at most $m$ children.
-        \item A non-leaf node with $k$ children contains $k-1$ keys.
-    \end{enumerate}
+    The \textbf{branching factor B} indicates the number of keys and children a node may have.
+    \begin{align*}
+        B \leq \text{number of children} < 2B \\
+        B - 1 \leq \text{number of keys} < 2B - 1
+    \end{align*}
     
+    % A B-tree of order $m$ is a tree which satisfies the following properties:
+    % \begin{enumerate}
+    %     \item The root has at least two children if it is not a leaf node.
+    %     \item Every non-leaf node (except the root) has at least $ \lceil \frac{m}{2} \rceil$ child nodes.
+    %     \item All leaves appear in the same level and carry no information.
+    %     \item Every node has at most $m$ children.
+    %     \item A non-leaf node with $k$ children contains $k-1$ keys.
+    % \end{enumerate}
+    A \textbf{2-3 tree} is a B-tree with branching factor of 2. This means it has at most 2 keys and at most 3 children. 
     
     B-trees are constructed in a bottom-up way: values are inserted into a node based on binary search. If the node reaches its capacity based on the degree of the B-tree, then it is split in half with left or right bias and an appropriate root (median value) and children are selected and appointed to existing or new nodes.
     
-    For implementing multi-level indexing in a database, every node will have a key to be indexed by, a pointer to its child nodes in their memory blocks as well as a pointer to a record on the database (value).
-    
-    In a \textbf{B+ tree}, only leaf nodes contain a record pointer with leaf nodes also containing a copy of corresponding parent keys.
+    For implementing multi-level indexing in a database, every node will have a key to be indexed by a pointer to its child nodes in their memory blocks as well as a pointer to a record on the database (value). In a \textbf{B+ tree}, only leaf nodes contain a record pointer with leaf nodes also containing a copy of corresponding parent keys.
     
     \subsection{Graphs}
     A graph is simply a collection of nodes, some of which may have edges between them. With this definition, we see that a tree is a connected graph that does not have cycles. Graphs can be either \textbf{directed} or \textbf{undirected}. A graph might consist of multiple isolated subgraphs. If there is a path between every pair of vertices, it is called a \textbf{connected} graph. A graph can also have cycles (or not), an \textbf{acyclic} graph is one without cycles. 
@@ -836,12 +873,10 @@ def isSubtree(s, t):
     \end{enumerate}
     
     \textbf{Planar graphs} are those that can be drawn in the plane so no two edges cross. Planar graphs are always sparse, since any n-vertex planar graph can have at most $3n - 6$ edges, thus they should be represented using adjacency lists. Euler's Formula states $v-e+f=2$, where numbers $v = $ verticies $e = $ edges, and $f = $ faces.
-    
-    \textbf{Hypergraphs} are generalized graphs where each edge may link subsets of more than two vertices. In contrast, in an ordinary graph, an edge connects exactly two vertices. Two basic data structures for hypergraphs are: incidence matrices, which are analogous to adjacency matrices, and bipartite incidence structures, which are analogous to adjacency lists
-    
+
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
-# Directed graph 
+# Directed weighted graph using an adjacency list
 class Graph(object):
     def __init__(self):
         self.nodes = set()
@@ -856,7 +891,7 @@ class Graph(object):
         self.edges[to_node].append(from_node)
         self.distances[(from_node, to_node)] = distance
 
-# Undirected graph using Adjacency Matrix
+# Undirected graph using an adjacency matrix
 class Vertex:
     def __init__(self, n):
         self.name = n
@@ -891,39 +926,60 @@ class Graph:
             for j in range(len(self.edges)):
                 print(self.edges[i][j], end='')
             print(' ')
+\end{lstlisting}
 
-# Undirected graph using Adjacency Lists
-class Vertex:
-    def __init__(self, n):
-        self.name = n
-        self.neighbors = list()
+\subsubsection{Flow Networks}
 
-    def add_neighbor(self, v):
-        if v not in self.neighbors:
-            self.neighbors.append(v)
-            self.neighbors.sort()
+A flow network is a directed graph where each edge has a capacity and each edge receives a flow, usually represented as a fraction $flow_i/capacity_i$. A flow must satisfy the restriction that the amount of flow into a node equals the amount of flow out of it, unless it is a source $s$, which has only outgoing flow, or sink $t$, which has only incoming flow. Often we are in search of the max flow of the network using which can be found using the \textbf{Ford–Fulkerson algorithm} or in search of a \textbf{bottleneck} node, 
+\[
+    bottleneck = min(capacity_i - flow_i \ \ \forall i  \text{ in the network}).
+\]
+\subsubsection{Union-Find}
+A union–find data structure (a.k.a disjoint-set union or DSU) stores a collection of non-overlapping sets. In a graph, a set can be thought of as a tree, i.e. an acyclic and connected graph, making union-find a quick method for determining if a graph contains cycles. Disjoint-set data structures play a key role in \textbf{Kruskal's algorithm} for finding the \textbf{minimum spanning tree} of a graph, a subset of the edges of a connected, weighted, undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight. Union-find can be used to keep track of the connected components of an undirected graph. The data structure maintains three operations,
+\begin{enumerate}
+    \item \textbf{makeset(A)} -- Create a new size-1 set containing just element A.
+    \item \textbf{find(A)} -- Starts at A returns A's tree root.
+    \item \textbf{union(A, B) } --  Finds the root for A and B using the find operation, then sets B's parent to be A, combining the two trees into one.
+\end{enumerate}
 
-class Graph:
-    vertices = {}
+Two optimizations bring the amortized time for both union and find from $\bigO(\log N)$ close to $\bigO(1)$. The find operation limits the number of repeated traversals by keeping track of all the nodes along the path using \textbf{path compression}. The union operation tracks the size of each set to ensure the tree depth is minimised, this is known as \textbf{union by rank}. To perform a sequence of $m$ addition, union, or find operations on a disjoint-set forest with $N$ nodes requires total time $\bigO(m \alpha(N))$, where $\alpha(N)$ is the extremely slow-growing inverse Ackermann function, which is effectively considered equal to $\bigO(1)$.
 
-    def add_vertex(self, vertex):
-        if isinstance(vertex, Vertex) and vertex.name not in self.vertices:
-            self.vertices[vertex.name] = vertex
-            return True
-        else:
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+class UnionFind:
+    def __init__(self, size):
+        self.parent = list(range(size))
+        # We use this to keep track of the size of each set.
+        self.rank = [0] * size
+        
+    def find(self, x):
+        # recursive path compression
+        if x != self.p[x]:
+            self.p[x] = self.find(self.p[x])
+        return self.p[x]
+        
+    def union(self, x, y):
+        # Find the parents for x and y.
+        px = self.find(x)
+        py = self.find(y)
+        
+        # Check if they are already in the same set.
+        if px == py:
             return False
-
-    def add_edge(self, u, v):
-        if u in self.vertices and v in self.vertices:
-            self.vertices[u].add_neighbor(v)
-            self.vertices[v].add_neighbor(u)
-            return True
+        
+        # We want to ensure the larger set remains the root.
+        if self.rank[px] < self.rank[py]:
+            self.parent[px] = py
+            self.rank[py] += self.rank[px]
         else:
-            return False
-
-    def print_graph(self):
-        for key in sorted(list(self.vertices.keys())):
-            print(key + str(self.vertices[key].neighbors))
+            self.parent[py] = px
+            self.rank[px] += self.rank[py]
+            
+        # Return true if merge occurred
+        return True
+        
+    def same_group(self, x, y):
+        return self.find(x) == self.find(y)
 \end{lstlisting}
 
 \newpage    
@@ -933,6 +989,8 @@ class Graph:
     Time Complexity: $\bigO(\log n)$ average and worst case.  Space Complexity: $\bigO(1)$
     
     In binary search, we look for an element $x$ in a sorted array by first comparing $x$ to the midpoint of the array. If $x$ is less than the midpoint, then we search the left half of the array. If $x$ is greater than the midpoint, then we search the right half of the array. We then repeat this process, treating the left and right halves as subarrays. Again, we compare $x$ to the midpoint of this subarray and then search either its left or right side. We repeat this process until we either find $x$ or the subarray has size 0.
+    
+    Instead of finding the exact target, we may want to return the index of next smallest or next largest index. To do this, we can return our left or right pointers instead of -1.  
     
     In general, if we can discover some kind of monotonicity, for example, i.e. if condition(k) is True then condition(k + 1) is also True, then we can consider binary search.
 
@@ -992,7 +1050,7 @@ def selection_sort(A):
         for j in range(i + 1, len(A)):
             if A[j] < A[min_index]:
                 min_index = j
-        if i == min_index:
+        if i == min_index: 
             continue
         A[i], A[min_index] = A[min_index], A[i]
     return A
@@ -1058,7 +1116,7 @@ def merge_sort(A):
     if len(A) <= 1:
         return A
     else:
-        midpoint = int(len(A)/2)
+        midpoint = len(A)//2
         left_sublist = merge_sort(A[:midpoint])
         right_sublist = merge_sort(A[midpoint:])
         return _merge_lists(left_sublist, right_sublist)
@@ -1120,7 +1178,7 @@ def heapsort(A):
     h = []
     for value in A:
         heapq.heappush(h, value)
-    return [heapq.heappop(h) for i in range(len(h))]
+    return [heapq.heappop(h) for _ in range(len(h))]
 \end{lstlisting}
 
     \subsubsection{Counting Sort}
@@ -1130,20 +1188,21 @@ def heapsort(A):
     
     Its running time is linear in the number of items and the difference between the maximum and minimum key values, so it is only suitable for use in situations where the variation in keys is not significantly greater than the number of items. 
     
-    
      Counting sort is a \textbf{stable} sorting algorithm, meaning the order in which identical values appear in the sorted result will be the same as in the unsorted array. Because of this property, it is often used as a subroutine in another sorting algorithm, radix sort, that can handle larger keys more efficiently.
    
+   
     \begin{enumerate}
-        \item In the auxiliary array, add counts of the number in its corresponding index. Note, the index of the auxiliary array represents the numeric value in the original array. Knowing the count of repeated numeric values will help us discern the contiguous indices needed to store each number. 
+        \item In the auxiliary array, add counts of the number in its corresponding index. Note, the index of the auxiliary array represents the numeric value in the original array. Knowing the count of repeated numeric values will help us find the contiguous indices needed to store each number. 
         \item Iterate over the auxiliary array, add the number to left of the current number, generating a cumulative sum. This will later give us the starting position of the current number since the counts of the previous numbers will need be allocated in the indices to the left in a sorted array.
         \item Shift all the elements of the auxiliary array to right with the left-most value being zero. This will give us our finalized zero-indexed mapping of array indices (representing a numeric value) to a value representing the starting index in a sorted array.
     \end{enumerate}
+    
+    If the resulting sorted array does not need to be returned then a variant of counting sort can be used in which frequencies of characters are counted and stored in a bitmap of size equal to the max of the input constraints, then the bitmap is processed while ignoring any values of 0.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
-def count_sort(A):
-    output = [0 for i in range(256)]
-    count = [0 for i in range(256)]
+def count_sort_ascii(A):
+    output, count = [0] * 256, [0] * 256, 
     ans = ["" for _ in A]
 
     for i in A:
@@ -1154,10 +1213,35 @@ def count_sort(A):
     for i in range(256):
         count[i] += count[i-1]
 
-    # Build the output character array
+    # Build the output character array while shifting position
     for i in range(len(A)):
         output[count[ord(A[i])]-1] = A[i]
         count[ord(A[i])] -= 1
+
+    # Copy the output array to A, so that A now
+    # contains sorted characters
+    for i in range(len(A)):
+        ans[i] = output[i]
+    return ans
+    
+def count_sort_digits(A, exponent=1):
+    n = len(A)
+    output, count = [0] * n, [0] * 10
+    
+    # Store count of occurrences
+    for i in range(0, n): 
+        index = arr[i] / exp1
+        count[index % 10] += 1
+
+    # Change count[i] so that count[i] now contains actual
+    # position of this character in output array
+    for i in range(1, 10): 
+        count[i] += count[i-1] 
+
+    # Build the output character array while shifting position
+    for i in range(len(A)):
+        output[count[index % 10] - 1] = A[i]
+        count[index % 10] -= 1
 
     # Copy the output array to A, so that A now
     # contains sorted characters
@@ -1175,6 +1259,18 @@ def count_sort(A):
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
+# Radix sort using counting sort as subroutine
+def radix_sort_subroutine(arr): 
+    # Find the maximum number to know number of digits 
+    max_num = max(arr) 
+    # Do counting sort for every digit. Note that instead 
+    # of passing digit number, exp is passed. exp is 10^i 
+    # where i is current digit number 
+    exp = 1
+    while max_num/exp > 0: 
+        count_sort_digits(arr, exp) 
+        exp *= 10
+
 def radix_sort(A):
     RADIX = 10
     maxLength = False
@@ -1235,9 +1331,9 @@ def left_right_boundary(self, seq):
     
     The fast and slow pointers/runners technique (a.k.a. Floyd’s Tortoise and Hare Algorithm) is useful when dealing with cyclic linked lists or arrays. By moving at different rates, the algorithm proves that the two pointers are either going to meet eventually or one will reach the end of the list. That is, the fast pointer should catch the slow pointer once both the pointers are in a cyclic loop. 
     
-    If the list has $n$ nodes, then in $\leq n$ steps, either the fast pointer will find the end of the list, or there is a loop and the slow pointer will be in the loop. Suppose the loop is of length $m \leq n$, then once the slow pointer is in the loop, both the fast and slow pointers will be stuck in the loop forever. Each step, the distance between the fast and the slow pointers will increase by 1. When the distance is divisible by $m$, then the fast and slow pointers will be on the same node and the algorithm terminates. The distance will reach a number divisible by $m$ in $\leq m$ steps.
+    If the list has $n$ nodes, then in $\leq n$ steps, either the fast pointer will find the end of the list, or there is a loop and the slow pointer will be in the loop. Suppose the loop is of length $m \leq n$, then once the slow pointer is in the loop, both the fast and slow pointers will be stuck in the loop forever. Each step, the distance between the fast and the slow pointers will increase by 1. When the distance is divisible by $m$, then the fast and slow pointers will be on the same node and the algorithm terminates. The distance will reach a number divisible by $m$ in $\leq m$ steps. So, getting the slow pointer to the loop, and then getting the fast and slow pointers to meet takes $\leq n + m \leq 2n$ steps, and that is in $\bigO(n)$.
 
-    So, getting the slow pointer to the loop, and then getting the fast and slow pointers to meet takes $\leq n + m \leq 2n$ steps, and that is in $\bigO(n)$.
+    Fast and slow pointers can also be used to find the midpoint of an acyclic linked list, since the second pointer will reach the end while the first pointer reaches the middle. To determine if a linked list has palindromic symmetry, we can find the midpoint, then reverse the second half until the end. From here, we can traverse from the head to the middle and from the end backwards, comparing each node to check if they are equal.  
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1250,13 +1346,29 @@ def has_cycle(self, head):
         return True
     except AttributeError:
         return False
+        
+def middleNode(self, head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next.next
+    return slow
+
+def reverseList(self, head: ListNode) -> ListNode:
+    prev = None
+    while head:
+        next_node = head.next
+        head.next = prev
+        prev = head
+        head = next_node
+    return prev
 \end{lstlisting}
 
 
     \subsubsection{Sliding Window Technique}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(k)$, where $k$ is the length of a pattern or restrict sequence 
     
-    Sliding windows are commonly used to find a match or maximum/minimum in a given subarray or substring. It uses two pointers as the boundary of a sliding window to traverse and can also use a counter dictionary to maintain current state.
+    Sliding windows are commonly used to find a match or maximum/minimum in a given subarray or substring. It uses two pointers as the boundary of a sliding window to traverse and can also use a counter dictionary to track the state of the current window.
     
     \begin{enumerate}
         \item Define two pointers, start and end, to represent the sliding window.
@@ -1264,26 +1376,20 @@ def has_cycle(self, head):
         \item When a valid window is found, move start to find a smaller valid window, continuing until the smallest valid window is found.
     \end{enumerate}
     
-    A possible variation is to use two sliding windows. This may be necessary when a question asks to find the number of valid sub-sequence of \textit{exactly} $K$ elements.\footnote{https://leetcode.com/problems/subarrays-with-k-different-integers/} Then we want to find $exactly(K) = atMost(K) - atMost(K-1)$ and may define two sliding windows, one which counts subsequences with length $<= k$ and another with length $<= k-1$.
+    A possible variation is to use two sliding windows. This may be necessary when a question asks to find the number of valid sub-sequence of \textit{exactly} $K$ elements.\footnote{https://leetcode.com/problems/subarrays-with-k-different-integers/} Then we want to find $exactly(K) = atMost(K) - atMost(K-1)$ and may define two sliding windows, one which counts subsequences with length $\leq k$ and another with length $\leq k-1$.
     
-    Another challenging variation involves finding the length of a window in which the absolute difference is maximized but under a given limit.\footnote{https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/} In this case, we maintain two double-ended queues (deque), one of minimums that is kept monotonically increasing and the other of maximums that is kept monotonically decreasing. After appending elements on to the end of both queues while maintaining monotonic order, we then update the front of the deques so that the difference between their first elements does not exceede the given limit, increment a counter if we popleft. This counter corresponds to the left pointer of a sliding window and we want the max valid window. 
+    Another challenging variation involves finding the length of a window in which the absolute difference is maximized but under a given limit.\footnote{https://leetcode.com/problems/longest-continuous-subarray-with-absolute-diff-less-than-or-equal-to-limit/} In this case, we maintain two double-ended queues (deque), one of minimums that is kept monotonically increasing and the other of maximums that is kept monotonically decreasing. After appending elements on to the end of both queues while maintaining monotonic order, we then update the front of the deques so that the difference between their first elements does not exceede the given limit, incrementing a counter if we popleft. This counter corresponds to the left pointer of a sliding window and we want the max valid window. 
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 def basic_sliding_window(self, seq):
-    start, end = 0, 0
-    while end < len(seq):
-        # end grows in the outer loop
-        end += 1
-        # start grows with some restrict
-        while self.start_condition(start):
-            # process logic before pointers movement
-            self.process_logic1(start, end)
-            # start grows in the inner loop
+    start = 0
+    for end in range(len(seq)):
+        while self.condition(seq[start:end]):
             start += 1
-        # or process logic after pointers movement
-        self.process_logic2(start, end)
-
+        # return first valid minimal window
+        return seq[start:end]
+        
 # Using a counter
 from collections import Counter
 
@@ -1302,7 +1408,7 @@ def sliding_window_with_counter(sequence, max_length):
     return ans
     
 # Using monotonic double-ended queues
-def longest_subarray(A, limit):
+def longest_valid_subarray(A, limit):
     maxdq = collections.deque()
     mindq = collections.deque()
     i = 0 
@@ -1323,7 +1429,7 @@ def longest_subarray(A, limit):
     
     A lookup table is an example of making a time-space tradeoff. This technique is useful when searching an array for a pair of values, though the method can be extrapolated to triples and more. Given an array and a target we first initialize a lookup table, usually as a hash table or dictionary. Next, we iterate over the array checking if the complement to the current value needed to satisfy the target exists in our lookup table. If it exists, meaning we've visited the complement before, we retrieve the value from the pointer in the lookup and return it with the current index. Otherwise we add the compliment with the current index as a key value pair in the lookup table.
 
-    The key takeaway is that when finding pairs to meet a condition, we typically require nested for loops to run $\bigO(\frac{n(n-1)}{2}) = \bigO(n^2)$ comparisons. By instead storing and searching a hashmap only for the desired pairing, we reduce our operations to $\bigO(n)$. When we need to find triples we can reduce 3 for loops and a running time of $\bigO(n^3)$ to only two loops and running time of $\bigO(n^2))$. Similar  optimizations hold for larger groups.
+    The key takeaway is that when finding pairs to meet a condition, we typically require nested for loops to run $\bigO(\frac{n(n-1)}{2}) = \bigO(n^2)$ comparisons. By instead storing and searching a hashmap only for the desired pairing, we reduce our operations to $\bigO(n)$. When we need to find triples we can reduce 3 for loops and a running time of $\bigO(n^3)$ to only two loops and running time of $\bigO(n^2)$. Similar  optimizations hold for larger groups.
 
 
 \vspace{8pt} \emph{Python Implementation}
@@ -1336,37 +1442,13 @@ def single_pass_lookup(nums, target):
         lookup[v] = i
     raise ValueError('Target not in list.')
 \end{lstlisting}
-    
-    \subsubsection{Range Operations on Array}
-    Time Complexity: $\bigO(Q + n)$, Space Complexity: $\bigO(1)$, where $Q$ is the number of operations or queries
-    
-    Given an array $A$ of 0's of size $n$, perform $Q$ operations or queries by incrementing values in the subarray $A[L: R]$ by 1. A naive brute force solution of performing all the given operations will result in time complexity of $\bigO(Q\cdot n)$. 
-    
-    However, using a numerical method we are able to reduce the time complexity to $\bigO(Q + n)$. This technique involves creating a secondary array $B$ and only incrementing the value at the left endpoint, $L$ by 1 and decrementing the value at index $R + 1$ by 1. After repeating this process for all queries, to find the true desired value of $A[i]$ we can find the prefix sum of $B$ from $B[0:i]$.
-    
-    If instead we want to find the maximum in the array after performing $Q$ range operations, we can modify the above technique which will give us an algorithm that runs in $\bigO(n)$. Again, for each range interval we increment the left pointer by 1 and decrement the right by 1. By the end of all this, we have an array that shows the difference between every successive element. From here, we iterate over the array while maintaining a running sum and keeping track of the maximum of the sum.
-    
-\vspace{8pt} \emph{Python Implementation}
-\begin{lstlisting}[language=Python]
-def max_after_operations(n, operations):
-    B = [0] * (n + 1)
-    for start, end, incr in operations:
-        B[start - 1] += incr
-        if stop <= len(B):
-            B[stop] -= incr;
-    max_value = cur = 0
-    for i in B:
-        cur = cur + i;
-        max_value = max(max_value, cur)
-    return max_value
-\end{lstlisting}
 
     \subsubsection{Kadane's Algorithm}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(1)$
     
     The maximum subarray sum problem is the task of finding a contiguous subarray with the largest sum within a given one-dimensional array $A[1...n]$ of numbers.
     
-    This problem can be solved using several different techniques, including brute force, divide and conquer, dynamic programming, and reduction to shortest paths. Kadane's algorithm can be viewed as a trivial example of dynamic programming which will be visited in more detail later.
+    This problem can be solved using several different techniques, including brute force, divide and conquer, dynamic programming, and reduction to shortest paths. Kadane's algorithm can be viewed as a trivial example of dynamic programming which will be visited in more detail later, and makes use of in-place \textbf{prefix sums}. For each number in a sequence, its corresponding prefix sum, also known as cumulative sum, is the sum of all previous numbers in the sequence plus the number itself. 
     
     \begin{enumerate}
         \item Use the input array of nums to store the candidate subarrays sum (i.e. the greatest contiguous sum so far).
@@ -1384,7 +1466,9 @@ def maxSubArray(self, nums: List[int]) -> int:
 \end{lstlisting}
 
     \subsubsection{Prefix Sums with Binary Search}
-    Similar to Kadane's algorithm, we can create an alternative representation of a given array of numbers which will speed up finding a solution. For each number in a sequence, its corresponding prefix sum, also known as cumulative sum, is the sum of all previous numbers in the sequence plus the number itself. The trick here, is to relate the original list of numbers to a corresponding list of prefix sums using their index.
+    Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(n)$
+    
+    Similar to Kadane's algorithm, we can create an alternative representation of the given array of numbers which will speed up finding the solution. The trick is to relate the original list of numbers to a corresponding list of prefix sums using their index. This is similar to counting sort, where we used cumulative sums in a bitmap to determine sorted indices.
     
     If all numbers are positive, then we see that the list of prefix sums would be strictly monotonically increasing. If we are given a list of positive numbers and we want to find which offset or range a new number corresponds to, we can convert the numbers (which represent some kind of weight) to list of relative offsets (i.e. prefix sums). Our task is then to fit the target offset into the list so that the ascending order is maintained using binary search ($\bigO(\log(n))$).
 
@@ -1406,10 +1490,35 @@ def prefix_sum(self, weights: List[int], target: int) -> int:
     return low
 \end{lstlisting}
 
+    \subsubsection{Range Operations on Array}
+    Time Complexity: $\bigO(Q + n)$, Space Complexity: $\bigO(1)$, where $Q$ is the number of operations or queries
+    
+    Given an array $A$ of 0's of size $n$, perform $Q$ operations or queries by incrementing values in the subarray $A[L: R]$ by 1. A naive brute force solution of performing all the given operations will result in time complexity of $\bigO(Q\cdot n)$. 
+    
+    However, using a numerical method we are able to reduce the time complexity to $\bigO(Q + n)$. This technique involves creating a secondary array $B$ and only incrementing the value at the left endpoint, $L$ by 1 and decrementing the value at index $R + 1$ by -1. After repeating this process for all queries, to find the true desired value of $A[i]$ we can find the prefix sum of $B$ from $B[0:i]$.
+    
+    If instead we want to find the maximum in the array after performing $Q$ range operations, we can modify the above technique which will give us an algorithm that runs in $\bigO(n)$. Again, for each range interval we increment the left pointer by 1 and decrement the right by -1. By the end of all this, we have an array that shows the difference between every successive element. From here, we iterate over the array while maintaining a running sum and keeping track of the maximum of the sums.
+    
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def max_after_operations(n, operations):
+    B = [0] * (n + 1)
+    for start, end, incr in operations:
+        B[start - 1] += incr
+        if stop <= len(B):
+            B[stop] -= incr;
+    max_value = cur = 0
+    for i in B:
+        cur = cur + i;
+        max_value = max(max_value, cur)
+    return max_value
+\end{lstlisting}
+
+
     \subsubsection{Merge Intervals}
     Time Complexity: $\bigO(n \log n)$, Space Complexity: $\bigO(n)$
     
-    An interval problem has an input of a 2d array in which each nested array represents a start and an end value. The interval can also be represented as an object with start and end attributes.
+    An interval problem has an input of a 2D array in which each nested array represents a start and an end value. The interval can also be represented as an object with start and end attributes.
     
     Given two intervals A and B, there will be six different ways the two intervals can relate to each other:
     \begin{enumerate}
@@ -1427,79 +1536,66 @@ def prefix_sum(self, weights: List[int], target: int) -> int:
 \begin{lstlisting}[language=Python]
 def merge_intervals(self, intervals):
     if len(intervals) < 2: return intervals
-
+    
+    # sort on start values
     intervals.sort(key=lambda x: x[0])
     merged = []
-    start = intervals[0][0]
-    end = intervals[0][1]
+    prev_start, prev_end = intervals[0][0], intervals[0][1]
 
     for i in range(1, len(intervals)):
-        interval = intervals[i]
-        if interval[0] <= end:  # overlapping intervals
-            end = max(interval[1], end)
-        else:  # non-overlapping interval, add the previous interval and reset
-            merged.append([start, end])
-            start = interval[0]
-            end = interval[1]
-
-    merged.append([start, end])  # add the last interval
+        cur_start, cur_end = intervals[i]
+        
+        # overlapping intervals, new starts before previous ends
+        if cur_start <= prev_end:  
+            prev_end = max(prev_end, cur_end)
+        # non-overlapping interval, add the previous interval and update
+        else:  
+            merged.append([prev_start, prev_end])
+            prev_start, prev_end = cur_start, cur_end
+    # add the last interval
+    merged.append([prev_start, prev_end]) 
     return merged
 \end{lstlisting}
     
     
     \subsection{String Analysis Methods}
-    A string is a sequence of ASCII characters. Many analysis techniques that apply to arrays can also be used on string inputs when they are interpreted as character arrays.
+    A string is a sequence of ASCII characters. Many analysis techniques that apply to arrays can also be used on string inputs when they are interpreted as character arrays. The space required for a string counter is $\bigO(1)$ not $\bigO(n)$. This is because the upper bound is the range of characters, which is usually a fixed constant of 26. Typically, slicing and concatenating strings require $\bigO(n)$ time. Instead, use start and end indices to demarcate a substring where possible.
     
     \subsubsection{KMP Pattern Matching}
-    Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(k)$, where $n$ is the length of the string and $k$ is the length of the pattern
+    Time Complexity: $\bigO(n + k)$, Space Complexity: $\bigO(k)$, where $n$ is the length of the string and $k$ is the length of the pattern
     
-    KMP (Knuth Morris Pratt) pattern matching improves the worst case complexity of a naive approach to $\bigO(n)$. The basic idea behind KMP’s algorithm is that whenever we detect a mismatch after some matches, we already know some of the characters in the text of the next window. Instead of wasting computation on previous matches, we use a pre-computed lookup table to skip to the first instance of a match of the starting character.
+    KMP (Knuth--Morris--Pratt) pattern matching improves the worst case complexity of a naive approach of $\bigO(n^2)$ to $\bigO(n)$. The basic idea behind KMP’s algorithm is that whenever we detect a mismatch after some matches, we already know some of the characters in the text of the next window. Instead of wasting computation on previous matches, we use a pre-computed lookup table to skip to the first instance of a match of the starting character.
+    
+    Values in the longest proper suffix (LPS) array record the max length of matching substrings that exists as both a prefix and suffix, where the suffix ends at the current index. For example, the LPS array of patter ``aabaac" is [0, 1, 0, 1, 2, 0].
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]    
 class KMP:
     def build_lps(self, pattern):
-        """ Helper function for strStr.
-        Returns longest proper suffix array for string pattern.
-        Each lps_array[i] is the length of the longest proper prefix
-        which is equal to suffix for pattern ending at character i.
-        Proper means that whole string cannot be prefix or suffix.
-
-        Time complexity: O(m). Space complexity: O(1), where
-        m is the length of the pattern, space used for lps array isn't included.
-        """
         m = len(pattern)
-        lps_array = [0] * m
-        i, j = 1, 0  # start from the 2nd character in pattern
-        while i < m:
-            if pattern[i] == pattern[j]:
-                lps_array[i] = j + 1
-                j += 1
-                i += 1
+        lps = [0] * m
+        i, j = 0, 1
+
+        while j < m: 
+            if pattern[i] == pattern[j]: 
+                lps[j] = i + 1
+                i, j = i + 1, j + 1
+            elif i != 0:
+                i = lps[i - 1]
             else:
-                if j > 0:
-                    j = lps_array[j - 1]
-                else:
-                    lps_array[i] = 0
-                    i += 1
+                lps[j] = 0
+                j += 1
+        return lps
         
     def search(self, text, pattern):
-        """ Returns index of 1st occurence of pattern in text.
-        Returns -1 if pattern is not in the text.
-        Knuth-Morris-Pratt algorithm.
-        Time complexity: O(n + m). Space complexity: O(m).
-        """
-        # special cases
-        if not text or not pattern : return 0
-        # build longest proper suffix array for pattern
+        if not text or not pattern: return 0
         lps_array = self.build_lps(pattern)
         n, m = len(text), len(pattern)
         i, j = 0, 0
         while i < n:
             # current characters match, move to the next characters
             if text[i] == pattern[j]:
-                i += 1
-                j += 1
+                i, j = i + 1, j + 1
             # current characters don't match
             else:
                 if j > 0:  # try start with previous longest prefix
@@ -1516,7 +1612,46 @@ class KMP:
 \end{lstlisting}
     
     \subsubsection{Rabin–Karp}
-    The Rabin–Karp algorithm is a string-searching algorithm that uses hashing to find an exact match of a pattern string in a text. It uses a rolling hash to quickly filter out positions of the text that cannot match the pattern, and then checks for a match at the remaining positions.
+    Time Complexity: $\bigO(n + k)$, Space Complexity: $\bigO(k)$, where $n$ is the length of the string and $k$ is the length of the pattern
+    
+    
+    The Rabin–Karp algorithm is a string-searching algorithm that uses hashing to find an exact match of a pattern string in a text. It uses a rolling hash to quickly filter out positions of the text that cannot match the pattern, and then checks for a match at the remaining positions. It can be useful when the size of the query string is much smaller than the full text as it reduces a naive quadratic worst case of $\bigO(n\cdot k)$ to a linear worst case runtime.
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]    
+class RHash():
+    def __init__(self, s):
+        self.d = 256
+        self.q = 101
+        self.h = pow(self.d, len(s)-1, self.q)
+        self.val = 0
+        for c in s:
+            self.append(c)
+    def append(self, c):
+            self.val = (self.val * self.d + ord(c)) % self.q
+    def rmleft(self, c):
+            self.val = (self.val - self.h * ord(c) + self.q) % self.q 
+    def __eq__(self, other):            
+        return self.val == other.val
+        
+def strStr(self, haystack, needle):
+    hl, nl = len(haystack), len(needle)
+    if not needle:
+        return 0
+    if not haystack or nl > hl:
+        return -1
+  
+    nh, hh = RHash(needle), RHash(haystack[:nl])
+    if nh == hh and haystack[:nl] == needle:
+        return 0
+    
+    for i in range(nl, hl):
+        hh.rmleft(haystack[i-nl])
+        hh.append(haystack[i])
+        if hh == nh and haystack[i-nl+1:i+1] == needle:
+            return i-nl+1
+    return -1
+\end{lstlisting}
 
     \subsubsection{Edit Distance}
     Edit distance is a way of quantifying how dissimilar two strings are to one another by counting the minimum number of operations required to transform one string into the other. 
@@ -1531,13 +1666,13 @@ class KMP:
     \end{enumerate}
     
     \subsection{Heap Use Cases}
-    \subsubsection{Top K Numbers}
-    The best data structure to keep track of top $K$ elements is a heap. If we iterate through an array, one element at a time, and keep $K$-th largest element in a heap such that each time we find a larger number than the smallest number in the heap, we do two things:
+    \subsubsection{K Largest or Smallest Numbers}
+    The best data structure to keep track of largest or smallest $K$ elements (in ascending sorted order) in streaming data is a heap. If we iterate through an array or read from a stream of data one element at a time, we can keep the $K$-th largest element in a heap such that each time we find a larger number than the smallest number in the heap, we do two things:
     \begin{enumerate}
-        \item Take out the smallest number from the heap
-        \item Insert the larger number into the heap
+        \item Take out the smallest number from the heap.
+        \item Insert the larger number into the heap.
     \end{enumerate}
-    This will ensure that we always have top $K$ largest numbers in the heap. To easily remove the smallest value we may use a min-heap.
+    This will ensure that we always have top $K$ largest numbers in the heap. To easily remove the smallest value we may use a min-heap. Note, largest in in terms of ascending order from low to high values.
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1558,14 +1693,9 @@ class KthLargest:
 
 # For one-time calculation
 def findKthLargest(self, nums: List[int], k: int) -> int:
-        min_heap = []
-        for i in range(k):
-            heapq.heappush(min_heap, nums[i])
-        for i in range(k, len(nums)):
-            if nums[i] > min_heap[0]:
-                heapq.heappop(min_heap)
-                heapq.heappush(min_heap, nums[i])
-        return min_heap[0]
+    return heapq.nlargest(k, nums)[-1]
+    # or for large values of k
+    return sorted(nums)[k]
 \end{lstlisting}
 
     
@@ -1582,7 +1712,7 @@ class MedianFinder:
 
     def addNum(self, num):
         small, large = self.heaps
-        #convert a min heap to a max heap. heapq only has a min heap by default.
+        #convert a min heap to a max heap. heapq uses a min heap by default.
         heappush(small, -heappushpop(large, num))
         if len(large) < len(small):
             heappush(large, -heappop(small))
@@ -1595,7 +1725,9 @@ class MedianFinder:
 \end{lstlisting}
 
     \subsection{Tree Traversal}
-    Given a binary tree, an \textbf{in-order traversal} (LNR) means to visit the left branch, then the current node, and finally, the right branch. A \textbf{pre-order traversal} (NLR) visits the current node before its child nodes, i.e. the root is always the first node visited. A \textbf{post-order traversal} (LRN) visits the current node after its child nodes, i.e. the root node is always the last node visited. A \textbf{breadth-first search} of a tree, a.k.a. level order tree traversal, iteratively visits all the nodes at the same height from left to right.
+    Given a binary tree, an \textbf{in-order traversal} (LNR) means to visit the left branch, then the current node, and finally, the right branch. A \textbf{pre-order traversal} (NLR) visits the current node before its child nodes, i.e. the root is always the first node visited. A \textbf{post-order traversal} (LRN) visits the current node after its child nodes, i.e. the root node is always the last node visited. A \textbf{breadth-first search} of a tree, a.k.a. \textbf{level order traversal}, iteratively visits all the nodes at the same height from left to right.
+    
+    Recall, for a binary search tree an inorder traversal will result in an increasing sequence. Note, the successor of a node could be in either the ancestor or right child, and the predecessor could be in either ancestor or left child. 
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]  
@@ -1618,8 +1750,7 @@ def preorder(root):
         preorder(root.right)
         
 def levelorder(root):
-    q, level = collections.deque(), 0
-    q.append(root)
+    q, level = collections.deque(root), 0
     while q:
         level += 1
         for _ in range(len(q)):
@@ -1629,8 +1760,7 @@ def levelorder(root):
                 q.append(node.left)
             if node.right:
                 q.append(node.right)
-        # perform a level based condition check here
-    return
+    return level
 \end{lstlisting}
     \subsection{Graph Traversal}
 
@@ -1643,7 +1773,7 @@ def levelorder(root):
     
     In an unweighted graph, since BFS explores all neighbors at the same depth, it can be used to find the shortest path between a start and a target node.
     
-    When a graph is implemented with an Adjacency List, the time complexity of BFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix it will be $\bigO(|V|^2)$. The complexity difference occurs due to the fact that in an Adjacency Matrix we must iterate through all possible adjacent edges to find existing outgoing edges, which takes $O(|V|)$ time summed over $|V|$ vertices. So $\bigO(|V| + |E|) = \bigO(|V| + |V|^2) = \bigO(|V|^2)$.
+    When a graph is implemented with an Adjacency List, the time complexity of BFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix or if the graph is dense, it will be $\bigO(|V|^2)$. The complexity difference occurs due to the fact that in an Adjacency Matrix we must iterate through all possible adjacent edges to find existing outgoing edges, which takes $O(|V|)$ time summed over $|V|$ vertices. So $\bigO(|V| + |E|) = \bigO(|V| + |V|^2) = \bigO(|V|^2)$.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1701,11 +1831,11 @@ def bfs(adj_list):
     
     In depth-first search (DFS), we start at the root (or another arbitrarily selected node) and explore each branch completely before moving on to the next branch. That is, we go deep first before we go wide. 
     
-    In general, DFS often has similar function to BFS. However, only DFS is optimal as a single-source shortest path algorithm in an unweighted graph.
+    In general, DFS often has similar function to BFS. However, only DFS is optimal as a \textbf{single-source shortest path} algorithm in an unweighted graph.
     
-    Note that pre-order and other forms of tree traversal are a form of DFS. The key difference is that when implementing this algorithm for a graph, we must check if the node has been visited. If we don't, we risk getting stuck in an infinite loop. 
+    Note that pre-order and other forms of tree traversal are a form of DFS. The key difference is that when implementing this algorithm for a graph, we must check if the node has been visited. If we don't, we risk getting stuck in an infinite loop. This is because graphs may not be acyclic and do not make distinctions between parent and child edges. 
     
-    Again, we find that when implemented with an Adjacency List, the time complexity of DFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix it will be $\bigO(|V|^2)$.
+    Again, we find that when implemented with an Adjacency List, the time complexity of DFS will be $\bigO(|V| + |E|)$, but when implemented with an Adjacency Matrix or if the graph is dense, it will be $\bigO(|V|^2)$.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1751,26 +1881,35 @@ def dfs(adj_list):
     \subsubsection{Dijkstra's Shortest Path Algorithm}
     Time Complexity: $\Theta (|E|+|V|\log |V|)$ worst case
     
-    An algorithm for finding the shortest paths between nodes in a positive weighted, directed, acyclic graph. For a given source node in the graph, the algorithm finds the shortest path between that node and every other. Let the node at which we are starting be called the initial node and the distance of node Y be the distance from the initial node to Y. Dijkstra's algorithm will assign some initial distance values and will try to improve them iteratively, prioritizing shorter distances and edges with low weights in its path discovery process.
+    An algorithm for finding the shortest paths between nodes in a positive weighted, directed, acyclic graph. For a given source node in the graph, the algorithm finds the shortest path between that node and every other. In breadth-first search will find the path with the fewest edges, but in Dijkstra’s algorithm, we assign a number or weight to each segment. Then Dijkstra’s algorithm finds the path with the smallest total weight.
     
-    Breadth-first search will find the path with the fewest segments. But in Dijkstra’s algorithm, you assign a number or weight to each segment. Then Dijkstra’s algorithm finds the path with the smallest total weight.
+    Let the node at which we are starting be called the initial node and consider the distance to be from the initial node to a given node Y. Dijkstra's algorithm will assign some initial distance values and will try to improve them iteratively, prioritizing shorter distances and edges with low weights in its path discovery process.
+    
+    Similar to breadth first search, we use a queue for maintaining our traversal order, The code is further simplified by maintaining the already visited set with a min-priority queue (min-heap) and uses two dictionaries (hashmaps) for storing the graph as an adjacency list and for storing the minimum distances.
     
     \begin{enumerate}
-        \item Mark all nodes unvisited and store them in a set.
+        \item \textbf{Initialize data structures} -- 
         
-        \item Set the distance to zero for our initial node and to infinity for other nodes.
-
-        \item From the set of unvisited vertices, choose the vertex with the smallest distance and set it to the current node.
+        Create a min-heap/min-priority queue of unvisited nodes, initalize with starting tuple of (0 cumulative distance, start node, empty path). 
         
-        \item Find unvisited neighbors for the current node and calculate their distances through the current node. Compare the newly calculated distance to the assigned and save the smaller one. 
-        For example, if the node A has a distance of 6, and the A-B edge has length 2, then the distance to B through A will be 6 + 2 = 8. If B was previously marked with a distance greater than 8 then change it to 8.
-
-        \item When we are done considering all of the unvisited neighbours of the current node, mark the current node as visited and remove it from the unvisited set. A visited node will never be checked again.
+        Create a minimum distance hashmap and set the distance of the initial node to zero and exclude or set all other nodes to infinity. 
         
-        \item Stop, if the destination node has been visited (when planning a route between two specific nodes) or if the smallest distance among the unvisited nodes is infinity. If not, repeat steps 3-6.
+        Create an empty set to track visited nodes. 
+        
+        Convert graph to adjacency list in order to store node to (weight, neighbor) tuples as key-value pairs.
+        
+        \item \textbf{Enter top level of while loop} -- 
+        
+        While the unvisited priority queue is non-empty, pop and unpack the vertex with the smallest distance and set it to the current node. Check that the current node has not already been visited and add to the visited set. Append the node to the front of the existing path. If the current node matches the desired end target node, we can return the path and cost.
+        
+        \item \textbf{Enter inner for loop} -- 
+        
+        Loop over (weight, neighbor) tuples of the current node and check that they are not already in the visited set. Calculate the new distance by adding the neighbor's edge weight to the cumulative distance. Check if the neighbor already has a min value in our distance hash map and if the newly calculated distance is smaller than its existing value, save the smaller one to the hashmap and push the (new cost, neighbor, new path) tuple to the priority queue. 
+        
+        \item \textbf{Otherwise return infinity} -- 
+        
+        When the unvisited queue has depleted and the target node was not found.
     \end{enumerate}
-    
-    The code for maintaining the visited set can be simplified by using a priority queue (min heap) and dictionary (hashmap) data structure for storing the graph as an adjacency list and for storing the minimum distances.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -1789,7 +1928,8 @@ def dijkstra(edges, start, end):
     for l, r, weight in edges:
         graph[l].append((weight, r))
 
-    q = [(0, start, ())] # queue of tuples: cumulative cost, vertex, path
+    # queue of tuples: cumulative cost, vertex, path
+    q = [(0, start, ())] 
     visited = set()
     mins = {start: 0}
     
@@ -1813,7 +1953,7 @@ def dijkstra(edges, start, end):
 \end{lstlisting}
 
     \subsubsection{A*}
-    A* (pronounced ``A-star") is a graph traversal and path search algorithm. It is a minor extension of Djikstra's algorithm that builds in a heuristic for remaining distance used to indicate the relevance of paths which should be tried first.
+    A* (pronounced ``A-star") is a graph traversal and path search algorithm. It is a minor extension of Dijkstra's algorithm that builds in a heuristic for remaining distance used to indicate the relevance of paths which should be tried first.
     
     One important aspect of A* is $F = G + H$. The $F$, $G$, and $H$ variables are in our Node class and get calculated every time we create a new node. 
     \begin{itemize}
@@ -1827,11 +1967,11 @@ def dijkstra(edges, start, end):
     \subsubsection{Bellman-Ford Shortest Path Algorithm}
     Time Complexity: $\bigO (|E||V|)$ worst case. Space Complexity: $\bigO(|V|)$.
     
-    The Bellman-Ford (BF) algorithm is a Single Source Shortest Path (SSSP) algorithm, i.e. it can find the shortest path from one node to any other. It is slower than Djikstra's algorithm, but is capable of handling graph's with negative edges, in particular negative weighted cycles.
+    The Bellman-Ford (BF) algorithm is a Single Source Shortest Path (SSSP) algorithm, i.e. it can find the shortest path from one node to any other. It is slower than Dijkstra's algorithm, but is capable of handling graph's with negative edges, in particular negative weighted cycles.
     \begin{enumerate}
         \item Let $S$ be the start node and $D$ be an array of length $|V|$ to record distances. Initialized every entry in $D$ to $\infty$
         \item Set $D[S] = 0$. Traverse the graph from adjacencies of $S$ in any order. 
-        \item Relax each edge $V-1$ times, i,e. $D[edge.to] = min(D[edge.to], D[edge.from] + edge.cost)$.
+        \item Relax each edge $V-1$ times, i.e. $D[edge.to] = min(D[edge.to], D[edge.from] + edge.cost)$.
         \item After traversing the graph $V-1$ times, repeat previous step and if any edge is still updated to a new minimum then there exists a negative cycle. So we set that node to $-\infty$.
     \end{enumerate}
     
@@ -1839,18 +1979,18 @@ def dijkstra(edges, start, end):
     \subsubsection{Floyd-Warshall All-Pairs Shortest Path Algorithm}
     Time Complexity: $\bigO(|V|^3)$ worst case. Space Complexity: $\bigO(|V|^2)$.
     
-    The Floyd-Warshall (FW) algorithm is an (All-Pairs Shortest Path) algorithm. This means it can find the shortest path between all pairs of nodes. With its high cubic time complexity, it's generally only ideal for graphs with less than a couple hundred nodes.
+    The Floyd-Warshall (FW) algorithm is an \textbf{all-pairs shortest path} algorithm. This means it can find the shortest path between all pairs of nodes. With its high cubic time complexity, it's generally only ideal for graphs with less than a couple hundred nodes.
     
-    FW works well with a 2D adjacency matrix with $\infty$ representing no adjacency. The main idea of FW is to build up all possible intermediary paths between node $i$ and $j$ to find the optimal path. We use dynamic programming, covered in more details later, to cache previous optimal solutions in a 3D $n\times n$ memo table. 
+    FW works well with a 2D adjacency matrix with $\infty$ representing no adjacency. The main idea of FW is to build up all possible intermediary paths between node $i$ and $j$ to find the optimal path. We use dynamic programming, covered in more detail later, to cache previous optimal solutions in a 3D $n\times n$ memo table. 
     
     \begin{enumerate}
         \item Define $dp$ table where $dp[i][j] =$ shortest path from $i$ to $j$ routing through nodes $\{ 0, 1, \dots, k \}$.
     
         \item Iterate over 3 nested loops $k,i,j$ to fill the $dp$ table.
         
-        \item Transitions will be, $dp[i][j] =$ $m[i][j]$ if $k = 0$. Otherwise $dp[i][j] = min(dp[i][j], dp[i][k] + dp[k-1][k][j])$. where we compute the solution for $k$ in place, saving us a  dimension of space.
+        \item Transitions will be, $dp[i][j] =$ $m[i][j]$ if $k = 0$. Otherwise $dp[i][j] = min(dp[i][j], dp[i][k] + dp[k][j])$. where we compute the solution for $k$ in place, saving us a  dimension of space.
         
-        Note, the first term in the minimization is reusing the previous best distance routing through $0, \dots, k-1$. The second term is essentially measures the path from $i$ to $k$ plus the path from $k$ to $j$. 
+        Note, the first term in the minimization is reusing the previous best distance routing through $0, \dots, k-1$. The second term essentially measures the path from $i$ to $k$ plus the path from $k$ to $j$. 
         
         \item If negative cycles are possible, add a subroutine to detect them
         
@@ -1858,12 +1998,75 @@ def dijkstra(edges, start, end):
     \end{enumerate}
      
     \subsection{Graph Analysis Methods}
+    \subsubsection{Topological Sort}
+    Time Complexity: $\bigO(|V| + |E|)$ worst case,  Space Complexity: $\bigO(|V|)$
+    
+    A topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge $uv$ from vertex $u$ to vertex $v$, $u$ comes before $v$ in the ordering. It can be useful for determining the  the order of dependencies in anything that has a directed graph representation. A topological ordering is only possible if the graph has no directed cycles, that is, if it is a \textbf{directed acyclic graph} (DAG). Any DAG has at least one topological ordering, and algorithms are known for constructing a topological ordering of any DAG in linear time. A simple way to understand a topological ordering is to visualize the graph with each node placed in a row such that edges are only directed to the right. In general, topological orderings are not unique.
+    
+    An algorithm for topological sorting is based on depth-first search. Simply put, run DFS and output the reverse of the finishing times of vertices, where finishing time corresponds to number of steps taken by DFS. The algorithm loops through each node of the graph, in an arbitrary order, initiating a depth-first search that terminates when it hits any node that has already been visited since the beginning of the topological sort or the node has no outgoing edges (i.e. a leaf node). Each node $n$ gets prepended to the output list $L$ only after considering all other nodes which depend on $n$ (all descendants of $n$ in the graph). Specifically, when the algorithm adds node $n$, we are guaranteed that all nodes which depend on $n$ are already in the output list $L$: they were added to $L$ either by the recursive call to visit() which ended before the call to visit $n$, or by a call to visit() which started even before the call to visit $n$. We mark nodes with a state or color to detect cycles in the graph while it is being processed. Since each edge and node is visited once, the algorithm runs in linear time. 
+
+    An alternative to the DFS approach is known as \textbf{Kahn's algorithm} and corresponds to BFS. Along with an adjacency list of outgoing edges, we will need to maintain a list of the counts of incoming edges, a.k.a its indegree or dependencies. We select nodes that have no incoming edges and add that subset in any order to the back of the queue. To process a node, we pop from the front of the queue, add the node value to our resulting ordering list, then we remove the node from the graph by deleting their outgoing edges from our adjacency list and decrement the corresponding indegree count. We repeat this process until no nodes are left or we detect a cycle. If not all nodes are in the output, there  must be a cycle so no  valid  ordering  exists. Nodes with no incoming nor outgoing edges can be included in any position of the final ordering, though are usually at the beginning.
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def dfs_topological_sort(adj_list):
+    order = []
+    visiting, visited = set([]), set([])
+    
+    def dfs(node):
+        if node in visiting:
+            return False
+        visiting.add(node)
+        for neighbor in adj_list[node]:
+            if neighbor in visited:
+                continue
+            if not dfs(neighbor):
+                return True
+        visiting.remove(node)
+        visited.add(node)
+        order.append(node)
+        return True
+
+    for node in adj_list:
+        if node in completed:
+            continue
+        if not dfs(node):
+            return []
+    return order
+    
+from collections import deque
+def khans_topological_sort(adj_list):
+    # initialize indegree counter 
+    in_degree = collections.Counter()
+    for node in adj_list
+        for neighbor in adj_list[node]:
+            in_degree[node] += 1
+            
+    # repeatedly pick off nodes with an indegree of 0 
+    # decrease indegree of neighbors, append them to queue when 0
+    output = []
+    queue = collections.deque([c for c in in_degree if in_degree[c] == 0])
+    while queue:
+        cur = queue.popleft()
+        output.append(cur)
+        for neighbor in adj_list[c]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+                
+    # If not all nodes are in the output, there must be a cycle so
+    #  no valid ordering exists.
+    if len(output) < len(in_degree):
+        return []
+    return output 
+\end{lstlisting}
+    
     \subsubsection{Tarjan's Strongly Connected Component Algorithm}
     Time Complexity: $\bigO (|E| + |V|)$ worst case.
     
-    A \textit{strongly connected component} (SCC) can be thought of as self-contained cycles within a directed graph where every vertex in a given cycle can reach every other vertex in the same cycle. 
+    A \textbf{strongly connected component} (SCC) can be thought of as self-contained cycles within a directed graph where every vertex in a given cycle can reach every other vertex in the same cycle. 
     
-    A \textit{low-link} of a node is the smallest node id reachable from that node where the id corresponds to a rank obtained by performing a DFS with some starting node being 0. The low-link value is highly dependent on the order of traversal in a DFS, which is random.
+    A \textbf{low-link} of a node is the smallest node id reachable from that node where the id corresponds to a rank obtained by performing a DFS with some starting node being 0. The low-link value is highly dependent on the order of traversal in a DFS, which is random.
     
     To cope with the random traversal order of a DFS, Tarjan's algorithm maintains a stack of valid nodes from which to update low-link values from. Nodes are added to the stack of valid nodes as they're explored for the first time and are removed each time a complete SCC is found. To update node $u$'s low-link value to node $v$'s low-link value, there must be a path of edges from $u$ to $v$ and $v$ must be on the stack. Then we find that each strongly connected component will contain the same low-link value. 
     
@@ -1871,7 +2074,7 @@ def dijkstra(edges, start, end):
         \item Mark the id of each node as unvisited.
         \item Perform a DFS from an arbitrary node. Upon visiting a node, assign it an id and a low-link value. Mark current nodes as visited and add them to a seen stack.
         \item On DFS callback, i.e. after reaching a leaf or already vising all neighbors, we begin backtracking. If the previous node is on the seen stack, then minimize the current node's low-link value with the last node's low-link vaue. This allows low-link values to propegate through cycles being tracked in the stack.
-        \item After visiting all neighbors, if the current node started a connected component started a connected component, i.e. if its id equals its low-link value, then pop all nodes off the stack until the current node is reached. This will remove all the nodes associated with the current connected component and reset our stack reference.
+        \item After visiting all neighbors, if the current node started a connected component, i.e. if its id equals its low-link value, then pop all nodes off the stack until the current node is reached. This will remove all the nodes associated with the current connected component and reset our stack reference.
         \item Pick another node at random and continue this process until all nodes are visited.
     \end{enumerate}
     
@@ -1886,9 +2089,9 @@ def dijkstra(edges, start, end):
     \begin{enumerate}
         \item Maintain a min Priority Queue ($PQ$) that sorts edges based on min edge cost. This will be used to determine the next node to visit and the edges used to get there.
         
-        \item Start the algorthm on any node $s$. Mark $s$ as visited and iterate over all edges of $s$, adding them to $PQ$.
+        \item Start the algorithm on any node $s$. Mark $s$ as visited and iterate over all edges of $s$, adding them to $PQ$.
         
-        \item While the $PQ$ is not empty and MST has not been formed, dequeue the next cheapest edge from $PQ$. If the dequeued edge is stale, i.e. it has already be visited, then skip it and poll again. Otherwise mark the current node as visited and add it to the MST.
+        \item While $PQ$ is not empty and an MST has not been formed, dequeue the next cheapest edge from $PQ$. If the dequeued edge is stale, i.e. it has already be visited, then skip it and poll again. Otherwise mark the current node as visited and add it to the MST.
         
         \item Iterate over the new current node's edges and add all its edges to the $PQ$. Do not add edges to the $PQ$ which point to already visited nodes.
     \end{enumerate}
@@ -1901,45 +2104,11 @@ def dijkstra(edges, start, end):
      
     \begin{enumerate}
         \item Sort edges by ascending edge weight.
-        \item Walk through sorted edges and look at the two nodes the edges belong to. If the nodes area already unified we don't include this edge, otherwise we include and unify the nodes. Unified edges are groupings of sub-trees in the graph. The algorithm makes use of the \textit{union find} data structure to efficiently determine if an edge belongs to an existing group.
+        \item Walk through sorted edges and look at the two nodes the edges belong to. If the nodes area is already unified we don't include this edge, otherwise we include and unify the nodes. Unified edges are groupings of sub-trees in the graph. The algorithm makes use of the \textit{union-find} data structure to efficiently determine if an edge belongs to an existing group.
         \item The algorithm terminates when every edge has been processed or all the vertices have been unified.
     \end{enumerate}
     
     
-    \subsubsection{Topological Sort}
-    Time Complexity: $\bigO(|V| + |E|)$ worst case,  Space Complexity: $\bigO(|V|)$
-    
-    A topological sort or topological ordering of a directed graph is a linear ordering of its vertices such that for every directed edge $uv$ from vertex $u$ to vertex $v$, $u$ comes before $v$ in the ordering. A topological ordering is possible if and only if the graph has no directed cycles, that is, if it is a \textbf{directed acyclic graph} (DAG). Any DAG has at least one topological ordering, and algorithms are known for constructing a topological ordering of any DAG in linear time. A simple way to understand a topological ordering is to visualize the graph with each node placed in a row such that edges are only directed to the right.
-    
-    An algorithm for topological sorting is based on depth-first search. Simply put, run DFS and output the reverse of the finishing times of vertices, where finishing time corresponds to number of steps taken by DFS. The algorithm loops through each node of the graph, in an arbitrary order, initiating a depth-first search that terminates when it hits any node that has already been visited since the beginning of the topological sort or the node has no outgoing edges (i.e. a leaf node). Each node $n$ gets prepended to the output list $L$ only after considering all other nodes which depend on $n$ (all descendants of $n$ in the graph). Specifically, when the algorithm adds node $n$, we are guaranteed that all nodes which depend on $n$ are already in the output list $L$: they were added to $L$ either by the recursive call to visit() which ended before the call to visit $n$, or by a call to visit() which started even before the call to visit $n$. Since each edge and node is visited once, the algorithm runs in linear time.
-
-\vspace{8pt} \emph{Python Implementation}
-\begin{lstlisting}[language=Python]
-from collections import deque
-IN_PROGRESS, COMPLETE = 0, 1
-
-def topological_sort(graph):
-    order, enter, state = deque(), set(graph), {}
-
-    def dfs(node):
-        state[node] = IN_PROGRESS
-        for k in graph.get(node, ()):
-            sk = state.get(k, None)
-            if sk == IN_PROGRESS:
-                raise ValueError("cycle")
-            if sk == COMPLETE:
-                continue
-            enter.discard(k)
-            dfs(k)
-        order.appendleft(node)
-        state[node] = COMPLETE
-
-    while enter:
-        dfs(enter.pop())
-    return order
-\end{lstlisting}
-
-
     \subsection{Recursive Problems}
     We can interpret recursive solutions using the following categories:
     \begin{itemize}
@@ -1972,8 +2141,8 @@ def topological_sort(graph):
     
     A problem is said to have \textbf{optimal substructure} if an optimal solution can be constructed efficiently from optimal solutions of its subproblem. Another way to view this is that when given the optimal solution, the solution of the sub-problems will also be optimal. For example: if we know a path (A, B, C, D) is the shortest possible distance between A and D, then the shortest path from B to D must also pass through C.
     
-   \subsubsection{The DAG Model}
-    Many problems involve finding a solution by processing the state space, i.e. the space of all possible results, in order to find the optimal result. An algorithm processes the state space by making a series of decisions and completes when it knows it has found the best resulting set of decisions. We can think of this decision space in terms of a graph structure in which each node being traversed is an inclusion to our resulting decision sequence which is represented by a path. Then, each of the outgoing edges in the graph indicates a reachable link from one state to another. 
+   \subsubsection{The Decision Tree (DAG) Model}
+    Many problems involve finding a solution by processing the state space, i.e. the space of all possible results, in order to find the desired solution. An algorithm processes the state space by making a series of decisions and completes when it knows it has found the best resulting set of decisions. We can think of this decision space in terms of a graph structure in which each node being traversed is an inclusion to our resulting decision sequence which is represented by a path. Then, each of the outgoing edges in the graph indicates a reachable link from one state to another. 
     
     Recall that a \textbf{directed acyclic graph (DAG)} is a directed graph that does not contain any cycles. This can be understood as a state space in which no decision chosen from a unique subset of choices can be reached again or included multiple times, i.e. there are no infinite loops.
     
@@ -1981,37 +2150,32 @@ def topological_sort(graph):
         \item \textbf{Depth-First Search} --
         In the most straightforward case, we are given a generic state space represented as a directed graph that may or may not be acyclic and we want to determine  whether two states are reachable from one another. 
         
-        DFS is the ideal solution since no heuristic is available as the intermediary states do not reveal information about the location of the desired state, except when it is found or unreachable as a result visiting all neighbors or reaching a leaf node without neighbors. Although overlapping subproblems exist, i.e. the state space has statically defined adjacent edges, we can not optimize the final result through a heuristic made in the aglorithm's local decisions. Despite doing some bookkeeping, we are mostly blindly searching the state space.
+        DFS is the ideal solution since no heuristic is available as the intermediary states do not reveal information about the location of the desired state, except when it is found or unreachable as a result visiting all neighbors or reaching a leaf node without neighbors. Although overlapping subproblems exist, i.e. the state space has statically defined adjacent edges, we can not optimize the final result through a heuristic made in the aglorithm's local decisions. Despite doing some bookkeeping to prevent duplicate work, we are mostly blindly searching the state space.
         
-        \item \textbf{Backtracking} -- Similar to DFS, this approach can be used when there are overlapping subproblems but no optimal substructure, i.e. we can not derive optimal solutions to subproblems even when given a global optimal solution. Additionally no local cost analysis can be performed independent of previous states. However, when analysing a current state and its previous states, a heuristic exists that determines if a path cannot possibly be appended to produce a valid solution. So that a path can be avoided or pruned without reaching its leaves as is necessary in DFS.
+        \item \textbf{Backtracking} -- Similar to DFS, this approach can be used when there are overlapping subproblems but no optimal substructure exists, i.e. we can not derive optimal solutions to subproblems even when given a global optimal solution. Additionally, any local cost analysis which ignores previous states will not be enough to determine our future choices. However, when analyzing a current state and its previous states, a heuristic exists that determines if a path cannot possibly be appended to produce a valid solution. So that a path can be avoided or pruned without reaching its leaves as is necessary in DFS.
         
-        \item \textbf{Greedy Algorithm} -- This approach is ideal when overlapping subproblems exist and a cost analysis exists in which making optimal local decisions results in finding the globally optimal result. Moreover, the cost analysis heuristic is independent of previous states and only involves processing the subset of decisions at the current local state.
+        \item \textbf{Greedy Algorithm} -- This approach is ideal when overlapping subproblems exist and a cost analysis exists in which making optimal local decisions results in finding the globally optimal result. That is, the cost analysis heuristic is independent of previous states and only involves processing the subset of decisions at the current local state.
 
-        \item \textbf{Dynamic Programming} --  Similar to the greedy algorithm, this approach is ideal when there are overlapping subproblems and optimal substructure exists, i.e. given the optimal solution, sub-problems will also be optimal. Although a greedy heuristic may also solve some problems with optimal substructure, a DP approach is more reliable when cost analysis is largely dependent on previous decision states.
-
+        \item \textbf{Dynamic Programming} --  Similar to the greedy algorithm, this approach is ideal when there are overlapping subproblems and optimal substructure exists, i.e. given the optimal solution, sub-problems will also be optimal. Although a greedy heuristic may sometimes solve problems with optimal substructure, a DP approach is more reliable when cost analysis is largely dependent on previous decision states.
     \end{enumerate}
     
     \subsubsection{Backtracking}
-    Backtracking is a general algorithm for finding all (or some) solutions to some computational problems, notably constraint satisfaction problems, that incrementally builds candidates to the solutions and abandons a candidate as soon as it determines that the candidate cannot possibly be completed to a valid solution. 
-    
-    It is useful for exhaustive recursive problems in which the solution must follow some constraints. We may define a policy for recursion and when a computation does not meet the constraints, we halt or backtrack on the exhaustive recursion. The call stack remembers our previous choices and decides what choice to make next.
-    
-    Three key things to keep in mind
+    Backtracking is a general algorithm for finding all (or some) solutions to some computational problem, notably constraint satisfaction problems that incrementally builds candidates to the solutions and abandons a candidate as soon as it determines that they cannot possibly be completed to a valid solution. It is useful for exhaustive recursive problems in which the solution must follow some constraints. We may define a policy for recursion and when a computation does not meet the constraints, we halt or backtrack on the exhaustive recursion. The call stack remembers our previous choices and decides what choice to make next. Thus, there are three key things to keep in mind:
     \begin{enumerate}
         \item Our choice -- What choice do we make at each call of the function? Recursion expresses this decision
         \item Our constraints -- When do we stop following a certain path?
         \item Our goal -- What's our target? What are we trying to find?
     \end{enumerate}
-    
 
     The difference between backtracking and depth-first search is that backtracking traverses in the solution space whereas DFS traverses in data structure space. DFS is a special type of backtracking paradigm where the process of backtracking only takes place in the leaf nodes whereas general backtracking algorithms can also preemptively reject useless branches of the state space tree. Thus, DFS maintains the entire tree structure while backtracking creates a pruned tree.
+    
+    The backtracking pattern can be useful for generating combinations in linear time.
     
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 def backtrack(candidate):
     if find_solution(candidate):
         return candidate
-    
     # iterate all possible candidates.
     for next_candidate in list_of_candidates:
         if is_valid(next_candidate):
@@ -2021,7 +2185,20 @@ def backtrack(candidate):
             backtrack(next_candidate)
             # backtrack/prune
             remove(next_candidate)
-            
+
+def powerset(nums):
+    result, partial = [], []
+    def backtrack(idx):
+        if idx == len(nums):
+            result.append(partial[:])
+            return
+        partial.append(nums[idx])
+        backtrack(idx + 1)
+        partial.pop()
+        backtrack(idx + 1)
+    backtrack(0)
+    return result
+    
 ## Generate all combinations of well-formed parentheses with n pairs.
 def generate_parenthesis(n):
     ans = []
@@ -2054,33 +2231,27 @@ assert generate_parenthesis(3) == [
     
     
     \subsubsection{Dynamic Programming \& Memoization}
-    Dynamic programming (DP) is a general, powerful algorithm design technique. It is mostly just a matter of taking a recursive algorithm and finding the overlapping subproblems (that is, the repeated calls). You then cache those results for future recursive calls. Alternatively, you can study the pattern of the recursive calls and implement something iterative. You still cache previous work. A dynamic programming solution can only be used if the problem possesses the optimal substructure property, i.e. its global optimal solution can be constructed efficiently from optimal solutions of its subproblems. Recall, overlapping subproblems exist if the problem can be broken down into subproblems which are reused several times. 
+    Dynamic programming (DP) corresponds to a careful bruteforce approach, taking an exponential algorithm and making it polynomial. The basic idea of dynamic programming is to take a problem, split it into subproblems, solve the subproblems, and re-use the solutions to the subproblems. A dynamic programming solution can only be used if the problem possesses the optimal substructure property, i.e. its global optimal solution can be constructed efficiently from optimal solutions of its subproblems. Recall, overlapping subproblems exist if the problem can be broken down into subproblems which are reused several times. 
     
-    DP corresponds to a careful bruteforce approach, taking an exponential algorithm and making it polynomial. The basic idea of dynamic programming is to take a problem, split it into subproblems, solve the subproblems, and re-use the solutions to the subproblems.
+    \textbf{Memoization} refers to the technique of caching and reusing previously computed results. Some people call top-down dynamic programming ``memoization'' and only use ``dynamic programming" to refer to bottom-up work. A memoized function only recurses the first time it's called with the memoized call costing $\Theta(1)$. In general, the time complexity will be the number of subproblems needed to be solved multiplied by the running time per subproblem. We no longer need to count recursions or the call stack. It's important to note that we want to perform an exhaustive search with the values we're caching. Doing this recursively with memoization can be more obvious when the cached values are in the recursive function header. The typical procedure will be to instantiate a cache table in the driver function, where features or arguments map to a computed value. Then define a recursive function using those args which will first check for success and failure base cases and return appropriate values, then will check if the given args already exist as keys in the cache table, returning the mapped value if they do. Otherwise it will recurse with modified args and derive a value from the recursion adding it to our cache and then returning it. The driver function will call the recursive function with the desired arguments of the original problem and return its results.
+    
+    A bottom-up solution uses \textbf{tabulation} to only store the relevant calls needed for future computations. With tabulation, we have to come up with an ordering which is often less intuitive than memoized solutions. If all sub-problems must be solved at least once, a bottom-up tabulated dynamic programming algorithm usually outperforms a top-down memoized algorithm by a constant factor. The typical process involves defining a memo table with dimensions equal to the number of features and then initializing the base case values in the relevant rows or columns of the table. The function will then iteratively update the tables entries according to a state transition rule, where the order and range of iterations over states occurs in such a way that previous states referenced by the transition rule will already exist. We then return the index of the table corresponding to the state values of the original problem.
 
-    \textbf{Memoization} refers to the technique of caching and reusing previously computed results. Some people call top-down dynamic programming ``memoization'' and only use "dynamic programming" to refer to bottom-up work
-    
-    A bottom-up solution uses \textbf{tabulation} to only store the relevant calls needed for future computations. With tabulation, we have to come up with an ordering which is often less intuitive than memoized solutions. If all sub-problems must be solved at least once, a bottom-up tabulated dynamic programming algorithm usually outperforms a top-down memoized algorithm by a constant factor.
-
-    A memoized function only recurses the first time it's called with the memoized call costing $\Theta(1)$. In general, the time complexity will be the number of subproblems needed to be solved multiplied by the running time per subproblem. We no longer need to count recursions or the call stack.
-    
     % Topological sort of a dependency DAG: DP is roughly equivalent to recursion + memory + guessing. We use brute force to try all guesses and take the best ones and record the result. Applying a basic DP algorithm to graphs to find the shortest path can cause infinite runtime if the graph has cycles. For memoization to work, subproblem dependencies should be acyclic, otherwise we get an acyclic algorithm. In a Directed Acyclic Graph, the runtime will be $\bigO(|V|+|E|)$. 
     
     % To prevent cycles in a cyclic graph, we can expand it into k layers where we may think of the layered axis as time and all edges connect a layer to one below it. This prevents any cycles from occuring. We want to find $S_k(s,v)$ = the weight of the shortest path from s to v that uses $\leq k$ edges. We now want to find, $S_k(s,v) = min_ (S_{k-1} (u,v) + w(u,v))$. By adding k parameter, the recurrence on subproblems is acyclic but the number of subproblems has increased to $v^2$ and the total running time is $\Theta (|V| |E|)$. This algorithm is analogous to the Bellman-Ford algorithm.
     
-    Subproblems for strings or arrays will be one of the following:
-    \begin{itemize}
-        \item \textbf{Suffixes} -- x[i:] for all i. Time complexity: $\bigO(n)$
-        \item \textbf{Prefixes} -- x[:i] for all i. Time complexity: $\bigO(n)$
-        \item \textbf{Substrings} -- x[i:j] for all $i \leq j$. Time complexity: $\bigO(n^2)$
-    \end{itemize}
-    
     A useful strategy for solving dynamic programming problems is as follows:
     
     \begin{enumerate}
-        \item Define subproblems.
+        \item Define subproblems. Subproblems for sequences will be one of the following:
+        \begin{enumerate}
+            \item Suffixes -- x[i:] for all i. Time complexity: $\bigO(n)$
+            \item Prefixes -- x[:i] for all i. Time complexity: $\bigO(n)$
+            \item Subsequences -- x[i:j] for all $i \leq j$. Time complexity: $\bigO(n^2)$
+        \end{enumerate}
         
-        \item Guess part of the solution.There are two kinds of guessing:
+        \item Guess part of the solution. There are two kinds of guessing:
         \begin{enumerate}
             \item Which existing subproblems to use to solve bigger subproblem.
             \item Or add more subproblems to guess, remember more features of the solution variations.
@@ -2093,81 +2264,204 @@ assert generate_parenthesis(3) == [
         \item Solve original problem. The runtime will be the number of subproblems multiplied by the running time per subproblem.
     \end{enumerate}
     
-    
-    
-    % - combinatoric problems
-    % - optimization problems
-    
-    % The function f is called an objective function, a loss function or cost function (minimization). A feasible solution that minimizes (or maximizes, if that is the goal) the objective function is called an optimal solution.
+    % In general, DP usually applies to recursive problems that attempt to count something, minimize or maximize a value, or answer a yes/no question. More specifically, some variants of DP problems include:
+    % \begin{enumerate}
+    %     \item Optimize or Count Set Partitions / Knapsack
+    %     \item Search or Count Subsequences
+    %     \item Pathfinding / DFS in 2D Grid
+    %     \item Sequential Left to Right Process / Sliding Window
+    %     \item Optimize Sortable Compatible Subproblems
+    %     \item Optimized Binary Guessing / Minimax
+    %     \item Turn-Based Games / Deque
+    % \end{enumerate}
+
+\subsubsection*{Unordered Choices Without Repetitions in 1D}
+
+\comment{
+Input: choice array can be reordered, constraint 
+
+dimension doesn't matter much
+
+though a greedy heuristic may improve the time taken for an exhaustive search to find an optimal solution in which case we would want to sort our choices in descending order
+
+Given a knapsack with a maximum weight capacity and a list of items with value and weights, maximize the amount of value we can fit within the knapsacks weight capacity.
+
+TC: O(N*M), SC: O(N)
+}
+
+Given a set of choices, we are tasked with including or excluding members of this set in any order, typically with the aim of maximizing or minimizing the cumulative sum or product of these choices under some constraint or exactly matching a specific target. Although the choices can be sorted, the constraint prevents a greedy algorithm from being correct. In general, our actual choices are unimportant and only their cumulative value matters and needs to be tracked. 
+
+Thus the features of the recursive states are the cumulative value so far, the current choice being considered, and the remaining constraint. The state transitions generally iterate over the different elements taking a max or min of their inclusion or exclusion. Subproblems are either prefixes or suffixes of the given choices.
+
+Notable Problems: 0/1 Knapsack, Partition Equal Subset Sum
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
-# It takes n steps to reach to the top of a set of stairs. Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
-
-def climbStairs(n): ## Fibonacci
-    dp = [1, 1]
-    for i in range(2, n + 1):
-        dp.append(dp[i-1] + dp[i-2])
-    return dp[n]
-
-# Compute the fewest number of coins that are needed to sum to an amount
-
-def coinChange(coins, amount):
-    MAX = float("inf")
-    dp = [0] + [MAX] * amount
-
-    for i in range(1, amount + 1):
-        dp[i] = min(dp[i - c] if i - c >= 0 else MAX for c in coins) + 1 
-        
-    return dp[-1] if dp[-1] == MAX else -1
-    # return [dp[-1], -1][dp[-1] == MAX]
-    
-# Given a knapsack with a maximum weight capacity and a list of items with value and weights, maximize the amount of value we can fit within the knapsacks weight capacity.
-
-def knapsack(capacity, weight, values, n):
+# Maximize the amount of value we can fit within the knapsacks weight capacity
+from functools import lru_cache
+@lru_cache(None)
+def knapsack_recursive(capacity, weight, values, n):
     if n == 0 or capacity == 0:
         return 0
-    # If weight is higher than capacity then it is not included
     if (weight[n-1] > capacity):
-        return knapsack(capacity, weight, values, n-1)
-    # return either nth item being included or not
+        return knapsack_recursive(capacity, weight, values, n-1)
     else:
         return max(
-            values[n-1] + knapsack(capacity-weight[n-1], weight, values, n-1),
-            knapsack(capacity, weight, values, n-1)
+            values[n-1] +
+            knapsack_recursive(capacity - weight[n-1], weight, values, n - 1),
+            knapsack_recursive(capacity, weight, values, n - 1)
+        )
 
+def knapsack_bottom_up(item_weights, item_values, capacity):
+    n = len(item_weights)
+    dp = [[0] * (capacity + 1) for _ in range(n)]
+    for i in range(1, n):
+        for w in range(1, capacity + 1):
+            wi = item_weights[i]
+            vi = item_values[i]
+            if wi <= w:
+                dp[i][w] = max([dp[i - 1][w - wi] + vi, dp[i - 1][w]])
+            else:
+                dp[i][w] = dp[i - 1][w]
+    return dp[n - 1][capacity]
+\end{lstlisting}
+
+\subsubsection*{Unordered Choices With Repetitions in 1D}
+As with before, we are given a set of choices and make unordered selections, but now we are able to repeat our selections any number of times. Similarly we may wish to optimize under a constraint, exactly match a target value, or count the number of combinations that can match the target.
+
+Similar to before, the features will be the cumulative value so far, the current choice being considered, and the remaining constraint. However, instead of iterating over the different choices and taking a max or min of their inclusion or exclusion once per transition, the state transitions will iterate over all choices for every state, allowing for repetitions.
+
+Notable Problems: Coin Change (Minimize Coins), Coin Change (Count Ways)
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+# Compute the fewest number of coins that are needed to sum to an amount
+def coin_change_min(coins, amount):
+    MAX = float("inf")
+    dp = [0] + [MAX] * amount
+    for i in range(1, amount + 1):
+        dp[i] = min(dp[i - c] if i - c >= 0 else MAX for c in coins) + 1 
+    return dp[-1] if dp[-1] == MAX else -1
+    
+# Count the number of combinations of the given coins can sum to the amount
+def coin_change_ways(amount, coins):
+    dp = [0] * (amount + 1)
+    for coin in coins:
+        for x in range(coin, amount + 1):
+            dp[x] += dp[x - coin]
+    return dp[amount]
+\end{lstlisting}
+
+\subsubsection*{Ordered Choices in 1D Sequences}
+
+\comment{
+- sliding window with state (?)
+
+for state1 in all values of state1:
+    for state2 in in all values of state2:
+        for ...
+            dp[state1][state2][...] = best_choice(choice1, choice2, ...)
+}
+
+We are given an ordered sequence and are typically given an implicit set of choices and an implicit constraint on which choices can be made in a given state. In a sense, we can view this category of problem as a state machine. Since there is only one dimension, processing a sequence from left to right can be interpreted as moving forward in time while making decisions at each step, generally with the goal of optimizing a cumulative sum or product. 
+
+
+The difference between this and the knapsack problem is that the order of our decisions matters and is usually subject to some constraints which often rely on how adjacent values can interact with each other. Because of this we may want to pre-process our given sequence using cumulative prefix or suffix sums or products. When dealing with products, it can be useful to track both a cumulative min so far as well as the desired cumulative max, because the min can be inverted after multiplying with a negative value and become the new maximum.
+
+Notable Problems: Climb stairs, Buy and Sell Stocks, House Robbers, Maximum Product Subarray
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+# Count distinct ways to reach the top of a set of stairs climbing 1 or 2 steps at a time
+def climb_stairs(n): ## Fibonacci
+    if n <= 1: return n
+    dp = [1, 2]
+    for i in range(3, n+1):
+        curr = dp[0] + dp[1]
+        dp[0], dp[1] = dp[1], curr
+    return dp[1]
+
+# House Robbers II: Max profit without robbing two adjacent houses in a circular street
+def rob_II(nums):
+    if len(nums) == 0 or nums is None: return 0
+    if len(nums) == 1: return nums[0]
+        
+    def rob_I(nums):
+        t1 = t2 = 0
+        for current in nums:
+            temp = t1
+            t1 = max(current + t2, t1)
+            t2 = temp
+        return t1
+    
+    return max(rob_I(nums[:-1]), rob_I(nums[1:]))
+
+# Best Time to Buy and Sell Stock IV (K transactions only)
+def max_profit(k: int, prices: List[int]) -> int:
+        n = len(prices)
+        if not prices or k == 0: return 0
+        # Equivalent to unlimited transactions, sum all the positive gains
+        if 2*k > n:
+            res = 0
+            for i, j in zip(prices[1:], prices[:-1]):
+                res += max(0, i - j)
+            return res
+
+        # dp[i][used_k][hold_state] = balance
+        # hold_state: 0 not holding, 1 holding
+        dp = [[[-math.inf]*2 for _ in range(k+1)] for _ in range(n)]
+        dp[0][0][0] = 0
+        dp[0][1][1] = -prices[0]
+        for i in range(1, n):
+            for j in range(k+1):
+                dp[i][j][0] = max(dp[i-1][j][0], dp[i-1][j][1]+prices[i])
+                # you can't hold stock without any transaction
+                if j > 0:
+                    dp[i][j][1] = max(dp[i-1][j][1], dp[i-1][j-1][0]-prices[i])
+        res = max(dp[n-1][j][0] for j in range(k+1))
+        return res
+\end{lstlisting}
+
+\subsubsection*{Ordered Choices in 2D Sequences (Subsequences)}
+
+\comment{
+Search or Count Subsequences.
+
+Optimize Sortable Compatible Subproblems
+- Increased dimensions correspond to job scheduling problems
+}
+As with before, we are given an input where order matters but instead of only traversing left to right in one dimension, there are two degrees of freedom and each choice has two dimensions. Consequentially, we can think of interacting with the state space in one of two ways: as searching for subsequences of a given sequence, or as traversing or path-finding in a graph using DFS. As such, the input we're given might be in the form of a one or two-dimensional arrays.  
+
+Notable Problems: Longest Increasing Subsequence (LIS), Longest Common Subsequence (LCS)
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
 # Given an unsorted array of integers, find the length of longest increasing subsequence.
-
 def lis(nums):
     n = len(nums)
     if not n: return 0
     dp = [1] * n
-
     for i in range(1, n):
         for j in range(i):
             if nums[i] > nums[j]:
-                dp[i] = max(dp[i], dp[j]+1)
-
+                dp[i] = max(dp[i], dp[j] + 1)
     return max(dp)
 
 # Given two strings text1 and text2, return the length of their longest common subsequence.
-
 import functools
-def lcs_cache(text1: str, text2: str) -> int:
-    ## similar to memoization, in recursive calls the decorator doesn't have to recompute but retrieves from the cache
+def lcs_recursive(text1: str, text2: str) -> int:
     @functools.lru_cache(None)
     def helper(i,j):
-        if i<0 or j<0:
+        if i < 0 or j < 0:
             return 0
-        if text1[i]==text2[j]:
-            return helper(i-1,j-1)+1
-        return max(helper(i-1,j),helper(i,j-1))
-    return helper(len(text1)-1,len(text2)-1)
+        if text1[i] == text2[j]:
+            return helper(i-1, j-1) + 1
+        return max(helper(i-1, j),helper(i, j-1))
+    return helper(len(text1) - 1, len(text2) - 1)
 
-def lcs_table(X, Y): 
-    m = len(X) 
-    n = len(Y) 
-    L = [[None]*(n + 1) for i in range(m + 1)] 
+def lcs_bottom_up(X, Y): 
+    m, n = len(X), len(Y)
+    L = [[None] * (n + 1) for i in range(m + 1)] 
     for i in range(m + 1): 
         for j in range(n + 1): 
             if i == 0 or j == 0 : 
@@ -2179,13 +2473,128 @@ def lcs_table(X, Y):
     return L[m][n] 
 \end{lstlisting}
 
+\subsubsection*{Ordered Choices in 2D+ Sequences (DFS)}
+
+As mentioned above, we can interpret the state space as a graph or 2D grid and can use DFS with memoization to exhastively search for paths. DP becomes valid when constraints are given on the directions we're allowed to traverse in, i.e. only up and right or only down and left, which lets us build up a solution from subproblems. Sometimes we can reduce our DP table to single array by cumulatively storing row and column information. We may also be able to reduce space by using the grid to overwrite memoized values in-place. DFS can generalize to larger dimensions as long as the constraints on traversal provide optimal substructure.
+
+Notable Problems: Unique paths in grid, Unique paths below diagonal (Catalan Number), Minimum/Maximum path weight, Unique paths with obstacles, Minimum Knight Moves
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+# Unique paths in grid
+def uniquePaths_2D_memo(self, m, n):
+    if not m or not n:
+        return 0
+    dp = [[1] * n for _ in range(m)]
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    return dp[-1][-1]
+
+def uniquePaths_1d_memo(self, m, n):
+    if not m or not n:
+        return 0
+    dp = [1] * n
+    for _ in range(1, m):
+        for j in range(1, n):
+            dp[j] += dp[j-1]
+    return dp[-1]
+    
+# Minimum path sum
+def minPathSum(self, grid):
+    m, n = len(grid), len(grid[0])
+    for i in range(1, n):
+        grid[0][i] += grid[0][i-1]
+    for i in range(1, m):
+        grid[i][0] += grid[i-1][0]
+    for i in range(1, m):
+        for j in range(1, n):
+            grid[i][j] += min(grid[i-1][j], grid[i][j-1])
+    return grid[-1][-1]
+\end{lstlisting}
+
+\subsubsection*{Unordered Choices in 2D Sequences (Binary Search)}
+
+\comment{
+def bisect_left(A, val):
+    lo, hi = 0, len(A) - 1
+    while lo <= hi:
+        mid = (lo + hi) //2
+        if A[mid] < val:
+            lo = mid + 1
+        elif val < A[mid]:
+            hi = mid - 1
+        else:
+            return mid
+    return lo
+}
+Again, we're given a two-dimensional input but are now able to reorder the subarrays. In general the trick is to first sort the subarrays by their first dimensional value and possibly inversely sort on their second dimensional value. 
+
+Now that we have a sorted 2D array of choices, we can make use of binary search to find target values. This may further reduce a polynomial exhaustive search runtime to a logarithmic one as is done in the longest increasing subsequence (LIS) problem.
+
+Notable Problems: Weighted Interval Scheduling, Russian Doll Envelopes, Rectangular Block Stacking
+
+Length of Longest Increasing Subsequence, Super egg drop, Guessing game with cost %Minimax
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+# Weighted Interval Scheduling
+import bisect
+def weightedJobScheduling(self, startTime, endTime, profit):
+    # Similar to unweighted greedy approach, we sort on earliest finish time
+    jobs = sorted(zip(startTime, endTime, profit), key=lambda v: v[1])
+    dp = [[0, 0]]
+    for s, e, p in jobs:
+        i = bisect.bisect(dp, [s + 1]) - 1
+        if dp[i][1] + p > dp[-1][1]:
+            dp.append([e, dp[i][1] + p])
+    return dp[-1][1]
+
+def length_of_LIS(self, nums):
+    dp = []
+    for i in range(len(nums)):
+        idx = bisect.bisect_left(dp, nums[i])
+        if idx == len(dp):
+            dp.append(nums[i])
+        else:
+            dp[idx] = nums[i]
+    return len(dp)
+
+# Russian Doll Envelopes
+def maxEnvelopes(self, arr):
+    # sort increasing in first dimension and decreasing in second
+    arr.sort(key=lambda x: (x[0], -x[1]))
+    # extract the second dimension and run the LIS
+    return length_of_LIS([i[1] for i in arr])
+\end{lstlisting}
+
+\subsubsection*{Turn-Based Games (Double-ended queue)}
+The core idea is to use tuples to store the game results of two people in the two-dimensional dp array. In general, there are three states: the starting index i, the ending index j, and the player whose turn it is. The state transitions decide between two choices: the leftmost index, or the rightmost index.
+
+Notable Problems: Nim Game, Stone Game, Line of Wines, Binary Tree Coloring Game, Maximum Points You Can Obtain from Cards
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def stoneGame(self, piles: List[int]) -> bool:
+    n = len(piles)
+    dp = [[0] * n for i in range(n)]
+    for i in range(n):
+        dp[i][i] = piles[i]
+    for d in range(1, n):
+        for i in range(n - d):
+            dp[i][i + d] = max(
+                piles[i] - dp[i + 1][i + d],
+                piles[i + d] - dp[i][i + d - 1],
+            )
+    return dp[0][-1] > 0
+\end{lstlisting}
 
     \subsection{Numerical Problems}
     
     \subsubsection{Bit Manipulation}
-    1 byte comprises of 8 bits. Any integer or character can be represented using bits, which we call its binary form (containing only 1 or 0) or its base 2 representation.
+    1 byte is comprised of 8 bits. Any integer or character can be represented using bits, which we call its binary form (containing only 1 or 0) or its base 2 representation.
     
-    For example, $14 = (1110)_2 = = 1 * 2^3 + 1 * 2^2 + 1 * 2^1 + 0 * 2^0$  
+    For example, $14 = (1110)_2 = 1 * 2^3 + 1 * 2^2 + 1 * 2^1 + 0 * 2^0$  
     
     At the heart of bit manipulation are the bit-wise operators: 
     \begin{itemize}
@@ -2209,9 +2618,9 @@ def lcs_table(X, Y):
         
         \item \textbf{XOR} -- $\wedge$ 
         
-        The exclusive-or operation takes two inputs and returns a 1 if either one or the other of the inputs is a 1, but not if both are.
+        The exclusive-or operation takes two inputs and returns a 1 if either one or the other of the inputs is a 1, but 0 if both are 1.
         
-        $A = 5 = (101)_2 , B = 3 = (011)_2$
+        $A = 5 = (101)_2$, $B = 3 = (011)_2$
         
         $A \wedge B = (101)_2 \wedge (011)_2 = (110)_2 = 6$
         
@@ -2321,6 +2730,16 @@ print(a)
 import operator
 def missingNumber(self, nums):
     return reduce(operator.xor, nums + range(len(nums)+1))
+
+# Use a 26-bit bitmask to indicate which lower case latin characters are inside the string.
+def get_mask(word):
+    mask = 0
+    for c in set(word):
+      mask |= (1 << (ord(c) - ord('a')))
+
+def has_common_chars(word_1, word_2):
+    mask_1, mask_2 = get_mask(word_1), get_mask(word_2)
+    return mask_1 & mask_b > 0
 \end{lstlisting}    
 
 \subsection{Combinatorial Problems}
@@ -2372,8 +2791,18 @@ import itertools
 # Get all combinations of [1, 2, 3] of length 2 
 comb = itertools.combinations([1, 2, 3], 2)
 
-# Get all combinations with an element-to-itself combination included 
+# Get all combinations with an element-to-itself combinations included 
 comb = itertools.combinations_with_replacement([1, 2, 3])
+
+import math
+
+# Count n choose k combinations (Python 3.8)
+n, k  = 10, 3
+math.comb(n, k)
+
+# < Python 3.8
+math.factorial(n) / (math.factorial(k) * math.factorial(n-k)
+
 \end{lstlisting}
 
     \subsubsection{Cartesian Product}
@@ -2391,6 +2820,7 @@ for a in A:
         results.append((a, b))
 
 ## Using itertools module
+list(itertools.product(A, B))
 
 # product of iterable with itself of size 2
 list(itertools.product(A, repeat=2))
@@ -2427,27 +2857,25 @@ assert iterative_sum_count == nth_partial_sum == contiguous_sublist_count
     \[
         !n=n!\sum_{i=0}^{n}{\frac {(-1)^{i}}{i!}}
     \]
-    
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
 import random
 
-def random_derangement(n):
+def random_derangement(arr):
     while True:
-        v = [i for i in range(n)]
-        for j in range(n - 1, -1, -1):
+        for j in range(len(arr) - 1, -1, -1):
             p = random.randint(0, j)
-            if v[p] == j:
+            if arr[p] == j:
                 break
             else:
-                v[j], v[p] = v[p], v[j]
+                arr[j], arr[p] = arr[p], arr[j]
         else:
-            if v[0] != 0:
-                return tuple(v)
+            if arr[0] != 0:
+                return arr
 \end{lstlisting}
 
     \subsubsection{Fibonacci Numbers}
-    A recursively defined sequence used to derive the golden ratio among other naturally occurring patterns and fractals.
+    A recursively defined sequence used to derive the golden ratio and other naturally occurring patterns and sequences.
     
     \[
          F_{0}=0, \ F_{1}=1 \ \text{and} \ 
@@ -2494,7 +2922,7 @@ def unique_paths(m, n):
     \subsubsection{Catalan Numbers}
     Catalan numbers are a sequence of natural numbers that occur in various counting problems,
     \begin{enumerate}
-        \item The number of lattice paths from $(0, 0)$ to $(n, n)$ that do not go above the diagonal line $y = x$.
+        \item The number of lattice paths from $(0, 0)$ to $(n, n)$ that do not go above the diagonal line $y = x$ (a.k.a Dyck paths).
         
         \item Forming a bijection with up/down movements as characters $X, Y$, shows that $C_n$ counts the number of Dyck words.
         
@@ -2522,21 +2950,39 @@ def unique_paths(m, n):
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
+import math  
+def catalan_direct(n):
+    first_term = 1 / (n + 1)
+    second_term = math.comb(2*n, n) # in python 3.8 and above
+    second_term = math.factorial(2*n) / (math.factorial(n) * math.factorial(2*n-n))
+    return int(first_term * second_term)
+
 def catalan_recursive(n):
     C = 1
     for i in range(0, n):
         C = C * 2*(2*i+1)/(i+2)
     return int(C)
-    
+
 def catalan_dp(n): 
     if n <= 1: return 1
-    dp = [0] * (n + 1) 
+    dp = [0] * n 
     dp[0] = dp[1] = 1
     for i in range(2, n + 1): 
         dp[i] = 0
         for j in range(i): 
-            dp[i] = dp[i] + dp[j] * dp[i-j-1] 
+            dp[i] = dp[i] + dp[j] * dp[i-j-1]
     return dp[n]
+
+def catalan_grid(n):
+    if n <= 1: return 1
+    dp = [[0] * (n) for _ in range(n)] 
+    for i in range(n):
+        dp[0][i] = 1
+    for i in range(1, n):
+        for j in range(1, n):
+          if i <= j: 
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    return dp[-1][-1] 
 \end{lstlisting}
 
     \subsubsection{Stars and Bars}
@@ -2605,10 +3051,10 @@ def stars_and_bars(n, k):
 \begin{enumerate}
     \item  Restate and reduce problem
     \begin{enumerate}
-        \item Carefully read the problem. If constraints on input are given, be sure to make a mental note of them.
-        \item Spend some time simplifying and re-stating problem in your own words. This helps solidify your understanding, plus translating the problem into its most essential form may reveal possible reductions.
+        \item Carefully read the problem. Spend some time simplifying and re-stating problem in your own words. This helps solidify your understanding, plus translating the problem into its most essential form may reveal possible reductions.
+        \item Clarify requirements, constraints on input and any other assumptions you may need or want to make. 
         \item What are problematic or challenging areas that might arise from certain inputs? For example, an input that causes a naive approach to traverse the decision tree toward an incorrect solution. These inputs can be converted into sufficiently complex test cases later.
-        \item Can you pre-process the input or re-interpret the desired output to simplify or reduce the problem? This may involve sorting a sequence, converting a matrix to a graph, etc.
+        \item Can you pre-process the input or re-interpret the desired output to simplify or reduce the problem to a simpler or familiar one? This may involve sorting a sequence, converting a matrix to a graph, etc.
         \item What is the best conceivable run time? If it's not yet obvious, this can be examined later during the optimization phase.
         \item What are your intuitions about possible solutions? You can revisit these ideas later.
     \end{enumerate}
@@ -2637,7 +3083,7 @@ def stars_and_bars(n, k):
         \item Consider boundary conditions if dealing with iterations, indexed arrays, or ranges.
         \item Describe sufficiently complex test case if none are given, consider problem areas.
         \item Consider minor optimizations to general approach, i.e. short-circuiting, more performant data structures, caching.
-        \item If using recursion, note the limitations of relying on the call stack.
+        \item If using recursion, note the limitations of relying on the call stack. Default limit in Python is 1000.
     \end{enumerate}
     
     \item Implement
