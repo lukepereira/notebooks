@@ -38,11 +38,12 @@
         \item \textbf{Graph databases} go in the opposite direction, targeting use cases where anything is potentially related to everything.
     \end{enumerate}
     
-    All three models (document, relational, and graph) are widely used today, and each is good in its respective domain. One model can be emulated in terms of another model —for example, graph data can be represented in a relational database—but the result is often awkward. That’s why we have different systems for different purposes, not a single one-size-fits-all solution.
+    All three models (document, relational, and graph) are widely used today, and each is good in its respective domain. One model can be emulated in terms of another model —for example, graph data can be represented in a relational database—but the result is often awkward. That’s why we have different systems for different purposes, not a single one-size-fits-all solution. 
     
     One thing that document and graph databases have in common is that they typically don’t enforce a schema for the data they store, which can make it easier to adapt applications to changing requirements. However, your application most likely still assumes that data has a certain structure; it’s just a question of whether the schema is explicit (enforced on write) or implicit (handled on read).
     
     Each data model comes with its own query language or framework, i.e. SQL, MapReduce, MongoDB’s aggregation pipeline, Cypher, SPARQL, or Datalog. 
+    
     
     \subsection{Storage and Retrieval }
     On a high level, storage engines fall into two broad categories: 
@@ -145,6 +146,11 @@
     
     \subsubsection{Denormalized Data}
     A denormalized dataset introduces some amount of redundancy or duplication in a normalized dataset, typically in the form of a cache or index, in order to speed up reads. A  denormalized value is a kind of precomputed query result, similar to a materialized view.
+    
+    \subsubsection{Row Store vs. Column Store}
+    A \textbf{row store} (or row-oriented database) stores a sequence of records that contains the fields of one row in the table. In a \textbf{column store}, the entries of a column are stored in contiguous memory locations. At a basic level, row stores are great for transaction processing. Column stores are great for highly analytical query models. Row stores have the ability to write data very quickly, whereas a column store excel at aggregating large volumes of data for a subset of columns. By storing data in columns rather than rows, the database can more precisely access the data it needs to answer a query rather than scanning and discarding unwanted data in rows.
+    
+    Column stores typically make use of Log-structured merge-tree (LSM-Trees) which provide indexed access to files with high insert volume. Row stores typically use B-Trees. Column-compression is a column-level operation that reduces the size of data when it is stored. Compression conserves storage space and reduces the size of data that is read from storage, which reduces the amount of disk I/O and therefore improves query performance.
     
     \subsubsection{Data Warehouse}
     A database in which data from several different OLTP systems has been combined and prepared to be used for analytics purposes, i.e. as an OLAP.
@@ -503,7 +509,9 @@
     \begin{table}[H]
         \centering
         \begin{tabular}{|l|l|}
+            \hline
             \textbf{Availability \%	}& \textbf{Downtime per year} \\ 
+            \hline
             90\% ("one nine") & 36.53 days \\
             95\% ("one and a half nines") &	18.26 days \\
             97\% & 10.96 days	\\
@@ -520,6 +528,7 @@
             99.99999\% ("seven nines")	& 3.16 seconds	\\
             99.999999\% ("eight nines") & 315.58 milliseconds \\
             99.9999999\% ("nine nines") & 31.56 milliseconds \\
+            \hline
         \end{tabular}
     \end{table}
     
@@ -541,7 +550,9 @@
     A global file system (GFS), in computer science, is cluster of files that are shared between a number of computers and end systems from which data or services are accessed, stored and fetched. The computer systems may be physically distant or may be a part of same network.
     
     \subsubsection{Peer-to-peer}
-    Peer-to-peer (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. Peers make a portion of their resources, such as processing power, disk storage or network bandwidth, directly available to other network participants, without the need for central coordination by servers or stable hosts.
+    \textbf{Peer-to-peer} (P2P) computing or networking is a distributed application architecture that partitions tasks or workloads between peers. Peers are equally privileged, equipotent participants in the application. Peers make a portion of their resources, such as processing power, disk storage or network bandwidth, directly available to other network participants, without the need for central coordination by servers or stable hosts.
+    
+    In the \textbf{BitTorrent} file distribution system, a torrent file contains metadata about files and folders to be distributed and a list of the network locations of trackers and is signed using cryptographic hash values for verifying file integrity. Trackers are computers that help participants in the system find each other and form efficient distribution groups called swarms. Each file to be distributed is divided into small information chunks called pieces. Downloading peers achieve high download speeds by requesting multiple pieces from different computers simultaneously in the swarm. Once obtained, these pieces are usually immediately made available for download by others in the swarm.
     
     \subsubsection{Shared-nothing}
     An architecture in which independent nodes -- each with their own CPUs, memory, and disks -- are connected via a conventional network, in contrast to shared-memory or shared-disk architectures.
@@ -638,7 +649,7 @@
     
     to ensure that all of this processing remains correct in the presence of faults strong integrity guarantees can be implemented scalably with asynchronous event processing by using end-to-end operation identifiers to make operations idempotent and by checking constraints asynchronously. Clients can either wait until the check has passed, or go ahead without waiting but risk having to apologize about a constraint violation. This approach is much more scalable and robust than the traditional approach of using distributed transactions, and fits with how many business processes work in practice.
     
-    By structuring applications around dataflow and checking constraints asynchronously, we can avoid most coordination and create systems that maintain integrity but still perform well, even in geographically distributed scenarios and in the presence of faults. Audits can be used to verify the integrity of data and detect corruption.
+    By structuring applications around data flow and checking constraints asynchronously, we can avoid most coordination and create systems that maintain integrity but still perform well, even in geographically distributed scenarios and in the presence of faults. Audits can be used to verify the integrity of data and detect corruption.
 
     \subsection{Concepts}
     
@@ -657,8 +668,11 @@
         \item Shuffle -- worker nodes redistribute data based on the output keys (produced by the map function), such that all data belonging to one key is located on the same worker node.
         \item Reduce: worker nodes now process each group of output data, per key, in parallel.
     \end{enumerate}
-    
+
     For large enough problems, it’s more about disk and network performance than CPU \& DRAM.
+    
+    \subsubsection{Fan-out}
+    Fan-out is a messaging pattern used to model an information exchange that implies the delivery (or spreading) of a message to one or multiple destinations possibly in parallel, and not halting the process that executes the messaging to wait for any response to that message.
     
     \subsubsection{Systems of Record}
     A system that holds the primary, authoritative version of some data, also known as  the source of truth. Changes are first written here, and other datasets may be derived from the system of record.
@@ -735,6 +749,7 @@
     \textbf{Numbers Everyone Should Know (2012)}
     \begin{table}[H]
     \begin{tabular}{|l|l|}
+    \hline
         L1 cache reference & 0.5 ns  \\
         Branch mispredict &  5 ns \\
         L2 cache reference & 7 ns \\
@@ -746,13 +761,15 @@
         Round trip within same datacenter & 500,000 ns \\
         Disk seek & 10,000,000 ns \\
         Read 1 MB sequentially from disk & 20,000,000 ns \\
-        Send packet CA $\to$ Netherlands $\to$ CA & 150,000,000 ns 
+        Send packet CA $\to$ Netherlands $\to$ CA & 150,000,000 ns \\
+    \hline
     \end{tabular}
     \end{table}
     
     \textbf{How many operations in one second? (2020)}
     \begin{table}[H]
     \begin{tabular}{|l|l|l|}
+    \hline
         C  & iterations over for loop & 550,000,000 \\
         python & iterations over for loop & 68,000,000 \\
         python & insertions into a dictionary & 11,000,000 \\
@@ -771,6 +788,7 @@
         python & bytes hashed using bcrypt & 3 \\
         C & size of array allocated and filled in order & 376,000,000 \\
         C & size of array allocated and filled out of order & 68,000,000 \\
+    \hline
     \end{tabular}
     \end{table}
     
@@ -914,7 +932,7 @@
     
     Layer4 (L4) works on Layer4 (and Layer3) of the OSI model. When a client makes a request, it creates a TCP connection with the load balancer. The Load Balancer then uses the same TCP connection that the client created with it, to connect with one of the upstream servers. The source and destination IP of each packet is changed by the load balancer using NAT (Network address translation). When a response is received from the server, the same translation is performed again at the load balancer.
     
-    There is another type of L4 load balancer known as TCP/UDP termination load balancers where there are two different TCP connections. When using L4 load balancers, we are unaware of the data. This means we cannot make any decisions based on data in our request. The only thing we have is IPs (source and destination)and ports.
+    There is another type of L4 load balancer known as TCP/UDP termination load balancers where there are two different TCP connections. When using L4 load balancers, we are unaware of the data. This means we cannot make any decisions based on data in our request. The only thing we have is IPs (source and destination)and ports. Load balancer can work at TCP level as long as it is at layer4. This is because TCP load balancers are for applications that do not use HTTP. Layer7 in the OSI model, for example, expects all network traffic to be HTTP.
     
     Cons: No smart load balancing, Doesn’t work with streaming/keep-alive connections, No TLS termination
 
@@ -925,7 +943,7 @@
     L7 load balancer creates a TCP connection with every upstream for a single client connection rather than choosing a single upstream. This means when A creates a connection with the load balancer, the load balancer creates two connections one with C and one with D.
     
     \subsubsection{CDN and Edge Computing}
-    Content Delivery Networks (CDN) serve static content using servers closest to the client.
+    Content Delivery Networks (CDN) serve static content with low-latency and low-cost using servers closest to the client. On the other hand, object storage is durable and highly available and is typically used as a reliable back-up of the content in a CDN.
     
     Edge computing performs computation or processing using servers closest to the client.
     
@@ -961,6 +979,63 @@
     The Two Generals' Problem is a thought experiment in which two generals are only able to communicate with one another by sending a messenger through enemy territory. The experiment asks how they might reach an agreement on the time to launch an attack, while knowing that any messenger they send could be captured. It is meant to illustrate the pitfalls and design challenges of attempting to coordinate an action by communicating over an unreliable link.
     
     It relates to Transmission Control Protocol, where it shows that TCP can't guarantee state consistency between endpoints.
+
+\newpage
+\section{System Design Interview}
+\subsection{Outline}
+\begin{enumerate}
+    \item Requirements - 5-10 mins
+    \begin{enumerate}
+        \item Exploratory Questions
+        \item Use Cases
+        \item Functional/Out of scope/Extended
+        \item Non-Functional
+    \end{enumerate}
+    \item Capacity Estimates - 2-5 mins
+    \item High Level Design - 5-10 mins
+    \item Data Model / APIs - 5 mins
+    \item Scale each component in HLD depending on NFR - 10 mins
+    \item Verify your design / Discuss trade-offs - 5 mins
+\end{enumerate}
+
+\subsection{Process}
+
+\subsection{Architectural Patterns}
+    
+    A \textbf{real-time messaging} server connects clients to a simulated thread and assigns them a receiving queue with an id or reference being stored into a table. When sending messages to another client, the service checks for a receiver in the queue reference table: if the recipient has a queue assigned to them , then they currently connected, so the message is pushed to the receiver's queue and read by their client. Otherwise the message is written to a persistent database. Upon reconnecting, the client polls the persistent database for any unread messages and updates their state and returns the message to the client.
+
+    \textbf{Timelines and news feeds} constructed by user follows or subscribes, like in Twitter, cannot make multiple queries to a database for all follower ids then each of their recent tweets on every visit to the homepage. Instead a distributed cache like Redis pre-computes and stores relevant posts from people the user follows in a data structure like a list. When a user makes a post, the content is distributed to all of their followers. If posting user's follower count is above some threshold, we don't distribute their posts to other users but store in their own cached list and we add the user to a table of users with high-follower counts. When fetching a timeline, the service retrieves messages already pre-loaded in their queue from accounts with low/medium follower and then polls the cached data of any other high-follower users, then collates all the data into a feed based on timestamps and other rating rules.
+    
+    \textbf{Trending analysis} may use a streaming service like Kafka to run data through a pipeline made of stateless operators that can be scaled and run in parallel with outputs connected to one another by queues, i.e. filter, parse, geolocation, count location, count tags, rank.
+    
+    \textbf{Real-time ranking and leader boards} would not be able to scale when using traditional RDBMS. Instead we can use the ordered sets data structure offered by Redis, an in-memory distributed cache. Sorted sets contain a list of members with associated scores. Although set members are unique, score values are permitted to repeat. Scores are used to rank the list in ascending order. One key difference between sorted sets and relational databases is when the tool sorts the list. During insert or update operations, sorted sets automatically position the item in the right order. Because of this pre-sorting, queries run significantly faster. You can quickly and efficiently query the middle of the list or get the rank of a specific member. Sorted sets finds specific rankings in logarithmic time proportional to the number of members. By contrast, relational databases order items during querying, adding computational burden to the database. Obtaining the rank of a specific player involves quadratic time complexity.
+    
+    \textbf{A distributed log system} can use an ELK stack. LogStash or Filebeat can be used for ingesting logs from various sources by running as a daemon directly on servers and configured to read and parse data from desired log files. It can write to an Elasticsearch cluster which can be queried by date ranges or keywords using Kibana.
+    
+    A \textbf{cloud-based file storage system} like google drive or dropbox usually provides fast uploads and versioning. Instead of storing the full copies of each modified version in cloud storage and to increase upload speeds, we can split up files into chunks that will each be assigned a hash. The chunks are all uploaded concurrently and the chunk hashes, their orders and other details are captured in metadata files that are stored both internally and in an external SQL db. When a file is modified, only the chunk containing changes will be uploaded and have a its new hash updated. To manage synchronization among all of a client's devices, a queue is maintained on the server that updates the local state of any client as they connect to the service. If we can't use a managed cloud storage system like s3, we can distribute files among different hard-drive heavy servers with replicas, and use a metadata db to store mappings of files to servers that can also maintain health and fail overs of the storage servers.
+    
+    Sharing multimedia files are handled by first uploading to a cloud storage system and CDN and then returning a hash of the file's location. The hash is then shared to the recipient at the app level that uses it to retrieve and download the original multimedia file. Metadata of the file is stored in a standard SQL database.
+    
+    A \textbf{real-time map}, like in a video game, requires low latency between user action and feedback between many users. To achieve this, a client interacts with 3 services: a connection server, a world server and a game server. The connection/proxy server handles overhead of connection auth/decoding/decryption/decompression request. The world server assigns a client to a game server depending on their location in the map, tracks the players state in order to orchestrate region assignments, and coordinates the different game servers to achieve any global game logic. Multiple game servers exist for different pieces of the map and they run the actual game sessions. Less popular locations in the map can be assigned to a single server. Each region session is a singleton. To handle crossing regions seamlessly, adjacent game servers share information about state of objects and players who are near edges directly with each other. When working with real world data or large maps, it can be expensive to use longitude and latitude, instead our regions can be given rectangular or Spherical Geometry (google's s2) with ids.
+    
+    A \textbf{real-time tracking and dispatch system} like Uber divides global map into cells using spherical geometry based cells, uses consistent hashing to distribute cell data to servers. A client's finds all cells it nearby radius intersects. Web-sockets listen to streaming data from user and driver clients. Pipeline gets available drivers from client web-socket connections, appending streaming jobs into Kafka queue and determines appropriate region id. User requests are sent to dispatch API which assigns jobs to appropriate regional server and determines ETA using 3rd party maps API (Google, Mapbox). Adjacent regional servers communicate with each other to reach consensus on which drivers to notify.
+    
+    Generating unique hashes in a distributed system can use a standalone \textbf{Key Generation Service} (KGS) that generates random six-letter strings beforehand and stores them in a database (key-DB). This prevents waiting for the computation and avoids duplication or collisions. To avoid concurrency issues, the KGS can use two tables to store keys: one for keys that are not used yet, and one for all the used keys. As soon as KGS gives keys to one of the servers, it can move them to the used keys table. KGS can always keep some keys in memory so that it can quickly provide them whenever a server needs them. KGS also has to make sure not to give the same key to multiple servers. For that, it must synchronize (or get a lock on) the data structure holding the keys before removing keys from it and giving them to a server. To prevent the KGS from being a single point of failure, we can have a standby replica of KGS that can take over to generate and provide keys.
+    
+    \textbf{Document search engine} make use of offline pipeline to pre-processes document: filters out unnecessary stop words noise, uses stemming or lemmatisation to get common base words, converts to lowercase. Then inserts word into an inverted index with rows of keywords, frequency, document id with occurrence. Rankings can be derived using page rank with other features like freq, reputation and age of the page. Take into account conjunctive (AND) or disjunctive (OR) on key words, order of key words. Keywords are sorted alphabetically allowing for binary search on prefixes or use Tries/suffix trees. Searching across several disparate data centers can be done using a scatter and gather approach, where a service queries several DBs in parallel then collates their results. If a server is taking too long, instead of waiting we can return partial results.
+    
+    In a \textbf{video streaming service}, a load balancer routes client to different servers. Pre-processing pipeline transcodes video into different format/codecs/resolutions and creates multiple copies of video for different devices and internet speeds. This can be done offline by chunking, transcoding, and merging the large files and then uploading to distributed CDN network.
+    
+    \textbf{Collaborative documents} use operation transformation event parsing and differential sync. OT is an optimistic concurrency mechanism that allows two editors to modify the same document that simplifies resolving conflicts so that neither user resolution nor locking is necessary. We have an authoritative server that receives all operations from users and serves unified the document. It works by storing a chronological list for each document of every change. ``Type an H at position 0". ``Type a i at position 1". If users are collaboratively editing, we get concurrent edits, then the first edit to arrive at the server gets recorded as usual. If the second edit is out of date, we use the log of operations as a reference to figure out what the user really intended, usually this just means updating character positions. Then we pretend as if that's what the user meant all along and append the new (edited) operation. Its like real-time git-rebase. Let a = client operation, b = server operation, a' = server operation, b' = client operation. Then, operational transformations can be expressed xform(a,b) = (a',b'), where b' composed a = a' composed b. Differential synchronization works similarly to git diff by detecting differences in a client's local copy vs. a global copy which is stored and updated as a patch on both the local and remote copies. The server copy of the document is the source of truth, it broadcasts the changed copy to all connected clients and updates their local copy. To save space, only the diff is saved instead of the complete redundant parts of the document. 
+    
+    The big problem with OT is that dependency on a centralized server. \textbf{Conflict-free Replicated Data Type} (CRDTs) approach the problem slightly differently to allow real-time editing without needing a central source of truth. they provide Strong Eventual Consistency (SEC), i.e. all actors will eventually converge to the same state without data loss.
+    
+    In a \textbf{web crawler}, seed URLs are generated from script and stored in database or file with a null last visited date. A management service periodically reads from the database, performs HTTP head requests to detect updates and inserts URL with metadata into pipeline of priority queues. A server using curl/headless browser/server-side rendering waits for free threads to read from the queue and then fetches and renders web-pages asynchronously. To cut down the request time, we can use our own DNS resolver to get the host IP of the websites before fetching them. After rendering web-page, we can cache in local memory or in a distributed cache like Redis for upcoming server processing and can store a Simhash hash of the core page content in a database to compare diffs and avoid reprocessing unchanged pages. The web-page is added into a queue for further page analysis/processing like extracting more unique URLs on the domains or desired content. Visited URLs are upserted into the URLs database with the current time and any unique URLs are passed back into the management service queues to continue exploration of the web domain.
+    
+    To handle \textbf{distributed transactions in micro-services}, we can use sagas or two/three-phase commits. Two-phase commit consists of two parts: prepare and commit. The orchestrator receives a client request for a transaction and forwards it two a coordinator to create a transaction id and prepares a transaction by performing any prerequisite actions to micro-services with timeout detection. If they are successful, then the coordinator commits and performs the final action, otherwise it rolls-back previous actions and returns a failure error code.
+    
+    A \textbf{job scheduler} can use an SQL database with an indexed date-time column and status column as a priority queue to enque process and deque jobs while remaining consistent.
+
 
 \newpage
 \begin{thebibliography}{}
