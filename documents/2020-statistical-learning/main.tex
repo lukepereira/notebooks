@@ -1099,6 +1099,81 @@ As mentioned before, one should never use sum of squared errors, p-values, $R^2$
 
 \newpage
 \section{Moving Beyond Linearity}
+Although However, standard linear regression can have  have advantages over other approaches in terms of interpretation and inference, it has significant limitations in terms of predictive power because the linearity assumption is almost always an approximation, and sometimes a poor one. 
+
+\begin{itemize}
+    \item \textit{Polynomial regression} extends the linear model by adding extra predictors, obtained by raising each of the original predictors to a power. This approach provides a simple way to provide a nonlinear fit to data.
+    \item \textit{Step functions} cut the range of a variable into $K$ distinct regions in order to produce a qualitative variable. This has the effect of fitting a piecewise constant function.
+    \item \textit{Regression splines} are more flexible than polynomials and step functions, and in fact are an extension of the two. They involve dividing the range of X into K distinct regions. Within each region, a polynomial function is fit to the data. However, these polynomials are constrained so that they join smoothly at the region boundaries, or knots. Provided that the interval is divided into enough regions, this can produce an extremely flexible fit.
+    \item Smoothing splines are similar to regression splines, but arise in a slightly different situation. Smoothing splines result from minimizing a residual sum of squares criterion subject to a smoothness penalty.
+    \item Local regression is similar to splines, but differs in an important way. The regions are allowed to overlap, and indeed they do so in a very smooth way.
+    \item Generalized additive models allow us to extend the methods above to deal with multiple predictors.
+\end{itemize}
+\subsection{Polynomial Regression}
+Historically, the way to extend linear regression was to replace the standard linear model,
+\[
+    y_i = \beta_0 + \beta_1 x_i + \epsilon_i
+\]
+with with a polynomial function,
+\begin{equation}
+    y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \dots + \beta_d x_i^d + \epsilon_i
+\end{equation}
+in an approach known as \textit{polynomial regression}. Using a large enough degree $d$, a polynomial regression allows us to produce an extremely non-linear curve but in General, it is unusual
+to use $d$ greater than 3 or 4 because for large values of d, the polynomial curve can become overly flexible and can take on some very strange shapes. This is especially true near the boundary of the $X$ variable.
+
+\subsection{Step Functions}
+Using polynomial functions of the features as predictors in a linear model imposes a global structure on the non-linear function of X. We can instead use \textit{step functions} in order to avoid imposing such a global structure. We break the range of $X$ into bins, and fit a different constant in each bin. This amounts to converting a continuous variable into an \textit{ordered categorical variable}.
+
+We create cutpoints $c_1, c_2,\dots,c_K$ in the range of $X$, and then construct $K + 1$ new variables, sometimes called \textit{dummy variables},
+\begin{align}
+\begin{split}
+    C_0(X) &= I(X<c_1), \\
+    C_1(X) &= I(c_1 \leq X < c_2),\\
+    C_2(X) &= I(c_2 \leq X<c_3),\\
+    &\vdots \\
+    C_{K-1}(X) &= I(c_{K-1} \leq X < c_K),\\
+    C_K(X) &= I(c_K \leq X),
+\end{split}
+\end{align}
+where $I()$ is an \textit{indicator function} that returns a 1 if the condition is true, and 0 otherwise. Notice that for any value of $X$, $C_0(X) + C_1(X) + \dots + C_K(X) = 1$, since $X$ must
+be in exactly one of the $K + 1$ intervals. We then use least squares to fit a linear model using $C_1(X), C_2(X),\dots,C_K(X)$ as predictors:
+\begin{equation}
+    y_i = \beta_0 + \beta_1C_1(x_i) + \beta_2C_2(x_i) + \dots + \beta_KC_K(x_i) + i.
+\end{equation}
+Note that when $X<c_1$, all of the predictors in the above equation are zero, so $\beta_0$ can be interpreted as the mean value of $Y$ for $X<c_1$. Then the model predicts a response of $\beta_0+\beta_j$ for $c_j \leq X<c_j+1$. So $\beta_j$ represents the average increase in the response for $X$ in $c_j \leq X<c_j+1$ relative to $X<c_1$.
+
+Unfortunately, unless there are natural breakpoints in the predictors, piecewise-constant functions can miss the action. Nevertheless, step function approaches are very popular in biostatistics and epidemiology, among other disciplines. For example, 5-year age groups are often used to define the bins.
+
+\subsection{Basis Functions}
+Polynomial and piecewise-constant regression models are in fact special cases of a \textit{basis function} approach. The idea is to have at hand a family of functions or transformations that can be applied to a variable $X$: $b_1(X), b_2(X),\dots, b_K(X)$. Instead of fitting a linear model in $X$, we fit the model
+\begin{equation}
+    y_i = \beta_0 + \beta_1b_1(x_i) + \beta_2b_2(x_i) + \dots + \beta_Kb_K(x_i) + \epsilon_i.
+\end{equation}
+Note that the basis functions $b_1(), b_2(),\dots,b_K()$ are fixed and known ahead of time. We can think of the model as a standard linear model with predictors $b_1(x_i), b_2(x_i),\dots, b_K(x_i)$. Hence, we can use least squares to estimate the unknown regression coefficients in the model. Importantly, this means that all of the inference tools for linear models, such as standard errors for the coefficient estimates and F-statistics for the model’s overall significance, are also available in this setting.
+
+For polynomial regression, the basis functions are $b_j(x_i) = x_i^j$, and for piecewise constant functions they are $b_j (x_i) = I(c_j \leq x_i < c_{j+1})$. Many alternatives for our basis functions are possible like wavelets or Fourier series or the very common choice of regression splines.
+
+\subsection{Regression Splines}
+\textit{Regression splines} are a flexible class of basis functions that extends upon the polynomial regression and piecewise constant regression approaches.
+
+\subsubsection{Piecewise Polynomials}
+
+\subsubsection{Constraints and Splines}
+\subsubsection{The Spline Basis Representation}
+\subsubsection{Choosing the Number and Locations of the Knots}
+\subsubsection{Comparison to Polynomial Regression}
+
+\subsection{Smoothing Splines}
+\subsubsection{An Overview of Smoothing Splines}
+\subsubsection{Choosing the Smoothing Parameter \texorpdfstring{$\lambda$}{lambda}}
+
+\subsection{Local Regression}
+
+\subsection{Generalized Additive Models}
+\subsubsection{GAMs for Regression Problems}
+\subsubsection{GAMs for Classification Problems}
+
+
 
 \newpage
 \section{Tree-based Methods}
@@ -1127,6 +1202,7 @@ Gareth James, Daniela Witten, Trevor Hastie, Robert Tibshirani. An Introduction 
 http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR\%20Seventh\%20Printing.pdf
 
 % https://www.dataschool.io/15-hours-of-expert-machine-learning-videos/
+
 
 \bibitem[]{}
 https://arxiv.org/pdf/1010.3162.pdf
