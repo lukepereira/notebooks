@@ -395,14 +395,14 @@ def monotonic_stack(A):
 
 def trap_water(height):
     stack, water = [], 0
-    for i, e in enumerate(height):
-        while stack and e >= stack[-1][0]:
+    for i, v in enumerate(height):
+        while stack and v >= stack[-1][0]:
             popped, _ = stack.pop()
             # we need a left and right border to contain water
             if stack:
                 left_border, j = stack[-1]
                 # compute the cumulative water
-                water += min(left_border-popped, e-popped)*(i-j-1)
+                water += min(left_border-popped, v-popped)*(i-j-1)
         stack.append((e, i))
     return water
 
@@ -1049,7 +1049,7 @@ A = [-14, -10, 2, 108, 108, 243, 285, 285, 285, 401]
 
 # Bisect module implements most binary search use cases
 import bisect
-## insert into sorted array while maintaining order in O(logn)
+## insert into sorted array while maintaining order in O(n)
 bisect.insort(A, 3)
 ## return index of first occurence of target element O(logn)
 bisect.bisect_left(A, -10)
@@ -2512,7 +2512,7 @@ As with before, we are given a set of choices and make unordered selections, but
 
 Similar to before, the features will be the cumulative value so far, the current choice being considered, and the remaining constraint. However, instead of iterating over the different choices and taking a max or min of their inclusion or exclusion once per transition, the state transitions will iterate over all choices for every state, allowing for repetitions.
 
-Notable Problems: Coin Change (Minimize Coins), Coin Change (Count Ways)
+Notable Problems: Coin Change (Minimize Coins), Coin Change (Count Ways), Word Break II
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -2710,13 +2710,13 @@ def bisect_left(A, val):
 }
 Again, we're given a two-dimensional input but are now able to reorder the subarrays. In general the trick is to first sort the subarrays by their first dimensional value and possibly inversely sort on their second dimensional value. 
 
-Now that we have a sorted 2D array of choices, we can make use of binary search to find target values. This may further reduce a polynomial exhaustive search runtime to a logarithmic one as is done when finding the length of longest increasing subsequence (LIS). 
+Now that we have a sorted 2D array of choices, we can make use of binary search to find target values. This may further reduce a polynomial exhaustive search runtime to a logarithmic one as is done when finding the length of longest increasing subsequence (LIS). Since we are using binary search, we can't initialize the dp array with empty or placeholder values and instead need to iteratively append to it. 
 
-Since we are using binary search, we can't initialize the dp array with empty or placeholder values and instead need to iteratively append to it. 
+Notable Problems: Weighted Interval Scheduling, Russian Doll Envelopes, Rectangular Block Stacking, Length of Longest Increasing Subsequence
 
-Notable Problems: Weighted Interval Scheduling, Russian Doll Envelopes, Rectangular Block Stacking
+A closely related version of this category is a \textbf{minimax} problem where we aim to minimize the possible loss for a worst case (maximum loss) scenario. This is generally in the form of determining the minimum number of guesses or the minimum cost required to perform a binary search.
 
-Length of Longest Increasing Subsequence, Super egg drop, Guessing game with cost %Minimax
+Super egg drop, Guessing game with cost %Minimax
 
 \vspace{8pt} \emph{Python Implementation}
 \begin{lstlisting}[language=Python]
@@ -2747,8 +2747,25 @@ def length_of_LIS(nums):
 def maxEnvelopes(arr):
     # sort increasing in first dimension and decreasing in second
     arr.sort(key=lambda x: (x[0], -x[1]))
-    # extract the second dimension and run the LIS
     return length_of_LIS([i[1] for i in arr])
+    
+# Given K eggs and N floors find the min number of moves needed to guarantee you find the lowest floor needed to break the egg
+def superEggDrop(self, K: int, N: int) -> int:
+        @lru_cache(None)
+        def dfs(eggs, floors):
+            if eggs == 1 or floors == (0 or 1): 
+                return floors
+            lo, hi = 0, floors
+            while lo < hi:
+                mid = (lo + hi) // 2
+                left, right = dfs(eggs - 1, mid-1), dfs(eggs, floors - mid)
+                if left < right:
+                    lo = mid + 1
+                else:
+                    hi = mid
+            res = 1 + max(dfs(eggs-1, lo-1), dfs(eggs, floors-lo))
+            return res
+        return dfs(K, N)
 \end{lstlisting}
 
 \subsubsection*{Turn-Based Games (Double-ended queue)}
