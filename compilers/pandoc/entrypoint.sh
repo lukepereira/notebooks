@@ -48,8 +48,9 @@ if [ -n "$root_file" ];
       echo "processing line: ${LINE}"
       cd "$(dirname "${LINE}")";
       pandoc $args "$(basename ${LINE})" -o main.md;
-      pandoc --standalone --mathjax -f markdown -t html main.md -o index.html
-      ls -R
-      cd -
+      pandoc --standalone --mathjax -f markdown -t html main.md -o index.html;
+      echo "debug";
+      ls -la;
+      cd -;
     done < $changed_files
 fi
