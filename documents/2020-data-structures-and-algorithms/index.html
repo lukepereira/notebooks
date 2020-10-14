@@ -595,14 +595,14 @@
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true"></a></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true"></a><span class="kw">def</span> trap_water(height):</span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true"></a>    stack, water <span class="op">=</span> [], <span class="dv">0</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>    <span class="cf">for</span> i, e <span class="kw">in</span> <span class="bu">enumerate</span>(height):</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>        <span class="cf">while</span> stack <span class="kw">and</span> e <span class="op">&gt;=</span> stack[<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>]:</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true"></a>    <span class="cf">for</span> i, v <span class="kw">in</span> <span class="bu">enumerate</span>(height):</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true"></a>        <span class="cf">while</span> stack <span class="kw">and</span> v <span class="op">&gt;=</span> stack[<span class="op">-</span><span class="dv">1</span>][<span class="dv">0</span>]:</span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true"></a>            popped, _ <span class="op">=</span> stack.pop()</span>
 <span id="cb4-16"><a href="#cb4-16" aria-hidden="true"></a>            <span class="co"># we need a left and right border to contain water</span></span>
 <span id="cb4-17"><a href="#cb4-17" aria-hidden="true"></a>            <span class="cf">if</span> stack:</span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true"></a>                left_border, j <span class="op">=</span> stack[<span class="op">-</span><span class="dv">1</span>]</span>
 <span id="cb4-19"><a href="#cb4-19" aria-hidden="true"></a>                <span class="co"># compute the cumulative water</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>                water <span class="op">+=</span> <span class="bu">min</span>(left_border<span class="op">-</span>popped, e<span class="op">-</span>popped)<span class="op">*</span>(i<span class="op">-</span>j<span class="op">-</span><span class="dv">1</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true"></a>                water <span class="op">+=</span> <span class="bu">min</span>(left_border<span class="op">-</span>popped, v<span class="op">-</span>popped)<span class="op">*</span>(i<span class="op">-</span>j<span class="op">-</span><span class="dv">1</span>)</span>
 <span id="cb4-21"><a href="#cb4-21" aria-hidden="true"></a>        stack.append((e, i))</span>
 <span id="cb4-22"><a href="#cb4-22" aria-hidden="true"></a>    <span class="cf">return</span> water</span>
 <span id="cb4-23"><a href="#cb4-23" aria-hidden="true"></a></span>
@@ -1150,7 +1150,7 @@
 <h3 id="flow-networks">Flow Networks</h3>
 <p>A flow network is a directed graph where each edge has a capacity and each edge receives a flow, usually represented as a fraction <span class="math inline">\(flow_i/capacity_i\)</span>. A flow must satisfy the restriction that the amount of flow into a node equals the amount of flow out of it, unless it is a source <span class="math inline">\(s\)</span>, which has only outgoing flow, or sink <span class="math inline">\(t\)</span>, which has only incoming flow. Often we are in search of the max flow of the network using which can be found using the <strong>Ford–Fulkerson algorithm</strong>. Or we may be in search of a <strong>bottleneck</strong> node, <span class="math display">\[bottleneck = min(capacity_i - flow_i \ \ \forall i  \text{ in the network}).\]</span></p>
 <h3 id="union-find">Union-Find</h3>
-<p>A union–find data structure (a.k.a disjoint-set union or DSU) stores a collection of non-overlapping sets. In a graph, a set can be thought of as a tree, i.e. an acyclic and connected subgraph, making union-find a quick method for determining if a graph contains cycles. Disjoint-set data structures play a key role in <strong>Kruskal’s algorithm</strong> for finding the <strong>minimum spanning tree</strong> of a graph, which is a subset of the edges of a connected, weighted, undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight. Union-find can also be used to keep track of the connected components of an undirected graph. The data structure maintains three operations,</p>
+<p>A union–find data structure (a.k.a disjoint-set union (DSU)) stores a collection of non-overlapping sets. In a graph, a set can be thought of as a tree, i.e. an acyclic and connected subgraph, making union-find a quick method for determining if a graph contains cycles. Disjoint-set data structures play a key role in <strong>Kruskal’s algorithm</strong> for finding the <strong>minimum spanning tree</strong> of a graph, which is a subset of the edges of a connected, weighted, undirected graph that connects all the vertices together, without any cycles and with the minimum possible total edge weight. Union-find can also be used to keep track of the connected components of an undirected graph. The data structure maintains three operations,</p>
 <ol type="1">
 <li><p><strong>makeset(A)</strong> – Create a new size-1 set containing just element A.</p></li>
 <li><p><strong>find(A)</strong> – Starts at A returns A’s tree root.</p></li>
@@ -1220,7 +1220,7 @@
 <span id="cb13-16"><a href="#cb13-16" aria-hidden="true"></a></span>
 <span id="cb13-17"><a href="#cb13-17" aria-hidden="true"></a><span class="co"># Bisect module implements most binary search use cases</span></span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true"></a><span class="im">import</span> bisect</span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a><span class="co">## insert into sorted array while maintaining order in O(logn)</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true"></a><span class="co">## insert into sorted array while maintaining order in O(n)</span></span>
 <span id="cb13-20"><a href="#cb13-20" aria-hidden="true"></a>bisect.insort(A, <span class="dv">3</span>)</span>
 <span id="cb13-21"><a href="#cb13-21" aria-hidden="true"></a><span class="co">## return index of first occurence of target element O(logn)</span></span>
 <span id="cb13-22"><a href="#cb13-22" aria-hidden="true"></a>bisect.bisect_left(A, <span class="op">-</span><span class="dv">10</span>)</span>
@@ -2334,7 +2334,7 @@
 <h3 class="unnumbered" id="unordered-choices-with-repetitions-in-1d">Unordered Choices With Repetitions in 1D</h3>
 <p>As with before, we are given a set of choices and make unordered selections, but now we are able to repeat our selections any number of times. Similarly we may wish to optimize under a constraint, exactly match a target value, or count the number of combinations that can match the target.</p>
 <p>Similar to before, the features will be the cumulative value so far, the current choice being considered, and the remaining constraint. However, instead of iterating over the different choices and taking a max or min of their inclusion or exclusion once per transition, the state transitions will iterate over all choices for every state, allowing for repetitions.</p>
-<p>Notable Problems: Coin Change (Minimize Coins), Coin Change (Count Ways)</p>
+<p>Notable Problems: Coin Change (Minimize Coins), Coin Change (Count Ways), Word Break II</p>
 <p><em>Python Implementation</em></p>
 <div class="sourceCode" id="cb45" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true"></a><span class="co"># Compute the fewest number of coins that are needed to sum to an amount</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true"></a><span class="kw">def</span> coin_change_min(coins, amount):</span>
@@ -2479,10 +2479,10 @@
 <span id="cb48-30"><a href="#cb48-30" aria-hidden="true"></a>    <span class="cf">return</span> grid[<span class="op">-</span><span class="dv">1</span>][<span class="op">-</span><span class="dv">1</span>]</span></code></pre></div>
 <h3 class="unnumbered" id="unordered-choices-in-2d-sequences-binary-search">Unordered Choices in 2D Sequences (Binary Search)</h3>
 <p>Again, we’re given a two-dimensional input but are now able to reorder the subarrays. In general the trick is to first sort the subarrays by their first dimensional value and possibly inversely sort on their second dimensional value.</p>
-<p>Now that we have a sorted 2D array of choices, we can make use of binary search to find target values. This may further reduce a polynomial exhaustive search runtime to a logarithmic one as is done when finding the length of longest increasing subsequence (LIS).</p>
-<p>Since we are using binary search, we can’t initialize the dp array with empty or placeholder values and instead need to iteratively append to it.</p>
-<p>Notable Problems: Weighted Interval Scheduling, Russian Doll Envelopes, Rectangular Block Stacking</p>
-<p>Length of Longest Increasing Subsequence, Super egg drop, Guessing game with cost</p>
+<p>Now that we have a sorted 2D array of choices, we can make use of binary search to find target values. This may further reduce a polynomial exhaustive search runtime to a logarithmic one as is done when finding the length of longest increasing subsequence (LIS). Since we are using binary search, we can’t initialize the dp array with empty or placeholder values and instead need to iteratively append to it.</p>
+<p>Notable Problems: Weighted Interval Scheduling, Russian Doll Envelopes, Rectangular Block Stacking, Length of Longest Increasing Subsequence</p>
+<p>A closely related version of this category is a <strong>minimax</strong> problem where we aim to minimize the possible loss for a worst case (maximum loss) scenario. This is generally in the form of determining the minimum number of guesses or the minimum cost required to perform a binary search.</p>
+<p>Super egg drop, Guessing game with cost</p>
 <p><em>Python Implementation</em></p>
 <div class="sourceCode" id="cb49" data-language="Python"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true"></a><span class="co"># Weighted Interval Scheduling</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true"></a><span class="im">import</span> bisect</span>
@@ -2511,8 +2511,25 @@
 <span id="cb49-25"><a href="#cb49-25" aria-hidden="true"></a><span class="kw">def</span> maxEnvelopes(arr):</span>
 <span id="cb49-26"><a href="#cb49-26" aria-hidden="true"></a>    <span class="co"># sort increasing in first dimension and decreasing in second</span></span>
 <span id="cb49-27"><a href="#cb49-27" aria-hidden="true"></a>    arr.sort(key<span class="op">=</span><span class="kw">lambda</span> x: (x[<span class="dv">0</span>], <span class="op">-</span>x[<span class="dv">1</span>]))</span>
-<span id="cb49-28"><a href="#cb49-28" aria-hidden="true"></a>    <span class="co"># extract the second dimension and run the LIS</span></span>
-<span id="cb49-29"><a href="#cb49-29" aria-hidden="true"></a>    <span class="cf">return</span> length_of_LIS([i[<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> arr])</span></code></pre></div>
+<span id="cb49-28"><a href="#cb49-28" aria-hidden="true"></a>    <span class="cf">return</span> length_of_LIS([i[<span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> arr])</span>
+<span id="cb49-29"><a href="#cb49-29" aria-hidden="true"></a>    </span>
+<span id="cb49-30"><a href="#cb49-30" aria-hidden="true"></a><span class="co"># Given K eggs and N floors find the min number of moves needed to guarantee you find the lowest floor needed to break the egg</span></span>
+<span id="cb49-31"><a href="#cb49-31" aria-hidden="true"></a><span class="kw">def</span> superEggDrop(<span class="va">self</span>, K: <span class="bu">int</span>, N: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb49-32"><a href="#cb49-32" aria-hidden="true"></a>        <span class="at">@lru_cache</span>(<span class="va">None</span>)</span>
+<span id="cb49-33"><a href="#cb49-33" aria-hidden="true"></a>        <span class="kw">def</span> dfs(eggs, floors):</span>
+<span id="cb49-34"><a href="#cb49-34" aria-hidden="true"></a>            <span class="cf">if</span> eggs <span class="op">==</span> <span class="dv">1</span> <span class="kw">or</span> floors <span class="op">==</span> (<span class="dv">0</span> <span class="kw">or</span> <span class="dv">1</span>): </span>
+<span id="cb49-35"><a href="#cb49-35" aria-hidden="true"></a>                <span class="cf">return</span> floors</span>
+<span id="cb49-36"><a href="#cb49-36" aria-hidden="true"></a>            lo, hi <span class="op">=</span> <span class="dv">0</span>, floors</span>
+<span id="cb49-37"><a href="#cb49-37" aria-hidden="true"></a>            <span class="cf">while</span> lo <span class="op">&lt;</span> hi:</span>
+<span id="cb49-38"><a href="#cb49-38" aria-hidden="true"></a>                mid <span class="op">=</span> (lo <span class="op">+</span> hi) <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb49-39"><a href="#cb49-39" aria-hidden="true"></a>                left, right <span class="op">=</span> dfs(eggs <span class="op">-</span> <span class="dv">1</span>, mid<span class="op">-</span><span class="dv">1</span>), dfs(eggs, floors <span class="op">-</span> mid)</span>
+<span id="cb49-40"><a href="#cb49-40" aria-hidden="true"></a>                <span class="cf">if</span> left <span class="op">&lt;</span> right:</span>
+<span id="cb49-41"><a href="#cb49-41" aria-hidden="true"></a>                    lo <span class="op">=</span> mid <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb49-42"><a href="#cb49-42" aria-hidden="true"></a>                <span class="cf">else</span>:</span>
+<span id="cb49-43"><a href="#cb49-43" aria-hidden="true"></a>                    hi <span class="op">=</span> mid</span>
+<span id="cb49-44"><a href="#cb49-44" aria-hidden="true"></a>            res <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="bu">max</span>(dfs(eggs<span class="op">-</span><span class="dv">1</span>, lo<span class="op">-</span><span class="dv">1</span>), dfs(eggs, floors<span class="op">-</span>lo))</span>
+<span id="cb49-45"><a href="#cb49-45" aria-hidden="true"></a>            <span class="cf">return</span> res</span>
+<span id="cb49-46"><a href="#cb49-46" aria-hidden="true"></a>        <span class="cf">return</span> dfs(K, N)</span></code></pre></div>
 <h3 class="unnumbered" id="turn-based-games-double-ended-queue">Turn-Based Games (Double-ended queue)</h3>
 <p>The core idea is to use tuples to store the game results of two people in the two-dimensional dp array. In general, there are three states: the starting index i, the ending index j, and the player whose turn it is. The state transitions decide between two choices: the leftmost index, or the rightmost index. In some cases, we can use a sliding window by modifying the array to be circular using modular arithmetic on indices in a doubled range while maintaining up-to-date cumulative values using decrements.</p>
 <p>Notable Problems: Nim Game, Stone Game, Line of Wines, Binary Tree Coloring Game, Maximum Points You Can Obtain from Cards</p>
@@ -2838,11 +2855,11 @@
 <h1 id="appendix">Appendix</h1>
 <h2 id="powers-of-2-table">Powers of 2 Table</h2>
 <figure>
-<img src="powers-of-two.png" style="width:10cm" alt="" /><figcaption>image</figcaption>
+<img src="powers-of-two.png" style="width:10cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <h2 id="array-sorting-algorithms-table">Array Sorting Algorithms Table</h2>
 <figure>
-<img src="Array_sorting_algorithms.png" style="width:13cm" alt="" /><figcaption>image</figcaption>
+<img src="Array_sorting_algorithms.png" style="width:13cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <h2 id="single-source-shortest-path-table">Single-Source Shortest Path Table</h2>
 <h2 id="algorithm-optimization-checklist">Algorithm Optimization Checklist</h2>

@@ -107,7 +107,7 @@
 <p>One should also look at box-plots for each individual features. The box plot displays the distribution of data based on the five number summary: minimum, first quartile, median, third quartile, and maximum.</p>
 <p>We can look for outliers beyond 3*IQR (Inter Quartile Range). Bootstrapping the data set also provides some insight on outliers.</p>
 <figure>
-<img src="box-plot.png" style="width:6cm" alt="" /><figcaption>image</figcaption>
+<img src="box-plot.png" style="width:6cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <h1 id="statistical-learning">Statistical Learning</h1>
 <h2 id="what-is-statistical-learning">What is Statistical Learning</h2>
@@ -152,7 +152,7 @@
 <p>A very large number of observations (far more than is typically needed for a parametric approach) is required in order to obtain an accurate estimate for <span class="math inline">\(f\)</span>. In order to fit a thin-plate spline, the data analyst must select a level of smoothness.</p>
 <h3 id="the-trade-off-between-prediction-accuracy-and-model-interpretability">The Trade-Off Between Prediction Accuracy and Model Interpretability</h3>
 <figure>
-<img src="isl-figure-1.png" style="width:11cm" alt="" /><figcaption>image</figcaption>
+<img src="isl-figure-1.png" style="width:11cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <p>If we are mainly interested in inference, then restrictive models are much more interpretable. In contrast, very flexible approaches, such as the splines and the boosting methods can lead to such complicated estimates of <span class="math inline">\(f\)</span> that it is difficult to understand how any individual predictor is associated with the response. Though there are clear advantages to using simple and relatively inflexible statistical learning methods when inference is the goal, the converse is not typically true. Instead we will often obtain more accurate predictions using a less flexible method. This phenomenon has to do with the potential for overfitting in highly flexible methods.</p>
 <h3 id="supervised-versus-unsupervised-learning">Supervised Versus Unsupervised Learning</h3>
@@ -175,10 +175,10 @@
 <p><em>Variance</em> refers to the amount by which <span class="math inline">\(\hat f\)</span> would change if we estimated it using a different training data set. In general, more flexible statistical methods have higher variance. This is because changing any one of the data points may cause the estimate <span class="math inline">\(\hat f\)</span> to change considerably. A model with high variance does not generalize on the data which it hasn’t seen before and is said to be overfitting.</p>
 <p><em>Bias</em> refers to the error that is introduced by approximating a real-life problem, which may be extremely complicated, by a much simpler model. Generally, more flexible methods result in less bias. A model with high bias will be making overly strong assumptions about the training data and is said to be underfitting.</p>
 <figure>
-<img src="bias-variance-tradeoff.png" style="width:13cm" alt="" /><figcaption>image</figcaption>
+<img src="bias-variance-tradeoff.png" style="width:13cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <figure>
-<img src="bias-variance-tuning.jpg" style="width:7cm" alt="" /><figcaption>image</figcaption>
+<img src="bias-variance-tuning.jpg" style="width:7cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <p>The relationship between bias, variance, and test set MSE is referred to as the <em>bias-variance trade-off</em>.</p>
 <p>As a general rule, as we use more flexible methods, the variance will increase and the bias will decrease. The relative rate of change of these two quantities determines whether the test MSE increases or decreases. As we increase the flexibility of a class of methods, the bias tends to initially decrease faster than the variance increases. Consequently, the expected test MSE declines. However, at some point increasing flexibility has little impact on the bias but starts to significantly increase the variance. When this happens the test MSE increases.</p>
@@ -399,23 +399,23 @@
 <p>Class-specific performance is also important in medicine and biology, where the terms <em>sensitivity</em>, corresponding to true positive classifications, and <em>specificity</em>, corresponding to true negative classifications, characterize the performance of a model or screening test.</p>
 <p>The Bayes classifier works by assigning an observation to the class for which the posterior probability <span class="math inline">\(p_k(X)\)</span> is greatest. Thus, the Bayes classifier, and by extension LDA, uses a threshold of 50% for the posterior probability in order to assign an observation to a class. However, if we are more concerned about incorrectly predicting the class status, then we can consider lowering this threshold. This may increase the overall error but may make for more accurate identification of a certain class.</p>
 <figure>
-<img src="err-threshold.png" style="width:10cm" alt="" /><figcaption>image</figcaption>
+<img src="err-threshold.png" style="width:10cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <p>Using a threshold of 0.5 minimizes the overall error rate, shown as a black solid line. This is to be expected, since the Bayes classifier uses a threshold of 0.5 and is known to have the lowest overall error rate. As the threshold is reduced, the error rate among a specific classification decreases steadily (orange dotted line), but the error rate among the observations who do not belong to the class increases (blue dotted line).</p>
 <p>Varying the classifier threshold changes its true positive and false positive rate. These are also called the sensitivity and one minus the specificity of our classifier. Below are tables of classifier names and measures.</p>
 <figure>
-<img src="classifier-names.png" style="width:10cm" alt="" /><figcaption>image</figcaption>
+<img src="classifier-names.png" style="width:10cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <figure>
-<img src="classifier-measures.png" style="width:10cm" alt="" /><figcaption>image</figcaption>
+<img src="classifier-measures.png" style="width:10cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <p>The denominators for the false positive and true positive rates are the actual population counts in each class. In contrast, the denominators for the positive predictive value and the negative predictive value are the total predicted counts for each class.</p>
 <figure>
-<img src="roc-curve.png" style="width:8cm" alt="" /><figcaption>image</figcaption>
+<img src="roc-curve.png" style="width:8cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <p>The <em>ROC curve</em> (receiver operating characteristics) above is a popular graphic for simultaneously displaying the two types of errors for all possible thresholds. The overall performance of a classifier, summarized over all possible thresholds, is given by the <em>area under the curve</em> (AUC). An ideal ROC curve will hug the top left corner, so the larger the AUC the better the classifier.</p>
 <figure>
-<img src="confusion-matrix.png" style="width:8cm" alt="" /><figcaption>image</figcaption>
+<img src="confusion-matrix.png" style="width:8cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
 </figure>
 <p>A <em>confusion matrix</em> is a way of visualizing predictions made by a classifier and is just a table showing the distribution of predictions for a specific class. The x-axis indicates the true class of each observation while the y-axis corresponds to the class predicted by the model.</p>
 <h3 id="quadratic-discriminant-analysis">Quadratic Discriminant Analysis</h3>
@@ -584,6 +584,46 @@
 <p>In the high-dimensional setting, the multicollinearity problem is extreme: any variable in the model can be written as a linear combination of all of the other variables in the model. This means that we can never know exactly which variables truly are predictive of the outcome, and we can never identify the best coefficients for use in the regression and can only hope to assign appropriate regression coefficients to correlated variables.</p>
 <p>As mentioned before, one should never use sum of squared errors, p-values, <span class="math inline">\(R^2\)</span> statistics or other traditional measures of model fit on the training data as evidence of a good model fit in the high-dimensional setting. It is important to instead report results on an independent test set, or cross-validation errors. For instance, the MSE or <span class="math inline">\(R^2\)</span> on an independent test set is a valid measure of model fit, but the MSE on the training set is not.</p>
 <h1 id="moving-beyond-linearity">Moving Beyond Linearity</h1>
+<p>Although However, standard linear regression can have have advantages over other approaches in terms of interpretation and inference, it has significant limitations in terms of predictive power because the linearity assumption is almost always an approximation, and sometimes a poor one.</p>
+<ul>
+<li><p><em>Polynomial regression</em> extends the linear model by adding extra predictors, obtained by raising each of the original predictors to a power. This approach provides a simple way to provide a nonlinear fit to data.</p></li>
+<li><p><em>Step functions</em> cut the range of a variable into <span class="math inline">\(K\)</span> distinct regions in order to produce a qualitative variable. This has the effect of fitting a piecewise constant function.</p></li>
+<li><p><em>Regression splines</em> are more flexible than polynomials and step functions, and in fact are an extension of the two. They involve dividing the range of X into K distinct regions. Within each region, a polynomial function is fit to the data. However, these polynomials are constrained so that they join smoothly at the region boundaries, or knots. Provided that the interval is divided into enough regions, this can produce an extremely flexible fit.</p></li>
+<li><p>Smoothing splines are similar to regression splines, but arise in a slightly different situation. Smoothing splines result from minimizing a residual sum of squares criterion subject to a smoothness penalty.</p></li>
+<li><p>Local regression is similar to splines, but differs in an important way. The regions are allowed to overlap, and indeed they do so in a very smooth way.</p></li>
+<li><p>Generalized additive models allow us to extend the methods above to deal with multiple predictors.</p></li>
+</ul>
+<h2 id="polynomial-regression">Polynomial Regression</h2>
+<p>Historically, the way to extend linear regression was to replace the standard linear model, <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \epsilon_i\]</span> with with a polynomial function, <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \dots + \beta_d x_i^d + \epsilon_i\]</span> in an approach known as <em>polynomial regression</em>. Using a large enough degree <span class="math inline">\(d\)</span>, a polynomial regression allows us to produce an extremely non-linear curve but in General, it is unusual to use <span class="math inline">\(d\)</span> greater than 3 or 4 because for large values of d, the polynomial curve can become overly flexible and can take on some very strange shapes. This is especially true near the boundary of the <span class="math inline">\(X\)</span> variable.</p>
+<h2 id="step-functions">Step Functions</h2>
+<p>Using polynomial functions of the features as predictors in a linear model imposes a global structure on the non-linear function of X. We can instead use <em>step functions</em> in order to avoid imposing such a global structure. We break the range of <span class="math inline">\(X\)</span> into bins, and fit a different constant in each bin. This amounts to converting a continuous variable into an <em>ordered categorical variable</em>.</p>
+<p>We create cutpoints <span class="math inline">\(c_1, c_2,\dots,c_K\)</span> in the range of <span class="math inline">\(X\)</span>, and then construct <span class="math inline">\(K + 1\)</span> new variables, sometimes called <em>dummy variables</em>, <span class="math display">\[\begin{aligned}
+\begin{split}
+    C_0(X) &amp;= I(X&lt;c_1), \\
+    C_1(X) &amp;= I(c_1 \leq X &lt; c_2),\\
+    C_2(X) &amp;= I(c_2 \leq X&lt;c_3),\\
+    &amp;\vdots \\
+    C_{K-1}(X) &amp;= I(c_{K-1} \leq X &lt; c_K),\\
+    C_K(X) &amp;= I(c_K \leq X),
+\end{split}\end{aligned}\]</span> where <span class="math inline">\(I()\)</span> is an <em>indicator function</em> that returns a 1 if the condition is true, and 0 otherwise. Notice that for any value of <span class="math inline">\(X\)</span>, <span class="math inline">\(C_0(X) + C_1(X) + \dots + C_K(X) = 1\)</span>, since <span class="math inline">\(X\)</span> must be in exactly one of the <span class="math inline">\(K + 1\)</span> intervals. We then use least squares to fit a linear model using <span class="math inline">\(C_1(X), C_2(X),\dots,C_K(X)\)</span> as predictors: <span class="math display">\[y_i = \beta_0 + \beta_1C_1(x_i) + \beta_2C_2(x_i) + \dots + \beta_KC_K(x_i) + i.\]</span> Note that when <span class="math inline">\(X&lt;c_1\)</span>, all of the predictors in the above equation are zero, so <span class="math inline">\(\beta_0\)</span> can be interpreted as the mean value of <span class="math inline">\(Y\)</span> for <span class="math inline">\(X&lt;c_1\)</span>. Then the model predicts a response of <span class="math inline">\(\beta_0+\beta_j\)</span> for <span class="math inline">\(c_j \leq X&lt;c_j+1\)</span>. So <span class="math inline">\(\beta_j\)</span> represents the average increase in the response for <span class="math inline">\(X\)</span> in <span class="math inline">\(c_j \leq X&lt;c_j+1\)</span> relative to <span class="math inline">\(X&lt;c_1\)</span>.</p>
+<p>Unfortunately, unless there are natural breakpoints in the predictors, piecewise-constant functions can miss the action. Nevertheless, step function approaches are very popular in biostatistics and epidemiology, among other disciplines. For example, 5-year age groups are often used to define the bins.</p>
+<h2 id="basis-functions">Basis Functions</h2>
+<p>Polynomial and piecewise-constant regression models are in fact special cases of a <em>basis function</em> approach. The idea is to have at hand a family of functions or transformations that can be applied to a variable <span class="math inline">\(X\)</span>: <span class="math inline">\(b_1(X), b_2(X),\dots, b_K(X)\)</span>. Instead of fitting a linear model in <span class="math inline">\(X\)</span>, we fit the model <span class="math display">\[y_i = \beta_0 + \beta_1b_1(x_i) + \beta_2b_2(x_i) + \dots + \beta_Kb_K(x_i) + \epsilon_i.\]</span> Note that the basis functions <span class="math inline">\(b_1(), b_2(),\dots,b_K()\)</span> are fixed and known ahead of time. We can think of the model as a standard linear model with predictors <span class="math inline">\(b_1(x_i), b_2(x_i),\dots, b_K(x_i)\)</span>. Hence, we can use least squares to estimate the unknown regression coefficients in the model. Importantly, this means that all of the inference tools for linear models, such as standard errors for the coefficient estimates and F-statistics for the model’s overall significance, are also available in this setting.</p>
+<p>For polynomial regression, the basis functions are <span class="math inline">\(b_j(x_i) = x_i^j\)</span>, and for piecewise constant functions they are <span class="math inline">\(b_j (x_i) = I(c_j \leq x_i &lt; c_{j+1})\)</span>. Many alternatives for our basis functions are possible like wavelets or Fourier series or the very common choice of regression splines.</p>
+<h2 id="regression-splines">Regression Splines</h2>
+<p><em>Regression splines</em> are a flexible class of basis functions that extends upon the polynomial regression and piecewise constant regression approaches.</p>
+<h3 id="piecewise-polynomials">Piecewise Polynomials</h3>
+<h3 id="constraints-and-splines">Constraints and Splines</h3>
+<h3 id="the-spline-basis-representation">The Spline Basis Representation</h3>
+<h3 id="choosing-the-number-and-locations-of-the-knots">Choosing the Number and Locations of the Knots</h3>
+<h3 id="comparison-to-polynomial-regression">Comparison to Polynomial Regression</h3>
+<h2 id="smoothing-splines">Smoothing Splines</h2>
+<h3 id="an-overview-of-smoothing-splines">An Overview of Smoothing Splines</h3>
+<h3 id="choosing-the-smoothing-parameter-lambda">Choosing the Smoothing Parameter <span class="math inline">\(\lambda\)</span></h3>
+<h2 id="local-regression">Local Regression</h2>
+<h2 id="generalized-additive-models">Generalized Additive Models</h2>
+<h3 id="gams-for-regression-problems">GAMs for Regression Problems</h3>
+<h3 id="gams-for-classification-problems">GAMs for Classification Problems</h3>
 <h1 id="tree-based-methods">Tree-based Methods</h1>
 <h1 id="support-vector-machines">Support Vector Machines</h1>
 <h1 id="unsupervised-learning">Unsupervised Learning</h1></li>
