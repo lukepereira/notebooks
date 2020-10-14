@@ -49,8 +49,6 @@ if [ -n "$root_file" ];
       cd "$(dirname "${LINE}")";
       pandoc $args "$(basename ${LINE})" -o main.md;
       pandoc --standalone --mathjax -f markdown -t html main.md -o index.html;
-      echo "debug";
-      ls -la;
       cd -;
     done < $changed_files
 fi
