@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>main</title>
+  <style>
+    html {
+      line-height: 1.7;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 40em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin-top: 1.7em;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.7em;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1.7em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1.7em 0 1.7em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      font-style: italic;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      background-color: #f0f0f0;
+      font-size: 85%;
+      margin: 0;
+      padding: .2em .4em;
+    }
+    pre {
+      line-height: 1.5em;
+      padding: 1em;
+      background-color: #f0f0f0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin-top: 1.7em;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+    }
+    th, td {
+      border-bottom: 1px solid lightgray;
+      padding: 1em 3em 1em 0;
+    }
+    header {
+      margin-bottom: 6em;
+      text-align: center;
+    }
+    nav a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<table>
+<tbody>
+<tr class="odd">
+<td>title: {Artificial, Biological} Neural Nets</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><a href="#energy-based-models">Energy-Based Models</a>
+<ul>
+<li><a href="#inference-on-energy-functions">Inference on Energy Functions</a></li>
+<li><a href="#normalization-of-energy-functions">Normalization of Energy Functions</a></li>
+<li><a href="#free-energy">Free Energy</a></li>
+<li><a href="#training-energy-functions">Training Energy Functions</a></li>
+<li><a href="#combining-densities">Combining Densities</a></li>
+<li><a href="#directed-models-vs.-energy-based-models">Directed Models vs. Energy-Based Models</a></li>
+</ul></li>
+<li><a href="#early-models-of-the-mind">Early Models of the Mind</a>
+<ul>
+<li><a href="#bayesian-networks">Bayesian Networks</a></li>
+<li><a href="#binary-hopfield-networks-and-hebbian-theory">Binary Hopfield Networks and Hebbian Theory</a></li>
+<li><a href="#free-energy-principle-and-predictive-coding">Free Energy Principle and Predictive Coding</a></li>
+<li><a href="#helmholtz-machines-and-the-wakesleep-algorithm">Helmholtz Machines and the Wake–Sleep Algorithm</a></li>
+<li><a href="#autoencoders">Autoencoders</a></li>
+</ul></li>
+<li><a href="#modern-generative-models">Modern Generative Models</a>
+<ul>
+<li><a href="#variational-autoencoders">Variational Autoencoders</a></li>
+<li><a href="#deep-boltzman-machines">Deep Boltzman Machines</a></li>
+<li><a href="#generative-adversarial-networks">Generative Adversarial Networks</a></li>
+<li><a href="#transformers">Transformers</a></li>
+<li><a href="#continuous-state-modern-hopfield-networks">Continuous State Modern Hopfield Networks</a></li>
+</ul></li>
+</ul>
+<h1 id="energy-based-models">Energy-Based Models</h1>
+<p>In an energy-based model (EBM), we make a trade-off for the numerical precision of probabilistic likelihood and instead are concerned with finding the dependence between two variables, our input <span class="math inline">\(x\)</span> and compatible <span class="math inline">\(y\)</span> values. This is in contrast to normalizing a likelihood value over the entirety of the distribution or a large set of samples. EBMs are particulary appealing when making predictions in the presence of uncertainty in high dimensional spaces. In a sense, self-supervised learning (SSL) can simply be understood as learning dependencies.</p>
+<h2 id="inference-on-energy-functions">Inference on Energy Functions</h2>
+<p>We define an energy function as <span class="math inline">\(F: \mathcal X \times \mathcal Y \mapsto \mathcal R\)</span> where <span class="math inline">\(F(x,y)\)</span> describes the level of dependency between <span class="math inline">\((x, y)\)</span> pairs. Note that this energy is used in inference, not in learning. The inference function is given by the following equation: <span class="math display">\[\check y = \text{argmin}_y\{ F(x,y)\}\]</span></p>
+<p>To perform inference, we search this function using gradient descent (or an alternative optimization method) to find compatible <span class="math inline">\(y\)</span>’s that minimize the energy function <span class="math inline">\(F\)</span>.</p>
+<p>In a <strong>latent variable energy-based model</strong>, the output <span class="math inline">\(y\)</span> depends on <span class="math inline">\(x\)</span> as well as a latent variable <span class="math inline">\(z\)</span> which we do not know the value of. These latent variables can provide auxiliary information and can be thought of as a piece of important information about the output <span class="math inline">\(y\)</span> that is not present in the input <span class="math inline">\(x\)</span>. By varying them over a set, we can let our predicted <span class="math inline">\(y\)</span> vary over the <em>manifold</em> of possible predictions. To do inference with latent variables in an EBM, we want to simultaneously minimize the energy function with respect to <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span>. <span class="math display">\[\check y, \check z = \text{argmin}_{y,z} E(x,y,z)\]</span></p>
+<h2 id="normalization-of-energy-functions">Normalization of Energy Functions</h2>
+<p>EBMs provide an alternative to probability density estimation by learning a manifold to compute the dependency of variables. In doing so, they provide a framework to describe probabilistic and non-probabilistic approaches to learning without needing to estimate the normalization constant in probabilistic models, increasing flexibility of the model.</p>
+<p>The <strong>Gibbs-Boltzmann distribution</strong> was originally used in thermodynamics to find the probability that a system will be in a certain state <span class="math inline">\(i\)</span> as a function of that state’s energy <span class="math inline">\(\epsilon_i\)</span> and the temperature <span class="math inline">\(T\)</span> of the system. Here <span class="math inline">\(\propto\)</span> indicates proportionality under a constant and <span class="math inline">\(k\)</span> is known as Boltzmann’s constant. <span class="math display">\[\begin{aligned}
+    p_{i} &amp;\propto \exp \bigg ( -{\frac {\varepsilon_{i}}{kT}} \bigg )\\
+     &amp;= \exp \bigg( - \frac{E(x, y)}{kT} \bigg )\end{aligned}\]</span></p>
+<p>Energies can then be thought of as being <em>unnormalized negative log probabilities</em>. That is, we may use the Gibbs-Boltzmann distribution to convert an energy function to its equivalent probabilistic representation after normalization, i.e. <span class="math inline">\(P(y \mid x)\)</span>.</p>
+<p>The derivation introduces a <span class="math inline">\(\beta\)</span> term which is the inverse of temperature <span class="math inline">\(T\)</span>, so as <span class="math inline">\(\beta \rightarrow \infty\)</span> the temperature goes to zero. <span class="math inline">\(\beta\)</span> is a positive constant that needs to be calibrated to fit the model. A larger <span class="math inline">\(\beta\)</span> value produces a more fluctuate model while a smaller <span class="math inline">\(\beta\)</span> gives a smoother model. <span class="math display">\[P(y, z \mid x) = \frac{\exp(-\beta E(x,y,z)) }{ \int_y \int_z \exp(\beta E(x, y, z))}\]</span> Recall, <em>marginalisation</em> is a method that sums over the possible values of one variable to determine the marginal contribution of another. <span class="math inline">\(P(y \mid x)\)</span> is just an application of the Gibbs-Boltzmann formula with latent variables <span class="math inline">\(z\)</span> being marginalized implicitly through integration, i.e. <span class="math inline">\(P(y \mid x) = \int_z P(y,z | x)\)</span>. Then, <span class="math display">\[\begin{aligned}
+    P(y \mid x) &amp;= \frac{ \int_z \exp(-\beta E(x,y,z)) }{ \int_y \int_z \exp(-\beta E(x, y, z))} \\
+    &amp;= \frac{
+        \exp \bigg [  -\beta (-\frac{1}{\beta} \log  \int_z \exp(-\beta E(x,y,z)) ) \bigg ]
+    }{
+        \int_y \exp \bigg [  -\beta (-\frac{1}{\beta} \log  \int_z \exp(-\beta E(x,y,z)) ) \bigg ]
+    }\end{aligned}\]</span></p>
+<h2 id="free-energy">Free Energy</h2>
+<p>When <span class="math inline">\(\beta \rightarrow \infty\)</span>, we see that <span class="math inline">\(\check{y} = \text{argmin}_{y} E(x,y)\)</span>. So we can redefine our energy function as an equivalent function using <span class="math inline">\(F_\beta\)</span>, <span class="math display">\[\begin{aligned}
+    F_{\infty} (x,y) &amp;= \text{argmin}_z E(x,y,z)\\
+    F_{\beta} (x,y) &amp;= -\frac{1}{\beta} \log \int_z \exp(-\beta E(x,y,z)).\end{aligned}\]</span></p>
+<p>In physics, <span class="math inline">\(F_\beta\)</span> is known as the <strong>free energy</strong> – so <span class="math inline">\(E\)</span> is the energy, and <span class="math inline">\(F\)</span> is free energy. If we have a latent variable model and want to eliminate the latent variable <span class="math inline">\(z\)</span> in a probabilistically correct way, we just need to redefine the energy function in terms of <span class="math inline">\(F_\beta\)</span>.</p>
+<p><span class="math display">\[P(y \mid x) = \frac{ \exp(-\beta F_\beta(x,y,z)) }{ \int_y \exp(-\beta F_\beta(x, y, z))} \\
+\]</span></p>
+<h2 id="training-energy-functions">Training Energy Functions</h2>
+<p>There are two classes of learning models to train an EBMs in order to parameterize <span class="math inline">\(F(x, y)\)</span>:</p>
+<ol type="1">
+<li><p><strong>Contrastive methods</strong> push down the energy of training data points, <span class="math inline">\(F(x_i, y_i)\)</span>, while pushing up energy everywhere else, <span class="math inline">\(F(x_i, y&#39;)\)</span>. Types of contrastive methods differ in the way they pick the points to push up.</p>
+<p>For an example of this method, see the section on Generative Adversarial Networks.</p></li>
+<li><p><strong>Regularized latent variable methods</strong> build energy function <span class="math inline">\(F(x, y)\)</span> so that the volume of low energy regions is limited or minimized by applying regularization. Types of architectural methods differ in the way they limit the information capacity of the code.</p>
+<p>For an example of this method, see the section on Variational Autoencoders.</p></li>
+</ol>
+<p>Examples of constrastive learning methods include Contrastive Divergence, Ratio Matching, Noise Contrastive Estimation, and Minimum Probability Flow. The term <em>contrastive sample</em> is often used to refer to a data point causing an energy pull-up, such as the incorrect <span class="math inline">\(y\)</span> ’s in supervised learning and points from low data density regions in unsupervised learning.</p>
+<p>TODO: add sections on Contrastive embedding, Sparse Coding, Contrastive Divergence.</p>
+<h2 id="combining-densities">Combining Densities</h2>
+<p>There are three ways to combine probability density models:</p>
+<ol type="1">
+<li><p>Mixture – Take a weighted average of the distributions. The mixture can never be sharper than the individual distributions, this is a very weak way to combine models.</p></li>
+<li><p>Product – Multiply the distributions at each point and then renormalize. This is exponentially more powerful than a mixture. The normalization makes maximum likelihood learning difficult, but approximations allow us to learn anyway.</p></li>
+<li><p>Composition – Use the values of the latent variables of one model as the data for the next model. This works well for learning multiple layers of representation, but only if the individual models are undirected.</p></li>
+</ol>
+<p>It is possible to combine multiple latent-variable models of the same data by multiplying their probability distributions together and then renormalizing. This way of combining individual “expert” models makes it hard to generate samples from the combined model but easy to infer the values of the latent variables of each expert, because the combination rule ensures that the latent variables of different experts are conditionally independent when given the data. This technique is known as the <strong>product of experts</strong> (PoE).</p>
+<p>As we’ve seen, energy-based models represent probability distributions over data by assigning an unnormalized probability scalar, i.e. an energy, to each input data point. This provides useful modeling flexibility since any arbitrary model that outputs a real number given an input can be used as an energy model. Since each model represents an unnormalized probability distribution, models can be naturally combined through product of experts or other hierarchical models.</p>
+<h2 id="directed-models-vs.-energy-based-models">Directed Models vs. Energy-Based Models</h2>
+<figure>
+<img src="dag-ebm.png" style="width:12cm" alt="image" /><figcaption aria-hidden="true">image</figcaption>
+</figure>
+<p>There are two of density models:</p>
+<ol type="1">
+<li><p>Stochastic generative model using directed acyclic graph (see the section on Bayes Networks). Generation from model is easy, inference can be hard and learning is easy after inference. <span class="math display">\[P(v) = \sum_h P(h)P(v | h)\]</span> where <span class="math inline">\(v\)</span> are the visible units and <span class="math inline">\(h\)</span> are the hidden units.</p></li>
+<li><p>Energy-based models that associate an energy with each data vector. Generation from model is hard, inference can be easy, and learning varies depending on the model. <span class="math display">\[P(v, h) = \frac{\exp(-E(v, h))}{\sum_{u, g} \exp(-E(u, g))}\]</span> The probability of a joint configuration over both visible and hidden units depends on the energy of that joint configuration compared with the energy of all other joint configurations. <span class="math display">\[P(v) = \frac{\sum_{h} \exp(-E(v, h))}{\sum_{u, g} \exp(-E(u, g))}\]</span> The probability of a configuration of the visible units is the sum of the probabilities of all the joint configurations that contain it.</p></li>
+</ol>
+<p>Probabilities can be understood as integrating over a density. In Bayesian analysis, many of the densities are not analytically tractable or have a posterior that is expensive to compute. When it is intractable, we can try to programmatically simulate a random variable with the given density.</p>
+<p><strong>Markov chain Monte Carlo (MCMC)</strong> are algorithmic methods for sampling from a probability distribution that is represented as graphical model, i.e. a Markov chain. Under certain conditions, we can generate a memoryless process (i.e. Markovian) in the form of an ensemble of Markov Chains that has the same limiting distribution as the random variable that we’re trying to simulate. Because of the memoryless property, a large number of random walks through the chains using simulations of random variable will represent correlated independent samples. Eventually this process will converge to an equilibrium distribution and produce an estimate of an otherwise intractable posterior.</p>
+<p>Surprisingly, it is unnecessary to allow the simulated physical process to reach the equilibrium distribution. If we start the process at an observed data vector and just run it for a few steps, we can generate a “confabulation” that works very well for adjusting the weights. If the Markov chain starts to diverge from the data in a systematic way, we already have evidence that the model is imperfect and that it can be improved (in this local region of the data space) by reducing the energy of the initial data vector and raising the energy of the confabulation.</p>
+<p>The <strong>contrastive backpropagation</strong> learning procedure cycles through the observed data vectors adjusting each weight by: <span class="math display">\[\triangledown w_{ij} = a \bigg (  - \frac{\partial E(x)}{\partial w_{ij}} +  \frac{E(\hat x)}{\partial w_{ij}} \bigg)\]</span> where <span class="math inline">\(a\)</span> is a learning rate and <span class="math inline">\(\hat x\)</span> is a confabulation produced by starting at <span class="math inline">\(x\)</span> and noisily following the gradient of the energy surface for a few steps.</p>
+<h1 id="early-models-of-the-mind">Early Models of the Mind</h1>
+<h2 id="bayesian-networks">Bayesian Networks</h2>
+<p>The basis of all Bayesian statistics can be interpreted through <strong>Bayes’ Theorem</strong>, simply stated as, <span class="math inline">\(\text{posterior}\propto \text{prior} \times \text{likelihood}\)</span>, where <span class="math inline">\(\propto\)</span> indications proportionality. Equivalently, this can be stated with conditional probabilities as, <span class="math display">\[P(A\mid B)={\frac {P(B\mid A)P(A)}{P(B)}}.\]</span></p>
+<p>A <strong>Bayesian Network</strong> is a directed acyclic graph that represents a factorization of the joint probability of all random variables. If the random variables are <span class="math inline">\(X_{1},\ldots ,X_{n}\)</span> then the joint distribution factors into a product of conditional distributions, <span class="math display">\[P(X_{1},\ldots ,X_{n}) = \prod_{i=1}^{n}P(X_{i}|{\text{pa}}(X_{i}))\]</span> where <span class="math inline">\({\text{pa}}(X_{i})\)</span> is the set of parents of node <span class="math inline">\(X_{i}\)</span>. Classical neural networks and hidden Markov Models are a form of Bayesian belief networks.</p>
+<ol type="1">
+<li><p>Define the prior distribution that incorporates subjective beliefs about a parameter. If the prior is uninformative, the posterior is data-driven. If the prior is informative, the posterior is a mixture of the prior and the data.</p></li>
+<li><p>Collect data. The more informative the prior, the more data you need to "change" your beliefs. With a lot of data, the data will dominate the posterior distribution.</p></li>
+<li><p>Update the prior distribution with the collected data using Bayes’ theorem to obtain a posterior distribution. The posterior distribution represents the updated beliefs about the parameter after having seen the data. In most cases, the posterior distribution has to be found numerically via MCMC simulations.</p></li>
+<li><p>Analyze the posterior distribution and summarize it (mean, median, standard deviation, quantiles, etc.)</p></li>
+</ol>
+<h2 id="binary-hopfield-networks-and-hebbian-theory">Binary Hopfield Networks and Hebbian Theory</h2>
+<p>The <strong>Hopfield network</strong> is a complete undirected graph made of binary threshold neurons, usually having values 1 or -1, with all pairs of units connected by symmetric weighted edges. Hopfield networks serve as content-addressable memory and provide a model for understanding <strong>associative memory</strong> in humans.</p>
+<p>The constraint that weights are symmetric guarantees that the energy function decreases monotonically, guaranteeing that descending its manifold will converge to a local minimum. The energy, <span class="math inline">\(E\)</span>, can be described in terms of scalar values associated to each of the states of the network, <span class="math display">\[E = -\frac{1}{2} \sum_{i,j} w_{ij} s_i s_j + \sum_i \theta_i s_i.\]</span> where <span class="math inline">\(w_{ij}\)</span> the weight of the connection from unit <span class="math inline">\(i\)</span> to unit <span class="math inline">\(j\)</span>, <span class="math inline">\(s_{i}\)</span> is the state of unit <span class="math inline">\(i\)</span>, and <span class="math inline">\(\theta_{i}\)</span> is the threshold. Unlike in perceptron training, the thresholds of the neurons are never updated.</p>
+<p>Training a Hopfield network involves lowering the energy of states that we want the network to remember. The network will converge to a remembered state if it is given only part of the queried state, i.e. given a distorted pattern it can recover a memorized one that is most similar. Much like our own memory, the network may retrieve the wrong pattern, known as a spurious pattern, from the wrong local minimum instead of the intended pattern, known as retrieval states, at an expected local minimum. For each stored pattern <span class="math inline">\(x\)</span>, the negation <span class="math inline">\(-x\)</span> is also a spurious pattern. For a network with <span class="math inline">\(n\)</span> neurons, the storage capacity can be given as <span class="math display">\[C\cong {\frac {n}{2\log _{2}n}} \approxeq 0.15n.\]</span></p>
+<p>Hopfield networks called <strong>dense associative memory</strong> (DAM) models use an energy function that can be expressed as the sum of interaction functions <span class="math inline">\(F\)</span> of the form <span class="math inline">\(F(x) = x^n\)</span> and, thereby, achieve a storage capacity proportional to <span class="math inline">\(d^{n-1}\)</span> in a d-dimensional space.</p>
+<p>Updating units in the Hopfield network can be done one at a time, in a biologically plausible and asynchronous way, or they can be updated synchronously, all at the same time. Updating is performed using the following rule: <span class="math display">\[s_{i} \leftarrow \left\{
+    {
+    \begin{array}{ll}+1&amp;{\mbox{if }} \displaystyle \sum _{{j}}{w_{{ij}}s_{j}}\geq \theta _{i},\\-1&amp;{\mbox{otherwise.}}\end{array}
+    }\right.\]</span> The updating rule implies that neurons attract or repel each other in state space, i.e. the values of neurons will converge if the weight between them is positive or they will diverge if the weight is negative. Under repeated updates, the network will eventually converge to a stable state which is a local minimum or basin of attraction in the energy function.</p>
+<p>A learning rule is used to store information in the memory. It must follow the constraints of only being local to a neuron and its adjacent neurons and must be incremental, meaning that updating weights to store a new pattern must be dependent on values of the previously stored information. These rules enforce some sort of biologically plausibility on the network.</p>
+<p>The <strong>Hebbian theory</strong> of synaptic plasticity is closely related to the constraints of this model. The Hebbian rule is often summarized as "Neurons that fire together, wire together" and is both local and incremental. When learning <span class="math inline">\(n\)</span> binary patterns where <span class="math inline">\(\epsilon_{i}^{\mu }\)</span> represents bit <span class="math inline">\(i\)</span> from pattern <span class="math inline">\(\mu\)</span>, the Hebbian learning rule is expressed as, <span class="math display">\[w_{{ij}}={\frac  {1}{n}}\sum _{{\mu =1}}^{{n}}\epsilon _{{i}}^{\mu }\epsilon _{{j}}^{\mu }\]</span></p>
+<p><strong>Spike-timing-dependent plasticity</strong> (STDP) is a biological process that adjusts the strength of connections between neurons in the brain. The process adjusts the connection strengths based on the relative timing of a particular neuron’s output and input action potentials (or spikes).</p>
+<p>Experiments that stimulated two connected neurons with varying interstimulus asynchrony confirmed the importance of temporal precedence implicit in Hebb’s principle: the presynaptic neuron has to fire just before the postsynaptic neuron for the synapse to be potentiated. In addition, it has become evident that the presynaptic neural firing needs to consistently predict the postsynaptic firing for synaptic plasticity to occur robustly.</p>
+<h2 id="free-energy-principle-and-predictive-coding">Free Energy Principle and Predictive Coding</h2>
+<p>The <strong>free energy principle</strong>, introduced by neuroscientest Karl Friston, generalizes a formal description of how systems minimize a free energy function of their internal states in an attempt to generate beliefs about hidden states in their environment.</p>
+<p>In terms of the brain, we are given sensory information in current and past inputs while neurons are continuously performing inference by updating into configurations that better explain the observed sensory data. This theory of brain function, in which the brain is constantly generating and updating a mental model of the world, is known as <strong>predictive coding</strong>.</p>
+<p>We can represent these configuration of internal neurons as continuous valued latent variables that correspond to averaged voltage potential across time, spikes, and possibly neurons in the same cortical minicolumn. Neural computation corresponds to approximate inference and error back-propagation at the same time. It has been shown that the predictive coding model is able to approximate backpropagation along arbitrary computation graphs, making it biologically plausible but computationally infeasible with our current hardware.</p>
+<p>When reformulated using a generalized notation, active inference in the brain can be formally described on the tuple <span class="math inline">\((\Omega ,\Psi ,S,A,R,q,p)\)</span>.</p>
+<ul>
+<li><p><strong>A sample space <span class="math inline">\(\Omega\)</span> –</strong> from which random perturbations <span class="math inline">\(\omega \in \Omega\)</span> are drawn</p></li>
+<li><p><strong>Hidden or external states <span class="math inline">\(\Psi:\Psi\times A \times \Omega \to \mathbb{R}\)</span></strong> – that cause sensory states and depend on action</p></li>
+<li><p><strong>Sensory states <span class="math inline">\(S:\Psi \times A \times \Omega \to \mathbb{R}\)</span></strong> – a probabilistic mapping from action and hidden states</p></li>
+<li><p><strong>Action <span class="math inline">\(A:S\times R \to \mathbb{R}\)</span></strong> – that depends on sensory and internal states</p></li>
+<li><p><strong>Internal states <span class="math inline">\(R:R\times S \to \mathbb{R}\)</span></strong> – that cause action and depend on sensory states</p></li>
+<li><p><strong>Generative density <span class="math inline">\(p(s,\psi \mid m)\)</span></strong> – over sensory and hidden states under a generative model <span class="math inline">\(m\)</span></p></li>
+<li><p><strong>Variational density <span class="math inline">\(q(\psi \mid \mu )\)</span></strong> – over hidden states <span class="math inline">\(\psi \in \Psi\)</span> that is parameterised by internal states <span class="math inline">\(\mu \in R\)</span></p></li>
+</ul>
+<p>This closely resembles energy-based learning models, where predicted outputs <span class="math inline">\(y\)</span> would would be equivalent to sensory events <span class="math inline">\(s\)</span>, latent variables <span class="math inline">\(z\)</span> would be equivlent to hidden states <span class="math inline">\(\psi\)</span> and the known input <span class="math inline">\(x\)</span> would be the generative model <span class="math inline">\(m\)</span>. The objective is to maximise model evidence <span class="math inline">\(P(s\mid m)\)</span> or minimize <em>surprise</em>, <span class="math inline">\(-\log P(s\mid m)\)</span>. <span class="math display">\[\begin{aligned}
+    \underset {\mathrm {free-energy} }{\underbrace {F(s,\mu )}} 
+    &amp;={\underset {\mathrm {energy} }{\underbrace {E_{q}[-\log p(s,\psi \mid m)]} }}-{\underset {\mathrm {entropy} }{\underbrace {H[q(\psi \mid \mu )]} }}\\
+    &amp;={\underset {\mathrm {surprise} }{\underbrace {-\log p(s\mid m)} }}+{\underset {\mathrm {divergence} }{\underbrace {D_{\mathrm {KL} }[q(\psi \mid \mu )\parallel p(\psi \mid s,m)]} }}\\
+    &amp;\geq {\underset {\mathrm {surprise} }{\underbrace {-\log p(s\mid m)} }}\end{aligned}\]</span></p>
+<h2 id="helmholtz-machines-and-the-wakesleep-algorithm">Helmholtz Machines and the Wake–Sleep Algorithm</h2>
+<p>The notion that self-organising biological systems were continuously updating in order to minimizing variational free energy was derived from the work of the German physicist Helmholtz. In particular, acknowledgments are made to Helmholtz’s conception of <em>unconscious inference</em> which encapsulates the view of the human perceptual system as a statistical inference engine whose core function is to infer the probable causes of sensory input.</p>
+<p>Helmholtz machines are artificial neural networks that, through many cycles of sensing and dreaming, gradually learn to make their dreams converge to reality, and, in the process, create a succinct internal model of a fluctuating world.</p>
+<p>In particular, the Helmholtz machine is designed for unsupervised learning tasks. It contains two networks, a bottom-up <em>recognition</em> network that takes an external observation as input and produces a distribution over hidden variables, and a top-down <em>generative</em> network that generates values of the hidden variables and the data itself.</p>
+<p>The wake-sleep training algorithm consists of two phases:</p>
+<ol type="1">
+<li><p>In the wake phase, neurons are driven by recognition connections, and generative connections are adapted to increase the probability that they would reconstruct the correct activity vector in the layer below.</p></li>
+<li><p>In the sleep phase, neurons are driven by generative connections, and recognition connections are adapted to increase the probability that they would produce the correct activity vector in the layer above.</p></li>
+</ol>
+<h2 id="autoencoders">Autoencoders</h2>
+<p>The Helmholtz Machine served as an important precursor for autoencoder networks (AE) which are also a discriminative model used for making predictions and are similarly composed of a sequence of two networks: one for encoding inputs (analogous to the recognition network) and another for decoding outputs (analogous to the generative network). The encoder network learns a representation of the data by mapping data to a compressed or latent space and then training the decoder to generate an output that minimizes the reconstruction loss.</p>
+<p>On its own, this model would be prone to copying all the input features into the hidden layer and passing it directly as the output, essentially behaving like an identity function and not learning anything. This is avoided by applying an <em>information bottleneck</em> by feeding the coded input into hidden layers of lower dimension known as <em>under-complete layers</em>. An under-complete layer cannot behave as an identity function simply because the hidden layer doesn’t have enough dimensions to copy the original input.</p>
+<p>An <em>affine</em> transformation preserves lines and parallelism, i.e. it’s a linear function with a translation constant. A very simple form of an AE does the following:</p>
+<ol type="1">
+<li><p>In the encoder stage, the autoencoder takes in an input <span class="math inline">\(x \in \mathbb R^n\)</span> and applies an affine transformation <span class="math inline">\(W_h \in \mathbb R^{d\times n}\)</span> resulting in an intermediate hidden layer <span class="math inline">\(h \in \mathbb R^d\)</span>:</p>
+<p><span class="math inline">\(h = f(W_h x + b_h)\)</span>, where <span class="math inline">\(f\)</span> is an element-wise activation function and <span class="math inline">\(h\)</span> is called the code.</p></li>
+<li><p>In the decoder stage another affine transformation defined by <span class="math inline">\(W_x \in \mathbb R^{n\times d}\)</span> produces the output <span class="math inline">\(\hat{x} \in \mathbb R^n\)</span>, which is the model’s prediction/reconstruction of the input:</p>
+<p><span class="math inline">\(\hat{x} = g(W_x h + b_x)\)</span>, where <span class="math inline">\(g\)</span> is an activation function.</p></li>
+</ol>
+<p>Instead of using the wake-sleep algorithm as was done in Helmholtz machines, autoencoders are trained using backpropagation. <em>Cross-Entropy</em> can be used when the input is categorical and the <em>Mean Squared Error Loss</em> can be used when the input is real-valued. The overall loss for the dataset is given as the average per sample loss, <span class="math display">\[L = \frac{1}{m}\sum_{j=1}^m \ell (x^{(j)}, \hat x^{(j)}).\]</span></p>
+<p>Interpreted as an energy-based model, we train the system to produce an energy function that grows quadratically as the corrupted data move away from the data manifold. For a denoising autoencoder, training can be done using <strong>Contrastive divergence (CD)</strong> to handle the uncountable ways to corrupt a piece of data in high-dimensional space.</p>
+<p>In a continuous space, CD first picks a training sample <span class="math inline">\(y\)</span> and lowers its energy. For that sample, it uses a gradient-based process to move downward on the energy surface with noise. If the input space is discrete, it can instead perturb the training sample randomly to modify the energy. If the energy it gets is lower, the perturbed sample is kept, otherwise, it’s discarded with some probability. Continuous this process will eventually lower the energy of <span class="math inline">\(y\)</span>. We can then update the parameter of our energy function by comparing <span class="math inline">\(y\)</span> and the contrasted sample <span class="math inline">\(\bar y\)</span> with some loss function.</p>
+<p><em>Model</em></p>
+<p><em>Training</em></p>
+<h1 id="modern-generative-models">Modern Generative Models</h1>
+<h2 id="variational-autoencoders">Variational Autoencoders</h2>
+<p>Variational Autoencoders (VAE) are a type of generative models that aim to simulate the data generation process. VAEs have conceptual similarities to auto-encoders, but have very different formulations. The main difference between VAEs and AEs is that VAEs are designed to create a better latent space for capturing underlying causal relations that in turn enables them to perform better in the generative process.</p>
+<ol type="1">
+<li><p>In the encoder stage, the input <span class="math inline">\(x\)</span> is passed to the encoder. Instead of generating a hidden representation of the the code <span class="math inline">\(h\)</span>, as was done in an AE, the code in a VAE is comprised of two things: the mean <span class="math inline">\(\mathbb{E}(z)\)</span> and the variance <span class="math inline">\(\mathbb{V}(z)\)</span> where <span class="math inline">\(z\)</span> is the latent random variable following a <em>Gaussian distribution</em>. (Other distributions can be used as well, but a Gaussian is the most common encoded distribution in practice. A reparameterization trick is necessary when sampling <span class="math inline">\(z\)</span>, this is outlined in more detail below.)</p>
+<p>The encoder will be a function from <span class="math inline">\(\mathcal{X}\)</span> to <span class="math inline">\(\mathbb{R}^{2d} : x \mapsto {h}\)</span> (here we use <span class="math inline">\(h\)</span> to represent the concatenation of <span class="math inline">\(\mathbb{E}({z})\)</span> and <span class="math inline">\(\mathbb{V}({z})\)</span>).</p></li>
+<li><p>In the sampler stage, <span class="math inline">\(z\)</span> is sampled from the above distribution parametrized by the encoder; specifically, <span class="math inline">\(\mathbb{E}({z})\)</span> and <span class="math inline">\(\mathbb{V}({z})\)</span> are passed into a sampler to generate the latent variable <span class="math inline">\(z\)</span>.</p></li>
+<li><p>In the decoder stage, <span class="math inline">\(z\)</span> is passed into the decoder to generate <span class="math inline">\(\hat{x}\)</span>.</p>
+<p>The decoder will be a function from <span class="math inline">\(\mathcal{Z}\)</span> to <span class="math inline">\(\mathbb{R}^{n}: z \mapsto \hat{x}\)</span>.</p></li>
+</ol>
+<p>To obtain <span class="math inline">\(z\)</span>, we can’t simply sample from the Gaussian distribution because when we do gradient descent to train the VAE model, we won’t know how to do backpropagation through the sampling module. Instead, we use the <strong>reparameterization trick</strong>: <span class="math inline">\(z = \mathbb E (z) + \epsilon \odot \mathbb V(z)\)</span> where <span class="math inline">\(\epsilon\sim \mathcal{N}(0, {I}_d)\)</span>. Now backpropagation in training is possible, the gradients will go through the element-wise multiplication and addition in the above equation.</p>
+<p>To train the VAE, we want to minimize a loss function which will be composed of a reconstruction term as well as a regularization term. Regularization is done by using a penalty term <span class="math inline">\(\ell_{KL}(z, \mathcal N(0, I_d))\)</span>. Without this term, the VAE will act like a standard autoencoder which may lead to overfitting and we won’t have the generative properties that we desire.</p>
+<p>So we can write the loss as <span class="math inline">\(\ell(x, \hat x) = \ell_{reconstruction} + \ell_{KL}(z, \mathcal N(0, I_d))\)</span> where, <span class="math display">\[\ell_{reconstruction}= 
+    \begin{cases}
+        -\displaystyle \sum_{i=1}^{n}[x_i \log(x_i) + (1-x_i)\log(1-\hat x_i)] , &amp; \text{for binary inputs}\\ \\ 
+        \ \ \ \displaystyle \frac{1}{2}||x -\hat x||, &amp; \text{for real-valued inputs}
+    \end{cases}\]</span></p>
+<p>In general, to go from the latent space to input space during the generative process we will need to either learn the underlying distribution of the latent code or enforce some structure on the space. In a VAE the regularization term is used to enforce a specific Gaussian structure on the latent space. The penalty term is the <em>relative entropy</em> which is a measure of the distance between two distributions: the latent variables sampled from the Gaussian distribution and the standard normal distribution. <span class="math display">\[\ell_{KL}(z, \mathcal N(0, I_d)) = 
+    \frac{\beta}{2}\sum_{i=1}^{d}(\mathbb{V}(z_i) - \log[\mathbb{V}(z_i)] - 1 + \mathbb{E}(z_i)^2 )\]</span></p>
+<p>Interpreted as an energy-based model, Variational Autoencoders have an architecture similar to <em>Regularized Latent Variable EBM</em> where the adaptability of the latent variable is constrained in order to prevent an energy function from being 0 everywhere. This happens because every true output <span class="math inline">\(y\)</span> can be perfectly reconstructed from input <span class="math inline">\(x\)</span> with an appropriately chosen <span class="math inline">\(z\)</span>. To solve this, we may limit the information capacity of the latent variable <span class="math inline">\(z\)</span> through regularization, <span class="math display">\[E(x,y,z) = C(y, \text{Dec}(\text{Pred}(x), z)) + \lambda R(z)\]</span> where Dec is the decoder, Pred is the predictor, and <span class="math inline">\(R\)</span> is the regularization function. The value of <span class="math inline">\(\lambda\)</span> controls how much we limit the volume of space of <span class="math inline">\(z\)</span> which will, in turn, control the space of <span class="math inline">\(y\)</span> that has low energy. In a VAE, <span class="math inline">\(R\)</span> adds noise to <span class="math inline">\(z\)</span> while limiting its <span class="math inline">\(L_2\)</span> norm which will limit its information content. Recall, The <span class="math inline">\(L_2\)</span> norm calculates the euclidean distance of a vector coordinate from the origin of the vector space.</p>
+<p>The latent variable <span class="math inline">\(z\)</span> is not computed by minimizing the energy function with respect to <span class="math inline">\(z\)</span>. Instead, the energy function is viewed as sampling <span class="math inline">\(z\)</span> randomly according to a distribution whose logarithm is the cost that links it to <span class="math inline">\(\overline z\)</span>. The distribution is a Gaussian with mean <span class="math inline">\(\overline z\)</span> and this results in Gaussian noise being added to <span class="math inline">\(\overline z\)</span>.</p>
+<p>The effects of regularization with Gaussian noise can be visualized as connecting the code vectors spheres <span class="math inline">\(\overline z\)</span> with a spring. The unregularized vectors have a tendency to grow as large as possible in an attempt to disperse the noise on <span class="math inline">\(z\)</span> and to prevent overlapping spheres that would cause reconstruction loss. Connecting them with a loose spring encourages the spheres to cluster around the data manifold without pushing them to converge at the origin.</p>
+<p><em>Model</em></p>
+<p><em>Loss Function</em></p>
+<p><em>Training and Testing</em></p>
+<h2 id="deep-boltzman-machines">Deep Boltzman Machines</h2>
+<p>TODO</p>
+<h2 id="generative-adversarial-networks">Generative Adversarial Networks</h2>
+<p>The basic idea of GAN is to simultaneously train a discriminator and a generator. The discriminator is trained to distinguish real samples of a dataset from fake samples produced by the generator. We can think of a GAN as a form of energy-based model using contrastive methods (EBGAN). It pushes up the energy of contrastive samples and pushes down the energy of training samples. The generator produces contrastive samples intelligently while the discriminator, which is essentially a cost function, acts as an energy model. Both the generator and the discriminator are neural nets.</p>
+<p>The two kinds of input to GAN are its training samples and the contrastive samples produced by the generator. For training samples, the GAN passes these samples through the discriminator and makes their energy go down. For contrastive samples, the GAN samples latent variables from some distribution, runs them through the generator to produce something similar to training samples, and passes them through the discriminator to make their energy go up. The loss function for discriminator is as follows, <span class="math display">\[\sum_i  L_d(F(y), F(\bar y)).\]</span> In this context, <span class="math inline">\(y\)</span> is the label, and <span class="math inline">\(\bar{y}\)</span> is the response variable that gives the lowest energy except <span class="math inline">\(y\)</span> itself. <span class="math inline">\(L_d\)</span> can be any margin-based loss function that makes <span class="math inline">\(F(y)\)</span> decrease and <span class="math inline">\(F(\bar{y})\)</span> increase.</p>
+<p>The loss function used for the generator <span class="math inline">\(G\)</span> will be, <span class="math display">\[L_g(F(\bar y)) = L_g(F(G(z))).\]</span> We want to make the generator adapt its weight and produce a <span class="math inline">\(\bar{y}\)</span> with low energy that can fool the discriminator. The reason why this type of model is called generative adversarial network is because we have two objective functions that are incompatible with each other and we need to minimize them simultaneously. It’s not a gradient descent problem because the goal is to find a Nash equilibrium between these two functions and gradient descent is not capable of this by default.</p>
+<p>Viewing the discriminator as an energy function allows to use a wide variety of architectures and loss functions in addition to the usual binary classifier with logistic output, <span class="math display">\[\mathcal{L} = \mathbb{E}_x [\log(D(\boldsymbol{x} ))] + \mathbb{E}_{\hat{x}}[\log(1-D(\boldsymbol{\hat{x}}))]\]</span></p>
+<p>From this perspective, the GAN is essentially a variational autoencoder with an alternate training strategy.</p>
+<p>Problems with GANS and EBGANs:</p>
+<ol type="1">
+<li><p>Unstable convergence – As a result of the adversarial nature between the generator and discriminator there is an unstable equilibrium point rather than an equilibrium.</p></li>
+<li><p>Vanishing gradient – As the discriminator becomes more confident, the outputs of the cost network move into flatter regions where the gradients become more saturated. These flatter regions provide small, vanishing gradients that hinder the generator network’s training. Thus, when training a GAN, you want to make sure that the cost gradually increases as you become more confident.</p></li>
+<li><p>Mode collapse – If a generator maps all <span class="math inline">\(\vec{z}\)</span>’s from the sampler to a single <span class="math inline">\(\vec{\hat{x}}\)</span> that can fool the discriminator, then the generator will produce only that <span class="math inline">\(\vec{\hat{x}}\)</span>. Eventually, the discriminator will learn to detect specifically this fake input. As a result, the generator simply finds the next most plausible <span class="math inline">\(\vec{\hat{x}}\)</span> and the cycle continues. Consequently, the discriminator gets trapped in local minima while cycling through fake <span class="math inline">\(\vec{\hat{x}}\)</span>’s. A possible solution to this issue is to enforce some penalty to the generator for always giving the same output given different inputs.</p></li>
+<li><p>Energy smoothness – In an EBGAN problems arise when we have samples that are close to the true manifold. If we train the system successfully where we get the discriminator to produce <span class="math inline">\(0\)</span> outside the manifold and an infinite probability on the manifold, the energy function becomes useless because we don’t want the energy value to go from <span class="math inline">\(0\)</span> to infinity in a very small step. An improvement of the GAN model is made with the Wasserstein GAN which limits the size of discriminator weight.</p></li>
+</ol>
+<p>To generate samples from EBMs, we use an iterative refinement process based on Langevin dynamics. Informally, this involves performing noisy gradient descent on the energy function to arrive at low-energy configurations</p>
+<p>Below is a standard implement of a Deep Convolutional Generative Adversarial Network (DCGAN).</p>
+<p><em>Generator Model</em></p>
+<p><em>Descrimantor Model</em></p>
+<p><em>Loss Function and Setup</em></p>
+<p><em>Training the Discriminator and the Generator</em></p>
+<h2 id="transformers">Transformers</h2>
+<p>TODO</p>
+<h2 id="continuous-state-modern-hopfield-networks">Continuous State Modern Hopfield Networks</h2>
+<p>The energy of binary modern Hopfield networks can be generalized to allow continuous states while keeping convergence and storage capacity properties. For the new energy, a new update rule is used that minimizes the energy.</p>
+<p>Defining the convex log-sum-exp function (lse), <span class="math display">\[lse(\beta, x) = \beta^{-1} \log \bigg (  \sum_{i=1}^{N} \exp(\beta x_i) \bigg).\]</span></p>
+<p>Suppose there are <span class="math inline">\(N\)</span> patterns, <span class="math inline">\(x_i \in \mathbb R^d\)</span>, represented by the matrix <span class="math inline">\(X = (x_1, \dots, x_N)\)</span> with the largest pattern <span class="math inline">\(M = \max_i ||x_i||\)</span> and a query is <span class="math inline">\(\xi \in R^d\)</span>. Recall, we can express the binary Hopfield energy as <span class="math inline">\(E = -\sum_{i=1}^N F(\xi^T)\)</span> with interaction function <span class="math inline">\(F(x) = x^n\)</span>.</p>
+<p>Then, for the new energy of the generalized continuous Hopfield network we take the logarithm of the negative energy of modern Hopfield networks and add a quadratic term of the current state. The quadratic term ensures that the norm of the state vector <span class="math inline">\(\xi\)</span> remains finite and the energy is bounded. <span class="math display">\[E = -lse(\beta, X^T \xi) + \frac{1}{2}\xi^T\xi + \beta^-1\log N +\frac{1}{2} M^2\]</span> The update rule is given by <span class="math display">\[\xi_{new} = X \text{softmax}(\beta X^T \xi).\]</span></p>
+<p>Continuous Hopfield network converge in one update step with exponentially low error and have storage capacity proportional to <span class="math inline">\(c^{\frac{d-1}{4}}\)</span>, for c = 1.37 or c = 3.15. This new update rule can be shown to be equivalent to the attention mechanism of the transformer.</p>
+<p>Yann LeCun, DS-GA 1008, DEEP LEARNING, NYU CENTER FOR DATA SCIENCE</p>
+<p>https://atcold.github.io/pytorch-Deep-Learning/</p>
+<p>Geoffrey E. Hinton, CSC2535, Advanced Machine Learning, University of Toronto</p>
+<p>https://www.cs.toronto.edu/ hinton/csc2535/</p>
+<p>Friston, K.J., Stephan, K.E. Free-energy and the brain. Synthese 159, 417–458 (2007). [https://doi.org/10.1007/s11229-007-9237-y]</p>
+<p>GE Hinton, P Dayan, BJ Frey, RM Neal, The "wake-sleep" algorithm for unsupervised neural networks, Science 26 May 1995</p>
+<p>[https://pdfs.semanticscholar.org/6dd0/1cd9c17d1491ead8c9f97597fbc61dead8ea.pdf]</p>
+<p>Hinton G, Osindero S, Welling M, Teh YW. Unsupervised discovery of nonlinear structure using contrastive backpropagation.</p>
+<p>Cogn Sci. 2006 Jul 8;30(4):725-31. doi: 10.1207/s15516709cog0000_76. PMID: 21702832.</p>
+<p>[http://www.gatsby.ucl.ac.uk/ỹwteh/research/unsup/cogsci2006-printed.pdf]</p>
+<p>Yoshua Bengio, Benjamin Scellier, Olexa Bilaniuk, João Sacramento, Walter Senn: Feedforward Initialization for Fast Inference of Deep Generative Networks is biologically plausible. CoRR abs/1606.01651 (2016)</p>
+<p>[https://arxiv.org/pdf/1606.01651.pdf]</p>
+<p>Yilun Du, Igor Mordatch, Implicit Generation and Generalization Methods for Energy-Based Models</p>
+<p>[https://openai.com/blog/energy-based-models/]</p>
+<p>Igor Mordatch, Learning Concepts with Energy Functions</p>
+<p>[https://openai.com/blog/learning-concepts-with-energy-functions/]</p>
+<p>Hubert Ramsauer et. al., Hopfield Networks is All You Need</p>
+<p>[https://arxiv.org/pdf/2008.02217.pdf]</p>
+</body>
+</html>
