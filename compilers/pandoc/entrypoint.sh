@@ -47,8 +47,8 @@ if [ -n "$root_file" ];
     while IFS='' read -r LINE || [ -n "${LINE}" ]; do
       echo "processing line: ${LINE}"
       cd "$(dirname "${LINE}")";
-      pandoc $args "$(basename ${LINE})" -o main.md;
-      pandoc --standalone --mathjax -f markdown -t html main.md -o index.html;
+      pandoc --verbose $args "$(basename ${LINE})" -o main.md;
+      pandoc --verbose --standalone --mathjax -f markdown -t html main.md -o index.html;
       cd -;
     done < $changed_files
 fi
