@@ -1,4 +1,4 @@
-\begin{tikzpicture}[x={(0.866cm,-0.5cm)}, y={(0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=.8,
+\begin{tikzpicture}[x={(0.866cm,-0.5cm)}, y={(0.866cm,0.5cm)}, z={(0cm,1cm)}, scale=.75,
     %Option for nice arrows
     >=stealth, %
     inner sep=0pt, outer sep=2pt,%
@@ -50,7 +50,7 @@
     \foreach \x in{0, 0.25,...,6}
         \draw[color=blue,->] (\x,0,0) -- (\x,{sin(2*\x r)},0);
 
-    \draw (3,1,1) node [text width=2.5cm, text centered]{Lyapunov trajectory};
+    \draw (3,1.5,1.5) node [text width=2.5cm, text centered]{Lyapunov trajectory in latent space};
 
     %Crystal thin section
     \begin{scope}[thick]
@@ -64,8 +64,8 @@
                 -- (6.2, 2, -1.5) -- cycle; % Second face
 
         %Optical indices
-        % \draw[darkred, ->]       (6.1, 0, 0) -- (6.1, 0.26,  0.966) node [right] {$n_{g}'$}; % index 1
-        % \draw[darkred, dashed]   (6.1, 0, 0) -- (6.1,-0.26, -0.966); % index 1
+        \draw[darkred, dashed]       (6.1, 0, 0) -- (6.1, 0.26,  0.966) node [right] {$z$}; % index 1
+        % \draw[darkred, dashed]   (6.1, 0, 0) -- (6.1,-0.26, -0.966) node [left] {$z$}; % index 1
         % \draw[darkgreen, ->]     (6.1, 0, 0) -- (6.1, 0.644,-0.173) node [right] {$n_{p}'$}; % index 2
         \draw[darkgreen, dashed] (6.1, 0, 0) -- (6.1,-0.644, 0.173); % index 2
     \end{scope}
@@ -75,7 +75,7 @@
         plot (\x, {0.26*0.26*sin(2*(\x-0.5) r)},  {0.966*0.26*sin(2*(\x-0.5) r)});  %n'g-oriented ray
     \draw[wave=darkgreen, variable=\x, samples at={6.2,6.45,...,12}]
         plot (\x, {0.966*0.966*sin(2*(\x-0.1) r)},{-0.26*0.966*sin(2*(\x-0.1) r)}); %n'p-oriented ray
-    \draw (10,1,1) node [text width=2.5cm, text centered] {Samples of sensory stimuli};
+    \draw (9.5,1.5,1.5) node [text width=2.5cm, text centered] {Samples of sensory stimuli};
 
     \foreach \x in{6.2,6.45,...,12} {
         \draw[color=darkgreen, ->] (\x, 0, 0) --
@@ -100,5 +100,6 @@
     %     plot (\x,{0}, {-0.26*0.966*sin(2*(\x-0.1) r)});      %n'p polarized ray
 
     \node[align=justify, text width=14cm, anchor=north west, yshift=-2mm] at (current bounding box.south west)
-        {A depiction of the high-dimensional energy manifolds that act as phase boundaries between the states of consciousness.};
+        {A depiction of the high-dimensional energy manifolds that act as phase boundaries between the states of consciousness. };
 \end{tikzpicture}
+% The third axis indicates an increasing stochasticity in the environment which results from information loss being supplemented by generated synthetic data.
