@@ -1325,6 +1325,41 @@ def radix_sort(arr):
         exp *= 10
 \end{lstlisting}
     
+    \subsubsection{Bucket Sort}
+    Time complexity: $\bigO(n^{2})$ worst case, 	$\bigO\left(n+{\frac {n^{2}}{k}}+k\right) \approx \bigO(n)$ average case when $k\approx n$ where $k$ is the number of buckets. Space complexity: $\bigO(n\cdot k)$
+    
+    \begin{enumerate}
+        \item Set up an array of initially empty "buckets".
+        \item Scatter: Go over the original array, putting each object in its bucket.
+        \item Sort each non-empty bucket.
+        \item Gather: Visit the buckets in order and put all elements back into the original array.
+    \end{enumerate}
+    
+    Radix and bucket sort are two useful generalizations of counting sort. They have a lot in common with counting sort and with each other but exchange time-space tradeoffs.
+    
+    \begin{itemize}
+        \item Counting sort -- Simple buckets, simple processing, memory overhead
+        \item Radix sort -- Simple buckets, sophisticated processing, speed overhead (and still need additional static memory)
+        \item Bucket sort -- Sophisticated buckets, simple processing, requires dynamic memory, performant on average
+    \end{itemize}
+     
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+def bucket_sort_frequency(s):
+    counter = collections.Counter(s) 
+    buckets = collections.defaultdict(list)
+			
+    for key, value in counter.items():  
+        buckets[value].append(key)
+
+    ret = []
+    for count in range(len(s), 0, -1):  
+        for char in bucket[count]:  
+            ret += [char] * count
+    return ret
+\end{lstlisting}
+
     \subsubsection{Cycle Sort}
     Time Complexity: $\bigO(n)$ worst case, Space Complexity: $\bigO(1)$ 
     
