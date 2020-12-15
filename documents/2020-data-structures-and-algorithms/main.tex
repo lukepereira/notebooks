@@ -320,7 +320,7 @@ while len(q):
     \end{table}
 
     
-    \subsubsection{Priority Queue}
+    \subsubsection{Priority Queues}
     A priority queue is an ADT container that retrieves items not by the insertion time (as in a stack or queue), nor by a key match (as in a dictionary), but instead retrieves items with the highest priority value. Priority queues provide more flexibility than simple sorting because they allow new elements to enter a system at arbitrary intervals. It is much more cost-effective to insert a new job into a priority queue than to re-sort everything on each arrival. Max-priority queues order values in descending order with higher priority first and are typically implemented with a max-heap. Min-priority queues sort values in ascending order with lower priority values first and are typically implemented with a min-heap.
     
     The basic priority queue supports three primary operations:
@@ -369,10 +369,10 @@ while pq:
     print(next_item)
 \end{lstlisting}
 
-    \subsubsection{Indexed Priority Queue}
+    \subsubsection{Indexed Priority Queues}
     An Indexed Priority Queue gives us the ability to change the priority of an element without having to go through all the elements. It can be thought of as a combination of a hash table, used for quick lookups of values, and a priority queue, to maintain a heap ordering.
 
-    \subsubsection{Monotonic Stack and Queue}
+    \subsubsection{Monotonic Stacks and Queues}
     This structure maintains an ordering so that its elements are either strictly increasing or strictly decreasing. It differs from a heap in that instead of re-ordering elements as they're processed, it will discard previous numbers that do not follow the monotonic condition before appending a new number. It is often used to reduce a quadratic time algorithm to a linear one by maintaining a kind of short-term memory of the most recently processed larger or smaller value.
     
     For example, a monotonic increasing stack can be used to find the index distance of the next smaller number given an unordered list of numbers. Instead of searching for the next smallest number for every number with a nested for loop, resulting in an $\bigO(n^2)$ runtime, we only need to check the top of the stack of indicies of previously visited numbers, giving us a $\bigO(n)$ runtime. In an monotonic increasing stack, we append values and pop from the right. 
@@ -860,6 +860,68 @@ def KNN_to_origin(points, K):
     return [points[i] for i in idx] if K > 1 else [points[idx]]
 \end{lstlisting}
 
+    \subsubsection{Segment Trees}
+    A Segment Tree can be used for storing information about intervals, or segments. It allows querying which of the stored segments contain a given point. In principle, it's a static structure, meaning it cannot be modified once it's built. For $n$ intervals, a segment tree uses $\bigO(n \log n)$ storage, can be built in $\bigO(n \log n)$ time, and support searching for all the intervals that contain a query point in $\bigO(\log n + k)$, $k$ being the number of retrieved intervals or segments. 
+    \begin{enumerate}
+        \item Segment tree $T$ is a binary tree.
+        \item Leaves in $T$ correspond to the intervals described by the endpoints in set of intervals $I$. The ordering of intervals is maintained in the tree, i.e. the leftmost leaf corresponds to the leftmost interval.
+        \item The internal nodes of $T$ correspond to intervals that are the union of elementary intervals.
+        \item Each node or leaf in $T$ stores the interval of itself and a set of intervals in a data structure.
+    \end{enumerate}
+    
+    Similar trees that operate on intervals  are described below:
+    \begin{itemize}
+        \item \textbf{Segment trees} stores intervals and are optimized for ``which of these intervals contains a given point" queries.
+        
+        $\bigO(n \log n)$ preprocessing time, $\bigO(k+\log n)$ query time, $\bigO(n \log n)$ space. Interval can be added/deleted in $\bigO(\log n)$ time.
+        
+        \item \textbf{Interval trees} store intervals as well, but are optimized for ``which of these intervals overlap with a given interval" queries. They can also be used for point queries - similar to segment tree.
+        
+        $\bigO(n \log n)$ preprocessing time, $\bigO(k+\log n)$ query time, $\bigO(n)$ space. Interval can be added/deleted in $\bigO(\log n)$ time
+        
+        \item \textbf{Range trees} store points and are optimized for ``which points fall within a given interval" queries.
+        
+         $\bigO(n \log n)$ preprocessing time, $\bigO(k+\log n)$ query time, $\bigO(n)$ space. New points can be added/deleted in $\bigO(\log n)$ time
+        
+        \item \textbf{Binary indexed trees} stores items-count per index, and are optimized for ``how many items are there between index m and n" queries.
+        
+        $\bigO(n \log n)$ preprocessing time, $\bigO(\log n)$ query time, $\bigO(n)$ space. The items-count per index can be increased in $\bigO(\log n)$ time
+    \end{itemize}
+
+
+\vspace{8pt} \emph{Python Implementation}
+\begin{lstlisting}[language=Python]
+#Segment tree node
+class Node(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+        self.total = 0
+        self.left = None
+        self.right = None
+        
+class SegmentTree(object):
+    def __init__(self, nums):
+        self.root = createTree(nums, 0, len(nums)-1)
+    def createTree(nums, l, r):
+        if l > r:
+            return None
+        #leaf node
+        if l == r:
+            n = Node(l, r)
+            n.total = nums[l]
+            return n
+        mid = (l + r) // 2
+        root = Node(l, r)
+        #recursively build the Segment tree
+        root.left = createTree(nums, l, mid)
+        root.right = createTree(nums, mid+1, r)
+        #Total stores the sum of all leaves under root
+        #i.e. those elements lying between (start, end)
+        root.total = root.left.total + root.right.total
+        return root
+\end{lstlisting}    
+
     \subsection{Self-balancing Trees}
     Balanced search trees use local \textbf{rotation operations} to restructure search trees, moving more distant nodes closer to the root while maintaining the in-order search structure of the tree. The \textbf{balance factor} of a node in a binary tree is the height of its right subtree minus the height of its left subtree. 
     
@@ -910,6 +972,7 @@ def KNN_to_origin(points, K):
     
     For implementing multi-level indexing in a database, every node will have a key to be indexed by a pointer to its child nodes in their memory blocks as well as a pointer to a record on the database (value). In a \textbf{B+ tree}, only leaf nodes contain a record pointer with leaf nodes also containing a copy of corresponding parent keys.
     
+
     \subsection{Graphs}
     A graph is simply a collection of nodes, some of which may have edges between them. With this definition, we see that a tree is a connected graph that does not have cycles. Graphs can be either \textbf{directed} or \textbf{undirected}. A graph might consist of multiple isolated subgraphs. If there is a path between every pair of vertices, it is called a \textbf{connected} graph. A graph can also have cycles (or not), an \textbf{acyclic} graph is one without cycles. Note that a tree is undirected and acyclic, which differs from a directed and acyclic graph in which sibling nodes can be joined by edges in a diamond-like shape. There are two common ways to represent a graph: adjacency lists and adjacency matrices. 
     
@@ -1055,7 +1118,7 @@ bisect.bisect_right(A, -10)
 
 def search_leftmost(nums, target):
     lo, hi = 0, len(nums) - 1
-    while lo < hi:
+    while lo <= hi: 
         mid = (lo + hi) // 2
         if target > nums[mid]:
             lo = mid + 1
@@ -1329,10 +1392,10 @@ def radix_sort(arr):
     Time complexity: $\bigO(n^{2})$ worst case, 	$\bigO\left(n+{\frac {n^{2}}{k}}+k\right) \approx \bigO(n)$ average case when $k\approx n$ where $k$ is the number of buckets. Space complexity: $\bigO(n\cdot k)$
     
     \begin{enumerate}
-        \item Set up an array of initially empty "buckets".
-        \item Scatter: Go over the original array, putting each object in its bucket.
-        \item Sort each non-empty bucket.
-        \item Gather: Visit the buckets in order and put all elements back into the original array.
+        \item Set up an array of initially empty bucket
+        \item Scatter: Go over the original array, putting each object in its bucket
+        \item Sort each non-empty bucket
+        \item Gather: Visit the buckets in order and put all elements back into the original array
     \end{enumerate}
     
     Radix and bucket sort are two useful generalizations of counting sort. They have a lot in common with counting sort and with each other but exchange time-space tradeoffs.
@@ -1512,12 +1575,12 @@ def maxSlidingWindow(nums, k):
         while dq and dq[-1][0] < nums[i]:
             dq.pop()
         dq.append((nums[i], i))
-        # At least one full window got added to queue
+        # At least one full window was added to queue
         if i >= k-1:
-            #Pop front while element index is out of window
+            # Pop front while element index is out of window
             while dq and dq[0][1] < i - k + 1:
                 dq.popleft()
-            #Add to answer
+            #Add largest element to answer
             if dq: out.append(dq[0][0])
     return out
 \end{lstlisting}
@@ -1541,7 +1604,7 @@ def single_pass_lookup(nums, target):
     raise ValueError('Target not in list.')
 \end{lstlisting}
 
-    \subsubsection{Kadane's Algorithm}
+    \subsubsection{Prefix Sums and Kadane's Algorithm}
     Time Complexity: $\bigO(n)$, Space Complexity: $\bigO(1)$
     
     The maximum subarray sum problem is the task of finding a contiguous subarray with the largest sum within a given one-dimensional array $A[1...n]$ of numbers.
@@ -2864,7 +2927,7 @@ def maxScore_sw(cardPoints, limit):
         return ans
 \end{lstlisting}
 
-    \subsection{Numerical Problems}
+    \subsection{Numerical Methods}
     
     \subsubsection{Bit Manipulation and Set Operations}
     1 byte is comprised of 8 bits. Any integer or character can be represented using bits, which we call its binary form (containing only 1 or 0) or its base 2 representation.
