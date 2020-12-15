@@ -60,6 +60,7 @@ title:  Data Structures and Algorithms
         -   [Heap Sort](#heap-sort)
         -   [Counting Sort](#counting-sort)
         -   [Radix Sort](#radix-sort)
+        -   [Bucket Sort](#bucket-sort)
         -   [Cycle Sort](#cycle-sort)
         -   [Timsort](#timsort)
     -   [Array Analysis Methods](#array-analysis-methods)
@@ -2167,6 +2168,52 @@ def radix_sort(arr):
     while max_num/exp > 0: 
         count_sort_digits(arr, exp) 
         exp *= 10
+```
+
+### Bucket Sort
+
+Time complexity: $\mathcal{O}(n^{2})$ worst case,
+$\mathcal{O}\left(n+{\frac {n^{2}}{k}}+k\right) \approx \mathcal{O}(n)$
+average case when $k\approx n$ where $k$ is the number of buckets. Space
+complexity: $\mathcal{O}(n\cdot k)$
+
+1.  Set up an array of initially empty \"buckets\".
+
+2.  Scatter: Go over the original array, putting each object in its
+    bucket.
+
+3.  Sort each non-empty bucket.
+
+4.  Gather: Visit the buckets in order and put all elements back into
+    the original array.
+
+Radix and bucket sort are two useful generalizations of counting sort.
+They have a lot in common with counting sort and with each other but
+exchange time-space tradeoffs.
+
+-   Counting sort -- Simple buckets, simple processing, memory overhead
+
+-   Radix sort -- Simple buckets, sophisticated processing, speed
+    overhead (and still need additional static memory)
+
+-   Bucket sort -- Sophisticated buckets, simple processing, requires
+    dynamic memory, performant on average
+
+*Python Implementation*
+
+``` {.python language="Python"}
+def bucket_sort_frequency(s):
+    counter = collections.Counter(s) 
+    buckets = collections.defaultdict(list)
+            
+    for key, value in counter.items():  
+        buckets[value].append(key)
+
+    ret = []
+    for count in range(len(s), 0, -1):  
+        for char in bucket[count]:  
+            ret += [char] * count
+    return ret
 ```
 
 ### Cycle Sort
