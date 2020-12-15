@@ -28,9 +28,9 @@ title:  Data Structures and Algorithms
     -   [Stacks and Queues](#stacks-and-queues)
         -   [Stacks](#stacks)
         -   [Queues](#queues)
-        -   [Priority Queue](#priority-queue)
-        -   [Indexed Priority Queue](#indexed-priority-queue)
-        -   [Monotonic Stack and Queue](#monotonic-stack-and-queue)
+        -   [Priority Queues](#priority-queues)
+        -   [Indexed Priority Queues](#indexed-priority-queues)
+        -   [Monotonic Stacks and Queues](#monotonic-stacks-and-queues)
     -   [Hash Tables](#hash-tables)
         -   [Dictionaries and Hash
             Tables](#dictionaries-and-hash-tables)
@@ -42,6 +42,7 @@ title:  Data Structures and Algorithms
         -   [Suffix Trees/Arrays](#suffix-treesarrays)
         -   [Merkle Trees](#merkle-trees)
         -   [Kd-Trees](#kd-trees)
+        -   [Segment Trees](#segment-trees)
     -   [Self-balancing Trees](#self-balancing-trees)
         -   [AVL Trees](#avl-trees)
         -   [Red--black Trees](#redblack-trees)
@@ -69,7 +70,8 @@ title:  Data Structures and Algorithms
         -   [Sliding Window Technique](#sliding-window-technique)
         -   [Single-pass with Lookup
             Table](#single-pass-with-lookup-table)
-        -   [Kadane's Algorithm](#kadanes-algorithm)
+        -   [Prefix Sums and Kadane's
+            Algorithm](#prefix-sums-and-kadanes-algorithm)
         -   [Prefix Sums with Binary
             Search](#prefix-sums-with-binary-search)
     -   [Intervals](#intervals)
@@ -127,7 +129,7 @@ title:  Data Structures and Algorithms
             Search)](#unordered-choices-in-2d-sequences-binary-search)
         -   [Turn-Based Games (Double-ended
             queue)](#turn-based-games-double-ended-queue)
-    -   [Numerical Problems](#numerical-problems)
+    -   [Numerical Methods](#numerical-methods)
         -   [Bit Manipulation and Set
             Operations](#bit-manipulation-and-set-operations)
     -   [Combinatorial Methods](#combinatorial-methods)
@@ -576,7 +578,7 @@ while len(q):
   rotate          $\mathcal{O}(k)$   $\mathcal{O}(k)$
   remove          $\mathcal{O}(n)$   $\mathcal{O}(n)$
 
-### Priority Queue
+### Priority Queues
 
 A priority queue is an ADT container that retrieves items not by the
 insertion time (as in a stack or queue), nor by a key match (as in a
@@ -664,14 +666,14 @@ while pq:
     print(next_item)
 ```
 
-### Indexed Priority Queue
+### Indexed Priority Queues
 
 An Indexed Priority Queue gives us the ability to change the priority of
 an element without having to go through all the elements. It can be
 thought of as a combination of a hash table, used for quick lookups of
 values, and a priority queue, to maintain a heap ordering.
 
-### Monotonic Stack and Queue
+### Monotonic Stacks and Queues
 
 This structure maintains an ordering so that its elements are either
 strictly increasing or strictly decreasing. It differs from a heap in
@@ -1421,6 +1423,96 @@ def KNN_to_origin(points, K):
     return [points[i] for i in idx] if K > 1 else [points[idx]]
 ```
 
+### Segment Trees
+
+A Segment Tree can be used for storing information about intervals, or
+segments. It allows querying which of the stored segments contain a
+given point. In principle, it's a static structure, meaning it cannot be
+modified once it's built. For $n$ intervals, a segment tree uses
+$\mathcal{O}(n \log n)$ storage, can be built in $\mathcal{O}(n \log n)$
+time, and support searching for all the intervals that contain a query
+point in $\mathcal{O}(\log n + k)$, $k$ being the number of retrieved
+intervals or segments.
+
+1.  Segment tree $T$ is a binary tree.
+
+2.  Leaves in $T$ correspond to the intervals described by the endpoints
+    in set of intervals $I$. The ordering of intervals is maintained in
+    the tree, i.e. the leftmost leaf corresponds to the leftmost
+    interval.
+
+3.  The internal nodes of $T$ correspond to intervals that are the union
+    of elementary intervals.
+
+4.  Each node or leaf in $T$ stores the interval of itself and a set of
+    intervals in a data structure.
+
+Similar trees that operate on intervals are described below:
+
+-   **Segment trees** stores intervals and are optimized for "which of
+    these intervals contains a given point\" queries.
+
+    $\mathcal{O}(n \log n)$ preprocessing time, $\mathcal{O}(k+\log n)$
+    query time, $\mathcal{O}(n \log n)$ space. Interval can be
+    added/deleted in $\mathcal{O}(\log n)$ time.
+
+-   **Interval trees** store intervals as well, but are optimized for
+    "which of these intervals overlap with a given interval\" queries.
+    They can also be used for point queries - similar to segment tree.
+
+    $\mathcal{O}(n \log n)$ preprocessing time, $\mathcal{O}(k+\log n)$
+    query time, $\mathcal{O}(n)$ space. Interval can be added/deleted in
+    $\mathcal{O}(\log n)$ time
+
+-   **Range trees** store points and are optimized for "which points
+    fall within a given interval\" queries.
+
+    $\mathcal{O}(n \log n)$ preprocessing time, $\mathcal{O}(k+\log n)$
+    query time, $\mathcal{O}(n)$ space. New points can be added/deleted
+    in $\mathcal{O}(\log n)$ time
+
+-   **Binary indexed trees** stores items-count per index, and are
+    optimized for "how many items are there between index m and n\"
+    queries.
+
+    $\mathcal{O}(n \log n)$ preprocessing time, $\mathcal{O}(\log n)$
+    query time, $\mathcal{O}(n)$ space. The items-count per index can be
+    increased in $\mathcal{O}(\log n)$ time
+
+*Python Implementation*
+
+``` {.python language="Python"}
+#Segment tree node
+class Node(object):
+    def __init__(self, start, end):
+        self.start = start
+        self.end = end
+        self.total = 0
+        self.left = None
+        self.right = None
+        
+class SegmentTree(object):
+    def __init__(self, nums):
+        self.root = createTree(nums, 0, len(nums)-1)
+    def createTree(nums, l, r):
+        if l > r:
+            return None
+        #leaf node
+        if l == r:
+            n = Node(l, r)
+            n.total = nums[l]
+            return n
+        mid = (l + r) // 2
+        root = Node(l, r)
+        #recursively build the Segment tree
+        root.left = createTree(nums, l, mid)
+        root.right = createTree(nums, mid+1, r)
+        #Total stores the sum of all leaves under root
+        #i.e. those elements lying between (start, end)
+        root.total = root.left.total + root.right.total
+        return root
+```
+
 ## Self-balancing Trees
 
 Balanced search trees use local **rotation operations** to restructure
@@ -1785,7 +1877,7 @@ bisect.bisect_right(A, -10)
 
 def search_leftmost(nums, target):
     lo, hi = 0, len(nums) - 1
-    while lo < hi:
+    while lo <= hi: 
         mid = (lo + hi) // 2
         if target > nums[mid]:
             lo = mid + 1
@@ -2177,15 +2269,15 @@ $\mathcal{O}\left(n+{\frac {n^{2}}{k}}+k\right) \approx \mathcal{O}(n)$
 average case when $k\approx n$ where $k$ is the number of buckets. Space
 complexity: $\mathcal{O}(n\cdot k)$
 
-1.  Set up an array of initially empty \"buckets\".
+1.  Set up an array of initially empty bucket
 
 2.  Scatter: Go over the original array, putting each object in its
-    bucket.
+    bucket
 
-3.  Sort each non-empty bucket.
+3.  Sort each non-empty bucket
 
 4.  Gather: Visit the buckets in order and put all elements back into
-    the original array.
+    the original array
 
 Radix and bucket sort are two useful generalizations of counting sort.
 They have a lot in common with counting sort and with each other but
@@ -2425,12 +2517,12 @@ def maxSlidingWindow(nums, k):
         while dq and dq[-1][0] < nums[i]:
             dq.pop()
         dq.append((nums[i], i))
-        # At least one full window got added to queue
+        # At least one full window was added to queue
         if i >= k-1:
-            #Pop front while element index is out of window
+            # Pop front while element index is out of window
             while dq and dq[0][1] < i - k + 1:
                 dq.popleft()
-            #Add to answer
+            #Add largest element to answer
             if dq: out.append(dq[0][0])
     return out
 ```
@@ -2472,7 +2564,7 @@ def single_pass_lookup(nums, target):
     raise ValueError('Target not in list.')
 ```
 
-### Kadane's Algorithm
+### Prefix Sums and Kadane's Algorithm
 
 Time Complexity: $\mathcal{O}(n)$, Space Complexity: $\mathcal{O}(1)$
 
@@ -4330,7 +4422,7 @@ def maxScore_sw(cardPoints, limit):
         return ans
 ```
 
-## Numerical Problems
+## Numerical Methods
 
 ### Bit Manipulation and Set Operations
 
