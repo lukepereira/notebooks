@@ -69,7 +69,7 @@ The \textit{free energy principle} shows us that biological dissapative systems 
 
 \newpage
 
-\section{Introduction}
+\section{Overview}
 
 Energy-based models (EBMs) provide an alternative perspective to the standard optimization approach of using a cost function to measure a model's ability to learn a probability density. This provides a useful layer of abstraction to build on and may also be more computationally efficient by avoiding computing an intractable posterior and only computing variable dependencies. A phase space that is divided by two manifolds described by separate energy functions that represent phase boundaries of the three states in which the agent can exist is proposed. The approach of maintaining two energy functions is in contrast to the standard approach of minimizing a single cost function. Having a mixture between an true world model and an upper bound of incoherent reality allows for better predictions within a stochastic test environment and also encourages creative experimentation and imaginative exploration. 
 
@@ -139,7 +139,7 @@ Where $D$ is the Kullback–Leibler cross-entropy or divergence term that measur
 \[
 D(q(\vartheta;\lambda) = \int q \ln \frac{q}{p} d\vartheta.
 \]
-By minimizing its free energy, the agent learns how to act in order for its trajectories to stabilize by descending into basins of attractions to find equilibrium points.
+By minimizing its free energy, the agent learns how to act in order for its trajectories to stabilize by descending into basins of attractions to find equilibrium points. It follows that the latent trajectories can be interpreted with symbolic dynamics. A symbolic orbit is a sequence of symbols corresponding to the successive partition elements visited by the point in its orbit. Instead, we use an Autoencoder to learn an encoding that will partition the space, which reduces the memory and computation of what would otherwise involve solving high dimensional differential equations on a continuous domain.
 
 % During the waking phasing, the agent now has access to both the discriminators and generators of the world model and the upper bounded dream model. It can simultaneously use them to predict and imagine in order to make the best decisions over a wider range of possible states.
 
