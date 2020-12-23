@@ -1,0 +1,166 @@
+\documentclass{article}
+
+\usepackage[final]{styles}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{csquotes}
+\usepackage{float}
+\title{Unifying Inference in Ergodic World Models}
+% \title{Unifying Inference in Ergodic Latent Space}
+% \title{Free-energy Dynamics in Ergodic Domains}
+% \title{Fast \& Slow Inference in Ergodic Domains}
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+\author{%
+  Luke J. Pereira \\
+%   \texttt{lukejoepereira@gmail.com} \\
+  % examples of more authors
+  % \And
+  % Coauthor \\
+  % Affiliation \\ consciousness
+  % Address \\
+  % \texttt{email} \\
+  % \AND
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+}
+
+\begin{document}
+\maketitle
+% \vspace{-0.5cm}
+
+\begin{abstract}
+% (Equivilently complex PDEs trajectories have dimensions reduced using ordinary differential representation of neural networks.)
+Birkhoff's theorem states that in an Ergodic domain, the average of a function $f$ over an infinite number of flows converges to the continuous integral of the function over the phase space. Defining $f$ to be a function that minimizes the joint divergence of the boundaries of a world model will produce a measure preserving Ergodic flow. Moreover, we can show that the time average can be derived from inference using standard Bayesian expected loss while the space average can be derived from energy-based inference methods. This reveals that the two methods of inference become point-wise unified in Ergodic domains, like language generation. This in turn explains the effectiveness of modern deep learning methods that, despite being restricted to surface level System 1 thinking, are able to imitate System 2 thinking. It is possible for a model to learn how to construct and maintain a minimal Ergodic latent space even when sampling from sparse non-Ergodic observations.
+
+Fast and slow inference are presented as trajectories existing on a high-dimensional spectrum with their extrema bounding surfaces of a latent phase space. On one end, an Autoencoder is trained on sensory observations and impresses these latent encodings onto a Discriminator-like energy manifold. On the other end, the latent space is delimited by repeating the training process on sparse and low-dimensional symbolic abstractions, producing an upper bounding manifold. An agent's trajectory corresponds to a flow of a symbolic dynamical system that minimizes the KL divergence between the upper and lower boundaries, which minimizes the free-energy of the system and can be learned from a series of initial value random walks.
+
+% known as a time average, known as its space average
+% The  implications of an analogous process potentially occurring in biological neural configurations are examined.
+%\textbf{}
+% Free energy minimization unifies fast and slow thinking in ergodic latent spaces. 
+%  where the time average of infinitely many trajectories approach an equivalence to an integral of a space average
+%  correspond to inference that has been perfected by SOTA machine learning models vs. dialogue response needed to pass a sufficient Turing test,
+
+% If we think of the measure as being an associative memory dimension, we find that the time average of
+
+% Internal modesls correspond to intermideary state between humans and the world
+\end{abstract}
+
+\section{Systems of Thinking}
+
+In \textit{Thinking, Fast and Slow} (Kahneman, 2011), cognitive processes are categorized into two modes. In System 1, thought processes are fast, intuitive, unconscious, and habitual. In System 2, thought processes become slower, logical, conscious, algorithmic, and may involve planning or reasoning. It can be claimed that the system of fast thought closely corresponds to many state-of-the-art deep learning approaches (Bengio, 2020). These methods aim to discover underlying distributions of data in the form of a normalized probability density by training on many examples while minimizing a cost function. In doing so, a model is able to quickly perform inference when being tested on unseen examples. 
+% Training probabilistic models with neural networks is intractable in many cases and requires using expensive and problematic approximate inference algorithms like Markov chain Monte Carlo (MCMC) or mean-field variational inference (VI).
+System 2 thinking instead embodies the future aspirations of models that require very few examples and can learn in a self-supervised manner. Though the model may perform inference slowly, this method of thinking appears to be a necessary aspect in developing an artificial general intelligence (AGI) that matches and exceeds our own abilities. It's possible to draw a comparison between System 2 thinking and energy-based models (EBM) which aim to capture dependencies between variables by associating a scalar energy to each configuration of the variables (LeCunn, 2006). Learning is often faster than with a standard loss functions and consists in finding an energy function where observed configurations of the variables are given lower energies than unobserved ones. Inference is often slower and involves searching the energy function using optimization methods like stochastic gradient descent to find compatible variables that minimize the energy function. 
+
+% where learning consists of finding an energy
+% function so that observed configurations of the variables are given lower energies than unobserved ones.  an energy function $F$ by using contrastive or regularized latent variable methods. Inference  involves searching the energy function using a optimization methods like gradient descent to find compatible $y$’s that minimize $F$. This can be expressed as $\hat y = \text{argmin}_{y}{F(x, y)}$\footnote{\url{https://lukepereira.github.io/notebooks/documents/2020-neural-nets/main.pdf}}. 
+
+
+\section{Birkhoff's Ergodic Theorem}
+A dynamical system, usually written as the tuple $(T, X)$, is described by a transformation that maps a phase space onto itself, $T: X \to X$. The set of points attained from repeated applications of the transformation from some starting point is known as its forward orbit or trajectory. Ergodicity can be viewed as an indecomposability condition and is concerned with how a typical orbit of a dynamical system is distributed throughout the phase space with these qualitative distributional properties being expressed in terms of measure theory. Measure preserving means that $P(T^{-1}(A)) = P(A)$ for all measurable sets $A \in \mathcal A$. Ergodic means that $T(A) = A$
+implies $P(A) = 0$ or $P(A) = 1$ for all $A \in \mathcal A$.
+
+\textit{Birkhoff's Ergodic Theorem} states that if a mapping is Ergodic, as the number of finite averages taken along any of its orbits increases to infinity (the time average), this value will converge to the continuous integral (the space average). That is, a finite average sampling of points of any orbit will be as accurate as a continuous average integral over the entire state space.  Formally, let $(X, \mathcal{B}, \mu)$ be a probability space and let $T : X \mapsto X$ be a measure-preserving transformation (on a $\sigma$-finite measure space $\mu(X)< \infty$). If $f$ is any integrable function and $T$ is Ergodic, then the time average is constant in measure $\mu$ almost everywhere and is equivalent to the space average,
+\begin{align*}
+    \underbrace{
+        \lim_{n\to \infty} \frac{1}{n}\sum_{i=0}^{n-1}f(T^{i}(x))
+    }_\textrm{Time Average, $\hat f$} 
+    &=  \underbrace{
+        \vphantom{ \sum_{i=0}^{n-1} }
+        \frac{1}{\mu(x)} \int_{X} f d \mu
+    }_\textrm{Space Average, $\bar f$}\\
+    \intertext{Corollary (Point-wise Ergodic Theorem):}
+        \lim_{n\to \infty} \frac{1}{n}\sum_{i=0}^{n-1}f(T^{i}(x))
+    &=  
+        \vphantom{ \sum_{i=0}^{n-1} }
+        E(f)
+\end{align*}
+Working backwards from the expected value, we can derive the standard Bayesian training method of averaging over a large number of training examples.  We consider $x \in X$ to be a sampled observation, $f$ is our cost minimization function, and $T$ represents a transformation attained from a trained model that encodes and predicts a future state. As the number of training orbits increases to infinity, the encoding and prediction mechanisms converge to the continuous integration over the space and the expected output of the function in the point-wise interpretation.
+
+% The Bayes classifier is
+% \[
+% C^\text{Bayes}(x) = \underset{r \in \{1,2,\dots, K\}}{\operatorname{argmax}} \operatorname{P}(Y=r \mid X=x).
+% \]
+% \textit{The ergodic hypothesis} says that, over long periods of time, the time spent by a system in some region of the phase space of microstates with the same energy is proportional to the volume of this region, i.e., that all accessible microstates are equiprobable over a long period of time.
+
+
+
+\section{Ergodic World Models}
+% If we let $E(f|{\mathcal {C}})$ be the conditional expectation given the $\sigma$-algebra ${\mathcal {C}}$ of invariant sets of $T$, then the probabilistic formulation is given by the Birkhoff–Khinchin theorem, 
+% \[
+% \displaystyle \lim_{n\to \infty} \frac{1}{n}\sum_{i=0}^{n-1}f(T^{i}(x)) = E(f\mid {\mathcal {C}})(x)
+% \]
+
+% procedure minimizes the standard Kullback-Leibler (KL) divergence $\text{KL}(q_\theta(z) || p(z | x))$, where $q_\theta(z)$ is an explicit amortized distribution.
+
+% Zhang et al. (2018) described a method to combine MCMC with VI that tries to directly minimize KL(q(t)θ(z) || p(z | x)), which is intractable
+We see that in Ergodic domains, an averaging of an increasingly large number of examples will become close to the average behaviour of the underlying causative process depicted by the space average integral. We can claim an equivalence between the time averages of a summation with the first system of thinking and the space average of an integral with the second system of thinking. It can then be claimed that the dichotomy of the systems of thought become unified in Ergodic domains.
+
+In environments that contain non-Ergodic domains, a learning agent can establish an internal Ergodic world model by actively selecting which observations are sampled and manipulating how these observations are encoded and stored. To maintain ergodic averages, only a local stablility is necessary, making this model biologically plausible. An Ergodic world model allows the agent to attain a fluidity between System 1 and System 2 inference capabilities which ultimately improves its decision-making speed and quality in unpredictable environments. When applied to the energy-based dynamical system described in a previous paper, the latent space explored during the dream phase of training can be manipulated in order to generate Ergodic measure preserving flows despite the external world explored during its waking test phase not necessarily being Ergodic. Recall, the flows are attained by minimizing the free-energy of the system, represented as a Kullback–Leibler divergence or relative entropy of bounding energy manifolds. 
+
+It follows that the latent trajectories can be understood with symbolic dynamics. A symbolic orbit is a sequence of symbols corresponding to the successive partition elements visited by the point in its orbit. Instead, we use an Autoencoder to learn an encoding that will partition the space while maintaining Ergodicity. This means the learned trajectories on the discrete space will on average be consistent with those in dense continuous space, which reduces the memory and computation of what would otherwise involve solving high dimensional differential equations on a continuous domain. The learned symbolic encodings of the Autoencoder are closely correlated with the form of the latent world model itself.
+
+
+% \section{Language-based Thought as an Ergodic Domain}
+% We see that in Ergodic domains, an averaging of an increasingly large number of examples will become close to the average behaviour of the underlying causative process captured in the space average integral. We can see an equivalence between the time averages of a summation and the first system of inference and the space average of an integral and the second system of thinking. It can then be claimed that the dichotomy of the systems of thought become unified in Ergodic domains.
+
+% We find evidence for this in the increasing effectiveness of contemporary machine learning models that are trained on a massive number of examples. Language models like GPT-3 are a good example of showing that in certain domains, a large model with billions of parameters will produce output that closely resembles the thinking and reasoning a human does during System 2 cognitive processes, despite the model only ever being trained in a probabilistic System 1 like manner. In other words, we see that GPT-3 produces time-averages that approach the space-average of human thought as the number of example orbits that it is trained on increases. 
+
+% Though it may be difficult or even impossible to formally prove, we can use this as evidence to show that language-based thinking is an Ergodic domain. When we think and speak we are fluidly switching between systems of thinking. Moreover, this fluidity between unconscious stochastic inference and conscious deterministic inference will exist in any Ergodic domain. Although modern machine learning techniques appear to be effective at imitating human reasoning in these domains, they require a massive amount of compute and training examples and will be constrained to certain domains of problems. They will also suffer from being unconscious and may lack the ability to perform well in tasks that require creative improvisation that diverges from expected behaviour. This can be thought of as an artist that can successfully write a speech or play but is unable to answer questions well or be interviewed, as is necessary in a Turing test.
+
+% \section{Implications on Consciousness and Psychology}
+
+% Impactful and traumatic experiences are often difficult to reconcile because our world model becomes deeply shaped around these moments as our mind reinforces its world model over time. The latent space world model is capable of reshaping itself but must always maintain coherence. Here, coherency can be thought of as some threshold on the divergence between experienced reality and feasible observations.
+
+
+% With little control over how our automatic consciousness shapes latent space in to be Ergodic, our world model can grow highly incoherent and stochastic which may result in mental illness. A top-down effort is necessary to push down on the traumatic memory using constrastive methods to reshape the latent space into a coherent and more desirable world model.
+
+% As trajectories move higher in the space, they lose coherence and become highly stochastic. Coherence can be thought of as a divergence value that is normalized with a variable threshold and represents a mask made of potential walls of a certain threshold. the latent space is restricted by some rule-set so that the many orbits through it maintain coherence despite entropy from loss of information.
+
+% The lower bounds of our world model represent our experiences and our memory, while the upper bound represents the limits of coherence in our imaginations.
+% 
+% Experiment in mice shows how memories could be altered while at rest
+
+\section*{References}
+
+\small
+
+[1] Kahneman, Daniel. Thinking, Fast and Slow. New York: Farrar, Straus and Giroux, 2011. 
+
+[2] Yann LeCun, A Tutorial on Energy-Based Learning
+% http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf
+
+
+% https://arxiv.org/pdf/1811.07192.pdf
+% https://openreview.net/pdf?id=HJx4KjRqYQ
+
+\end{document}
