@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Differential Geometry</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Differential Geometry</h1>
+</header>
+<ul>
+<li><a href="#prerequisites">Prerequisites</a>
+<ul>
+<li><a href="#topology-of-manifolds-intro">Topology of Manifolds Intro</a></li>
+<li><a href="#algebras">Algebras</a></li>
+<li><a href="#derivations">Derivations</a></li>
+<li><a href="#equivalence-relations">Equivalence Relations</a></li>
+<li><a href="#on-relation-to-physics">On relation to Physics</a></li>
+</ul></li>
+<li><a href="#manifolds">Manifolds</a>
+<ul>
+<li><a href="#atlases-and-charts">Atlases and Charts</a></li>
+<li><a href="#definition-of-manifold">Definition of manifold</a></li>
+<li><a href="#examples-of-manifolds">Examples of manifolds</a>
+<ul>
+<li><a href="#n-spheres">N-spheres</a></li>
+<li><a href="#products-and-n-torus">Products and n-torus</a></li>
+<li><a href="#real-projective-spaces">Real projective spaces</a></li>
+<li><a href="#complex-projective-spaces">Complex projective spaces</a></li>
+<li><a href="#grassmannians">Grassmannians</a></li>
+<li><a href="#complex-grassmannians">Complex Grassmannians</a></li>
+</ul></li>
+<li><a href="#oriented-manifolds">Oriented manifolds</a></li>
+<li><a href="#open-subsets">Open subsets</a></li>
+<li><a href="#compact-subsets">Compact subsets</a></li>
+</ul></li>
+<li><a href="#smooth-maps">Smooth Maps</a>
+<ul>
+<li><a href="#smooth-functions-on-manifolds">Smooth functions on manifolds</a></li>
+<li><a href="#smooth-maps-between-manifolds">Smooth maps between manifolds</a></li>
+<li><a href="#diffeomorphisms-of-manifolds">Diffeomorphisms of manifolds</a></li>
+<li><a href="#examples-of-smooth-maps">Examples of smooth maps</a>
+<ul>
+<li><a href="#products-diagonal-maps">Products, diagonal maps</a></li>
+<li><a href="#the-diffeomorphism-mathbb-r-p1-cong-s1">The diffeomorphism <span class="math inline">\(\mathbb R P^1 \cong S^1\)</span></a></li>
+<li><a href="#the-diffeomorphism-mathbb-c-p1-cong-s2">The diffeomorphism <span class="math inline">\(\mathbb C P^1 \cong S^2\)</span></a></li>
+<li><a href="#maps-to-and-from-projective-space">Maps to and from projective space</a></li>
+<li><a href="#the-hopf-fibration-a.k.a.-the-quotient-map-s2n1-rightarrow-mathbb-c-pn">The Hopf fibration, a.k.a. the quotient map <span class="math inline">\(S^{2n+1} \rightarrow \mathbb C P^n\)</span></a></li>
+</ul></li>
+<li><a href="#submanifolds">Submanifolds</a></li>
+<li><a href="#smooth-maps-of-maximal-rank">Smooth maps of maximal rank</a>
+<ul>
+<li><a href="#the-rank-of-a-smooth-map">The rank of a smooth map</a></li>
+<li><a href="#local-diffeomorphisms">Local diffeomorphisms</a></li>
+<li><a href="#level-sets-submersions">Level sets, submersions</a></li>
+<li><a href="#example-the-steiner-surface">Example: The Steiner surface</a></li>
+<li><a href="#immersions">Immersions</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#the-tangent-bundle">The Tangent Bundle</a>
+<ul>
+<li><a href="#tangent-map">Tangent map</a>
+<ul>
+<li><a href="#definition-of-the-tangent-map-basic-properties">Definition of the tangent map, basic properties</a></li>
+<li><a href="#coordinate-description-of-the-tangent-map">Coordinate description of the tangent map</a></li>
+</ul></li>
+<li><a href="#tangent-spaces-of-submanifolds">Tangent spaces of submanifolds</a>
+<ul>
+<li><a href="#example-steiners-surface-revisited">Example: Steiner’s surface revisited</a></li>
+<li><a href="#the-tangent-bundle-1">The tangent bundle</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#vector-fields">Vector Fields</a>
+<ul>
+<li><a href="#vector-fields-as-derivations">Vector fields as derivations</a></li>
+<li><a href="#vector-fields-as-sections-of-the-tangent-bundle">Vector fields as sections of the tangent bundle</a></li>
+<li><a href="#lie-brackets">Lie brackets</a></li>
+<li><a href="#related-vector-fields">Related vector fields</a></li>
+<li><a href="#flows-of-vector-fields">Flows of vector fields</a></li>
+<li><a href="#geometric-interpretation-of-the-lie-bracket">Geometric interpretation of the Lie bracket</a></li>
+<li><a href="#frobenius-theorem">Frobenius theorem</a></li>
+</ul></li>
+<li><a href="#differential-forms">Differential Forms</a>
+<ul>
+<li><a href="#review-differential-forms-on-mathbb-rm">Review: Differential forms on <span class="math inline">\(\mathbb R^m\)</span></a></li>
+<li><a href="#dual-spaces">Dual spaces</a></li>
+<li><a href="#cotangent-spaces">Cotangent spaces</a></li>
+<li><a href="#forms">1-forms</a></li>
+<li><a href="#pull-backs-of-function-and-1-forms">Pull-backs of function and 1-forms</a></li>
+<li><a href="#integration-of-1-forms">Integration of 1-forms</a></li>
+<li><a href="#forms-1">2-forms</a></li>
+<li><a href="#k-forms">k-forms</a>
+<ul>
+<li><a href="#definition">Definition</a></li>
+<li><a href="#wedge-product">Wedge product</a></li>
+<li><a href="#exterior-differential">Exterior differential</a></li>
+</ul></li>
+<li><a href="#lie-derivatives-and-contractions">Lie derivatives and contractions</a>
+<ul>
+<li><a href="#pull-backs">Pull-backs</a></li>
+<li><a href="#integration-of-differential-forms">Integration of differential forms</a></li>
+<li><a href="#integration-over-oriented-submanifolds">Integration over oriented submanifolds</a></li>
+<li><a href="#stokes-theorem">Stokes’ theorem</a></li>
+<li><a href="#volume-forms">Volume forms</a></li>
+</ul></li>
+<li><a href="#cartan-calculus">Cartan calculus</a></li>
+<li><a href="#cohomology-groups">Cohomology Groups</a></li>
+</ul></li>
+<li><a href="#riemannian-geometry">Riemannian Geometry</a></li>
+<li><a href="#lie-groups">Lie Groups</a></li>
+</ul>
+<h1 id="prerequisites">Prerequisites</h1>
+<h2 id="topology-of-manifolds-intro">Topology of Manifolds Intro</h2>
+<p>The fundamental objects of study in differential geometry are manifolds. Roughly, an n-dimensional manifold is a mathematical object that “locally” looks like <span class="math inline">\(\mathbb R^n\)</span>. Manifolds in euclidean space are described with a <em>regular level set</em>, <span class="math inline">\(S = f^{-1}(a)\)</span> which defines a smooth hypersurface <span class="math inline">\(S \subseteq R^n\)</span>. For example, the n-dimensional sphere described by: <span class="math display">\[S^n = \{ (x^0, \dots, x^n) \in \mathcal R^{n+1} | (x^0)^2 + \dots + (x^n)^2  = 1\}.\]</span> Another example is the 2-Torus, <span class="math inline">\(T^2\)</span>. Given real numbers <span class="math inline">\(r, R\)</span> with <span class="math inline">\(0 &lt; r &lt; R\)</span>, take a circle of radius <span class="math inline">\(r\)</span> in the <span class="math inline">\(x-z\)</span> plane, with center at <span class="math inline">\((R,0)\)</span>, and rotate about the <span class="math inline">\(z\)</span>-axis: <span class="math display">\[T^2 = \{ (x,y,z) | (\sqrt{x^2 + y^2} - R)^2 + z^2 + r\}\]</span></p>
+<p>The sphere, the torus, the double torus, triple torus, and so on are <em>orientable</em> surfaces, which essentially means that they have two sides which you might paint in two different colors. It turns out that these are all orientable surfaces, if we consider the surfaces intrinsically and only consider surfaces that are compact in the sense that they don’t go off to infinity and do not have a boundary (thus excluding a cylinder, for example).</p>
+<p>Not all surfaces can be realized as ‘embedded’ in <span class="math inline">\(\mathbb R^3\)</span>; for <em>non-orientable surfaces</em> one needs to allow for self-intersections. This type of realization is referred to as an immersion: We don’t allow edges or corners, but we do allow that different parts of the surface pass through each other. An example is the Klein bottle, which is not possible to represent as a regular level set <span class="math inline">\(f^{-1}(0)\)</span> of a function <span class="math inline">\(f\)</span> since any suface has one side where <span class="math inline">\(f\)</span> is positive and another side where <span class="math inline">\(f\)</span> is negative.</p>
+<p>The projective plane or projective space is denoted <span class="math inline">\(\mathbb{R} P^2\)</span> and is defined as the set of all lines (i.e., 1-dimensional subspaces) in <span class="math inline">\(\mathbb{R}^3\)</span>. we can also think of <span class="math inline">\(\mathbb{R} P^2\)</span> as the set of antipodal (i.e., opposite) points on <span class="math inline">\(S^2\)</span>. Splitting the points into those with distance <span class="math inline">\(&lt; \epsilon\)</span> from the equator and those <span class="math inline">\(\geq \epsilon\)</span> produces a Mobius strip and a two-dimensional disc. Generating a smooth curve by gluing the boundary of a Mobius strip to the boundary of a disk is depicted in what’s known as Boy’s surface.</p>
+<p>Another operation for surfaces, generalizing the procedure of ‘attaching handles’, is the connected sum Given two surfaces <span class="math inline">\(\sigma_1\)</span> and <span class="math inline">\(\sigma_2\)</span>, remove small disks around given points <span class="math inline">\(p_1 \in \sigma_1\)</span> and <span class="math inline">\(p_2 \in \sigma_2\)</span>, to create two surfaces with boundary circles. Then glue-in a cylinder connecting the two boundary circles, without creating edges. The resulting surface is denoted <span class="math inline">\(\sigma_1\#\sigma_2\)</span>.</p>
+<p>It turns out that all closed, connected surfaces are obtained from either the 2-sphere <span class="math inline">\(S^2\)</span>, the Klein bottle, or <span class="math inline">\(\mathbb{R} P^2\)</span>, by attaching handles with the connected sum.</p>
+<h2 id="algebras">Algebras</h2>
+<p>An algebra (over the field <span class="math inline">\(\mathbb R\)</span> of real numbers) is a <em>vector space</em> <span class="math inline">\(\mathscr{A}\)</span>, together with a <em>multiplication</em> (product) <span class="math inline">\(\mathscr{A} \times \mathscr{A} \rightarrow \mathscr{A}\)</span>, <span class="math inline">\((a,b) \mapsto ab\)</span> such that</p>
+<ol type="1">
+<li><p>The multiplication is associative.</p></li>
+<li><p>The multiplication map is linear in both arguments.</p></li>
+</ol>
+<p>The algebra is called commutative if <span class="math inline">\(ab = ba\)</span> for all <span class="math inline">\(a,b \in A\)</span>. A unital algebra is an algebra <span class="math inline">\(A\)</span> with a distinguished element <span class="math inline">\(1_{\mathscr{A}} \in \mathscr{A}\)</span> (called the unit), with <span class="math inline">\(1_{\mathscr{A}} a = a = a1_{\mathscr{A}}\)</span> for all <span class="math inline">\(a \in \mathscr{A}\)</span>.</p>
+<p>One can also consider non-associative product operations on vector spaces, most importantly one has the class of <em>Lie algebras</em>. Some examples include: The space of complex numbers which is a unital, commutative algebra. <span class="math inline">\(\mathbb H \cong \mathbb R^4\)</span> of quaternions which is a unital, non-commutative algebra. The space of <span class="math inline">\(n\times n\)</span> matricies which is a noncommutative unital algebra. Given a topological space <span class="math inline">\(X\)</span>, one has the algebra <span class="math inline">\(C(X)\)</span> of continuous <span class="math inline">\(\mathbb R\)</span>-valued functions.</p>
+<p>A <em>homomorphism</em> of algebras <span class="math inline">\(\phi : \mathscr{A} \rightarrow \mathscr{A}&#39;\)</span> is a linear map preserving products: <span class="math inline">\(\phi(ab) = \phi(a)\phi(b)\)</span>. It is called an <em>isomorphism</em> of algebras if <span class="math inline">\(\phi\)</span> is invertible. For the special case <span class="math inline">\(\mathscr{A}&#39; = A\)</span> , these are also called algebra <em>automorphisms</em> of <span class="math inline">\(\mathscr{A}\)</span>. Note that the algebra automorphisms form a group under composition.</p>
+<h2 id="derivations">Derivations</h2>
+<div class="defn">
+<p><strong>Definition 1</strong>. A derivation of an algebra <span class="math inline">\(\mathscr A\)</span> is a linear map <span class="math inline">\(D : \mathscr A \rightarrow \mathscr A\)</span> satisfying the product rule <span class="math display">\[D(a_1 a_2) = D(a_1)a_2 +a_1D(a_2).\]</span>.</p>
+</div>
+<p>If <span class="math inline">\(dim A &lt; \infty\)</span>, a derivation is an infinitesimal automorphism of an algebra.</p>
+<p>Any given <span class="math inline">\(x \in A\)</span> defines a derivation <span class="math inline">\(D(a) = [x,a] := xa-ax\)</span>. These are called inner derivations. If <span class="math inline">\(A\)</span> is commutative (for example <span class="math inline">\(A = C ^\infty(M)\)</span>) the inner derivations are all trivial. At the other extreme, for the matrix algebra <span class="math inline">\(A = \text{Mat}\mathbb R(n)\)</span>, one may show that every derivation is inner.</p>
+<p>If <span class="math inline">\(A\)</span> is a unital algebra, with unit <span class="math inline">\(1_A\)</span>, then <span class="math inline">\(D(1A) = 0\)</span> for all derivations <span class="math inline">\(D\)</span>.</p>
+<p>Given two derivations <span class="math inline">\(D_1,D_2\)</span> of an algebra <span class="math inline">\(A\)</span>, their commutator <span class="math inline">\([D_1,D_2] = D_1 D_2 - D_2 D_1\)</span> is again a derivation.</p>
+<p>If the algebra <span class="math inline">\(A\)</span> is commutative, then the space of derivations is a ‘left-module over <span class="math inline">\(A\)</span>’. That is, if <span class="math inline">\(D\)</span> is a derivation and <span class="math inline">\(x \in A\)</span> then <span class="math inline">\(a \mapsto (xD)(a) := xD(a)\)</span> is again a derivation</p>
+<h2 id="equivalence-relations">Equivalence Relations</h2>
+<p>[Omitted]</p>
+<h2 id="on-relation-to-physics">On relation to Physics</h2>
+<p>In Albert Einstein’s theory of General Relativity from 1916, space-time was regarded as a 4-dimensional ‘curved’ manifold with no distinguished coordinates. A local observer may want to introduce local <span class="math inline">\(xyz\)</span> coordinates to perform measurements, but all physically meaningful quantities must admit formulations that are coordinate-free. At the same time, it would seem unnatural to try to embed the 4-dimensional curved space-time continuum into some higher-dimensional flat space, in the absence of any physical significance for the additional dimensions. Some years later, gauge theory once again emphasized coordinate-free formulations, and provided physics motivations for more elaborate constructions such as fiber bundles and connections. There are many subbranches of differential geometry, for example complex geometry, Riemannian geometry, or symplectic geometry, which further subdivide into sub-sub-branches.</p>
+<h1 id="manifolds">Manifolds</h1>
+<h2 id="atlases-and-charts">Atlases and Charts</h2>
+<p>Manifolds will initially be described in intrinsic or manifestly coordinate-free terms. The basic feature of manifolds is the existence of ‘local coordinates’. The transition from one set of coordinates to another should be smooth.</p>
+<div class="defn">
+<p><strong>Definition 2</strong>. <strong>(Smoothness and diffeomophisms)</strong></p>
+<p>Let <span class="math inline">\(U \subseteq \mathbb R^m\)</span> and <span class="math inline">\(V \subseteq \mathbb R^n\)</span> be open subsets. A map <span class="math inline">\(F : U \rightarrow V\)</span> is called <em>smooth</em> if it is infinitely differentiable. The set of smooth functions from <span class="math inline">\(U\)</span> to <span class="math inline">\(V\)</span> is denoted <span class="math inline">\(C^{\infty}(U,V)\)</span>. The map <span class="math inline">\(F\)</span> is called a <em>diffeomorphism</em> from <span class="math inline">\(U\)</span> to <span class="math inline">\(V\)</span> if it is invertible, and the inverse map <span class="math inline">\(F^{-1}: V \rightarrow U\)</span> is again smooth.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 3</strong>. <strong>(Jacobian matrix)</strong></p>
+<p>For a smooth map <span class="math inline">\(F \in C^{\infty}(U,V)\)</span> between open subsets <span class="math inline">\(U \subseteq R^m\)</span> and <span class="math inline">\(V \subseteq R^n\)</span>, and any <span class="math inline">\(x \in U\)</span>, one defines the Jacobian matrix <span class="math inline">\(DF(x)\)</span> to be the <span class="math inline">\(n \times m\)</span> matrix of partial derivatives, <span class="math display">\[(DF(x))^i_j = \frac{\partial F^i}{\partial x^j}\]</span> Its determinant is called the Jacobian matrix of <span class="math inline">\(F\)</span> at <span class="math inline">\(x\)</span>.</p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 4</strong>. <strong><em>(Inverse function theorem)</em></strong></p>
+<p><em>The inverse function theorem states that <span class="math inline">\(F\)</span> is a diffeomorphism if and only if it is invertible, and for all <span class="math inline">\(x \in U\)</span>, the Jacobian matrix <span class="math inline">\(DF(x)\)</span> is invertible. This means one does not actually have to check smoothness of the inverse map.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 5</strong>. <strong>(Charts)</strong></p>
+<p>Let <span class="math inline">\(M\)</span> be a set.</p>
+<ol type="1">
+<li><p>An <span class="math inline">\(m\)</span>-dimensional (coordinate) chart <span class="math inline">\((U,\phi)\)</span> on <span class="math inline">\(M\)</span> is a subset <span class="math inline">\(U \subseteq M\)</span> together with a map <span class="math inline">\(\phi : U \rightarrow R^m\)</span> , such that <span class="math inline">\(\phi(U) \subseteq R^m\)</span> is open and <span class="math inline">\(\phi\)</span> is a bijection from <span class="math inline">\(U\)</span> to <span class="math inline">\(\phi(U)\)</span>.</p></li>
+<li><p>Two charts <span class="math inline">\((U,\phi)\)</span> and <span class="math inline">\((V,\psi)\)</span> are called compatible if the subsets <span class="math inline">\(\phi(U \cap V)\)</span> and <span class="math inline">\(\psi(U \cap V)\)</span> are open, and the transition map <span class="math display">\[\psi \circ \phi^{-1}  = \phi(U \cap V) \rightarrow \psi(U \cap V)\]</span> is a diffeomorphism known as a change of coordinates. As a special case, charts with <span class="math inline">\(U\cap V = \emptyset\)</span> are always compatible.</p></li>
+</ol>
+</div>
+<div class="defn">
+<p><strong>Definition 6</strong>. <strong>(Atlas)</strong></p>
+<p>Let <span class="math inline">\(M\)</span> be a set. An <span class="math inline">\(m\)</span>-dimensional atlas on <span class="math inline">\(M\)</span> is a collection of coordinate charts <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span> such that,</p>
+<ol type="1">
+<li><p>The <span class="math inline">\(U_\alpha\)</span> cover all of <span class="math inline">\(M\)</span>, i.e. <span class="math inline">\(\bigcup_\alpha U_\alpha = M\)</span>.</p></li>
+<li><p>For all indicies <span class="math inline">\(\alpha, \beta\)</span>, the charts <span class="math inline">\((U_\alpha, \phi_\alpha)\)</span> and <span class="math inline">\((U_\beta, \phi_\beta)\)</span> are compatible.</p></li>
+</ol>
+</div>
+<div class="defn">
+<p><strong>Definition 7</strong>. <strong>(Sterographic projection)</strong></p>
+<p>Regard <span class="math inline">\(\mathbb R^2\)</span> as the coordinate subspace of <span class="math inline">\(\mathbb R^3\)</span> on which <span class="math inline">\(z = 0\)</span> runs through the center of the sphere; the “equator” is the intersection of the sphere with this plane. Let <span class="math inline">\(N = (0, 0, 1)\)</span> be the “north pole”, and let <span class="math inline">\(M\)</span> be the rest of the sphere. For any point <span class="math inline">\(P\)</span> on <span class="math inline">\(M\)</span>, there is a unique line through <span class="math inline">\(N\)</span> and <span class="math inline">\(P\)</span>, and this line intersects the plane <span class="math inline">\(z = 0\)</span> in exactly one point <span class="math inline">\(P&#39;\)</span>. Define the stereographic projection of <span class="math inline">\(P\)</span> to be this point <span class="math inline">\(P&#39;\)</span> in the plane.</p>
+</div>
+<div class="example">
+<p><strong>Example 8</strong>. <strong>(Atlas on the 2-sphere)</strong></p>
+<p>Let <span class="math inline">\(S^2 \subseteq \mathbb R^3\)</span> be the unit sphere. Let <span class="math inline">\(n = (0,0,1)\)</span> be the north pole, and <span class="math inline">\(s =(0,0,-1)\)</span> be the south pole, and define an atlas with two charts <span class="math inline">\((U_+,\phi_+)\)</span> and <span class="math inline">\((U_-,\phi_-)\)</span>, where <span class="math display">\[U_+ = S^2 - {s}, U_- = S^2 - {n}\]</span> and the stereographic projection from the south pole is given by, <span class="math display">\[\begin{aligned}
+    \phi_+ : U_+ \rightarrow \mathbb R^2, p \mapsto \phi_+(p)\\
+    \phi_+(x, y,z) = \bigg( \frac{x}{1+z},\frac{y}{1+z} \bigg)\end{aligned}\]</span> and the stereographic projection from the north pole is given by, <span class="math display">\[\begin{aligned}
+    \phi_- : U_+ \rightarrow \mathbb R^2, p \mapsto \phi_-(p)\\
+    \phi_-(x, y,z) = \bigg( \frac{x}{1-z},\frac{y}{1-z} \bigg).\end{aligned}\]</span> The transition map on the overlap of the two charts is, <span class="math display">\[\phi_- \circ \phi_+^{-1} (u,v) =  \bigg( \frac{u}{u^2 + v^2}, \frac{v}{u^2 + v^2} \bigg).\]</span></p>
+</div>
+<p>The 2-sphere with the atlas given by stereographic projections onto the <span class="math inline">\(x-y\)</span>-plane, and the 2-sphere with the atlas given by stereographic projections onto the <span class="math inline">\(y-z\)</span>-plane, should be one and the same manifold <span class="math inline">\(S^2\)</span>. To resolve this, we will use the following notion of compatibility.</p>
+<div class="defn">
+<p><strong>Definition 9</strong>. <strong>(Compatibility)</strong></p>
+<p>Suppose <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span> is an <span class="math inline">\(m\)</span>-dimensional atlas on <span class="math inline">\(M\)</span>, and let <span class="math inline">\((U,\phi)\)</span> be another chart. Then <span class="math inline">\((U,\phi)\)</span> is said to be <em>compatible</em> with <span class="math inline">\(\mathscr{A}\)</span> if it is compatible with all charts <span class="math inline">\((U_\alpha, \phi_\alpha)\)</span> of <span class="math inline">\(\mathscr{A}\)</span></p>
+</div>
+<p>Note that <span class="math inline">\((U,\phi)\)</span> is compatible with the atlas <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span> if and only if the union <span class="math inline">\(\mathscr{A} \cup {(U,\phi)}\)</span> is again an atlas on <span class="math inline">\(M\)</span>. This suggests defining a bigger atlas, by using all charts that are compatible with the given atlas with the following lemma.</p>
+<div class="lemma">
+<p><strong>Lemma 10</strong>. <em>Let <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span> be a given atlas on the set <span class="math inline">\(M\)</span>. If two charts <span class="math inline">\((U,\phi), (V,\psi)\)</span> are compatible with <span class="math inline">\(\mathscr{A}\)</span>, then they are also compatible with each other.</em></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 11</strong>. <em>Given an atlas <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span> on <span class="math inline">\(M\)</span>, let <span class="math inline">\(\Tilde{\mathscr{A}}\)</span> be the collection of all charts <span class="math inline">\((U,\phi)\)</span> that are compatible with <span class="math inline">\(\mathscr{A}\)</span>. Then <span class="math inline">\(\Tilde{\mathscr{A}}\)</span> is itself an atlas on <span class="math inline">\(M\)</span>, containing <span class="math inline">\(\mathscr{A}\)</span>. In fact, <span class="math inline">\(\Tilde{\mathscr{A}}\)</span> is the largest atlas containing <span class="math inline">\(\mathscr{A}\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 12</strong>. <strong>(Maximal and equivalent atlases)</strong></p>
+<p>An atlas <span class="math inline">\(\mathscr{A}\)</span> is called <em>maximal</em> if it is not properly contained in any larger atlas. Given an arbitrary atlas <span class="math inline">\(\mathscr{A}\)</span>, one calls <span class="math inline">\(\Tilde{\mathscr{A}}\)</span> the maximal atlas determined by <span class="math inline">\(\mathscr{A}\)</span>. Two atlases are called equivalent if every chart of one atlas is compatible with every chart in the other atlas. Any maximal atlas determines an equivalence class of atlases, and vice versa.</p>
+</div>
+<h2 id="definition-of-manifold">Definition of manifold</h2>
+<div class="defn">
+<p><strong>Definition 13</strong>. An <span class="math inline">\(m\)</span>-dimensional manifold is a set <span class="math inline">\(M\)</span>, together with a maximal atlas <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span> with the following properties:</p>
+<ol type="1">
+<li><p><strong>(Countability condition)</strong> <span class="math inline">\(M\)</span> is covered by countably many coordinate charts in <span class="math inline">\(A\)</span>. That is, there are indices <span class="math inline">\(\alpha_1, \alpha_2, \dots\)</span> with <span class="math display">\[M = \bigcup_i U_{\alpha_i}.\]</span></p></li>
+<li><p><strong>(Hausdorff condition)</strong> For any two distinct points <span class="math inline">\(p,q \in M\)</span> there are coordinate charts <span class="math inline">\((U_\alpha, \phi_\alpha)\)</span> and <span class="math inline">\((U_\beta, \phi_\beta)\)</span> in <span class="math inline">\(A\)</span> such that <span class="math inline">\(p \in U_\alpha, q \in U_\beta\)</span>, with <span class="math display">\[U_\alpha \cap U_\beta = \emptyset.\]</span></p></li>
+</ol>
+</div>
+<p>The charts <span class="math inline">\((U,\phi) \in A\)</span> are called (coordinate) charts on the manifold <span class="math inline">\(M\)</span>. The countability condition is used for various arguments involving a proof by induction. The Hausdorff condition rules out some strange examples that don’t quite fit the idea of a space that is locally like <span class="math inline">\(\mathbb R^n\)</span>.</p>
+<div class="lemma">
+<p><strong>Lemma 14</strong>. <em>Let <span class="math inline">\(M\)</span> be a set with a maximal atlas <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span>, and suppose <span class="math inline">\(p,q \in M\)</span> are distinct points contained in a single coordinate chart <span class="math inline">\((U,\phi) \in \mathscr{A}\)</span>. Then we can find indices <span class="math inline">\(\alpha,\beta\)</span> such that <span class="math inline">\(p \in U_\alpha, q \in U_\beta\)</span>, with <span class="math inline">\(U_\alpha \cap U_\beta = \emptyset\)</span>.</em></p>
+</div>
+<h2 id="examples-of-manifolds">Examples of manifolds</h2>
+<h3 id="n-spheres">N-spheres</h3>
+<p>The construction of an atlas for the 2-sphere <span class="math inline">\(S^2\)</span>, by stereographic projection, also works for the n-sphere <span class="math display">\[S^n = \{ (x^0, \dots, x^n) \in \mathcal R^{n+1} | (x^0)^2 + \dots + (x^n)^2  = 1\}.\]</span> Let <span class="math inline">\(U_{\pm}\)</span> be the subsets obtained by removing <span class="math inline">\((\pm 1, 0,\dots, 0)\)</span>. Stereographic projection defines bijections <span class="math inline">\(\phi_{\pm} : U_{\pm} \rightarrow \mathbb R^{n}\)</span>, where <span class="math inline">\(\phi_{\pm} (x^0, x^1, \cdots, x^n) = (u^1, \cdots, u^n)\)</span> with <span class="math inline">\(\displaystyle u^{i} = \frac{x^j}{1\pm x^0}.\)</span></p>
+<p>Writing <span class="math inline">\(u = (u^1,\dots,u^n)\)</span>, the transition functions are given by, <span class="math display">\[(\phi_- \circ \phi_+^{-1})(u) = \frac{u}{||u||^2}.\]</span></p>
+<h3 id="products-and-n-torus">Products and n-torus</h3>
+<p>Given manifolds <span class="math inline">\(M,M&#39;\)</span> of dimensions <span class="math inline">\(m,m&#39;\)</span>, with atlases <span class="math inline">\(\{(U_\alpha,\phi_\alpha) \}\)</span> and <span class="math inline">\(\{(U_\beta,\phi_\beta)\}\)</span>, the cartesian product <span class="math inline">\(M \times M&#39;\)</span> is a manifold of dimension <span class="math inline">\(m + m&#39;\)</span>. An atlas is given by the product charts <span class="math inline">\(U_\alpha \times U_\beta\)</span> with the product maps <span class="math inline">\(\phi_\alpha \times \phi_\beta&#39; : (x, x&#39;) \mapsto (\phi_\alpha(x), \phi_\beta&#39;(x&#39;))\)</span>. For example, the 2-torus <span class="math inline">\(T^2 = S^1 \times S^1\)</span> becomes a manifold in this way, and likewise for the n-torus, <span class="math inline">\(T^n = S^1 \times \dots \times S^1\)</span>.</p>
+<h3 id="real-projective-spaces">Real projective spaces</h3>
+<p>The n-dimensional projective space <span class="math inline">\(\mathbb R P^n\)</span>, is the set of all lines <span class="math inline">\(l \subseteq \mathbb R^{n+1}\)</span>. It may also be regarded as a quotient space, <span class="math display">\[\mathbb R P^n  = (\mathbb R^{n+1} \setminus \{0\}) / \sim\]</span> <span class="math inline">\(\mathbb R P^n\)</span> has a standard atlas, <span class="math inline">\(\mathscr{A} = {(U_0,\phi_0),\dots,(U)n,\phi_n)}\)</span> defined as follows. For <span class="math inline">\(j = 0,\dots,n,\)</span> let <span class="math inline">\(U_j = \{(x^0 : \dots : x^n) \in \mathbb R P^n | x^j \neq 0\}\)</span> be the set for which the j-th coordinate is non-zero, and put <span class="math display">\[\phi_j : U_j \rightarrow \mathbb R^n, (x^0 : \dots : x^n ) \mapsto \bigg ( \frac{x^0}{x^j} ,\dots, \frac{x^n}{x^j} \bigg).\]</span></p>
+<p>Geometrically, viewing <span class="math inline">\(\mathbb RP^n\)</span> as the set of lines in <span class="math inline">\(\mathbb R^{n+1}\)</span>, the subset <span class="math inline">\(U_j \subseteq \mathbb RP^n\)</span> consists of those lines <span class="math inline">\(l\)</span> which intersect the affine hyperplane <span class="math inline">\(H_j = \{x \in \mathbb R^{n+1} | x^j = 1\}\)</span> and the map <span class="math inline">\(\phi_j\)</span> takes such a line <span class="math inline">\(l\)</span> to its unique point of intersection <span class="math inline">\(l \cap H_j\)</span>, followed by the identification <span class="math inline">\(H_j \cong \mathbb R^n\)</span> (dropping the coordinate <span class="math inline">\(x^j = 1\)</span>). In low dimensions, we have that <span class="math inline">\(\mathbb RP^0\)</span> is just a point, while <span class="math inline">\(\mathbb RP^1\)</span>is a circle.</p>
+<h3 id="complex-projective-spaces">Complex projective spaces</h3>
+<p>Similar to the real projective space, one can define a complex projective space <span class="math inline">\(\mathbb C P^n\)</span> as the set of complex 1-dimensional subspaces of <span class="math inline">\(\mathbb C^{n+1}\)</span>. <span class="math display">\[\mathbb C P^n = (\mathbb C^{n+1} \setminus \{0\})/ \sim\]</span> Alternatively, letting <span class="math inline">\(S^{2n+1} \subseteq \mathbb C^{n+1} = \mathbb R^{2n+2}\)</span> be the ‘unit sphere’ consisting of complex vectors of length <span class="math inline">\(||z|| = 1\)</span>, we have <span class="math display">\[\mathbb C P^n = S^{2n+1} / \sim\]</span> One defines charts <span class="math inline">\((U_j ,\phi_j)\)</span> similar to those for the real projective space: <span class="math display">\[\begin{aligned}
+    U_j &amp;= \{(z^0 : \dots : z^n) | z^j \neq 0\} \\
+    \phi_j : U_j \rightarrow \mathbb C^{2n},&amp; \ \ (z^0 : \dots : z^n ) \mapsto \bigg ( \frac{z^0}{z^j} ,\dots, \frac{z^n}{z^j} \bigg).\end{aligned}\]</span> The transition maps between charts are given by similar formulas as for <span class="math inline">\(\mathbb RP^n\)</span> (just replace <span class="math inline">\(x\)</span> with <span class="math inline">\(z\)</span>). The transition maps are not only smooth but even <em>holomorphic</em>, making <span class="math inline">\(\mathbb C P^n\)</span> an example of a complex manifold (of complex dimension <span class="math inline">\(n\)</span>).</p>
+<h3 id="grassmannians">Grassmannians</h3>
+<p>The set <span class="math inline">\(Gr(k,n)\)</span> of all <span class="math inline">\(k\)</span>-dimensional subspaces of <span class="math inline">\(\mathbb R^n\)</span> is called the Grassmannian of <span class="math inline">\(k\)</span>-planes in <span class="math inline">\(\mathbb R^n\)</span>. As a special case, <span class="math inline">\(Gr(1,n) = \mathbb RP^{n-1}\)</span>. We will show that for general <span class="math inline">\(k\)</span>, the Grassmannian is a manifold of dimension <span class="math inline">\(dim(Gr(k,n)) = k(n-k)\)</span>. [Omitted]</p>
+<h3 id="complex-grassmannians">Complex Grassmannians</h3>
+<p>Similar to the case of projective spaces, one can also consider the complex Grassmannian <span class="math inline">\(Gr \mathbb C(k,n)\)</span> of complex <span class="math inline">\(k\)</span>-dimensional subspaces of <span class="math inline">\(\mathbb C^n\)</span> . It is a manifold of dimension <span class="math inline">\(2k(n-k)\)</span>, which can also be regarded as a complex manifold of complex dimension <span class="math inline">\(k(n-k)\)</span>.</p>
+<h2 id="oriented-manifolds">Oriented manifolds</h2>
+<p>The notion of an orientation on a manifold will become crucial later, since integration of differential forms over manifolds is only defined if the manifold is oriented.</p>
+<div class="defn">
+<p><strong>Definition 15</strong>. <strong>(Oriented atlas and manfold)</strong></p>
+<p>The compatibility condition between charts <span class="math inline">\((U,\phi),(V,\psi)\)</span> on a set <span class="math inline">\(M\)</span> is that the change of coordinates map <span class="math inline">\(\phi \circ \psi^{-1})\)</span> is a diffeomorphism. In particular, the Jacobian matrix <span class="math inline">\(D(\phi \circ \psi^{-1}))\)</span> of the transition map is invertible, and hence has non-zero determinant. If the determinant is <span class="math inline">\(&gt; 0\)</span> everywhere, then we say <span class="math inline">\((U,\phi),(V,\psi)\)</span> are <em>oriented-compatible</em>. An <em>oriented atlas</em> on <span class="math inline">\(M\)</span> is an atlas such that any two of its charts are oriented-compatible; a <em>maximal oriented atlas</em> is one that contains every chart that is oriented-compatible with all charts in this atlas. An <em>oriented manifold</em> is a set with a maximal oriented atlas, satisfying the Hausdorff and countability conditions. A manifold is called orientable if it admits an oriented atlas.</p>
+</div>
+<p>The spheres <span class="math inline">\(S^n\)</span> are orientable. To see this, consider the atlas with the two charts given by stereographic projections. The Jacobian matrix <span class="math inline">\(D(\phi_-, \psi^{-1})_+)(u)\)</span> has determinant of <span class="math inline">\(-||u||^{-2n}\)</span> which is not an oriented atlas. To remedy this, simply compose one of the charts, with the map <span class="math inline">\((u_1,u_2,\dots,u_n) \mapsto (-u_1,u_2,\dots,u_n)\)</span>; then with the resulting new coordinate map <span class="math inline">\(\Tilde{\phi}_-\)</span> the atlas <span class="math inline">\((U_+,\phi_+),(U_-,\Tilde{\phi}_-)\)</span> will be an oriented atlas.</p>
+<p>One can show that the real projective space <span class="math inline">\(\mathbb R P^n\)</span> is orientable if and only if <span class="math inline">\(n\)</span> is odd or <span class="math inline">\(n = 0\)</span>. More generally, the Grassmannians space <span class="math inline">\(Gr(k,n)\)</span> is orientable if and only if <span class="math inline">\(n\)</span> is even or <span class="math inline">\(n = 1\)</span>. The complex projective spaces <span class="math inline">\(\mathbb C P^n\)</span> and complex Grassmannians <span class="math inline">\(Gr \mathbb C(k,n)\)</span> are all orientable. This follows because the transition maps for their standard charts, as maps between open subsets of <span class="math inline">\(\mathbb C^m\)</span>, are actually complex-holomorphic, and this implies that as real maps, their Jacobian has positive determinant.</p>
+<h2 id="open-subsets">Open subsets</h2>
+<p>Let <span class="math inline">\(M\)</span> be a set equipped with an <span class="math inline">\(m\)</span>-dimensional maximal atlas <span class="math inline">\(\mathscr{A} = \{(U_\alpha, \phi_\alpha) \}\)</span>.</p>
+<div class="defn">
+<p><strong>Definition 16</strong>. <strong>(Open subset)</strong></p>
+<p>A subset <span class="math inline">\(U \subseteq M\)</span> is open if and only if for all charts <span class="math inline">\((U_\alpha, \phi_\alpha) \in \mathscr{A}\)</span> the set <span class="math inline">\(\phi_\alpha(U \cap U_\alpha)\)</span> is open.</p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 1</strong>. <em>Given <span class="math inline">\(U \subseteq M\)</span>, let <span class="math inline">\(\mathscr{B} \subseteq \mathscr{A}\)</span> be any collection of charts whose union contains <span class="math inline">\(U\)</span>. Then <span class="math inline">\(U\)</span> is open if and only if for all charts <span class="math inline">\((U_\beta,\phi_\beta)\)</span> from <span class="math inline">\(\mathscr{B}\)</span>, the sets <span class="math inline">\(\phi_{\beta}(U \cap U_\beta)\)</span> are open.</em></p>
+</div>
+<p>This means that to check that a subset <span class="math inline">\(U\)</span> is open, it is not actually necessary to verify this condition for all charts. As the above proposition shows, it is enough to check for any collection of charts whose union contains <span class="math inline">\(U\)</span>. In particular, we may take <span class="math inline">\(\mathscr{A}\)</span> to be any atlas, not necessarily a maximal atlas.</p>
+<p>If <span class="math inline">\(\mathscr{A}\)</span> is an atlas on <span class="math inline">\(M\)</span>, and <span class="math inline">\(U \subseteq M\)</span> is open, then <span class="math inline">\(U\)</span> inherits an atlas by restriction: <span class="math display">\[\mathscr{A}  = \{ (U \cap U_\alpha, \phi_\alpha |_{U \cap U_\alpha } ) \}\]</span></p>
+<div class="proposition">
+<p><strong>Proposition 2</strong>. <em>An open subset of a manifold is again a manifold.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 3</strong>. <em>Let <span class="math inline">\(M\)</span> be a set with an <span class="math inline">\(m\)</span>-dimensional maximal atlas. The collection of all open subsets of M has the following properties</em></p>
+<ol type="1">
+<li><p><em><span class="math inline">\(\emptyset, M\)</span> are open.</em></p></li>
+<li><p><em>The intersection <span class="math inline">\(U \cap U&#39;\)</span> of any two open sets <span class="math inline">\(U,U&#39;\)</span> is again open.</em></p></li>
+<li><p><em>The union <span class="math inline">\(\cap_i U_i\)</span> of an arbitrary collection <span class="math inline">\(U_i, i \in I\)</span> of open sets is again open.</em></p></li>
+</ol>
+</div>
+<p>These properties mean, by definition, that the collection of open subsets of <span class="math inline">\(M\)</span> define a <em>topology</em> on <span class="math inline">\(M\)</span>. This allows us to adopt various notions from topology:</p>
+<ol type="1">
+<li><p>A subset <span class="math inline">\(A \subseteq M\)</span> is called <em>closed</em> if its complement <span class="math inline">\(M \setminus A\)</span> is open.</p></li>
+<li><p><span class="math inline">\(M\)</span> is called <em>connected</em> if the only subsets <span class="math inline">\(A \subseteq M\)</span> that are both closed and open are <span class="math inline">\(A = \emptyset\)</span> and <span class="math inline">\(A = M\)</span>.</p></li>
+<li><p>If <span class="math inline">\(U\)</span> is an open subset and <span class="math inline">\(p \in U\)</span>, then <span class="math inline">\(U\)</span> is called an open neighborhood of <span class="math inline">\(p\)</span>. More generally, if <span class="math inline">\(A \subseteq U\)</span> is a subset contained in <span class="math inline">\(M\)</span>, then <span class="math inline">\(U\)</span> is called an <em>open neighborhood</em> of <span class="math inline">\(A\)</span>.</p></li>
+</ol>
+<p>The Hausdorff condition in the definition of manifolds can now be restated as the condition that any two distinct points <span class="math inline">\(p,q \in M\)</span> have disjoint open neighborhoods. (It is not necessary to take them to be domains of coordinate charts.) It is immediate from the definition that domains of coordinate charts are open. Indeed, this gives an alternative way of defining the open sets.</p>
+<h2 id="compact-subsets">Compact subsets</h2>
+<p>Another important concept from topology that we will need is the notion of <em>compactness</em>.</p>
+<div class="defn">
+<p><strong>Definition 17</strong>. <strong>(Compactness)</strong></p>
+<p>A subset <span class="math inline">\(A \subseteq \mathbb R^m\)</span> is compact if it has the following property: For every collection <span class="math inline">\({U_\alpha}\)</span> of open subsets of <span class="math inline">\(R^m\)</span> whose union contains <span class="math inline">\(A\)</span>, the set <span class="math inline">\(A\)</span> is already covered by finitely many subsets from that collection.</p>
+</div>
+<p>In short, <span class="math inline">\(A \subseteq M\)</span> is compact if every open cover admits a finite subcover.</p>
+<div class="theorem">
+<p><strong>Theorem 18</strong>. <strong><em>(Heine-Borel)</em></strong></p>
+<p><em>A subset <span class="math inline">\(A \subseteq R^m\)</span> is compact if and only if it is closed and bounded.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 4</strong>. <em>If <span class="math inline">\(A \subseteq M\)</span> is contained in the domain of a coordinate chart <span class="math inline">\((U,\phi)\)</span>, then <span class="math inline">\(A\)</span> is compact in <span class="math inline">\(M\)</span> if and only if <span class="math inline">\(\phi(A)\)</span> is compact in <span class="math inline">\(R^n\)</span>.</em></p>
+</div>
+<p>The proposition is useful, since we can check compactness of <span class="math inline">\(\phi(A)\)</span> by using the Heine-Borel criterion. For more general subsets of <span class="math inline">\(M\)</span>, we can often decide compactness by combining this result with the following:</p>
+<div class="proposition">
+<p><strong>Proposition 5</strong>. <em>If <span class="math inline">\(A_1,\dots,A_k \subseteq M\)</span> is a finite collection of compact subsets, then their union <span class="math inline">\(A = A_1 \cap \dots \cap A_k\)</span> is again compact.</em></p>
+</div>
+<p>A simpler way of verifying compactness is by showing that they are closed and bounded subsets of <span class="math inline">\(\mathbb R^N\)</span> for a suitable <span class="math inline">\(N\)</span>.</p>
+<div class="proposition">
+<p><strong>Proposition 6</strong>. <em>Let <span class="math inline">\(M\)</span> be a set with a maximal atlas. If <span class="math inline">\(A \subseteq M\)</span> is compact, and <span class="math inline">\(C \subseteq M\)</span> is closed, then <span class="math inline">\(A \cap C\)</span> is compact.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 7</strong>. <em>If <span class="math inline">\(M\)</span> is a manifold, then every compact subset <span class="math inline">\(A \subseteq M\)</span> is closed.</em></p>
+</div>
+<h1 id="smooth-maps">Smooth Maps</h1>
+<h2 id="smooth-functions-on-manifolds">Smooth functions on manifolds</h2>
+<p>The notion of smooth functions on open subsets of Euclidean spaces carries over to manifolds: A function is smooth if its expression in local coordinates is smooth,</p>
+<div class="defn">
+<p><strong>Definition 19</strong>. <strong>(Smoothness)</strong></p>
+<p>A function <span class="math inline">\(f : M \rightarrow R\)</span> on a manifold <span class="math inline">\(M\)</span> is called smooth if for all charts <span class="math inline">\((U,\phi)\)</span> the function <span class="math display">\[f \circ\phi^{-1}: \phi(U) \rightarrow \mathbb{R}\]</span> is smooth. The set of smooth functions on <span class="math inline">\(M\)</span> is denoted <span class="math inline">\(C^{\infty}(M)\)</span>.</p>
+</div>
+<p>Since transition maps are diffeomorphisms, it suffices to check the condition for the charts from any given atlas which need not be the maximal atlas.</p>
+<p>Given an open subset <span class="math inline">\(U \subseteq M\)</span>, we say that a function <span class="math inline">\(f\)</span> is smooth on <span class="math inline">\(U\)</span> if its restriction <span class="math inline">\(f |_U\)</span> is smooth. (Here we are using that <span class="math inline">\(U\)</span> itself is a manifold.) Given <span class="math inline">\(p \in M\)</span>, we say that <span class="math inline">\(f\)</span> is smooth at <span class="math inline">\(p\)</span> if it is smooth on some open neighborhood of <span class="math inline">\(p\)</span>.</p>
+<div class="lemma">
+<p><strong>Lemma 20</strong>. <em>Smooth functions <span class="math inline">\(f \in C^{\infty}(M)\)</span> are continuous: For every open subset <span class="math inline">\(J \subseteq \mathbb R\)</span>, the pre-image <span class="math inline">\(f^{-1}(J) \subseteq M\)</span> is open.</em></p>
+</div>
+<p>From the properties of smooth functions on <span class="math inline">\(\mathbb R^m\)</span>, one immediately gets the following properties of smooth functions on manifolds <span class="math inline">\(M\)</span>:</p>
+<ol type="1">
+<li><p>If <span class="math inline">\(f,g \in C^{\infty}(M)\)</span> and <span class="math inline">\(\lambda, \mu \in \mathbb R\)</span>, then <span class="math inline">\(\lambda f + \mu g \in C^\infty(M)\)</span>.</p></li>
+<li><p>If <span class="math inline">\(f,g \in C^\infty(M)\)</span>, then <span class="math inline">\(f g \in C^\infty(M)\)</span>.</p></li>
+<li><p><span class="math inline">\(1 \in C^{\infty}(M)\)</span> (where <span class="math inline">\(1\)</span> denotes the constant function <span class="math inline">\(p \mapsto 1\)</span>)</p></li>
+</ol>
+<p>These properties say that <span class="math inline">\(C^{\infty}(M)\)</span> is an <em>algebra</em> with unit 1.</p>
+<div class="proposition">
+<p><strong>Proposition 8</strong>. <em>Suppose <span class="math inline">\(M\)</span> is any set with a maximal atlas, and <span class="math inline">\(p \neq q\)</span> are two points in <span class="math inline">\(M\)</span>. Then the following are equivalent:</em></p>
+<ol type="1">
+<li><p><em>There are open subsets <span class="math inline">\(U,V \subseteq M\)</span> with <span class="math inline">\(p \in U, q \in V, U \cap V = \emptyset\)</span></em></p></li>
+<li><p><em>There exists <span class="math inline">\(f \in C^\infty(M)\)</span> with <span class="math inline">\(f(p) \neq f(q)\)</span>.</em></p></li>
+</ol>
+</div>
+<div class="corollary">
+<p><strong>Corollary 1</strong>. <strong><em>(Criterion for Haudorff condition)</em></strong></p>
+<p><em>A set <span class="math inline">\(M\)</span> with an atlas satisfies the Hausdorff condition if and only if for any two distinct points <span class="math inline">\(p,q \in M\)</span>, there exists a smooth function <span class="math inline">\(f \in C^\infty(M)\)</span> with <span class="math inline">\(f(p) \neq f(q)\)</span>. In particular, if there exists a smooth injective map <span class="math inline">\(F : M \rightarrow \mathbb R^N\)</span>, then <span class="math inline">\(M\)</span> is Hausdorff.</em></p>
+</div>
+<h2 id="smooth-maps-between-manifolds">Smooth maps between manifolds</h2>
+<div class="defn">
+<p><strong>Definition 21</strong>. A map <span class="math inline">\(F : M \rightarrow N\)</span> between manifolds is smooth at <span class="math inline">\(p \in M\)</span> if there are coordinate charts <span class="math inline">\((U,\phi)\)</span> around <span class="math inline">\(p\)</span> and <span class="math inline">\((V,\psi)\)</span> around <span class="math inline">\(F(p)\)</span> such that <span class="math inline">\(F(U) \subseteq V\)</span> and such that the composition <span class="math display">\[\psi \circ F \circ \phi^{-1}: \phi(U) \rightarrow \psi(V)\]</span> is smooth. The function <span class="math inline">\(F\)</span> is called a smooth map from <span class="math inline">\(M\)</span> to <span class="math inline">\(N\)</span> if it is smooth at all <span class="math inline">\(p \in M\)</span>.</p>
+</div>
+<p>The condition for smoothness at p does not depend on the choice of charts. To check smoothness of <span class="math inline">\(F\)</span>, it suffices to take any atlas of M with the property that <span class="math inline">\(F(U_\alpha) \subseteq V_\alpha\)</span> and then check smoothness of the maps. Smooth maps <span class="math inline">\(M \rightarrow R\)</span> are the same thing as smooth functions on <span class="math inline">\(M\)</span>, <span class="math inline">\(C^{\infty} (M,R) = C^{\infty}(M)\)</span>.</p>
+<div class="proposition">
+<p><strong>Proposition 9</strong>. <em>Suppose <span class="math inline">\(F_1 : M_1 \rightarrow M_2\)</span> and <span class="math inline">\(F_2 : M_2 \rightarrow M_3\)</span> are smooth maps. Then the composition <span class="math inline">\(F_2 \circ F_1 : M_1 \rightarrow M_3\)</span> is smooth.</em></p>
+</div>
+<h2 id="diffeomorphisms-of-manifolds">Diffeomorphisms of manifolds</h2>
+<div class="defn">
+<p><strong>Definition 22</strong>. <strong>(Diffeomorphic manifolds)</strong></p>
+<p>A smooth map <span class="math inline">\(F : M \rightarrow N\)</span> is called a <em>diffeomorphism</em> if it is invertible, with a smooth inverse <span class="math inline">\(F^{-1} : N \rightarrow M\)</span>. Manifolds <span class="math inline">\(M,N\)</span> are called diffeomorphic if there exists a diffeomorphism from <span class="math inline">\(M\)</span> to <span class="math inline">\(N\)</span>.</p>
+</div>
+<p>In other words, a diffeomorphism of manifolds is a bijection of the underlying sets that identifies the maximal atlases of the manifolds. Manifolds that are diffeomorphic are therefore considered ‘the same manifolds’.</p>
+<div class="defn">
+<p><strong>Definition 23</strong>. <strong>(Homeomorphic manifolds)</strong> A continuous map <span class="math inline">\(F : M \rightarrow N\)</span> is called a <em>homeomorphism</em> if it is invertible, with a continuous inverse. Manifolds <span class="math inline">\(M,N\)</span> are called homeomorphic if there exists a homeomorphism from <span class="math inline">\(M\)</span> to <span class="math inline">\(N\)</span>.</p>
+</div>
+<p>Manifolds that are homeomorphic are considered ‘the same topologically’. Since every smooth map is continuous, every diffeomorphism is a homeomorphism.</p>
+<div class="example">
+<p><strong>Example 24</strong>. The standard example of a homeomorphism of smooth manifolds that is not a diffeomorphism is the map <span class="math inline">\(\mathbb R \rightarrow \mathbb R, x \mapsto x^3\)</span>. Indeed, this map is smooth and invertible, but the inverse map <span class="math inline">\(y \mapsto y ^{\frac{1}{3}}\)</span> is not smooth.</p>
+</div>
+<p>It is quite possible for two manifolds to be homeomorphic but not diffeomorphic, these are known as <em>exotic manifolds</em>. An <em>exotic sphere</em> is homeomorphic but not diffeomorphic to the standard Euclidean n-sphere. It is known that there are no exotic manifold structures on <span class="math inline">\(\mathbb R^n\)</span> for <span class="math inline">\(\mathbb R^n\)</span> with <span class="math inline">\(n \neq 4\)</span>, where there are uncountably many such.</p>
+<h2 id="examples-of-smooth-maps">Examples of smooth maps</h2>
+<h3 id="products-diagonal-maps">Products, diagonal maps</h3>
+<ol type="1">
+<li><p>If <span class="math inline">\(M,N\)</span> are manifolds, then the projection maps are smooth. Take product charts <span class="math inline">\(U_\alpha \times V_\beta\)</span>. <span class="math display">\[p^{T}_M : M \times N  \rightarrow M, \ \
+        p^{T}_N :  M \times N \rightarrow N\]</span></p></li>
+<li><p>The diagonal inclusion is smooth. In a coordinate chart around a point, the map is the restriction to a subset of the diagonal inclusion. <span class="math display">\[\Delta_M : M \rightarrow  M \times M\]</span></p></li>
+<li><p>Suppose <span class="math inline">\(F : M \rightarrow N\)</span> and <span class="math inline">\(F&#39; : M&#39; \rightarrow N&#39;\)</span> are smooth maps. Then the direct product is smooth. <span class="math display">\[F \times F&#39; : M \times M&#39; \rightarrow N \times N&#39;\]</span></p></li>
+</ol>
+<h3 id="the-diffeomorphism-mathbb-r-p1-cong-s1">The diffeomorphism <span class="math inline">\(\mathbb R P^1 \cong S^1\)</span></h3>
+<p>We have seen that <span class="math inline">\(\mathbb R P^1 \cong S^1\)</span>. To obtain a diffeomorphism, we construct a bijection between the standard atlases of both of the manifolds described previously</p>
+<h3 id="the-diffeomorphism-mathbb-c-p1-cong-s2">The diffeomorphism <span class="math inline">\(\mathbb C P^1 \cong S^2\)</span></h3>
+<p>By a similar reasoning, we find <span class="math inline">\(\mathbb C P^1 \cong S^2\)</span>. For <span class="math inline">\(S^2\)</span> we use the atlas given by stereographic projection. Regarding <span class="math inline">\(u\)</span> as a complex number the normis just the absolute value of <span class="math inline">\(u\)</span>, and the transition map becomes <span class="math inline">\(u \mapsto \frac{1}{u}\)</span>. Note that it is not quite the same as the transition map for the standard atlas of <span class="math inline">\(\mathbb C P^1\)</span>, which is given by <span class="math inline">\(u \mapsto u^{-1}\)</span>. We obtain a unique diffeomorphism such that <span class="math inline">\(\phi_+ \circ F \circ \phi_0^{-1}\)</span> is the identity and <span class="math inline">\(\phi_- \circ F \circ \phi_1^{-1}\)</span> is complex conjugation</p>
+<h3 id="maps-to-and-from-projective-space">Maps to and from projective space</h3>
+<p>The quotient map <span class="math inline">\(\pi\)</span> is smooth, as one verifies by checking in the standard atlas for <span class="math inline">\(\mathbb R P^n\)</span>. <span class="math display">\[\pi : \mathbb R^{n+1} \setminus \{0\} \rightarrow \mathbb R P^N, \ \ 
+    x = (x^0, \dots, x^n) \mapsto (x^0, \dots, x^n)\]</span> Given a map <span class="math inline">\(F : \mathbb R P^n \rightarrow N\)</span> to a manifold <span class="math inline">\(N\)</span>, let <span class="math inline">\(\Tilde{F} = F \circ \pi : \mathbb R ^{n+1}\setminus \{0\} \rightarrow N\)</span> be its composition with the projection map <span class="math inline">\(\pi : \mathbb R ^{n+1}\setminus \{0\} \rightarrow \mathbb R P^n\)</span>. That is, <span class="math inline">\(\Tilde{F} (x^0 , \dots, x^n ) = F(x^0 : \dots : x^n )\)</span>.</p>
+<p>We claim that the map <span class="math inline">\(F\)</span> is smooth if and only the corresponding map <span class="math inline">\(\Tilde{F}\)</span> is smooth. One direction is clear: If <span class="math inline">\(F\)</span> is smooth, then <span class="math inline">\(\Tilde{F} = F \circ \pi\)</span> is a composition of smooth maps. For the other direction, assuming that <span class="math inline">\(\Tilde{F}\)</span> is smooth, note that for the standard chart <span class="math inline">\((U_j ,\phi_j)\)</span>, and the maps <span class="math display">\[(F \circ \phi^{-1}_j )(u^1 ,\dots, u^n ) = \Tilde{F}(u^1 ,\dots, u^i ,1,u ^{i+1} ,\dots,u^n ),\]</span> are smooth. An analogous argument applies to the complex projective space <span class="math inline">\(\mathbb C P^n\)</span> , taking the <span class="math inline">\(x^i\)</span> to be complex numbers <span class="math inline">\(z^i\)</span></p>
+<h3 id="the-hopf-fibration-a.k.a.-the-quotient-map-s2n1-rightarrow-mathbb-c-pn">The Hopf fibration, a.k.a. the quotient map <span class="math inline">\(S^{2n+1} \rightarrow \mathbb C P^n\)</span></h3>
+<p>As mentioned above, quotient map <span class="math inline">\(q : C^{n+1} \setminus \{0\} \rightarrow \mathbb C P^n\)</span> is smooth. Since any class <span class="math inline">\([z] = (z 0 : \dots : z^n )\)</span> has a representative with <span class="math inline">\(|z^0|^2 + \dots +|z^n|^2 = 1\)</span>, and <span class="math inline">\(|z^i|^2 = (x^i)^2 + (y^i)^2\)</span> for <span class="math inline">\(z^i = x^i + \sqrt{-1}y^i\)</span>, we may also regard <span class="math inline">\(\mathbb C P^n\)</span> as a set of equivalence classes in the unit sphere <span class="math inline">\(S^{2n+1} \subseteq \mathbb R^{2n+2} = \mathbb C^{n+1}\)</span>. The resulting quotient map <span class="math display">\[\pi : S^{2n+1} \rightarrow \mathbb C P^n\]</span> is again smooth, because it can be written as a composition of two smooth maps <span class="math inline">\(\pi = q \circ \tau\)</span> where <span class="math inline">\(\tau : S ^{2n+1} \mapsto \mathbb R^{2n+2} \setminus \{0\} = \mathbb C^{n+1} \setminus \{0\}\)</span> is the inclusion map.</p>
+<p>For any <span class="math inline">\(p \in \mathbb C P^n\)</span> , the corresponding fiber <span class="math inline">\(\pi^{-1} (p) \subset S^{2n+1}\)</span> is diffeomorphic to a circle <span class="math inline">\(S^1\)</span> (which we may regard as complex numbers of absolute value 1). Indeed, given any point <span class="math inline">\((z^0 , \dots ,z^n ) \in \pi^{-1} (p)\)</span> in the fiber, the other points are obtained as <span class="math inline">\((\lambda z^0 ,\dots, \lambda z^n )\)</span> where <span class="math inline">\(|\lambda| = 1\)</span>.</p>
+<p>In other words, we can think of <span class="math display">\[S^{2n+1} = \bigcup_{p \in \mathbb C P^n} \pi^{- 1}(p)\]</span> as a union of circles, parametrized by the points of <span class="math inline">\(\mathbb C P^n\)</span>. This is an example of a <em>fiber bundle</em> or <em>fibration</em>.</p>
+<p>An import important case occurs when <span class="math inline">\(n = 1\)</span>. Identifying <span class="math inline">\(\mathbb C P^1 \cong S^2\)</span> as above, the map <span class="math inline">\(\pi\)</span> becomes a smooth map <span class="math inline">\(\pi : S^3 \rightarrow S^2\)</span> with fibers diffeomorphic to <span class="math inline">\(S^1\)</span>. This map appears in many contexts; it is called the <em>Hopf fibration</em>.</p>
+<p>Let <span class="math inline">\(S \in S^3\)</span> be the ‘south pole’, and <span class="math inline">\(N \in S^3\)</span> the ‘north pole’. We have that <span class="math inline">\(S^3 - \{S\} \cong R^3\)</span> by stereographic projection. The set <span class="math inline">\(\pi^{-1} (\pi(S)) - \{S\}\)</span> projects to a straight line (think of it as a circle with ‘infinite radius’). The fiber <span class="math inline">\(\pi ^{-1} (N)\)</span> is a circle that goes around the straight line. If <span class="math inline">\(Z \subseteq S^2\)</span> is a circle at a given ‘latitude’, then <span class="math inline">\(\pi^{-1} (Z)\)</span> is is a 2-torus. For <span class="math inline">\(Z\)</span> close to north pole <span class="math inline">\(N\)</span> this 2-torus is very thin, while for <span class="math inline">\(Z\)</span> approaching the south pole <span class="math inline">\(S\)</span> the radius goes to infinity. Each such 2-torus is itself a union of circles <span class="math inline">\(\pi^{-1} (p), p \in Z\)</span>. Those circles are neither the usual ‘vertical’ or ‘horizontal’ circles of a 2-torus in <span class="math inline">\(\mathbb R^3\)</span> , but instead are ‘tilted’. In fact, each such circle is a ‘perfect geometric circle’ obtained as the intersection of its 2-torus with a carefully positioned affine 2-plane. Moreover, any two of the circles <span class="math inline">\(\pi^{-1} (p)\)</span> are ‘linked’ as though they were in a chain.</p>
+<p>A calculation shows that over the charts <span class="math inline">\(U_+,U_-\)</span> from stereographic projection, the Hopf fibration is just a product. That is, one has <span class="math display">\[\pi^{-1} (U_+) \cong U_+ \times S^1, \ \ \pi^{-1} (U_-) \cong U_- \times S^1\]</span> In particular, the pre-image of the closed upper hemisphere is a solid 2-torus <span class="math inline">\(D^2 \times S^1\)</span> (with <span class="math inline">\(D^2 = \{ z \in \mathbb C| |z| \leq 1 \}\)</span> the unit disk), geometrically depicted as a 2-torus in <span class="math inline">\(\mathbb R^3\)</span> together with its interior. We hence see that the <span class="math inline">\(S^3\)</span> may be obtained by gluing two solid 2-tori along their boundaries <span class="math inline">\(S^1 \times S^1\)</span>.</p>
+<h2 id="submanifolds">Submanifolds</h2>
+<div class="defn">
+<p><strong>Definition 25</strong>. A subset <span class="math inline">\(S \subseteq M\)</span> is called a <em>submanifold</em> of dimension <span class="math inline">\(k \leq m\)</span>, if for all <span class="math inline">\(p \in S\)</span> there exists a coordinate chart <span class="math inline">\((U,\phi)\)</span> around <span class="math inline">\(p\)</span> such that <span class="math display">\[\phi(U \cap S) = \phi(U) \cap \mathbb R^k .\]</span> Charts <span class="math inline">\((U,\phi)\)</span> of <span class="math inline">\(M\)</span> with this property are called submanifold charts for <span class="math inline">\(S\)</span>.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 26</strong>. A chart <span class="math inline">\((U, \phi)\)</span> such that <span class="math inline">\(U \cap S = \emptyset\)</span> and <span class="math inline">\(\phi (U) \cap \mathbb R^k = \emptyset\)</span> is considered a <em>submanifold chart</em>. The existence of submanifold charts is only required for points <span class="math inline">\(p\)</span> that lie in <span class="math inline">\(S\)</span>.</p>
+</div>
+<p>Strictly speaking, a submanifold chart for <span class="math inline">\(S\)</span> is not a chart for <span class="math inline">\(S\)</span>, but is a chart for <span class="math inline">\(M\)</span> which is adapted to <span class="math inline">\(S\)</span>. Submanifold charts restrict to charts for <span class="math inline">\(S\)</span>, and this may be used to construct an atlas for <span class="math inline">\(S\)</span>.</p>
+<div class="proposition">
+<p><strong>Proposition 10</strong>. <em>Suppose <span class="math inline">\(S\)</span> is a submanifold of <span class="math inline">\(M\)</span>. Then <span class="math inline">\(S\)</span> is a <span class="math inline">\(k\)</span>-dimensional manifold in its own right, with atlas consisting of all charts <span class="math inline">\((U \cap S, \phi|U \cap S)\)</span> such that <span class="math inline">\((U,\phi)\)</span> is a submanifold chart.</em></p>
+</div>
+<div class="example">
+<p><strong>Example 27</strong>. (Open subsets). The <span class="math inline">\(m\)</span>-dimensional submanifolds of an <span class="math inline">\(m\)</span>-dimensional manifold are exactly the open subsets.</p>
+</div>
+<div class="example">
+<p><strong>Example 28</strong>. (Projective spaces). For <span class="math inline">\(k &lt; n\)</span>, regard <span class="math inline">\(\mathbb R P^k \subseteq \mathbb R P^n\)</span> as the subset of all <span class="math inline">\((x^0 : \dots : x^n )\)</span> for which <span class="math inline">\(x^{k+1} = \dots = x^n = 0\)</span>. These are submanifolds, with the standard charts <span class="math inline">\((U_i ,\phi_i)\)</span> for <span class="math inline">\(\mathbb R P^n\)</span> as submanifold charts. Similarly, <span class="math inline">\(\mathbb C P^k \subseteq \mathbb C P^n\)</span> are submanifolds, and for <span class="math inline">\(n &lt; n&#39;\)</span> we have <span class="math inline">\(Gr(k,n) \subseteq Gr(k,n&#39;)\)</span> as a submanifold.</p>
+</div>
+<div class="example">
+<p><strong>Example 29</strong>. (Spheres). For <span class="math inline">\(k &lt; n\)</span>, regard <span class="math inline">\(S^k \subseteq S^n\)</span> as the subset where the last <span class="math inline">\(n-k\)</span> coordinates are zero. These are submanifolds where the charts for <span class="math inline">\(S^n\)</span> given by stereographic projection are submanifold charts.</p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 11</strong>. <em>Let <span class="math inline">\(F : M \rightarrow N\)</span> be a smooth map between manifolds of dimensions <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>. Then <span class="math display">\[graph(F) = \{(F(p), p) | p \in M \} \subseteq N \times M\]</span> is a submanifold of <span class="math inline">\(N \times M\)</span>, of dimension equal to the dimension of <span class="math inline">\(M\)</span>.</em></p>
+<p><em>This result has the following consequence: If a subset of a manifold, <span class="math inline">\(S \subseteq M\)</span>, can be locally described as the graph of a smooth map, then <span class="math inline">\(S\)</span> is a submanifold.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 12</strong>. <em>The inclusion map <span class="math inline">\(i : S \rightarrow M, p \mapsto p,\)</span> which takes any point of <span class="math inline">\(S\)</span> to the same point but viewed as a point of <span class="math inline">\(M\)</span>, is smooth.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 13</strong>. <em>Suppose <span class="math inline">\(S\)</span> is a submanifold of <span class="math inline">\(M\)</span>. Then the open subsets of <span class="math inline">\(S\)</span> for its manifold structure are exactly those of the form <span class="math inline">\(U \cap S\)</span>, where <span class="math inline">\(U\)</span> is an open subset of <span class="math inline">\(M\)</span>.</em></p>
+</div>
+<p>In other words, the topology of <span class="math inline">\(S\)</span> as a manifold coincides with the ‘subspace topology’ as a subset of the manifold <span class="math inline">\(M\)</span>.</p>
+<p>As a consequence, if a manifold <span class="math inline">\(M\)</span> can be realized realized as a submanifold <span class="math inline">\(M \subseteq \mathbb R^n\)</span>, then <span class="math inline">\(M\)</span> is compact with respect to its manifold topology if and only if it is compact as a subset of <span class="math inline">\(R^n\)</span>, if and only if it is a closed and bounded subset of <span class="math inline">\(\mathbb R^n\)</span>.</p>
+<h2 id="smooth-maps-of-maximal-rank">Smooth maps of maximal rank</h2>
+<p>Let <span class="math inline">\(F \in C^\infty(M,N)\)</span> be a smooth map. Then the fibers (level sets) <span class="math inline">\(F^{-1}(q) = \{x \in M| F(x) = q\}\)</span> for <span class="math inline">\(q \in N\)</span> need not be submanifolds, in general.</p>
+<h3 id="the-rank-of-a-smooth-map">The rank of a smooth map</h3>
+<p>Let <span class="math inline">\(U \subseteq \mathbb R^m\)</span> and <span class="math inline">\(V \subseteq \mathbb R^n\)</span> be open subsets, and <span class="math inline">\(F \in C^\infty(U,V)\)</span> a smooth map.</p>
+<div class="defn">
+<p><strong>Definition 30</strong>. The <em>derivative</em> of <span class="math inline">\(F\)</span> at <span class="math inline">\(p \in U\)</span> is the linear map <span class="math display">\[D_pF : \mathbb R^m \rightarrow \mathbb R^n, \ \ v \mapsto \frac{d}{dt}\Bigr|_{\substack{ t=0 }} F(p+tv).\]</span></p>
+<p>Recall that the <em>rank</em> of a linear map is the dimension of its range. The rank of <span class="math inline">\(F\)</span> at <span class="math inline">\(p\)</span> is the rank of this linear map: <span class="math display">\[\text{rank}_p(F) = \text{rank}(D_p F).\]</span></p>
+</div>
+<p>Equivalently, <span class="math inline">\(D_p F\)</span> is the <span class="math inline">\(n \times m\)</span> matrix of partial derivatives and the rank of <span class="math inline">\(F\)</span> at <span class="math inline">\(p\)</span> is the rank of this matrix i.e., the number of linearly independent rows or the number of linearly independent columns.</p>
+<div class="defn">
+<p><strong>Definition 31</strong>. Let <span class="math inline">\(F \in C^\infty(M,N)\)</span> be a smooth map between manifolds, and <span class="math inline">\(p \in M\)</span>. The rank of <span class="math inline">\(F\)</span> at <span class="math inline">\(p \in M\)</span> is defined as <span class="math display">\[\text{rank}_p(F) = \text{rank}_{\phi(p)}(\psi \circ F \circ \phi^{-1}).\]</span> for any two coordinate charts <span class="math inline">\((U,\phi)\)</span> around <span class="math inline">\(p\)</span> and <span class="math inline">\((V,\psi)\)</span> around <span class="math inline">\(F(p)\)</span> such that <span class="math inline">\(F(U) \subseteq V\)</span>.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 32</strong>. The map <span class="math inline">\(F\)</span> is said to have <em>maximal rank</em> at <span class="math inline">\(p\)</span> if <span class="math display">\[\text{rank}_p(F) = \text{min}(\text{dim} M, \text{dim} N).\]</span> A point <span class="math inline">\(p \in M\)</span> is called a <em>critical point</em> for <span class="math inline">\(F\)</span> if <span class="math inline">\(\text{rank}_p(F) &lt; \text{min}(\text{dim} M, \text{dim} N)\)</span>.</p>
+</div>
+<h3 id="local-diffeomorphisms">Local diffeomorphisms</h3>
+<div class="theorem">
+<p><strong>Theorem 33</strong>. <em>(Inverse Function Theorem for <span class="math inline">\(\mathbb R^m\)</span>).</em></p>
+<p><em>Let <span class="math inline">\(F \in C^\infty(U,V)\)</span> be a smooth map between open subsets of <span class="math inline">\(\mathbb R^m\)</span>, and suppose that the derivative <span class="math inline">\(D_pF\)</span> at <span class="math inline">\(p \in U\)</span> is invertible. Then there exists an open neighborhood <span class="math inline">\(U_1 \subseteq U\)</span> of <span class="math inline">\(p\)</span> such that <span class="math inline">\(F\)</span> restricts to a diffeomorphism <span class="math inline">\(U_1 \rightarrow F(U_1)\)</span>.</em></p>
+</div>
+<p>The theorem tells us that for a smooth bijection, a sufficient condition for smoothness of the inverse map is that the differential (i.e., the first derivative) is invertible everywhere.</p>
+<div class="theorem">
+<p><strong>Theorem 34</strong>. <em>(Inverse function theorem for manifolds)</em></p>
+<p><em>Let <span class="math inline">\(F \in C^\infty(M,N)\)</span> be a smooth map between manifolds of the same dimension <span class="math inline">\(m = n\)</span>. If <span class="math inline">\(p \in M\)</span> is such that <span class="math inline">\(\text{rank}_p(F) = m\)</span>, then there exists an open neighborhood <span class="math inline">\(U \subseteq M\)</span> of <span class="math inline">\(p\)</span> such that <span class="math inline">\(F\)</span> restricts to a diffeomorphism <span class="math inline">\(U \rightarrow F(U)\)</span>.</em></p>
+</div>
+<p>A smooth map <span class="math inline">\(F \in C^\infty(M,N)\)</span> is called a local diffeomorphism if <span class="math inline">\(\text{dim} M = \text{dim}N\)</span>, and <span class="math inline">\(F\)</span> has maximal rank everywhere. By the theorem, this is equivalent to the condition that every point <span class="math inline">\(p\)</span> has an open neighborhood <span class="math inline">\(U\)</span> such that <span class="math inline">\(F\)</span> restricts to a diffeomorphism <span class="math inline">\(U \rightarrow F(U)\)</span>.</p>
+<h3 id="level-sets-submersions">Level sets, submersions</h3>
+<div class="proposition">
+<p><strong>Proposition 14</strong>. <em>Suppose <span class="math inline">\(F \in C^\infty(U,V)\)</span> is a smooth map between open subsets <span class="math inline">\(U \subseteq R^m\)</span> and <span class="math inline">\(V \subseteq R^n\)</span>, and suppose <span class="math inline">\(p \in U\)</span> is such that the derivative <span class="math inline">\(D_p F\)</span> is surjective. Then there exists an open neighborhood <span class="math inline">\(U_1 \subseteq U\)</span> of <span class="math inline">\(p\)</span> and a diffeomorphism <span class="math inline">\(\kappa : U_1 \rightarrow \kappa (U_1) \subseteq \mathbb R^m\)</span> such that <span class="math display">\[(F \circ \kappa - 1)(u^1, \dots, u^m) = (u^{m-n+1},\dots,u^m)\]</span></em></p>
+<p><em>for all <span class="math inline">\(u = (u^1 ,\dots,u^m) \in \kappa(U_1)\)</span>.</em></p>
+</div>
+<p>Again, this result has a version for manifolds:</p>
+<div class="theorem">
+<p><strong>Theorem 35</strong>. <em>Let <span class="math inline">\(F \in C ^\infty(M,N)\)</span> be a smooth map between manifolds of dimensions <span class="math inline">\(m \geq n\)</span>, and suppose <span class="math inline">\(p \in M\)</span> is such that <span class="math inline">\(\text{rank}_p(F) = n\)</span>. Then there exist coordinate charts <span class="math inline">\((U,\phi)\)</span> around <span class="math inline">\(p\)</span> and <span class="math inline">\((V,\psi)\)</span> around <span class="math inline">\(F(p)\)</span>, with <span class="math inline">\(F(U) \subseteq V\)</span>, such that <span class="math display">\[(\psi \circ F \circ \phi^{-1} )(u&#39; ,u&#39;&#39;) = u&#39;&#39;\]</span> for all <span class="math inline">\(u = (u&#39;,u&#39;&#39;) \in \phi(U)\)</span>. In particular, for all <span class="math inline">\(q \in V\)</span> the intersection <span class="math inline">\(F^{-1} (q)\cap U\)</span> is a submanifold of dimension <span class="math inline">\(m-n\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 36</strong>. Let <span class="math inline">\(F \in C^\infty(M,N)\)</span>. A point <span class="math inline">\(q \in N\)</span> is called a <em>regular value</em> of <span class="math inline">\(F \in C^\infty(M,N)\)</span> if for all <span class="math inline">\(x \in F^{-1} (q)\)</span>, one has <span class="math inline">\(\text{rank}_x(F) = \text{dim}N\)</span>. It is called a <em>singular value</em> if it is not a regular value.</p>
+</div>
+<p>Note that regular values are only possible if <span class="math inline">\(\text{dim}N \leq \text{dim}M\)</span>. Note also that all points of <span class="math inline">\(N\)</span> that are not in the image of the map F are considered regular values. We may restate the theorem as follows:</p>
+<div class="theorem">
+<p><strong>Theorem 37</strong>. <em>For any regular value <span class="math inline">\(q \in N\)</span> of a smooth map <span class="math inline">\(F \in C^\infty(M,N)\)</span>, the level set <span class="math inline">\(S = F^{-1}(q)\)</span> is a submanifold of dimension <span class="math inline">\(\text{dim}S = \text{dim}M - \text{dim}N\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 38</strong>. A smooth map <span class="math inline">\(F \in C^\infty(M,N)\)</span> is a <em>submersion</em> if <span class="math inline">\(\text{rank}_p(F) = \text{dim}N\)</span> for all <span class="math inline">\(p \in M\)</span>.</p>
+<p>Thus, for a submersion all level sets <span class="math inline">\(F^{-1} (q)\)</span> are submanifolds.</p>
+</div>
+<div class="example">
+<p><strong>Example 39</strong>. Recall that <span class="math inline">\(\mathbb CP^n\)</span> can be regarded as a quotient of <span class="math inline">\(S^{2n+1}\)</span>. Using charts, one can check that the quotient map <span class="math inline">\(\pi : S^{2n+1} \rightarrow \mathbb C P^n\)</span> is a submersion. Hence its fibers <span class="math inline">\(\pi^-1 (q)\)</span> are 1-dimensional submanifolds. As discussed before these fibers are circles. As a special case, the Hopf fibration <span class="math inline">\(S^3 \rightarrow S^2\)</span> is a submersion.</p>
+</div>
+<div class="example">
+<p><strong>Example 40</strong>. Let <span class="math inline">\(\mathbb H = \mathbb C^2 = \mathbb R^4\)</span> be the <em>quaternionic numbers</em>. The unit quaternions are a 3-sphere <span class="math inline">\(S^3\)</span> . Generalizing the definition of <span class="math inline">\(\mathbb R P^n\)</span> and <span class="math inline">\(\mathbb C P^n\)</span>, there are also quaternionic projective spaces, <span class="math inline">\(\mathbb H P^n\)</span>. These are quotients of the unit sphere inside <span class="math inline">\(\mathbb H^{n+1}\)</span> , hence one obtains submersions <span class="math display">\[S^{4n+3} \mapsto \mathbb H P^n;\]</span> the fibers of this submersion are diffeomorphic to <span class="math inline">\(S^3\)</span>. For <span class="math inline">\(n = 1\)</span>, one can show that <span class="math inline">\(\mathbb HP^1 = S^4\)</span>, hence one obtains a submersion <span class="math inline">\(\pi : S^7 \rightarrow S^4\)</span> with fibers diffeomorphic to <span class="math inline">\(S^3\)</span>.</p>
+</div>
+<h3 id="example-the-steiner-surface">Example: The Steiner surface</h3>
+<p>[Omitted]</p>
+<h3 id="immersions">Immersions</h3>
+<div class="proposition">
+<p><strong>Proposition 15</strong>. <em>Suppose <span class="math inline">\(F \in C^\infty(U,V)\)</span> is a smooth map between open subsets <span class="math inline">\(U \subseteq \mathbb R^m\)</span> and <span class="math inline">\(V \subseteq \mathbb R^n\)</span>, and suppose <span class="math inline">\(p \in U\)</span> is such that the derivative <span class="math inline">\(D_p F\)</span> is injective. Then there exist smaller neighborhoods <span class="math inline">\(U_1 \subseteq U\)</span> of <span class="math inline">\(p\)</span> and <span class="math inline">\(V_1 \subseteq V\)</span> of <span class="math inline">\(F(p)\)</span>, with <span class="math inline">\(F(U_1) \subseteq V_1\)</span>, and a diffeomorphism <span class="math inline">\(\chi : V_1 \rightarrow \chi(V_1)\)</span>, such that <span class="math inline">\((\chi \circ F)(u) = (u,0) \in R^m \times R^{n-m}\)</span></em></p>
+</div>
+<p>The manifolds version reads as follows:</p>
+<div class="theorem">
+<p><strong>Theorem 41</strong>. <em>Let <span class="math inline">\(F \in C^\infty(M,N)\)</span> be a smooth map between manifolds of dimensions <span class="math inline">\(m \infty n\)</span>, and <span class="math inline">\(p \in M\)</span> a point with <span class="math inline">\(\text{rank}_p(F) = m\)</span>. Then there are coordinate charts <span class="math inline">\((U,\phi)\)</span> around <span class="math inline">\(p\)</span> and <span class="math inline">\((V,\psi)\)</span> around <span class="math inline">\(F(p)\)</span> such that <span class="math inline">\(F(U) \subseteq V\)</span> and <span class="math display">\[(\psi \circ F \circ \phi{-1})(u) = (u,0).\]</span></em></p>
+<p><em>In particular, <span class="math inline">\(F(U) \subseteq N\)</span> is a submanifold of dimension <span class="math inline">\(m\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 42</strong>. A smooth map <span class="math inline">\(F : M \mapsto N\)</span> is an immersion if <span class="math inline">\(\text{rank}_p(F) = \text{dim}M\)</span> for all <span class="math inline">\(p \in M\)</span>.</p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 43</strong>. <em>If <span class="math inline">\(M\)</span> is a compact manifold, then every injective immersion <span class="math inline">\(F : M \rightarrow N\)</span> is an embedding as a submanifold <span class="math inline">\(S = F(M)\)</span>. By an embedding, we will mean an immersion given as the inclusion map for a submanifold.</em></p>
+</div>
+<h1 id="the-tangent-bundle">The Tangent Bundle</h1>
+<p>For embedded submanifolds <span class="math inline">\(M \subseteq \mathbb R^n\)</span>, the tangent space <span class="math inline">\(T_p M\)</span> at <span class="math inline">\(p \in M\)</span> can be defined as the set of all velocity vectors <span class="math inline">\(v = \gamma(0\)</span>), where <span class="math inline">\(\gamma : J \rightarrow M\)</span> is a smooth curve with <span class="math inline">\(\gamma(0) = p\)</span>; here <span class="math inline">\(J \subseteq R\)</span> is an open interval around <span class="math inline">\(0\)</span>. It turns out that <span class="math inline">\(T_pM\)</span> becomes a vector subspace of <span class="math inline">\(\mathbb R^n\)</span>. For a general manifold, we will define <span class="math inline">\(T_pM\)</span> as a set of directional derivatives.</p>
+<div class="defn">
+<p><strong>Definition 44</strong>. (Tangent spaces - first version)</p>
+<p>Let <span class="math inline">\(M\)</span> be a manifold, <span class="math inline">\(p \in M\)</span>. The <em>tangent space</em> <span class="math inline">\(T_pM\)</span> is the set of all linear maps <span class="math inline">\(v : C^{\infty}(M) \rightarrow \mathbb R\)</span> of the form <span class="math display">\[v(f) = \frac{d}{dt}\Bigr|_{\substack{ t=0 }}  f(\gamma(t))\]</span> for some smooth curve <span class="math inline">\(\gamma \in C^\infty(J,M)\)</span> with <span class="math inline">\(\gamma(0) = p\)</span>.</p>
+<p>The elements <span class="math inline">\(v \in T_pM\)</span> are called the <em>tangent vectors</em> to <span class="math inline">\(M\)</span> at <span class="math inline">\(p\)</span>.</p>
+</div>
+<p>The following local coordinate description makes it clear that <span class="math inline">\(T_pM\)</span> is a linear subspace of the vector space <span class="math inline">\(L(C^\infty(M),R)\)</span> of linear maps <span class="math inline">\(C^\infty(M) \rightarrow R\)</span>, of dimension equal to the dimension of <span class="math inline">\(M\)</span>.</p>
+<div class="theorem">
+<p><strong>Theorem 45</strong>. <em>Let <span class="math inline">\((U,\phi)\)</span> be a coordinate chart around <span class="math inline">\(p\)</span>. A linear map <span class="math inline">\(v : C^\infty(M) \rightarrow \mathbb R\)</span> is in <span class="math inline">\(T_pM\)</span> if and only if it has the form, <span class="math display">\[v(f) = m \sum_{i=1}^m a^i \frac{\partial (f \circ \phi^{-1} )}{ \partial u^i}\Bigr|_{u = \phi(p)}\]</span> for some <span class="math inline">\(a = (a^1 ,\dots,a^m) \in \mathbb R^m\)</span></em></p>
+</div>
+<p>We can use this result as an alternative definition of the tangent space, namely:</p>
+<div class="defn">
+<p><strong>Definition 46</strong>. (Tangent spaces - second version)</p>
+<p>Let <span class="math inline">\((U,\phi)\)</span> be a chart around <span class="math inline">\(p\)</span>. The tangent space <span class="math inline">\(T_pM\)</span> is the set of all linear maps <span class="math inline">\(v : C^\infty(M) \rightarrow \mathbb R\)</span> of the form <span class="math display">\[v(f) = m \sum_{i=1}^m a^i \frac{\partial (f \circ \phi^{-1} )}{ \partial u^i}\Bigr|_{u = \phi(p)}\]</span> for some <span class="math inline">\(a = (a^1 ,\dots,a^m) \in \mathbb R^m\)</span>.</p>
+</div>
+<p>It is not immediately obvious from this second definition that <span class="math inline">\(T_pM\)</span> is independent of the choice of coordinate chart, but this follows from the equivalence with the first definition. Any choice of coordinate chart <span class="math inline">\((U,\phi)\)</span> around <span class="math inline">\(p\)</span> defines a vector space isomorphism <span class="math inline">\(T_pM \cong \mathbb R^m\)</span>, taking <span class="math inline">\(v\)</span> to <span class="math inline">\(a = (a^1 ,\dots,a^m)\)</span>. In particular, we see that if <span class="math inline">\(U \subseteq \mathbb R^m\)</span> is an open subset, and <span class="math inline">\(p \in U\)</span>, then <span class="math inline">\(T_pU\)</span> is the subspace of the space of linear maps <span class="math inline">\(C^\infty(M) \rightarrow \mathbb R\)</span> spanned by the partial derivatives at <span class="math inline">\(p\)</span>.</p>
+<p>We now describe yet another approach to tangent spaces which again characterizes “directional derivatives” in a coordinate-free way, but without reference to curves <span class="math inline">\(\gamma\)</span>. Note first that every tangent vector satisfies the product rule, also called the Leibniz rule:</p>
+<div class="lemma">
+<p><strong>Lemma 47</strong>. <em>(Leibniz rule)</em></p>
+<p><em>Let <span class="math inline">\(v \in T_pM\)</span> be a tangent vector at <span class="math inline">\(p \in M\)</span>. Then <span class="math display">\[v(f g) = f(p) v(g) +v(f)g(p)\]</span> for all <span class="math inline">\(f,g \in C ^\infty(M)\)</span>.</em></p>
+</div>
+<p>Alternatively, in local coordinates it is just the product rule for partial derivatives. It turns out that the product rule completely characterizes tangent vector:</p>
+<div class="theorem">
+<p><strong>Theorem 48</strong>. <em>A linear map <span class="math inline">\(v : C^\infty(M) \rightarrow \mathbb R\)</span> defines an element of <span class="math inline">\(T_pM\)</span> if and only if it satisfies the Leibniz product rule.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 49</strong>. (Tangent spaces - third version)</p>
+<p>The tangent space <span class="math inline">\(T_pM\)</span> is the space of linear maps <span class="math inline">\(C^\infty(M) \rightarrow \mathbb R\)</span> satisfying the product rule, <span class="math display">\[v(f g) = f(p)v(g) +v(f)g(p)\]</span> for all <span class="math inline">\(f,g \in C^\infty(M)\)</span>.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 50</strong>. (Tangent Vectors)</p>
+<p>The <em>velocity vectors</em> of curves are elements of the tangent space. Let <span class="math inline">\(J \subseteq \mathbb R\)</span> be an open interval, and <span class="math inline">\(\gamma \in C^\infty(J,M)\)</span> a smooth curve. Then for any <span class="math inline">\(t_0 \in J\)</span>, the tangent (or velocity) vector <span class="math inline">\(\dot{\gamma}(t_0) \in T_{\gamma(t_0)}M\)</span> at time <span class="math inline">\(t_0\)</span> is given in terms of its action on functions by <span class="math inline">\((\dot{\gamma}(t_0))(f) = \frac{d}{dt} \Bigr |_{t=t_0} f(\gamma(t))\)</span>. We will also use the notation <span class="math inline">\(\frac{d\gamma}{dt} \Bigr|_(t_0)\)</span> or <span class="math inline">\(\frac{d\gamma}{dt} \Bigr |_{t_0}\)</span> to denote the velocity vector.</p>
+</div>
+<h2 id="tangent-map">Tangent map</h2>
+<h3 id="definition-of-the-tangent-map-basic-properties">Definition of the tangent map, basic properties</h3>
+<p>The following definition generalizes the derivative to smooth maps between manifolds.</p>
+<div class="defn">
+<p><strong>Definition 51</strong>. Let <span class="math inline">\(M,N\)</span> be manifolds and <span class="math inline">\(F \in C^\infty(M,N)\)</span>. For any <span class="math inline">\(p \in M\)</span>, we define the tangent map to be the linear map <span class="math display">\[T_pF : T_pM \rightarrow T_{F(p)}N\]</span> given by <span class="math display">\[(T_{p}F(v))(g) = v(g \circ F)\]</span> for <span class="math inline">\(v \in T_pM\)</span> and <span class="math inline">\(g \in C^\infty(N)\)</span></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 16</strong>. <em>If <span class="math inline">\(v \in T_p M\)</span> is represented by a curve <span class="math inline">\(\gamma : J \rightarrow M\)</span>, then <span class="math inline">\((T_pF)(v)\)</span> is represented by the curve <span class="math inline">\(F\circ \gamma\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 52</strong>. (Pull-backs, push-forwards)</p>
+<p>For smooth maps <span class="math inline">\(F \in C^\infty(M,N)\)</span>, one can consider various ‘pull-backs’ of objects on <span class="math inline">\(N\)</span> to objects on <span class="math inline">\(M\)</span>, and ‘push-forwards’ of objects on <span class="math inline">\(M\)</span> to objects on <span class="math inline">\(N\)</span>. Pull-backs are generally denoted by <span class="math inline">\(F^{*}\)</span>, push-forwards by <span class="math inline">\(F_{*}\)</span>. For example, functions on <span class="math inline">\(N\)</span> pull back, curves push forward on <span class="math inline">\(M\)</span>, and tangent vectors to <span class="math inline">\(M\)</span> also push forward.</p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 17</strong>. <em>(Chain rule) Let <span class="math inline">\(M,N,Q\)</span> be manifolds. Under composition of maps <span class="math inline">\(F \in C^\infty(M,N)\)</span> and <span class="math inline">\(F0 \in C^\infty(N,Q)\)</span>, <span class="math display">\[T_p(F&#39;\circ F) = T_{F(p)} F&#39; \circ T_pF.\]</span></em></p>
+</div>
+<h3 id="coordinate-description-of-the-tangent-map">Coordinate description of the tangent map</h3>
+<div class="proposition">
+<p><strong>Proposition 18</strong>. <em>Let <span class="math inline">\(F \in C^\infty(U,V)\)</span> is a smooth map between open subsets <span class="math inline">\(U \subseteq \mathbb R^m\)</span> and <span class="math inline">\(V \subseteq \mathbb R^n\)</span>. For all <span class="math inline">\(p \in M\)</span>, the tangent map <span class="math inline">\(T_pF\)</span> is just the derivative (i.e., Jacobian matrix) <span class="math inline">\(D_pF\)</span> of <span class="math inline">\(F\)</span> at <span class="math inline">\(p\)</span>.</em></p>
+</div>
+<p>Now that we have recognized <span class="math inline">\(TpF\)</span> as the derivative expressed in a coordinate-free way, we may liberate some of our earlier definitions from coordinates:</p>
+<ul>
+<li><p>The rank of <span class="math inline">\(F\)</span> at <span class="math inline">\(p \in M\)</span>, denoted <span class="math inline">\(\text{rank}p(F)\)</span>, is the rank of the linear map <span class="math inline">\(T_pF\)</span>.</p></li>
+<li><p><span class="math inline">\(F\)</span> has maximal rank at <span class="math inline">\(p\)</span> if <span class="math inline">\(\text{rank}p(F) = min(dim M, dim N)\)</span>.</p></li>
+<li><p><span class="math inline">\(F\)</span> is a submersion if <span class="math inline">\(T_pF\)</span> is surjective for all <span class="math inline">\(p \in M\)</span>,</p></li>
+<li><p><span class="math inline">\(F\)</span> is an immersion if <span class="math inline">\(T_pF\)</span> is injective for all <span class="math inline">\(p \in M\)</span>,</p></li>
+<li><p><span class="math inline">\(F\)</span> is a local diffeomorphism if <span class="math inline">\(T_pF\)</span> is an isomorphism for all <span class="math inline">\(p \in M\)</span>.</p></li>
+<li><p><span class="math inline">\(p \in M\)</span> is a critical point of <span class="math inline">\(F\)</span> is <span class="math inline">\(T_pF\)</span> does not have maximal rank at <span class="math inline">\(p\)</span>.</p></li>
+<li><p><span class="math inline">\(q \in N\)</span> is a regular value of <span class="math inline">\(F\)</span> if <span class="math inline">\(T_pF\)</span> is surjective for all <span class="math inline">\(p \in F^{-1} (q)\)</span> (in particular, if <span class="math inline">\(q \not\in F(M))\)</span></p></li>
+<li><p><span class="math inline">\(q \in N\)</span> is a singular value if it is not a regular value.</p></li>
+</ul>
+<h2 id="tangent-spaces-of-submanifolds">Tangent spaces of submanifolds</h2>
+<p>Suppose <span class="math inline">\(S \subseteq M\)</span> is a submanifold, and <span class="math inline">\(p \in S\)</span>. Then the tangent space <span class="math inline">\(T_pS\)</span> is canonically identified as a subspace of <span class="math inline">\(T_pM\)</span>. Indeed, since the inclusion <span class="math inline">\(i : S \mapsto M\)</span> is an immersion, the tangent map is an injective linear map, <span class="math inline">\(T_pi : T_pS \rightarrow T_pM\)</span>, and we identify <span class="math inline">\(T_pS\)</span> with the subspace given as the image of this map.</p>
+<p>Recall, the kernel of a linear mapping, also known as the null space or nullspace, is the set of vectors in the domain of the mapping which are mapped to the zero vector.</p>
+<div class="proposition">
+<p><strong>Proposition 19</strong>. <em>Let <span class="math inline">\(F \in C ^{\infty}(M,N)\)</span> be a smooth map, having <span class="math inline">\(q \in N\)</span> as a regular value, and let <span class="math inline">\(S^\infty F^{-1} (q)\)</span>. For all <span class="math inline">\(p \in S\)</span>, <span class="math display">\[T_pS = \ker(T_pF),\]</span> as subspaces of <span class="math inline">\(T_pM\)</span>.</em></p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 2</strong>. <em>Suppose <span class="math inline">\(V \subseteq \mathbb R^n\)</span> is open, and <span class="math inline">\(q \in \mathbb R^k\)</span> is a regular value of <span class="math inline">\(F \in C^\infty(M, \mathbb R^k)\)</span>, defining an embedded submanifold <span class="math inline">\(M = F^{-1} (q)\)</span>. For all <span class="math inline">\(p \in M\)</span>, the tangent space <span class="math inline">\(T_pM \subseteq T_p \mathbb R^n = \mathbb R^n\)</span> is given as <span class="math display">\[T_p M = \ker(T_pF) \equiv \ker(D_pF).\]</span></em></p>
+</div>
+<div class="example">
+<p><strong>Example 53</strong>. Various matrix Lie Groups are submanifolds <span class="math inline">\(G \subseteq \text{Mat}_{\mathbb R}(n)\)</span>, consisting of invertible matrices with the properties <span class="math display">\[A,B \in G \implies AB \in G, A \in G \implies A^{-1} \in G.\]</span></p>
+<p>The tangent space to the identity (group unit) for such matrix Lie groups <span class="math inline">\(G\)</span> turns out to be important; it is commonly denoted by lower case Fraktur letters <span class="math inline">\(\mathfrak {g} = T_I G\)</span>.</p>
+<ol type="1">
+<li><p>The <em>matrix Lie group</em> <span class="math display">\[GL(n,R) = \{A \in \text{Mat} \mathbb R(n) | \det(A) \neq 0 \}\]</span> of all invertible matrices is an open subset of <span class="math inline">\(\text{Mat} \mathbb R(n)\)</span>, hence <span class="math display">\[\mathscr{gl}(n,R) = \text{Mat} \mathbb R(n)\]</span> is the entire space of matrices.</p></li>
+<li><p>For the group <span class="math inline">\(O(n)\)</span>, consisting of matrices with <span class="math inline">\(F(A) := A ^T A = I\)</span>, we have computed <span class="math inline">\(T_A F(X) = X^T A + AX ^T\)</span>. For <span class="math inline">\(A = I\)</span>, the kernel of this map is <span class="math display">\[\mathfrak{o}(n) = \{ X \in \text{Mat}_\mathbb R(n) | X = -X \}.\]</span></p></li>
+<li><p>For the <em>special linear group</em> <span class="math inline">\(SL(n,R) = \{A \in \text{MatR}(n)| \det(A) = 1\}\)</span>, given as the level set <span class="math inline">\(F^{-1}(1)\)</span> of the function <span class="math inline">\(\det : \text{Mat}_\mathbb R(n) \rightarrow R\)</span>, we calculate <span class="math display">\[D_A F(X) = \frac{d}{dt} \Bigr |_{t=0} F(A+tX) =  \frac{d}{dt} \Bigr |_{t=0} \det(A+tX) = \frac{d}{dt} \Bigr |_{t=0} \det(I+tA^{-1}X) = tr(A^{-1} X),\]</span> where <span class="math inline">\(tr : \text{Mat}_\mathbb R(n) \rightarrow R\)</span> is the trace (sum of diagonal entries). Hence <span class="math display">\[\mathfrak{sl}(n,R) = \{X \in \text{Mat}_\mathbb R (n)| tr(X) = 0 \}.\]</span></p></li>
+</ol>
+</div>
+<h3 id="example-steiners-surface-revisited">Example: Steiner’s surface revisited</h3>
+<p>[Omitted]</p>
+<h3 id="the-tangent-bundle-1">The tangent bundle</h3>
+<div class="proposition">
+<p><strong>Proposition 20</strong>. <em>For any manifold <span class="math inline">\(M\)</span> of dimension <span class="math inline">\(m\)</span>, the tangent bundle <span class="math display">\[TM = \bigsqcup_{p\in M} T_p M\]</span> (disjoint union of vector spaces) is a manifold of dimension <span class="math inline">\(2m\)</span>. The map <span class="math display">\[\pi : TM \rightarrow M\]</span> taking <span class="math inline">\(v \in TpM\)</span> to the base point <span class="math inline">\(p\)</span>, is a smooth submersion, with fibers in the tangent spaces.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 21</strong>. <em>For any smooth map <span class="math inline">\(F \in C^\infty(M,N)\)</span>, the map <span class="math inline">\(T F : TM \rightarrow TN\)</span> given on <span class="math inline">\(T_pM\)</span> as the tangent maps <span class="math inline">\(T_pF : T_pM \rightarrow T_{F(p)}N\)</span>, is a smooth map</em></p>
+</div>
+<h1 id="vector-fields">Vector Fields</h1>
+<h2 id="vector-fields-as-derivations">Vector fields as derivations</h2>
+<div class="defn">
+<p><strong>Definition 54</strong>. (Vector Fields - first definition).</p>
+<p>A collection of tangent vectors <span class="math inline">\(X_p, p \in M\)</span> defines a vector field <span class="math inline">\(X \in \mathfrak X \in M\)</span> if and only if for all functions <span class="math inline">\(f \in C^\infty(M)\)</span> the function <span class="math inline">\(p \mapsto X_p(f)\)</span> is smooth. The space of all vector fields on <span class="math inline">\(M\)</span> is denoted <span class="math inline">\(\mathfrak X(M)\)</span>. We hence obtain a linear map <span class="math inline">\(X : C^\infty(M) \rightarrow C^\infty(M)\)</span> such that <span class="math display">\[X (f)|_p = X_p(f).\]</span></p>
+</div>
+<p>Since each <span class="math inline">\(X_p\)</span> satisfy the product rule (at <span class="math inline">\(p\)</span>), it follows that <span class="math inline">\(X\)</span> itself satisfies a product rule. We can use this as an alternative definition:</p>
+<div class="defn">
+<p><strong>Definition 55</strong>. (Vector Fields - second definition).</p>
+<p>A vector field on <span class="math inline">\(M\)</span> is a linear map <span class="math inline">\(X : C^\infty (M) \rightarrow C^\infty (M)\)</span> satisfying the product rule, <span class="math display">\[X(f g) = X(f)g + f X(g)\]</span> for <span class="math inline">\(f,g \in C^\infty(M)\)</span>.</p>
+</div>
+<p>We can also express the smoothness of the tangent vectors <span class="math inline">\(X_p\)</span> in terms of coordinate charts <span class="math inline">\((U,\phi)\)</span>. Recall that for any <span class="math inline">\(p \in U\)</span>, and all <span class="math inline">\(f \in C^\infty(M)\)</span>, the tangent vector <span class="math inline">\(X_p\)</span> is expressed as <span class="math display">\[X_p(f) = \sum_{i=1}^m a^i (u) \frac{\partial}{\partial u^i} \Bigr |_{u=\phi(p)}  (f \circ \phi^{-1})\]</span></p>
+<div class="proposition">
+<p><strong>Proposition 22</strong>. <em>The collection of tangent vectors <span class="math inline">\(X_p,\  p \in M\)</span> define a vector field if and only if for all charts <span class="math inline">\((U,\phi)\)</span>, the functions <span class="math inline">\(a^i : \phi(U) \rightarrow \mathbb R\)</span> defined by <span class="math display">\[X_{\phi^{-1}(u)} (f) = \sum_{i=1}^m a^i (u) \frac{\partial}{\partial u^i} (f \circ \phi^{-1}),\]</span> are smooth.</em></p>
+</div>
+<h2 id="vector-fields-as-sections-of-the-tangent-bundle">Vector fields as sections of the tangent bundle</h2>
+<div class="defn">
+<p><strong>Definition 56</strong>. (Vector fields – third definition).</p>
+<p>A vector field on <span class="math inline">\(M\)</span> is a smooth map <span class="math inline">\(X \in C^\infty(M,TM)\)</span> such that <span class="math inline">\(\pi \circ X\)</span> is the identity.</p>
+</div>
+<p>It is common practice to use the same symbol X both as a linear map from smooth functions to smooth functions, i.e. <span class="math inline">\(X : M \rightarrow TM\)</span>, or as a map into the tangent bundle, <span class="math inline">\(X : C^\infty(M) \rightarrow C^\infty(M)\)</span>. The latter case can also be expressed as the ‘Lie derivative’ to avoid confusion: <span class="math inline">\(L_X : C^\infty(M) \rightarrow C^\infty(M)\)</span></p>
+<h2 id="lie-brackets">Lie brackets</h2>
+<div class="theorem">
+<p><strong>Theorem 57</strong>. <em>For any two vector fields <span class="math inline">\(X,Y \in \mathfrak X(M)\)</span> (regarded as derivations), the commutator <span class="math display">\[[X,Y] := X \circ Y - Y \circ X : C^\infty (M) \rightarrow C^\infty (M)\]</span> is again a vector field.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 58</strong>. (Lie Brackets)</p>
+<p>The vector field <span class="math inline">\([X,Y] := X \circ Y - Y \circ X\)</span> is called the <em>Lie bracket</em> of <span class="math inline">\(X,Y \in \mathfrak X(M)\)</span>.</p>
+</div>
+<p>Note: When calculating Lie brackets <span class="math inline">\(X \circ Y - Y \circ X\)</span> of vector fields <span class="math inline">\(X,Y\)</span> in local coordinates, it is not necessary to work out the second order derivatives – we know in advance that these are going to cancel out.</p>
+<p>Let <span class="math inline">\(S \subseteq M\)</span> be a submanifold. A vector field <span class="math inline">\(X \in \mathfrak X(M)\)</span> is called tangent to <span class="math inline">\(S\)</span> if for all <span class="math inline">\(p \in S\)</span>, the tangent vector <span class="math inline">\(X_p\)</span> lies in <span class="math inline">\(T_pS \subseteq T_pM\)</span>. (Thus <span class="math inline">\(X\)</span> restricts to a vector field <span class="math inline">\(X|_S \in \mathfrak X(S)\)</span>.)</p>
+<div class="proposition">
+<p><strong>Proposition 23</strong>. <em>If two vector fields <span class="math inline">\(X,Y \in \mathfrak X(M)\)</span> are tangent to a submanifold <span class="math inline">\(S \subseteq M\)</span>, then their Lie bracket is again tangent to <span class="math inline">\(S\)</span>.</em></p>
+</div>
+<h2 id="related-vector-fields">Related vector fields</h2>
+<div class="defn">
+<p><strong>Definition 59</strong>. (F-related)</p>
+<p>Let <span class="math inline">\(F \in C^\infty(M,N)\)</span> be a smooth map. Vector fields <span class="math inline">\(X \in \mathfrak X(M)\)</span> and <span class="math inline">\(Y \in \mathfrak X(N)\)</span> are called <span class="math inline">\(F\)</span>-related, written as <span class="math inline">\(X \sim_F Y\)</span>, if <span class="math inline">\(T_pF(X_p) = Y_{F(p)}\)</span> for all <span class="math inline">\(p \in M\)</span>.</p>
+</div>
+<div class="example">
+<p><strong>Example 60</strong>. If <span class="math inline">\(F\)</span> is a diffeomorphism, then <span class="math inline">\(X \sim_F Y\)</span> if and only if <span class="math inline">\(Y = F_* X\)</span>. In particular, if <span class="math inline">\(N = M\)</span>, then an equation <span class="math inline">\(X \sim_F X\)</span> means that <span class="math inline">\(X\)</span> is invariant under <span class="math inline">\(F\)</span>.</p>
+</div>
+<p>The <span class="math inline">\(F\)</span>-relation of vector fields also has a simple interpretation in terms of the ‘differential operator’ picture.</p>
+<div class="proposition">
+<p><strong>Proposition 24</strong>. <em>One has <span class="math inline">\(X \sim_F Y\)</span> if and only if for all <span class="math inline">\(g \in C^\infty(N), \ X(g \circ F) = Y(g) \circ F\)</span>.</em></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 61</strong>. <em>Let <span class="math inline">\(F \in C ^\infty(M,N)\)</span> For vector fields <span class="math inline">\(X_1,X_2 \in \mathfrak X(M)\)</span> and <span class="math inline">\(Y_1,Y_2 \in \mathfrak X(M)\)</span>, we have <span class="math display">\[X_1 \sim_F Y_1, \ X_2 \sim_F Y_2 \rightarrow [X1,X2] \sim_F [Y1,Y2].\]</span></em></p>
+</div>
+<h2 id="flows-of-vector-fields">Flows of vector fields</h2>
+<p>Recall, For any curve <span class="math inline">\(\gamma : J \rightarrow M\)</span>, with <span class="math inline">\(J \subseteq \mathbb R\)</span> an open interval, and any <span class="math inline">\(t \in J\)</span>, the velocity vector <span class="math inline">\(\dot{\gamma}(t) \equiv \frac{d\gamma}{dt} \in T_{\gamma(t)}M\)</span> is defined as the tangent vector, given in terms of its action on functions as <span class="math inline">\((\dot{\gamma}(t))(f) = \frac{d}{dt} f(\gamma(t))\)</span>. (The dot signifies a t-derivative.)</p>
+<p>Equivalently, one may think of the velocity vector as the image of <span class="math inline">\(\frac{\partial}{\partial t} |_{t} \in T_tJ \cong \mathbb R\)</span> under the tangent map <span class="math inline">\(T_t \gamma : \dot{\gamma}(t) = (T_t\gamma)( \frac{\partial}{\partial t}|_t)\)</span>.</p>
+<div class="defn">
+<p><strong>Definition 62</strong>. Suppose <span class="math inline">\(X \in \mathfrak X(M)\)</span> is a vector field on a manifold <span class="math inline">\(M\)</span>. A smooth curve <span class="math inline">\(\gamma \in C^\infty(J, M)\)</span>, where <span class="math inline">\(J \subseteq R\)</span> is an open interval, is called a solution curve to <span class="math inline">\(X\)</span> if <span class="math inline">\(\dot{\gamma}(t) = X_{\gamma(t)}\)</span> for all <span class="math inline">\(t \in J\)</span>.</p>
+</div>
+<p>Geometrically, this means that at any given time <span class="math inline">\(t\)</span>, the value of <span class="math inline">\(X\)</span> at <span class="math inline">\(\gamma(t)\)</span> agrees with the velocity vector to <span class="math inline">\(\gamma\)</span> at <span class="math inline">\(t\)</span>, i.e. <span class="math inline">\(\frac{\partial}{\partial t} \sim_\gamma X\)</span>.</p>
+<div class="example">
+<p><strong>Example 63</strong>. Consider first the case that <span class="math inline">\(M = U \subseteq \mathbb R^m\)</span>. Here curves <span class="math inline">\(\gamma (t)\)</span> are of the form, <span class="math display">\[\gamma(t) = x(t) = (x^1 (t),\dots, x^m (t)),\]</span> hence, <span class="math display">\[\dot{\gamma}(t) = \sum_{i=1}^m \frac{dx^i}{dt} \frac{\partial}{\partial x^i} \Bigr |_{x(t)}.\]</span> On the other hand, the vector field has the form <span class="math inline">\(X = \sum_{i=1}^m a^i (x) \frac{\partial}{\partial x i}\)</span>. This becomes the system of first order ordinary differential equations, <span class="math display">\[\frac{dx^i}{dt} = a^i (x(t)), i = 1,\dots, m.\]</span></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 64</strong>. <em>(Existence and uniqueness theorem for ODE’s)</em></p>
+<p><em>Let <span class="math inline">\(U \subseteq \mathbb R\)</span> m be an open subset, and <span class="math inline">\(a \in C^\infty(U, \mathbb R^m)\)</span>. For any given <span class="math inline">\(x_0 \in U\)</span>, there is an open interval <span class="math inline">\(J_{x_0} \subseteq \mathbb R\)</span> around <span class="math inline">\(0\)</span>, and a solution <span class="math inline">\(x : J_{x_0} \rightarrow U\)</span> of the ODE <span class="math display">\[\frac{d x^i}{dt} = a^i (x(t)), i = 1, \dots, m\]</span> with initial condition <span class="math inline">\(x(0) = x_0\)</span>, and which is maximal in the sense that any other solution to this initial value problem is obtained by restriction to some subinterval of <span class="math inline">\(J_{x0}\)</span>.</em></p>
+</div>
+<p>Thus, <span class="math inline">\(J_{x_0}\)</span> is the maximal open interval on which the solution is defined.</p>
+<div class="theorem">
+<p><strong>Theorem 65</strong>. <em>(Dependence on initial conditions for ODE’s)</em></p>
+<p><em>For <span class="math inline">\(a \in C^\infty(U,\mathbb R^m)\)</span> as above, the set <span class="math display">\[\mathscr J = \{(t, x) \in \mathbb R \times U | t \in J_x \}.\]</span> is an open neighborhood of <span class="math inline">\(\{0\} \times U\)</span> in <span class="math inline">\(\mathbb R \times U\)</span>, and the map <span class="math display">\[\Phi : \mathscr  J \rightarrow U, \  (t, x) \mapsto \Phi(t, x)\]</span> is smooth.</em></p>
+</div>
+<p>For a general vector field <span class="math inline">\(X \in \mathfrak X(M)\)</span> on manifolds, Equation <span class="math inline">\(\dot{\gamma}(t) = X_{\gamma(t)}\)</span> becomes <span class="math inline">\(\frac{dx^i}{dt} = a^i (x(t)), i = 1,\dots,m\)</span> after introduction of local coordinates. The existence and uniqueness theorem for ODE’s extends to manifolds, as follows:</p>
+<div class="theorem">
+<p><strong>Theorem 66</strong>. <em>Let <span class="math inline">\(X \in \mathfrak X(M)\)</span> be a vector field on a manifold <span class="math inline">\(M\)</span>. For any given <span class="math inline">\(p \in M\)</span>, there is an open interval <span class="math inline">\(\mathscr J_p \subseteq \mathbb R\)</span> around <span class="math inline">\(0\)</span>, and a solution <span class="math inline">\(\gamma : \mathscr J_p \rightarrow M\)</span> of the initial value problem <span class="math display">\[\dot{\gamma}(t) = X_{\gamma(t)} ,\  \gamma(0) = p,\]</span> which is maximal in the sense that any other solution of the initial value problem is obtained by restriction to a subinterval. The set <span class="math display">\[\mathscr J = \{(t, p) \in\mathbb R \times M | t \in \mathscr J_p\}\]</span> is an open neighborhood of <span class="math inline">\(\{0\} \times M\)</span>, and the map <span class="math display">\[\Phi : \mathscr J \rightarrow M,  \ (t, p) \mapsto  \Phi(t, p)\]</span> such that <span class="math inline">\(\gamma(t) = \Phi(t, p)\)</span> solves the initial value problem mentioned above and is smooth.</em></p>
+</div>
+<p>Note that the uniqueness part uses the Hausdorff property in the definition of manifolds. Indeed, the uniqueness part may fail for non-Hausdorff manifolds.</p>
+<div class="defn">
+<p><strong>Definition 67</strong>. (Flow)</p>
+<p>Given a vector field <span class="math inline">\(X\)</span>, the map <span class="math inline">\(\Phi : J \rightarrow M\)</span> is called the flow of <span class="math inline">\(X\)</span>. For any given <span class="math inline">\(p\)</span>, the curve <span class="math inline">\(\gamma(t) = \Phi(t, p)\)</span> is a solution curve. One can also fix <span class="math inline">\(t\)</span> and consider the time-<span class="math inline">\(t\)</span> flow <span class="math inline">\(\Phi_t(p) \equiv \Phi(t, p).\)</span></p>
+</div>
+<p>Intuitively, <span class="math inline">\(\Phi_t(p)\)</span> is obtained from the initial point <span class="math inline">\(p \in M\)</span> by flowing for time <span class="math inline">\(t\)</span> along the vector field <span class="math inline">\(X\)</span>. One expects that first flowing for time <span class="math inline">\(t\)</span>, and then flowing for time <span class="math inline">\(s\)</span>, should be the same as flowing for time <span class="math inline">\(t +s\)</span>. Indeed one has the following flow property</p>
+<div class="theorem">
+<p><strong>Theorem 68</strong>. <em>(Flow property).</em></p>
+<p><em>Let <span class="math inline">\(X \in \mathscr X(M)\)</span>, with flow <span class="math inline">\(\Phi : \mathscr J \rightarrow M\)</span>. Let <span class="math inline">\((t_2, p) \in \mathscr J\)</span>, and <span class="math inline">\(t_1 \in \mathbb R\)</span>. Then <span class="math display">\[(t_1,\Phi_{t_2} (p)) \in \mathscr J \iff (t_1 +t_2, p) \in \mathscr J,\]</span> and one has <span class="math display">\[\phi_{t_1} (\Phi_{t_2} (p)) = \Phi_{t_1+t_2} (p).\]</span></em></p>
+</div>
+<p>We see in particular that for any <span class="math inline">\(t\)</span>, the map <span class="math inline">\(\Phi_t : U_t \rightarrow M\)</span> is a diffeomorphism onto its image <span class="math inline">\(\Phi_t(U_t) = U_{-t}\)</span>, with inverse <span class="math inline">\(\Phi_{-t}\)</span>. Let <span class="math inline">\(X\)</span> be a vector field, and <span class="math inline">\(\mathscr J = \mathscr J^X\)</span> be the domain of definition for the flow <span class="math inline">\(\Phi = \Phi^X\)</span> .</p>
+<div class="defn">
+<p><strong>Definition 69</strong>. A vector field <span class="math inline">\(X \in \mathscr X (M)\)</span> is called complete if <span class="math inline">\(\mathscr J^X = \mathbb R \times M\)</span>. Thus <span class="math inline">\(X\)</span> is complete if and only if all solution curves exist for all time.</p>
+</div>
+<p>A vector field may fail to be complete if a solution curve escapes to infinity in finite time. This suggests that a vector fields <span class="math inline">\(X\)</span> that vanishes outside a compact set must be complete, because the solution curves are ‘trapped’ and cannot escape to infinity:</p>
+<div class="proposition">
+<p><strong>Proposition 25</strong>. <em>If <span class="math inline">\(X \in \mathfrak X(M)\)</span> is a vector field that has compact support, in the sense that <span class="math inline">\(X |_{M-A} = 0\)</span> for some compact subset <span class="math inline">\(A\)</span>, then <span class="math inline">\(X\)</span> is complete. In particular, every vector field on a compact manifold is complete.</em></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 70</strong>. <em>If <span class="math inline">\(X\)</span> is a complete vector field, the flow <span class="math inline">\(\Phi_t\)</span> defines a <span class="math inline">\(1\)</span>-parameter group of diffeomorphisms. That is, each <span class="math inline">\(\Phi_t\)</span> is a diffeomorphism and <span class="math display">\[\Phi_0 = id_M, \  \Phi_{t_1} \circ \Phi_{t_2} = \Phi_{t_1+t_2}.\]</span></em></p>
+<p><em>Conversely, if <span class="math inline">\(\Phi_t\)</span> is a <span class="math inline">\(1\)</span>-parameter group of diffeomorphisms such that the map <span class="math inline">\((t, p) \mapsto \Phi_t(p)\)</span> is smooth, the equation <span class="math display">\[X_p(f) = \frac{d}{dt} \Bigr  |_{t=0} f(\Phi_{t}(p))\]</span> defines a complete vector field <span class="math inline">\(X\)</span> on <span class="math inline">\(M\)</span>, with flow <span class="math inline">\(\Phi_t\)</span>.</em></p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 26</strong>. <em>Let <span class="math inline">\(F \in C^\infty(M,N)\)</span>, and let <span class="math inline">\(X \in \mathscr X(M), Y \in \mathscr X(N)\)</span> be complete vector fields, with flows <span class="math inline">\(\Phi^X_t , \Phi^Y_t\)</span>. <span class="math display">\[X \sim_F Y \iff F \circ \Phi^X_t = \Phi^Y_t \circ F\]</span> for all <span class="math inline">\(t\)</span>.</em></p>
+</div>
+<p>In short, vector fields are <span class="math inline">\(F\)</span>-related if and only if their flows are <span class="math inline">\(F\)</span>-related. <span class="math inline">\(\Phi^*_t : C^\infty (M) \rightarrow C^\infty (M), \Phi^* t : \mathfrak X(M) \rightarrow \mathfrak X(M)\)</span>.</p>
+<h2 id="geometric-interpretation-of-the-lie-bracket">Geometric interpretation of the Lie bracket</h2>
+<p>For any smooth map <span class="math inline">\(F \in C^\infty(M,N)\)</span> we defined the pull-back <span class="math display">\[F^* : C ^\infty (N) \rightarrow C ^\infty (M), \ g \mapsto g \circ F.\]</span> If <span class="math inline">\(F\)</span> is a diffeomorphism, then we can also pull back vector fields: <span class="math inline">\(F^* : X(N) \rightarrow X(M), \ Y \mapsto F^*Y\)</span>, by the condition <span class="math inline">\((F^*Y)(F^* g) = F^* (Y(g))\)</span> for all functions <span class="math inline">\(g\)</span>. That is, <span class="math inline">\(F^* Y \sim_F Y\)</span>, or in more detail <span class="math inline">\((F^*Y)_p = (T_pF)^{ -1}Y_{F(p)}\)</span>. By Theorem 5.2, we have <span class="math inline">\(F^*[X,Y] = [F^*X,F^*Y]\)</span>.</p>
+<p>Any complete vector field <span class="math inline">\(X \in \mathfrak X(M)\)</span> with flow <span class="math inline">\(\Phi_t\)</span> gives rise to a families of pull-back map. <span class="math display">\[\Phi^*_t : C ^\infty (M) \rightarrow C^\infty (M), \  \Phi^*_t : X(M) \rightarrow X(M)\]</span></p>
+<div class="defn">
+<p><strong>Definition 71</strong>. The Lie derivative of a function f with respect to <span class="math inline">\(X\)</span> is the function <span class="math display">\[L_X (f) = \frac{d}{dt} \Bigr |_{t=0} \Phi^*_t f ;\]</span></p>
+<p>thus <span class="math inline">\(L_X (f) = X(f)\)</span>. The Lie derivative measures how <span class="math inline">\(f\)</span> changes in the direction of <span class="math inline">\(X\)</span>. Similarly, for a vector field <span class="math inline">\(Y\)</span> one defines the Lie derivative <span class="math inline">\(L_X (Y)\)</span> by <span class="math display">\[L_X (Y) = \frac{d} {dt}\Bigr |_{t=0} \Phi^*_t Y \in X(M).\]</span></p>
+</div>
+<div class="defn">
+<p><strong>Definition 72</strong>. For any <span class="math inline">\(X,Y \in \mathfrak X(M)\)</span>, the Lie derivative <span class="math inline">\(L_X Y\)</span> is just the Lie bracket: <span class="math inline">\(L_X (Y) = [X,Y]\)</span>.</p>
+</div>
+<p>Thus, the Lie bracket <span class="math inline">\([X,Y]\)</span> measures ‘infinitesimally’ how the vector field <span class="math inline">\(Y\)</span> changes along the flow of <span class="math inline">\(X\)</span>. Note that in particular, <span class="math inline">\(L_XY\)</span> is skew-symmetric in <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> – this is not obvious from the definition. One can also interpret the Lie bracket as measuring how the flows of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> fail to commute.</p>
+<div class="theorem">
+<p><strong>Theorem 73</strong>. <em>Let <span class="math inline">\(X,Y\)</span> be complete vector fields, with flows <span class="math inline">\(\Phi_t ,\Psi_s\)</span>. Then, <span class="math display">\[\begin{aligned}
+= 0 &amp;\iff \Phi^*_t Y = Y \text{for all t}\\
+    &amp;\iff \Psi^*_s X = X \text{for all s} \\
+    &amp;\iff  \Phi_t \circ \Psi_s  = \Psi_s \circ \Phi_t \text{for all s,t.}\end{aligned}\]</span></em></p>
+</div>
+<h2 id="frobenius-theorem">Frobenius theorem</h2>
+<p>We saw that for any vector field <span class="math inline">\(X \in \mathfrak X(M)\)</span>, there are solution curves through any given point <span class="math inline">\(p \in M\)</span>. The image of this curve is an (immersed) submanifold to which <span class="math inline">\(X\)</span> is everywhere tangent. One might similarly ‘integral surfaces’ for pairs of vector fields, and ‘integral submanifolds’ for collections of vector fields</p>
+<div class="defn">
+<p><strong>Definition 74</strong>. (Involutive)</p>
+<p>Consider a sub-bundle <span class="math inline">\(E \subseteq TM\)</span> of rank <span class="math inline">\(r\)</span>. Such a subbundle is called <em>involutive</em> if the Lie bracket of any two sections of E is again a section of <span class="math inline">\(E\)</span>. For vector fields <span class="math inline">\(X_i\)</span> as above, the pointwise spans <span class="math display">\[E_p = \text{span} \{X_1|_p,\dots,X_r |_p\}\]</span> define a subbundle with this property. Recall, an involution is a function that is its own inverse.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 75</strong>. (Integral Submanifold)</p>
+<p>Suppose <span class="math inline">\(X_1,\dots,X_r\)</span> are vector fields on the manifold <span class="math inline">\(M\)</span>, such that the tangent vectors <span class="math inline">\(X_1|_p,\dots,X_r |_p \in T_pM\)</span> are linearly independent for all <span class="math inline">\(p \in M\)</span>. A <span class="math inline">\(r\)</span>-dimensional submanifold <span class="math inline">\(S \subseteq M\)</span> is called an <em>integral submanifold</em> if the vector fields <span class="math inline">\(X_1,\dots,X_r\)</span> are all tangent to <span class="math inline">\(S\)</span>.</p>
+<p>Suppose that there exists an integral submanifold <span class="math inline">\(S\)</span> through any given point <span class="math inline">\(p \in M\)</span>. Then each Lie bracket <span class="math inline">\([X_i ,X_j ] |_p \in T_pS\)</span>, and hence is a linear combination of <span class="math inline">\(X_1|_p,\dots,X_r |_p.\)</span> It follows that <span class="math display">\[[X_i ,X_j ] = \sum_{k=1}^r c^k_{ij}X_k\]</span> for certain (smooth) functions <span class="math inline">\(c^k_{i j}\)</span>.</p>
+<p>Indeed, given <span class="math inline">\(X = \sum_{i=1}^m a^i X_i\)</span> and <span class="math inline">\(Y = \sum^m_{i=1} b^i X_i\)</span> with functions <span class="math inline">\(a^i ,b^i\)</span>, the condition above guarantees that <span class="math inline">\(E\)</span> is involutive. Given any rank <span class="math inline">\(r\)</span> subbundle <span class="math inline">\(E \subseteq TM\)</span> (not necessarily involutive), a submanifold <span class="math inline">\(S \subseteq M\)</span> is called an integral submanifold if <span class="math inline">\(E_p = T_pS\)</span> for all <span class="math inline">\(p \in S\)</span>.</p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 76</strong>. <em>(Frobenius theorem)</em></p>
+<p><em>Let <span class="math inline">\(E \subseteq TM\)</span> be a subbundle of rank <span class="math inline">\(r\)</span>. The following are equivalent:</em></p>
+<ol type="1">
+<li><p><em>There exists an integral submanifold through every <span class="math inline">\(p \in M\)</span>.</em></p></li>
+<li><p><em><span class="math inline">\(E\)</span> is involutive.</em></p></li>
+</ol>
+<p><em>In fact, if <span class="math inline">\(E\)</span> is involutive, then it is possible to find a coordinate chart <span class="math inline">\((U,\phi)\)</span> near any given <span class="math inline">\(p\)</span>, in such a way that the subbundle <span class="math inline">\((T\phi)(E|_U ) \subseteq T\phi(U)\)</span> is spanned by the first <span class="math inline">\(r \leq m\)</span> coordinate vector fields <span class="math inline">\(\frac{\partial}{\partial u^1},\dots, \frac{\partial}{\partial u^r}\)</span>.</em></p>
+</div>
+<p>Thus, for any involutive subbundle <span class="math inline">\(E \subseteq TM\)</span>, then any <span class="math inline">\(p \in M\)</span> has an open neighborhood <span class="math inline">\(U\)</span> with a nice decomposition into <span class="math inline">\(r\)</span>-dimensional submanifolds. One calls such a decomposition (or sometimes the involutive subbundle E itself) a (local) <em>foliation</em>. A foliation gives a decomposition into submanifolds on a neighborhood of any given point. Globally, the integral submanifolds are often only immersed submanifolds, given by immersions <span class="math inline">\(i : S \rightarrow M\)</span> with <span class="math inline">\((T_pi)(T_pS) = E_p\)</span> for all <span class="math inline">\(p \in S\)</span>.</p>
+<div class="example">
+<p><strong>Example 77</strong>. Let <span class="math inline">\(\Phi : M \rightarrow N\)</span> be a submersion. Then the subbundle <span class="math inline">\(E \subseteq TM\)</span> with fibers <span class="math inline">\(E_p = \text{ker}(T_p \Phi) \subseteq T_pM\)</span> is an involutive subbundle of rank <span class="math inline">\(\dim M - \dim N\)</span>. Every fiber <span class="math inline">\(\Phi^{-1}(q)\)</span> is an integral submanifold.</p>
+</div>
+<h1 id="differential-forms">Differential Forms</h1>
+<h2 id="review-differential-forms-on-mathbb-rm">Review: Differential forms on <span class="math inline">\(\mathbb R^m\)</span></h2>
+<p>Differential forms are an approach to solving multivariable calculus problems that is independent of coordinates. They provide a unified approach to define integrands over curves, surfaces, solids, and higher-dimensional manifolds.</p>
+<div class="defn">
+<p><strong>Definition 78</strong>. (Wedge Product in <span class="math inline">\(\mathbb R^m\)</span>)</p>
+<p>The <em>exterior product</em> or <em>wedge product</em> is the product operator in an exterior algebra. If <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are differential <span class="math inline">\(k\)</span>-forms of degrees <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, respectively, then <span class="math display">\[\alpha \wedge \beta=(-1)^{pq} \beta \wedge \alpha.\]</span> It is not (in general) commutative, but it is associative, and bilinear.</p>
+</div>
+<div class="example">
+<p><strong>Example 79</strong>. Let <span class="math inline">\(\alpha, \beta \in \Omega^1(M)\)</span>. Then we define a wedge product <span class="math inline">\(\alpha \wedge \beta \in \Omega^2 (M)\)</span>, as follows: <span class="math display">\[(\alpha \wedge \beta)(X,Y) = \alpha (X)\beta(Y)-\alpha(Y)\beta(X).\]</span></p>
+</div>
+<div class="defn">
+<p><strong>Definition 80</strong>. (Differential <span class="math inline">\(k\)</span>-form)</p>
+<p>A differential <span class="math inline">\(k\)</span>-form on an open subset <span class="math inline">\(U \subseteq \mathbb R^m\)</span> is an expression of the form <span class="math display">\[\omega = \sum_{i_1 \dots i_k} \omega i_1\dots i_k dx^{i_1} \wedge \dots \wedge  dx^{i_k}\]</span> where <span class="math inline">\(\omega_{i_1\dots i_k} \in C^\infty(U)\)</span> are functions, and the indices are numbers <span class="math inline">\(1 \leq i_1 &lt; \dots &lt; i_k \leq m\)</span>. The symbol <span class="math inline">\(\wedge\)</span> denotes the exterior product of two differential forms.</p>
+</div>
+<p>Let <span class="math inline">\(\Omega^k (U)\)</span> be the vector space consisting of such expressions, with pointwise addition. It is convenient to introduce a short hand notation <span class="math inline">\(I = {i_1,\dots,i_k}\)</span> for the index set, and write <span class="math inline">\(\omega = \sum_I \omega_I dx^I\)</span> with <span class="math inline">\(\omega_I = \omega_{i_1 \dots i_k}\)</span>, and <span class="math inline">\(dx^I = dx^{i1} \wedge \dots \wedge dx^{ik}\)</span>.</p>
+<p>Since a <span class="math inline">\(k\)</span>-form is determined by these functions <span class="math inline">\(\omega_I\)</span>, and since there are <span class="math inline">\(\frac{m!}{k!(m-k)!}\)</span> ways of picking <span class="math inline">\(k\)</span>-element subsets from <span class="math inline">\(\{1,\dots,m\}\)</span>, the space <span class="math inline">\(\Omega^k (U)\)</span> can be identified with vector-valued smooth functions, <span class="math inline">\(\Omega^k (U) = C^\infty (U, \mathbb R ^{\frac{m!}{k!(m-k)!}})\)</span>.</p>
+<p>An associative product operation <span class="math inline">\(\Omega^k (U) \times \Omega^l (U) \rightarrow \Omega^{k+l} (U)\)</span> by the ‘rule of computation’ <span class="math inline">\(dx^i \wedge d x^j = -dx^j \wedge d x^i\)</span> for all <span class="math inline">\(i, j\)</span>; in particular <span class="math inline">\(dx^i \wedge dx^i = 0\)</span>.</p>
+<div class="defn">
+<p><strong>Definition 81</strong>. (Exterior Differential)</p>
+<p>Using the product structure we may define the <em>exterior differential</em> <span class="math display">\[d : \Omega^k (U) \rightarrow \Omega^{k+1}(U),  \ d \bigg ( \sum_I \omega_I dx^I \bigg ) = \sum_{i=1}^m \sum_I \frac{\partial \omega_I}{\partial x^i} dx^i \wedge dx^I.\]</span></p>
+</div>
+<p>The key property of the exterior differential is the following fact:</p>
+<div class="proposition">
+<p><strong>Proposition 27</strong>. <em>The exterior differential satisfies <span class="math display">\[d \circ d = 0,\]</span> i.e. <span class="math inline">\(dd\omega = 0\)</span> for all <span class="math inline">\(\omega\)</span>.</em></p>
+</div>
+<div class="example">
+<p><strong>Example 82</strong>. Consider forms on <span class="math inline">\(\mathbb R^3\)</span></p>
+<ul>
+<li><p>The differential of a function <span class="math inline">\(f \in \Omega^0 (\mathbb R^3 )\)</span> is a 1-form <span class="math display">\[df = \frac{\partial  f}{\partial x} dx + \frac{\partial f}{\partial y}  dy+ \frac{\partial f}{\partial z} dz,\]</span> with components being the gradient, <span class="math inline">\(\text{grad} f = \nabla f\)</span>.</p></li>
+<li><p>A 1-form <span class="math inline">\(\omega \in \Omega^1 (\mathbb R^3 )\)</span> is an expression <span class="math inline">\(\omega = f dx+gdy+hdz\)</span> with functions <span class="math inline">\(f,g,h\)</span>. The differential is <span class="math display">\[d\omega = \bigg( \frac{\partial g}{\partial x} - \frac{\partial f}{\partial y} \bigg )
+        dx \wedge dy +
+        \bigg ( \frac{\partial h}{\partial y} - \frac{\partial g}{\partial  z} \bigg)  dy\wedge dz + \bigg(\frac{\partial  f}{\partial  z} - \frac{\partial h}{\partial x} \bigg )  dz\wedge dx.\]</span> Thinking of the coefficients of <span class="math inline">\(\omega\)</span> as the components of a function <span class="math inline">\(F = (f,g,h) : U \rightarrow \mathbb R^3\)</span>, we see that the coefficients of <span class="math inline">\(d \omega\)</span> give the curl of <span class="math inline">\(F\)</span>, <span class="math inline">\(curl(F) = \nabla \times F\)</span>.</p></li>
+<li><p>Finally, any 2-form <span class="math inline">\(\omega \in \Omega^2 (\mathbb R^3 )\)</span> may be written <span class="math inline">\(\omega = a dy \wedge dz + b dz \wedge dx + c dx \wedge dy\)</span>, with <span class="math inline">\(A = (a,b, c) : U \rightarrow \mathbb R^3\)</span>. We obtain <span class="math display">\[d\omega = (\frac{\partial a}{\partial x} + \frac{\partial b}{\partial y} + \frac{\partial c}{\partial z}) dx \wedge dy \wedge dz;\]</span> the coefficient is the divergence <span class="math inline">\(div(A) = \nabla A\)</span> The usual properties <span class="math inline">\(curl(grad(f)) = 0, div(curl(F)) = 0\)</span> are both special cases of <span class="math inline">\(d \circ d = 0\)</span>.</p></li>
+</ul>
+</div>
+<div class="defn">
+<p><strong>Definition 83</strong>. (Support)</p>
+<p>The support <span class="math inline">\(supp(\omega) \subseteq U\)</span> of a differential form is the smallest closed subset <span class="math inline">\(Z\)</span> so that <span class="math inline">\(\omega\)</span> restricted to any point in the interior of <span class="math inline">\(Z\)</span> is not identically 0. Suppose <span class="math inline">\(\omega \in \Omega^m(U)\)</span> is a compactly supported form of the top degree <span class="math inline">\(k = m\)</span>, i.e. it is the set <span class="math display">\[supp(\omega )= \{p\in U : \omega_p \neq 0 \}.\]</span> Such a differential form is an expression <span class="math inline">\(\omega = f dx^1 \wedge \dots \wedge dx^m\)</span> where <span class="math inline">\(f \in C ^\infty(U)\)</span> is a compactly supported function</p>
+</div>
+<div class="defn">
+<p><strong>Definition 84</strong>. (Riemann Integral)</p>
+<p>One defines the integral of <span class="math inline">\(\omega\)</span> to be the Riemann integral: <span class="math display">\[\int_U \omega = \int_{\mathbb R^m} f(x^1 ,\dots, x^m )dx^1 \dots dx^m.\]</span></p>
+</div>
+<p>Note that we can regard <span class="math inline">\(\omega\)</span> as a form on all of <span class="math inline">\(\mathbb R^m\)</span>, due to the compact support condition.</p>
+<p>Our aim is now to define differential forms on manifolds, beginning with 1-forms. Even though 1-forms on <span class="math inline">\(U \subseteq \mathbb R^m\)</span> are identified with functions <span class="math inline">\(U \rightarrow \mathbb R^m\)</span>, they should not be regarded as vector fields, since their transformation properties under coordinate changes are different. In fact, while vector fields are sections of the tangent bundle, the 1-forms are sections of its dual space, the cotangent bundle. We will thus begin with a review of dual spaces in general.</p>
+<h2 id="dual-spaces">Dual spaces</h2>
+<div class="defn">
+<p><strong>Definition 85</strong>. (Dual space)</p>
+<p>For any real vector space <span class="math inline">\(E\)</span>, we denote by <span class="math inline">\(E^* = L(E,\mathbb R)\)</span> (the linear subspace) as its <em>dual space</em>, consisting of all linear maps <span class="math inline">\(\alpha : E \rightarrow \mathbb R\)</span>.</p>
+</div>
+<p>If <span class="math inline">\(E\)</span> is finite-dimensional, then the dual space is also finite-dimensional, and <span class="math inline">\(\dim E^* = \dim E\)</span>. It is common to write the value of <span class="math inline">\(\alpha \in E^*\)</span> on <span class="math inline">\(v \in E\)</span> as a pairing, using the bracket notation <span class="math inline">\(\langle \alpha, v \rangle := \alpha(v);\)</span>. (In physics, it is common to use Dirac bra-ket notation <span class="math inline">\(\langle \alpha | v \rangle := \alpha(v)\)</span>.)</p>
+<div class="defn">
+<p><strong>Definition 86</strong>. (Dual Basis)</p>
+<p>Let <span class="math inline">\(e_1,\dots, e_r\)</span> be a basis of <span class="math inline">\(E\)</span>. Any element of <span class="math inline">\(E^*\)</span> is determined by its values on these basis vectors. For <span class="math inline">\(i = 1,\dots,r\)</span>, let <span class="math inline">\(e^i \in E^*\)</span> be the linear functional such that <span class="math display">\[\langle e^i , e_j \rangle = \partial^i_j = 
+    \begin{cases}
+        0, &amp; \text {if } i \neq j \\ 
+        1, &amp; \text{if } i = j
+    \end{cases}\]</span> The elements <span class="math inline">\(e^1, \dots, e^r\)</span> are a basis of <span class="math inline">\(E^*\)</span>; this is called the <em>dual basis</em>.</p>
+</div>
+<p>The element <span class="math inline">\(\alpha \in E^*\)</span> is described in terms of the dual bases as <span class="math inline">\(\alpha = \sum_{j=1}^r \alpha_j e^j, \  \alpha_j = \langle \alpha, e_j \rangle\)</span>. Similarly, for vectors <span class="math inline">\(v \in E\)</span> we have <span class="math inline">\(v = \sum_{i=1}^r v^i e_i, \ v^i = \langle e^i , v \rangle\)</span>.</p>
+<div class="defn">
+<p><strong>Definition 87</strong>. (Dual Map)</p>
+<p>Given a linear map <span class="math inline">\(R : E \rightarrow F\)</span> between vector spaces, one defines the dual map <span class="math inline">\(R^* : F^* \rightarrow E^*\)</span> (note the direction), by setting <span class="math inline">\(\langle R^* \beta, v \rangle = \langle \beta ,R(v)\rangle\)</span> for <span class="math inline">\(\beta \in F^*\)</span> and <span class="math inline">\(v \in E\)</span>.</p>
+</div>
+<p>This satisfies <span class="math inline">\((R^*)^* = R\)</span>, and under the composition of linear maps, <span class="math inline">\((R_1 \circ R_2)^* = R^*_2 \circ R^*_1\)</span>. In terms of basis <span class="math inline">\(e_1,\dots, e_r\)</span> of <span class="math inline">\(E\)</span> and <span class="math inline">\(f_1,\dots, f_s\)</span> of <span class="math inline">\(F\)</span>, and the corresponding dual bases (with upper indices), a linear map <span class="math inline">\(R : E \rightarrow F\)</span> is given by the matrix with entries <span class="math inline">\(R_i^j = \langle f^j , R(e_i)\rangle\)</span>, while <span class="math inline">\(R^*\)</span> is described by the transpose of this matrix (the roles of <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are reversed). Thus, <span class="math inline">\((R^*)^j_i = R_i^j\)</span>.</p>
+<h2 id="cotangent-spaces">Cotangent spaces</h2>
+<div class="defn">
+<p><strong>Definition 88</strong>. (Cotangent spaces, vectors, maps)</p>
+<p>The dual of the tangent space <span class="math inline">\(T_pM\)</span> of a manifold <span class="math inline">\(M\)</span> is called the <em>cotangent space</em> at <span class="math inline">\(p\)</span>, denoted <span class="math inline">\(T^*_p M = (T_pM)^*\)</span>.</p>
+<p>Elements of <span class="math inline">\(T^*_p M\)</span> are called <em>cotangent vectors</em>, or simply covectors.</p>
+<p>Given a smooth map <span class="math inline">\(F \in C^\infty(M, N)\)</span>, and any <span class="math inline">\(p \in M\)</span> we have the <em>cotangent map</em> <span class="math inline">\(T^*_p F = (T_pF)^* : T^*_{F(p)}N \rightarrow T^*_p M\)</span> defined as the dual to the tangent map.</p>
+</div>
+<p>Thus, a co(tangent) vector at <span class="math inline">\(p\)</span> is a linear functional on the tangent space, assigning to each tangent vector at <span class="math inline">\(p\)</span> a number. The very definition of the tangent space suggests one such functional: Every function <span class="math inline">\(f \in C^\infty(M)\)</span> defines a linear map, <span class="math inline">\(T_pM \rightarrow \mathbb R, v \mapsto v(f)\)</span>. This linear functional is denoted <span class="math inline">\((d f)_p \in T^*_p M\)</span>.</p>
+<div class="defn">
+<p><strong>Definition 89</strong>. (Differential)</p>
+<p>Let <span class="math inline">\(f \in C^\infty(M)\)</span> and <span class="math inline">\(p \in M\)</span>. The covector <span class="math display">\[(d f)p \in T^*_p M,  \langle (d f)_p, v\rangle = v(f).\]</span> is called the differential of <span class="math inline">\(f\)</span> at <span class="math inline">\(p\)</span>.</p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 90</strong>. <em>For <span class="math inline">\(F \in C^\infty(M,N)\)</span> and <span class="math inline">\(g \in C^\infty(N),\)</span> <span class="math display">\[d(F^* g)_p = T^*_p F((dg)_{F(p)}).\]</span></em></p>
+<p><em>Let <span class="math inline">\(U \subseteq \mathbb R^m\)</span> and <span class="math inline">\(V \subseteq \mathbb R^n\)</span> be open, with coordinates <span class="math inline">\(x^1 , \dots , x^m\)</span> and <span class="math inline">\(y^1,\dots, y^n\)</span>. For <span class="math inline">\(F \in C^\infty(U,V)\)</span>, the tangent map is described by the Jacobian matrix.</em></p>
+<p><em>Thought of as matrices, the coefficients of the cotangent map are the transpose of the coefficients of the tangent map.</em></p>
+</div>
+<h2 id="forms">1-forms</h2>
+<p>Similar to the definition of vector fields, one can define co-vector fields, more commonly known as 1-forms: Collections of covectors <span class="math inline">\(\alpha_p \in T^*_p M\)</span> depending smoothly on the base point.</p>
+<div class="defn">
+<p><strong>Definition 91</strong>. (1-form)</p>
+<p>A 1-form on <span class="math inline">\(M\)</span> is a linear map <span class="math display">\[\alpha : \mathfrak X(M) \rightarrow C^\infty (M), \  X \mapsto \alpha(X) = \langle \alpha, X \rangle,\]</span> which is <span class="math inline">\(C^\infty(M)\)</span>-linear in the sense that <span class="math inline">\(\alpha(f X) = f\alpha(X)\)</span> for all <span class="math inline">\(f \in C^\infty(M), X \in \mathfrak X(M)\)</span>. The space of 1-forms is denoted <span class="math inline">\(\Omega^1 (M)\)</span>.</p>
+</div>
+<p>Let us verify that a 1-form can be regarded as a collection of covectors:</p>
+<div class="lemma">
+<p><strong>Lemma 92</strong>. <em>Let <span class="math inline">\(\alpha \in \Omega^1 (M)\)</span> be a 1-form, and <span class="math inline">\(p \in M\)</span>. Then there is a unique covector in the cotangent space <span class="math inline">\(\alpha_p \in T^*_p M\)</span> such that <span class="math inline">\(\alpha(X)_p = \alpha_p(X_p)\)</span> for all <span class="math inline">\(X \in \mathfrak X(M)\)</span>. Note, we indicate the value of the function <span class="math inline">\(\alpha(X)\)</span> at <span class="math inline">\(p\)</span> by a subscript, just like we did for vector fields.</em></p>
+</div>
+<p>The first example of a 1-form is described in the following definition.</p>
+<div class="defn">
+<p><strong>Definition 93</strong>. (Exterior differential)</p>
+<p>The exterior differential of a function <span class="math inline">\(f \in C^\infty(M)\)</span> is the 1-form <span class="math inline">\(d f \in \Omega^1 (M)\)</span>, defined in terms of its pairings with vector fields <span class="math inline">\(X \in \mathfrak X(M)\)</span> as <span class="math inline">\(\langle d f, X\rangle = X(f)\)</span>.</p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 94</strong>. <em>Let <span class="math inline">\(\alpha : p \mapsto \alpha p \in T^*_p M\)</span> be a collection of covectors. Then <span class="math inline">\(\alpha\)</span> defines a 1-form, with <span class="math display">\[\alpha(X)_p = \alpha_p(X_p)\]</span> for <span class="math inline">\(p \in M\)</span>, if and only if for all charts <span class="math inline">\((U,\phi)\)</span>, the coefficient functions for <span class="math inline">\(\alpha\)</span> in the chart are smooth</em></p>
+</div>
+<h2 id="pull-backs-of-function-and-1-forms">Pull-backs of function and 1-forms</h2>
+<p>Recall that for any manifold <span class="math inline">\(M\)</span>, the vector space <span class="math inline">\(C^\infty(M)\)</span> of smooth functions is an algebra, with product the pointwise multiplication. Any smooth map <span class="math inline">\(F : M \rightarrow M&#39;\)</span> between manifolds defined an algebra homomorphism, called the pull-back <span class="math display">\[F^* : C^\infty (M&#39;) \rightarrow C^\infty (M), \ \ f \mapsto F ^* (f) := f \circ F.\]</span> The fact that this preserves products is the following simple calculation: <span class="math display">\[(F^* (f)F^* (g))(p) = f(F(p))g(F(p)) = (f g)(F(p)) = F^* (f g)(p).\]</span> Given another smooth map <span class="math inline">\(F&#39; : M&#39; \rightarrow M&#39;&#39;\)</span> we have <span class="math inline">\((F&#39;\circ F)^* \circ F^* \circ (F&#39; )^*\)</span>.</p>
+<p>Let <span class="math inline">\(F \in C^\infty(M,N)\)</span> be a smooth map. Recall that for vector fields, there is no general ‘push-forward’ or ‘pull-back’ operation, unless <span class="math inline">\(F\)</span> is a diffeomorphism. For 1-forms the situation is better: for any <span class="math inline">\(p \in M\)</span> one has the dual to the tangent map <span class="math display">\[T^*_p F = (T_pF)^* : T^*_{F(p)}N \rightarrow T^*_p M.\]</span> For a 1-form <span class="math inline">\(\beta \in \Omega^1 (N)\)</span>, we can therefore define <span class="math inline">\((F^* \beta)_p := (T^*_p F)(\beta_{F(p)})\)</span></p>
+<div class="lemma">
+<p><strong>Lemma 95</strong>. <em>The collection of co-vectors <span class="math inline">\((F^*\beta)_p \in T^*_p M\)</span> depends smoothly on <span class="math inline">\(p\)</span>, defining a 1-form <span class="math inline">\(F^*\beta \in \Omega^1 (M)\)</span>.</em></p>
+</div>
+<p>The Lemma shows that we have a well-defined pull-back map <span class="math inline">\(F^* : \Omega^1 (N) \rightarrow \Omega^1 (M), \beta \mapsto F^* \beta\)</span>. Under composition of two maps, <span class="math inline">\((F_1 \circ F_2)^* = F^*_2 \circ F^*_1\)</span>. The pull-back of forms is related to the pull-back of functions, <span class="math inline">\(g \mapsto F^*g = g \circ F\)</span>:</p>
+<div class="proposition">
+<p><strong>Proposition 28</strong>. <em>For <span class="math inline">\(g \in C^\infty(N)\)</span>, <span class="math inline">\(F^* (dg) = d(F^* g)\)</span>.</em></p>
+</div>
+<p>Recall once again that while <span class="math inline">\(F \in C^\infty(M,N)\)</span> induces a tangent map there is no natural push-forward operation for vector fields. By contrast, for cotangent bundles there is no naturally induced map from <span class="math inline">\(T^*N\)</span> to <span class="math inline">\(T^*M\)</span> (or the other way), yet there is a natural pull-back operation for 1-forms. For any related vector fields <span class="math inline">\(X \sim_F Y\)</span>, and <span class="math inline">\(\beta \in \Omega^1 (N)\)</span>, we then have that <span class="math inline">\((F^* \beta)(X) = F^* (\beta(Y))\)</span>. Indeed, at any given <span class="math inline">\(p \in M\)</span> this just becomes the definition of the pullback map.</p>
+<h2 id="integration-of-1-forms">Integration of 1-forms</h2>
+<p>Given a curve <span class="math inline">\(\gamma : J \rightarrow M\)</span> in a manifold, and any 1-form <span class="math inline">\(\alpha \in \Omega^1 (M)\)</span>, we can consider the pull-back <span class="math inline">\(\gamma^*\alpha \in \Omega^1 (J)\)</span>. By the description of 1-forms on <span class="math inline">\(\mathbb R\)</span>, this is of the form <span class="math inline">\(\gamma^*\alpha = f(t)dt\)</span> for a smooth function <span class="math inline">\(f \in C^\infty(J)\)</span>.</p>
+<p>To discuss integration, it is convenient to work with closed intervals rather than open intervals. Let <span class="math inline">\([a,b] \subseteq R\)</span> be a closed interval. A map <span class="math inline">\(\gamma : [a,b] \rightarrow M\)</span> into a manifold will be called smooth if it extends to a smooth map from an open interval containing <span class="math inline">\([a,b]\)</span>. We will call such a map a smooth path.</p>
+<div class="defn">
+<p><strong>Definition 96</strong>. (Integral)</p>
+<p>Given a smooth path <span class="math inline">\(\gamma : [a,b] \rightarrow M\)</span>, we define the integral of a 1-form <span class="math inline">\(\alpha \in \Gamma^1 (M)\)</span> along <span class="math inline">\(\gamma\)</span> as <span class="math display">\[\int_\gamma \alpha = \int_b^a \gamma^*\alpha.\]</span></p>
+</div>
+<p>The fundamental theorem of calculus has the following consequence for manifolds. It is a special case of Stokes’ theorem</p>
+<div class="proposition">
+<p><strong>Proposition 29</strong>. <em>Let <span class="math inline">\(\gamma : [a,b] \rightarrow M\)</span> be a smooth path, with <span class="math inline">\(\gamma(a) = p, \ \gamma(b) = q\)</span>. For any <span class="math inline">\(f \in C^\infty(M)\)</span>, we have <span class="math inline">\(\int_\gamma d f = f(q) - f(p)\)</span>. In particular, the integral of <span class="math inline">\(d f\)</span> depends only on the end points of the path, rather than the path itself.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 97</strong>. A 1-form <span class="math inline">\(\alpha \in \Omega^1(M)\)</span> such that <span class="math inline">\(\alpha = d f\)</span> for some function <span class="math inline">\(f \in C^\infty(M)\)</span> is called exact.</p>
+</div>
+<div class="example">
+<p><strong>Example 98</strong>. Consider the <span class="math inline">\(1\)</span>-form <span class="math inline">\(\alpha = y^2 e^x dx+2y e^x dy \in \Omega(\mathbb R^2)\)</span>. Find the integral of <span class="math inline">\(\alpha\)</span> along the path <span class="math inline">\(\gamma : [0,1] \rightarrow M, \ t \mapsto (sin(\pi t/2),t^3 )\)</span>. Observe that the 1-form <span class="math inline">\(\alpha\)</span> is exact: <span class="math inline">\(\alpha = d (y^2 e^x) = d f\)</span> with <span class="math inline">\(f(x, y) = y^2 e^x\)</span>. The path has end points <span class="math inline">\(\gamma (0) = (0,0)\)</span> and <span class="math inline">\(\gamma (1) = (1,1)\)</span>. Hence, <span class="math inline">\(\int_\gamma \alpha = f(\gamma (1))- f(\gamma (0)) = e\)</span>.</p>
+</div>
+<h2 id="forms-1">2-forms</h2>
+<div class="defn">
+<p><strong>Definition 99</strong>. A 2-form on <span class="math inline">\(M\)</span> is a <span class="math inline">\(C^\infty(M)\)</span>-bilinear skew-symmetric map <span class="math display">\[\alpha : \mathfrak X(M)\times \mathfrak X(M) \rightarrow C^\infty (M), (X,Y) \mapsto \alpha (X,Y)\]</span></p>
+<p>Here skew-symmetry means that <span class="math inline">\(\alpha(X,Y) = -\alpha(Y,X)\)</span> for all vector fields <span class="math inline">\(X,Y\)</span>, while <span class="math inline">\(C^\infty(M)\)</span>-bilinearity means <span class="math display">\[\alpha(f X,Y) = f\alpha(X,Y) = \alpha(X, fY)\]</span> for <span class="math inline">\(f \in C^\infty(M)\)</span>, as well as <span class="math inline">\(\alpha(X&#39; + X&#39;&#39; ,Y) = \alpha(X&#39;,Y) + \alpha(X&#39;&#39;,Y)\)</span>, and similarly in the second argument. Also, if <span class="math inline">\(\alpha\)</span> is a 2-form then so is <span class="math inline">\(f\alpha\)</span> for any smooth function <span class="math inline">\(f\)</span>.</p>
+</div>
+<div class="example">
+<p><strong>Example 100</strong>. For an open subset <span class="math inline">\(U \subseteq \mathbb R^m\)</span>, a 2-form <span class="math inline">\(\omega \in \Omega^2 (U)\)</span> is uniquely determined by its values on coordinate vector fields. By skew-symmetry the functions <span class="math inline">\(\omega_{i j} = \omega \bigg ( \frac{\partial}{\partial x^i} , \frac{\partial}{ \partial x^j} \bigg )\)</span> satisfy <span class="math inline">\(\omega_{i j} = -\omega_{ji}\)</span>; hence it suffices to know these functions for <span class="math inline">\(i &lt; j\)</span>. As a consequence, we see that the most general 2-form on <span class="math inline">\(U\)</span> is <span class="math display">\[\omega  = \frac{1}{2} \sum^m_{i, j=1} \omega_{i j} dx^i \wedge dx ^j = \sum_{i&lt;j} \omega_{i j}dx^i \wedge dx^j.\]</span></p>
+</div>
+<h2 id="k-forms">k-forms</h2>
+<h3 id="definition">Definition</h3>
+<div class="defn">
+<p><strong>Definition 101</strong>. Let <span class="math inline">\(k\)</span> be a non-negative integer. A k-form on <span class="math inline">\(M\)</span> is a <span class="math inline">\(C^\infty(M)\)</span>-multilinear, skew-symmetric map <span class="math display">\[\alpha : \underbrace{\mathfrak X(M) \times \dots \times \mathfrak X(M)}_\text{k times} \rightarrow C^\infty (M).\]</span> The space of k-forms is denoted <span class="math inline">\(\Omega^k (M)\)</span>; in particular <span class="math inline">\(\Omega^0 (M) = C^\infty(M)\)</span></p>
+</div>
+<p>Here, skew-symmetry means that <span class="math inline">\(\alpha(X_1,\dots, X_k)\)</span> changes sign under exchange of any two of its elements. The <span class="math inline">\(C^\infty(M)\)</span>-multilinearity means <span class="math inline">\(C^\infty(M)\)</span>-linearity in each argument, similar to the condition for 2-forms. It implies <span class="math inline">\(\alpha\)</span> is local in the sense that the value of <span class="math inline">\(\alpha(X_1,\dots,X_k)\)</span> at any given <span class="math inline">\(p \in M\)</span> depends only on the values <span class="math inline">\(X_1|p,\dots,X_k |p \in T_pM\)</span>.</p>
+<p>If <span class="math inline">\(\alpha_1,\dots,\alpha_k\)</span> are 1-forms, then one obtains a k-form <span class="math inline">\(\alpha =: \alpha_1\wedge\dots\wedge\alpha_k\)</span> by wedge product.</p>
+<p>Using <span class="math inline">\(C^\infty\)</span>-multilinearity, a k-form on <span class="math inline">\(U \subseteq R\)</span> m is uniquely determined by its values on coordinate vector fields. i.e. by the functions, <span class="math display">\[\alpha_{i_1\dots i_k} = \alpha \bigg ( \frac{\partial}{\partial x^{i_1}}, \dots , \frac{\partial}{ \partial x ^{i_k}} \bigg )\]</span> Moreover, by skew-symmetry we only need to consider ordered index sets <span class="math inline">\(I = {i_1,\dots,i_k} \subseteq {1,\dots,m}\)</span>, that is, <span class="math inline">\(i_1 &lt; \dots &lt; i_k\)</span>. Using the wedge product notation, we obtain <span class="math display">\[\alpha = \sum_{i_1&lt;\dots&lt;i_k} \alpha_{i_1\dotsi_k} dx^{i_1} \wedge \dots dx^{i_k}.\]</span></p>
+<h3 id="wedge-product">Wedge product</h3>
+<div class="defn">
+<p><strong>Definition 102</strong>. (k,l-shuffle )</p>
+<p>A permutation <span class="math inline">\(s \in \mathfrak S_{k+l}\)</span> is called a <span class="math inline">\(k,l\)</span>-shuffle if it satisfies <span class="math display">\[s(1) &lt; \dots &lt; s(k), \ \ s(k +1) &lt; \dots &lt; s(k +l).\]</span></p>
+</div>
+<div class="defn">
+<p><strong>Definition 103</strong>. (Wedge product)</p>
+<p>The wedge product of <span class="math inline">\(\alpha \in \Gamma^k (M)\)</span>, <span class="math inline">\(\beta \in \Gamma^l (M)\)</span> is the element <span class="math display">\[\alpha \wedge \beta \in  \Gamma^{k+l} (M)\]</span> given as <span class="math display">\[(\alpha \wedge\beta )(X^1,\dots ,X^{k+l}) = \sum sign(s) \alpha (X_{s(1)},\dots ,X_{s(k)}) \beta (X_{s(k+1)},...,X_{s(k+l)})\]</span> where the sum is over all <span class="math inline">\(k,l\)</span>-shuffles.</p>
+</div>
+<p>The wedge product is graded commutative: If <span class="math inline">\(\alpha \in \Omega^k (M)\)</span> and <span class="math inline">\(\beta \in \Omega^l (M)\)</span> then <span class="math inline">\(\alpha \wedge \beta = (-1) ^{kl}\beta \wedge \alpha\)</span>. Furthermore, it is associative:</p>
+<div class="proposition">
+<p><strong>Proposition 30</strong>. <em>Given <span class="math inline">\(\alpha_i \in \Omega_{k_i} (M)\)</span> we have <span class="math inline">\((\alpha_1 \wedge \alpha_2)\wedge \alpha_3 = \alpha_1 \wedge (\alpha_2 \wedge \alpha_3)\)</span></em></p>
+</div>
+<h3 id="exterior-differential">Exterior differential</h3>
+<p>Recall that we defined the exterior differential on functions by the formula <span class="math inline">\((d f)(X) = X(f)\)</span>. We will now extend this definition to all forms.</p>
+<div class="theorem">
+<p><strong>Theorem 104</strong>. <em>There is a unique collection of linear maps <span class="math inline">\(d : \Omega^k (M) \rightarrow \Omega^{k+1} (M)\)</span>, extending the map <span class="math inline">\((d f)(X) = X(f)\)</span> for <span class="math inline">\(k = 0\)</span>, such that <span class="math inline">\(d(d f) = 0\)</span> and satisfying the graded product rule, <span class="math display">\[d(\alpha \wedge \beta) = d\alpha \wedge \beta + (-1) k\alpha \wedge d\beta\]</span> for <span class="math inline">\(\alpha \in \Omega^k (M)\)</span> and <span class="math inline">\(\beta \in \Omega^l (M)\)</span>. This exterior differential satisfies <span class="math inline">\(d \circ d = 0\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 105</strong>. (Exact, closed k-forms)</p>
+<p>A k-form <span class="math inline">\(\omega \in \Omega^k (M)\)</span> is called <em>exact</em> if <span class="math inline">\(\omega = d\alpha\)</span> for some <span class="math inline">\(\alpha \in \Omega^{k-1} (M)\)</span>. It is called closed if <span class="math inline">\(d\omega = 0\)</span>.</p>
+</div>
+<p>Since <span class="math inline">\(d\circ d = 0\)</span>, the exact <span class="math inline">\(k\)</span>-forms are a subspace of the space of closed <span class="math inline">\(k\)</span>-forms; a necessary condition for <span class="math inline">\(\alpha\)</span> to be exact is that it is closed.</p>
+<div class="example">
+<p><strong>Example 106</strong>. The quotient space (closed k-forms modulo exact k-forms) is a vector space called the k-th (de Rham) cohomology <span class="math display">\[H^k (M) = \frac{\{\alpha \in \Omega^k (M)| \alpha is closed \}}{\{\alpha \in \Omega^k(M)| \alpha is exact \}}.\]</span></p>
+<p>It turns out that whenever <span class="math inline">\(M\)</span> is compact (and often also if <span class="math inline">\(M\)</span> is non-compact), <span class="math inline">\(H ^k (M)\)</span> is a finite-dimensional vector space. The dimension of this vector space <span class="math inline">\(b_k(M) = \dim H^k (M)\)</span> is called the k-th Betti number of <span class="math inline">\(M\)</span>; these numbers are important invariants of <span class="math inline">\(M\)</span> which one can use to distinguish non-diffeomorphic manifolds.</p>
+</div>
+<h2 id="lie-derivatives-and-contractions">Lie derivatives and contractions</h2>
+<div class="defn">
+<p><strong>Definition 107</strong>. (Contractions)</p>
+<p>Given a vector field <span class="math inline">\(X\)</span>, and a <span class="math inline">\(k\)</span>-form <span class="math inline">\(\alpha \in \omega k (M)\)</span>, we can define a <span class="math inline">\(k-1\)</span>-form <span class="math display">\[\iota_X \alpha \in \omega  k-1 (M)\]</span> by <em>contraction</em>: Thinking of <span class="math inline">\(\alpha\)</span> as a multi-linear form, one simply puts <span class="math inline">\(X\)</span> into the first slot: <span class="math display">\[(\iota_X\alpha )(X_1,...,X_{k-1}) = \alpha (X,X_1,\dots,X_{k-1}).\]</span> Contractions have the following compatibility with the wedge product, similar to that for the exterior differential: <span class="math display">\[\iota_X (\alpha  \wedge \beta ) = \iota_X\alpha  \wedge \beta  + (-1) k\alpha  \wedge \iota_X \beta ,\]</span> for <span class="math inline">\(\alpha \in \omega^k (M)\)</span>,<span class="math inline">\(\beta \in \omega^l (M)\)</span>, which one verifies by evaluating both sides on vector fields.</p>
+</div>
+<p>Another important operator on forms is the Lie derivative:</p>
+<div class="theorem">
+<p><strong>Theorem 108</strong>. <em>Given a vector field <span class="math inline">\(X\)</span>, there is a unique collection of linear maps <span class="math inline">\(L_X : \Omega^k (M) \rightarrow \Omega^k (M)\)</span>, such that <span class="math display">\[L_X (f) = X(f), \ L_X (d f) = dX(f),\]</span> and satisfying the product rule, <span class="math display">\[L_X (\alpha  \wedge \beta ) = L_X \alpha  \wedge \beta  +\alpha  \wedge L_X \beta\]</span> for <span class="math inline">\(\alpha \in \Omega^k (M)\)</span> and <span class="math inline">\(\beta \in \Omega^l (M)\)</span>.</em></p>
+</div>
+<p>These operators, <span class="math inline">\(d, L_X, \iota_X\)</span>, have the following compatibilities with the wedge product: For <span class="math inline">\(\alpha \in \Omega^k (M)\)</span> and <span class="math inline">\(\beta \in \Omega^l (M)\)</span> one has <span class="math display">\[\begin{aligned}
+d(\alpha \wedge\beta) &amp;= (d\alpha)\wedge\beta + (-1) k\alpha \wedge d\beta,\\
+L_X (\alpha \wedge\beta) &amp;= (L_X\alpha)\wedge\beta +\alpha \wedge L_X \beta,\\
+\iota_X (\alpha \wedge\beta) &amp;= (\iota_X\alpha)\wedge\beta + (-1) k\alpha \wedge\iota_X \beta.\end{aligned}\]</span></p>
+<p>One says that <span class="math inline">\(L_X\)</span> is an <em>even derivation</em> relative to the wedge product, whereas <span class="math inline">\(d,\iota_X\)</span> are <em>odd derivations</em>. They also satisfy important relations among each other: <span class="math display">\[\begin{aligned}
+    d \circ d = 0 \\
+    L_X \circ L_Y -L_Y \circ L_X = L_{[X,Y]} \\
+    \iota_X \circ \iota_Y +\iota_Y \circ \iota_X = 0 \\
+    d \circ L_X -L_X \circ d = 0 \\
+    L_X \circ \iota_Y -\iota_Y \circ L_X = \iota_[X,Y] \\
+    \iota_X \circ d+d \circ \iota_X = L_X .\end{aligned}\]</span> This collection of identities is referred to as the Cartan calculus, , and in particular the last identity is called the Cartan formula.</p>
+<h3 id="pull-backs">Pull-backs</h3>
+<div class="defn">
+<p><strong>Definition 109</strong>. (k-form Pullbacks)</p>
+<p>Similar to the pull-back of functions (0-forms) and 1-forms, we have a pull-back operation for k-forms, <span class="math inline">\(F^* : \Omega^k (N) \rightarrow \Omega^k (M)\)</span> for any smooth map between manifolds, <span class="math inline">\(F \in C^\infty(M,N)\)</span>. Its evaluation at any <span class="math inline">\(p \in M\)</span> is given by <span class="math display">\[(F^* \beta )_p(v_1,\dots, v_k) = \beta_{F(p)} (T_pF(v1),\dots,T_pF(v_k)).\]</span></p>
+</div>
+<p>The pull-back map satisfies <span class="math inline">\(d(F^*\beta) = F^*d\beta\)</span>, and for a wedge product of forms, <span class="math inline">\(F^* (\beta_1 \wedge \beta_2) = F^* \beta_1 \wedge F^* \beta_2\)</span>.</p>
+<div class="proposition">
+<p><strong>Proposition 31</strong>. <em>Let <span class="math inline">\(U \subseteq \mathbb R^m\)</span>with coordinates <span class="math inline">\(x^i\)</span> , and <span class="math inline">\(V \subseteq \mathbb R^n\)</span> with coordinates <span class="math inline">\(y^j\)</span>. Suppose <span class="math inline">\(m = j\)</span>, and <span class="math inline">\(F \in C^\infty(U,V)\)</span>. Then <span class="math display">\[F^* (dy^1 \wedge \dots \wedge dy^n ) = J dx^ 1 \wedge \dots \wedge dx^n\]</span> where <span class="math inline">\(J(x)\)</span> is the determinant of the Jacobian matrix, <span class="math display">\[J(x) = \det \bigg (\frac{\partial F^i}{\partial  x^j} \bigg ) ^n_{i, j=1}.\]</span></em></p>
+</div>
+<p>The Lie derivative <span class="math inline">\(L_X \alpha\)</span> of a differential form with respect to a vector field <span class="math inline">\(X\)</span> has an important interpretation in terms of the flow <span class="math inline">\(\Phi_t\)</span> of <span class="math inline">\(X\)</span>. Assuming for simplicity that <span class="math inline">\(X\)</span> is complete (so that <span class="math inline">\(\Phi_t\)</span> is a globally defined diffeomorphism), one has the formula <span class="math display">\[L_X\alpha = \frac{d}{dt} \Bigr |_{t=0} \Phi^*_t \alpha.\]</span> The formula shows that <span class="math inline">\(L_X\)</span> measures to what extent <span class="math inline">\(\alpha\)</span> is invariant under the flow of <span class="math inline">\(X\)</span>.</p>
+<h3 id="integration-of-differential-forms">Integration of differential forms</h3>
+<p>Differential forms of top degree can be integrated over oriented manifolds. Let <span class="math inline">\(M\)</span> be an oriented manifold of dimension <span class="math inline">\(m\)</span>, and <span class="math inline">\(\omega \in \Omega^m(M)\)</span>. Let <span class="math inline">\(supp(\omega)\)</span> be the support of <span class="math inline">\(\omega\)</span>. If <span class="math inline">\(supp(\omega)\)</span> is contained in an oriented coordinate chart <span class="math inline">\((U,\phi)\)</span>, then one defines <span class="math display">\[\int_M \omega = \int_{\mathbb R^m} f(x)dx^1\cdots dx^m\]</span></p>
+<p>where <span class="math inline">\(f \in C^\infty(\mathbb R^m)\)</span> is the function, with <span class="math inline">\(supp(f) \subseteq \phi(U)\)</span>, determined from <span class="math display">\[(\phi^{-1} )^* \omega = f dx^1 \wedge \cdots \wedge dx^m.\]</span> This definition does not depend on the choice of oriented chart.</p>
+<p>If <span class="math inline">\(\omega\)</span> is not necessarily supported in a single oriented chart, we proceed as follows. Let <span class="math inline">\((U_i , \phi^i), \ i = 1,\dots,r\)</span> be a finite collection of oriented charts covering <span class="math inline">\(supp(\omega)\)</span>. Together with <span class="math inline">\(U_0 = M \setminus supp(\omega)\)</span> this is an open cover of <span class="math inline">\(M\)</span>.</p>
+<div class="lemma">
+<p><strong>Lemma 110</strong>. <em>Given a finite open cover of a manifold there exists a partition of unity subordinate to the cover, i.e. functions <span class="math inline">\(\chi_i \in C^\infty(M)\)</span> with <span class="math inline">\(supp(\chi_i) \subseteq U_i\)</span> and <span class="math inline">\(\sum_{i=0}^r \chi_i = 1\)</span>.</em></p>
+</div>
+<p>Indeed, partitions of unity exists for any open cover, not only finite ones. Let <span class="math inline">\(\chi_0, \dots, \chi_r\)</span> be a partition of unity subordinate to this cover. We define <span class="math display">\[\int_M \omega = \sum_{i=1}^r \int_M \chi_i \omega\]</span> where the summands are defined as above, since <span class="math inline">\(\chi_i\omega\)</span> is supported in <span class="math inline">\(U_i\)</span> for <span class="math inline">\(i \geq 1\)</span>. It can be shown that this is well defined, independent of the choice of oriented coordinate charts.</p>
+<h3 id="integration-over-oriented-submanifolds">Integration over oriented submanifolds</h3>
+<p>Let <span class="math inline">\(M\)</span> be a manifold, not necessarily oriented, and <span class="math inline">\(S\)</span> is a k-dimensional oriented submanifold, with inclusion <span class="math inline">\(i : S \rightarrow M\)</span>. We define the integral over <span class="math inline">\(S\)</span>, of any k-form <span class="math inline">\(\omega \in \Omega^k (M)\)</span> such that <span class="math inline">\(S \cap supp(\omega)\)</span> is compact, as follows:</p>
+<p><span class="math display">\[\int_S \omega = \int_S i^* \omega.\]</span> Of course, this definition works equally well for any smooth map from <span class="math inline">\(S\)</span> into <span class="math inline">\(M\)</span>. For example, the integral of compactly supported 1-forms along arbitrary paths <span class="math inline">\(\gamma : \mathbb R \rightarrow M\)</span> is defined. Note also that <span class="math inline">\(M\)</span> itself does not have to be oriented, it suffices that <span class="math inline">\(S\)</span> is oriented.</p>
+<h3 id="stokes-theorem">Stokes’ theorem</h3>
+<p>Let <span class="math inline">\(M\)</span> be an <span class="math inline">\(m\)</span>-dimensional oriented manifold.</p>
+<div class="defn">
+<p><strong>Definition 111</strong>. (Boundary and interior of region)</p>
+<p>A region with (smooth) boundary in <span class="math inline">\(M\)</span> is a closed subset <span class="math inline">\(D \subseteq M\)</span> with the following property: There exists a smooth function <span class="math inline">\(f \in C^\infty(M,R)\)</span> such that <span class="math inline">\(0\)</span> is a regular value of <span class="math inline">\(f\)</span> , and <span class="math display">\[D = \{p \in M | f(p) \leq 0 \}.\]</span> We do not consider <span class="math inline">\(f\)</span> itself as part of the definition of <span class="math inline">\(D\)</span>, only the existence of <span class="math inline">\(f\)</span> is required.</p>
+<p>The interior of a region with boundary, given as the largest open subset contained in <span class="math inline">\(D\)</span>, is <span class="math display">\[int(D) = \{p \in M| f(p) &lt; 0,\]</span> and the boundary itself is <span class="math display">\[\partial D = \{p \in M| f(p) = 0 \},\]</span> a codimension 1 submanifold (i.e., hypersurface) in <span class="math inline">\(M\)</span>.</p>
+</div>
+<p>Recall that we are considering <span class="math inline">\(D\)</span> inside an oriented manifold <span class="math inline">\(M\)</span>. The boundary <span class="math inline">\(\partial D\)</span> may be covered by oriented submanifold charts <span class="math inline">\((U,\phi)\)</span>, in such a way that <span class="math inline">\(\partial D\)</span> is given in the chart by the condition <span class="math inline">\(x^1 = 0\)</span>, and <span class="math inline">\(D\)</span> by the condition <span class="math inline">\(x^1 \leq 0\)</span>: <span class="math display">\[\phi (U \cap D) = \phi (U) \cap \{x \in \mathbb R^m | x ^1 \leq 0 \}.\]</span></p>
+<p>We call oriented submanifold charts of this kind <em>‘region charts’</em>.</p>
+<div class="lemma">
+<p><strong>Lemma 112</strong>. <em>The restriction of the region charts to <span class="math inline">\(\partial D\)</span> form an oriented atlas for <span class="math inline">\(\partial D\)</span>.</em></p>
+</div>
+<p>In particular, <span class="math inline">\(\partial D\)</span> is again an oriented manifold. To repeat: If <span class="math inline">\(x^1 ,\dots, x^m\)</span> are local coordinates near <span class="math inline">\(p \in \partial D\)</span>, compatible with the orientation and such that <span class="math inline">\(D\)</span> lies on the side <span class="math inline">\(x^1 \leq 0\)</span>, then <span class="math inline">\(x^2 ,\dots, x^m\)</span> are local coordinates on <span class="math inline">\(\partial D\)</span>. This convention of ‘induced orientation’ is arranged in such a way that the Stokes’ theorem holds without extra signs.</p>
+<p>For an <span class="math inline">\(m\)</span>-form <span class="math inline">\(\omega\)</span> such that <span class="math inline">\(supp(\omega)\cap D\)</span> is compact, the integral <span class="math inline">\(\int_D \omega\)</span> is defined similar to the case of <span class="math inline">\(D = M\)</span>.</p>
+<div class="theorem">
+<p><strong>Theorem 113</strong>. <em>(Stokes’ Theorem)</em></p>
+<p><em>Let <span class="math inline">\(M\)</span> be an oriented manifold of dimension <span class="math inline">\(m\)</span>, and <span class="math inline">\(D \subseteq M\)</span> a region with smooth boundary <span class="math inline">\(\partial D\)</span>. Let <span class="math inline">\(\alpha \in \Omega^{m-1} (M)\)</span> be a form of degree <span class="math inline">\(m-1\)</span>, such that <span class="math inline">\(supp(\alpha)\cap D\)</span> is compact. Then <span class="math display">\[\int_D d\alpha = \int_{\partial D} \alpha.\]</span></em></p>
+</div>
+<p>As explained above, the right hand side means <span class="math inline">\(\int_{\partial D} i^* \alpha\)</span>, where <span class="math inline">\(i : \partial D \rightarrow M\)</span> is the inclusion map.</p>
+<div class="corollary">
+<p><strong>Corollary 3</strong>. <em>Let <span class="math inline">\(\alpha \int \Omega^{m-1}(M)\)</span> be a compactly supported form on the oriented manifold <span class="math inline">\(M\)</span>. Then <span class="math display">\[\int_M d\alpha = 0.\]</span></em></p>
+</div>
+<p>Note that it does not suffice that <span class="math inline">\(d\alpha\)</span> has compact support. A typical application of Stokes’ theorem shows that for a closed form <span class="math inline">\(\omega \in \Omega^k (M)\)</span>, the integral of <span class="math inline">\(\omega\)</span> over an oriented compact submanifold does not change with smooth deformations of the submanifold.</p>
+<div class="theorem">
+<p><strong>Theorem 114</strong>. <em>Let <span class="math inline">\(\omega \in \Omega^k (M)\)</span> be a closed form on a manifold <span class="math inline">\(M\)</span>, and <span class="math inline">\(S\)</span> a compact, oriented manifold of dimension <span class="math inline">\(k\)</span>. Let <span class="math inline">\(F \in C^\infty(R\times S,M)\)</span> be a smooth map, thought of as a smooth family of maps <span class="math display">\[F_t = F(t, \cdot) : S \rightarrow M.\]</span> Then the integrals <span class="math inline">\(\int_S F^* t \omega\)</span> do not depend on <span class="math inline">\(t\)</span>.</em></p>
+</div>
+<p>If <span class="math inline">\(F_t\)</span> is an embedding, then this is the integral of <span class="math inline">\(\omega\)</span> over the submanifold <span class="math inline">\(F_t(S) \subseteq M\)</span>.</p>
+<div class="defn">
+<p><strong>Definition 115</strong>. (Smooth isotopy)</p>
+<p>Given a smooth map <span class="math inline">\(\phi : S \rightarrow M\)</span>, one refers to a smooth map <span class="math inline">\(F : R \times S \rightarrow M\)</span> with <span class="math inline">\(F_0 = \phi\)</span> as an <em>smooth deformation or isotopy</em> of <span class="math inline">\(\phi\)</span>. We say that <span class="math inline">\(\phi\)</span> can be smoothly deformed into <span class="math inline">\(\phi&#39;\)</span> if there exists a smooth isotopy <span class="math inline">\(F\)</span> with <span class="math inline">\(\phi = F_0\)</span> and <span class="math inline">\(\phi&#39; = F_1\)</span>.</p>
+</div>
+<p>The previous theorem shows that if <span class="math inline">\(S\)</span> is oriented, and if there is a closed form <span class="math inline">\(\omega \in \Omega^k (M)\)</span> with <span class="math display">\[\int_S \phi^* \omega \neq \int_S (\phi&#39; )^* \omega\]</span> then <span class="math inline">\(\phi\)</span> cannot be smoothly deformed into <span class="math inline">\(\phi 0\)</span>.</p>
+<h3 id="volume-forms">Volume forms</h3>
+<div class="defn">
+<p><strong>Definition 116</strong>. A non vanishing 1-form <span class="math inline">\(\alpha\)</span> at point <span class="math inline">\(p\)</span> means that there is a vector <span class="math inline">\(v\)</span> in <span class="math inline">\(T_pM\)</span> such that <span class="math inline">\(\alpha_p(v)\neq 0\)</span>. Similarly for the <span class="math inline">\(k\)</span>-form, it means that there is a set of <span class="math inline">\(k\)</span> vectors such the form is nonzero if evaluated on these vectors.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 117</strong>. (Volume form)</p>
+<p>A top degree differential form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span> is called a <em>volume form</em> if it is nonvanishing everywhere: <span class="math inline">\(\Gamma_p \neq 0\)</span> for all <span class="math inline">\(p \in M\)</span>. In a local coordinate chart <span class="math inline">\((U,\phi)\)</span>, this means that <span class="math display">\[(\phi^{-1} )^*\Gamma = f dx^1 \wedge \cdots \wedge dx^m\]</span> where <span class="math inline">\(f(x) \neq 0\)</span> for all <span class="math inline">\(x \in \phi(U)\)</span>.</p>
+</div>
+<div class="lemma">
+<p><strong>Lemma 118</strong>. <em>A volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span> determines an orientation on <span class="math inline">\(M\)</span>, by taking as the oriented charts those charts <span class="math inline">\((U,\phi)\)</span> such that</em></p>
+<p><em><span class="math display">\[(\phi^{-1})^*\Gamma = f dx^1 \wedge \cdots \wedge dx^m\]</span> with <span class="math inline">\(f &gt; 0\)</span> everywhere on <span class="math inline">\(\Phi(U)\)</span>.</em></p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 119</strong>. <em>A manifold <span class="math inline">\(M\)</span> is orientable if and only if it admits a volume form. In this case, any two volume forms compatible with the orientation differ by an everywhere positive smooth function: <span class="math display">\[\Gamma&#39; = f \Gamma , f &gt; 0.\]</span></em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 120</strong>. (Volume)</p>
+<p>For a compact manifold <span class="math inline">\(M\)</span> with a given volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span>, one can define the volume of <span class="math inline">\(M\)</span>, <span class="math display">\[vol(M) = \int_M \Gamma.\]</span> Here the orientation used in the definition of the integral is taken to be the orientation given by <span class="math inline">\(\Gamma\)</span> . Thus <span class="math inline">\(vol(M) &gt; 0\)</span>.</p>
+</div>
+<p>Note that volume forms are always closed, for degree reasons (since <span class="math inline">\(\Omega^{m+1} (M) = 0\)</span>). But on a compact manifold, they cannot be exact:</p>
+<div class="theorem">
+<p><strong>Theorem 121</strong>. <em>Let <span class="math inline">\(M\)</span> be a compact manifold with a volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span>. Then <span class="math inline">\(\Gamma\)</span> cannot be exact.</em></p>
+</div>
+<h2 id="cartan-calculus">Cartan calculus</h2>
+<h2 id="cohomology-groups">Cohomology Groups</h2>
+<h1 id="riemannian-geometry">Riemannian Geometry</h1>
+<h1 id="lie-groups">Lie Groups</h1>
+<p>E. Meinrenken and G. Gross, Introduction to Differential Geometry, Lecture Notes for MAT367.</p>
+<p>Samelson, H. Review: Werner Greub, Stephen Halperin and Ray Vanstone, Connections, curvature, and cohomology. Bull. Amer. Math. Soc. 83 (1977), no. 5, 1011–1015. https://projecteuclid.org/euclid.bams/1183539466</p>
+<p>Paul Seidel. 18.950 Differential Geometry. Fall 2008. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. License: Creative Commons BY-NC-SA.</p>
+<p>Sigurdur Helgason. 18.755 Introduction to Lie Groups. Fall 2004. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. License: Creative Commons BY-NC-SA.</p>
+</body>
+</html>
