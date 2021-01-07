@@ -86,9 +86,11 @@ title:  Differential Geometry
             submanifolds](#integration-over-oriented-submanifolds)
         -   [Stokes' theorem](#stokes-theorem)
         -   [Volume forms](#volume-forms)
-    -   [Cartan calculus](#cartan-calculus)
-    -   [Cohomology Groups](#cohomology-groups)
--   [Riemannian Geometry](#riemannian-geometry)
+-   [De Rham Cohomology](#de-rham-cohomology)
+-   [Overview of Riemannian Geometry](#overview-of-riemannian-geometry)
+    -   [Covariant derivative and
+        curvature](#covariant-derivative-and-curvature)
+    -   [Curvature](#curvature)
 -   [Lie Groups](#lie-groups)
 
 # Prerequisites
@@ -2532,17 +2534,36 @@ closed form $\omega \in \Omega^k (M)$ with
 $$\int_S \phi^* \omega \neq \int_S (\phi' )^* \omega$$ then $\phi$
 cannot be smoothly deformed into $\phi 0$.
 
+::: {.example}
+**Example 116**. (Winding number).
+
+Let$\omega \in \Omega^2 (\mathbb R^2\{0\})$ be the 1-form
+$\omega = \frac{1}{x^2 +y^2} (xdy-ydx)$. In polar coordinates
+$x = r \cos\theta, y = r\sin\theta$, one has that $\omega = d\theta$.
+Using this fact one sees that $\omega$ is closed (but not exact, since
+$\theta$ is not a globally defined function on $\mathbb R^2\{0\}$.)
+Hence, if $\gamma : S^1 \rightarrow \mathbb R^2 \{0\}$ is any smooth map
+(a 'loop'), then the integral $\int_{S^1} \gamma^*\omega$ does not
+change under deformations (isotopies) of the loop. In particular,
+$\gamma$ cannot be deformed into a constant map, unless the integral is
+zero. The number
+$$w(\gamma) = \frac{1}{2\pi} \int_{S^1} \gamma^*\omega$$ is the *winding
+number* of $\gamma$. (One can show that this is always an integer, and
+that two loops can be deformed into each other if and only if they have
+the same winding number.)
+:::
+
 ### Volume forms
 
 ::: {.defn}
-**Definition 116**. A non vanishing 1-form $\alpha$ at point $p$ means
+**Definition 117**. A non vanishing 1-form $\alpha$ at point $p$ means
 that there is a vector $v$ in $T_pM$ such that $\alpha_p(v)\neq 0$.
 Similarly for the $k$-form, it means that there is a set of $k$ vectors
 such the form is nonzero if evaluated on these vectors.
 :::
 
 ::: {.defn}
-**Definition 117**. (Volume form)
+**Definition 118**. (Volume form)
 
 A top degree differential form $\Gamma \in \Omega^m(M)$ is called a
 *volume form* if it is nonvanishing everywhere: $\Gamma_p \neq 0$ for
@@ -2552,7 +2573,7 @@ $f(x) \neq 0$ for all $x \in  \phi(U)$.
 :::
 
 ::: {.lemma}
-**Lemma 118**. *A volume form $\Gamma \in \Omega^m(M)$ determines an
+**Lemma 119**. *A volume form $\Gamma \in \Omega^m(M)$ determines an
 orientation on $M$, by taking as the oriented charts those charts
 $(U,\phi)$ such that*
 
@@ -2561,14 +2582,14 @@ everywhere on $\Phi(U)$.*
 :::
 
 ::: {.theorem}
-**Theorem 119**. *A manifold $M$ is orientable if and only if it admits
+**Theorem 120**. *A manifold $M$ is orientable if and only if it admits
 a volume form. In this case, any two volume forms compatible with the
 orientation differ by an everywhere positive smooth function:
 $$\Gamma' = f \Gamma , f > 0.$$*
 :::
 
 ::: {.defn}
-**Definition 120**. (Volume)
+**Definition 121**. (Volume)
 
 For a compact manifold $M$ with a given volume form
 $\Gamma \in \Omega^m(M)$, one can define the volume of $M$,
@@ -2582,17 +2603,202 @@ $\Omega^{m+1} (M) = 0$). But on a compact manifold, they cannot be
 exact:
 
 ::: {.theorem}
-**Theorem 121**. *Let $M$ be a compact manifold with a volume form
+**Theorem 122**. *Let $M$ be a compact manifold with a volume form
 $\Gamma \in \Omega^m(M)$. Then $\Gamma$ cannot be exact.*
 :::
 
-## Cartan calculus
+# De Rham Cohomology
 
-## Cohomology Groups
+The exterior derivative converts the algebra of differential forms on a
+manifold into a graded differential algebra. The corresponding
+cohomology is called the de Rham cohomology algebra.
 
-# Riemannian Geometry
+See Text for full details:
+
+http://im0.p.lodz.pl/ kubarski/AnalizaIV/Wyklady/GHV/ITOM/G-H-V-1
+
+In article 1 it is shown that the de Rham cohomology satisfies the
+dimension, homotopy, disjoint union, and Mayer-Vietoris axioms. In
+article 2 various examples (retracts, PoincarC lemma, cohomology of Sn,
+and RP\") are discussed. In article 3 everything is done again (with the
+appropriate modifications) for differential forms with compact carrier.
+In article 4 the integral is used to establish the PoincarC duality
+theorem for a smooth orientable manifold. This theorem is applied in
+article 5 (sec. 5.13 and 5.14) to determine the nth de Rham cohomology
+space for any n-manifold (orientable or nonorientable). In sec. 5.15 the
+duality theorem is used to show that a compact manifold has
+finitedimensional de Rham cohomology. The de Rham cohomology of the
+product of two manifolds is computed in article 6 (Kunneth theorems). In
+article 7 one version of the de Rham theorem is established. The results
+of this article are not quoted elsewhere in the book.
+
+# Overview of Riemannian Geometry
+
+Note, there may be changes in notation from switching reading source.
+
+On $\mathbb R^n$ we have notions like:
+
+1.  Length of vectors angles orthonormal/orthogonal geometry
+
+2.  Areas volumes length of curves
+
+3.  Distance between 2 points
+
+4.  Parallel transport
+
+Observe: All of the elements of Euclidean geometry on $\mathbb R$ is
+entirely encoded in the inner product. We introduce geometry into smooth
+manifolds by making a choice of inner products on each $TpM$ that varies
+smoothly from point to point. This is an inner product.
+
+::: {.defn}
+**Definition 123**.
+$$g: M \rightarrow T^2 (T^*_pM), p\mapsto g_p \in T^2 (T^*_pM)$$ so that
+$g_p$ is an inner product on $T_pM$ and is bilinear symmetric,
+nondegenerative, and positive definite.
+
+Then $g_p \in C^\infty$ iff
+$g: \mathfrak X(M) \times \mathfrak X(M) \rightarrow C^\infty(M)$,
+defined by $g(x,y)(p )= g_p(x_p, y_p)$. Note, $g_p$ is non-linear.
+:::
+
+::: {.defn}
+**Definition 124**. (M, g) is called a Riemannian manifold.
+:::
+
+The manifold has the following properties:
+
+1.  The length of vectors for $v \in T_pm$, $||v|| = \sqrt{g(v,v)}$,
+    $\cos (angle v w) = \frac{g(v,w)}{||v||||w||}$.
+
+    ::: {.lemma}
+    **Lemma 125**. *Near each point, there exists an orthonormal local
+    frame.*
+    :::
+
+2.  The length of curve
+    $\gamma := \int_a^b \sqrt{g(\gamma(t),\gamma ' (t))} dt$.
+
+3.  Distance $d: M \times M \rightarrow [0, \infty)$ is defined by
+    $d(p,q) = \inf(\int_0^1 || \gamma '(t)|| )dt$ where
+    $\gamma(0) = p, \gamma(1) = q$.
+
+    This makes $(M,d)$ a metric space so that the metric topology is the
+    same as the original topology. One can show that $(M,d)$ is complete
+    as a metric space iff $d(p,q)$ is obtained by a curve $\gamma$ for
+    all $p,q \in M$.
+
+4.  There is a natural isomorphism
+    $\Phi_p: T_pM \rightarrow T^*_pM, \ v \mapsto (v^* : w \mapsto g(v,w))$.
+    So there is a module isomorphism
+    $\Phi : \mathfrak X \rightarrow \Omega '(M)$.
+
+5.  Let $S \subseteq M$ be a $k$-dimensional manifold. Then $i^*g$
+    (induced metric on S) is a Riemannian metric on $S$ giving $S$ the
+    unique geometry inherited by $M$.
+
+6.  Suppose $M$ in oriented. There does not exist a nowhere vanishing
+    n-form called the volume form satisfying
+    $\omega(x_1,\dots, x_n) = 1$ whenever $x$ is a local orthonormal
+    frame that has positive orientation. This allows for integration of
+    functions for $f \in C^\infty(M)$ defined as
+    $\int_M f := \int_m f \omega$. Also, if $M$ is compact, we have
+    $vol(M) = \int_M 1 \ \int_M  \omega$. Similarly,
+    $Vol_{k-dim}(S) = \int_S 1$ with respect to the induced metric
+    $i^* g$ on $S$.
+
+7.  We say $(M, g)$, $(\Tilde{M}, \Tilde{g})$ are isometric if there
+    exists a diffeomorphism $F: M \rightarrow \Tilde{M}$ such that
+    $g = F^*\Tilde{g}$
+
+## Covariant derivative and curvature
+
+If a parallel transport of a vector along a curve has the property that
+$D_{\gamma'(t)} = 0$, then $\gamma$ is the shortest distance between $p$
+and $q$ so $\gamma$ is a line.
+
+On a sphere in $S^2$, parrallel transport is equivalent to
+$(\delta _{\gamma'(t)} X )^T = 0$ intrinsic to the round metric
+$(S^3, g)$. Then the shortest paths are the curves which form great
+circles.
+
+Define $(\Tilde{\delta _{X}} Y)= (\delta_X Y)^T$ as the connection
+operator for $X,Y\in \mathfrak{X}(S^2)$. This operator is intrinsic to
+$S^2$ and satisfies:
+
+1.  $C^\infty$-linear w.r.t. $X$.
+
+2.  $\mathbb R$-linear w.r.t. $Y$.
+
+3.  $(\Tilde{\delta _{X}} fY) = X(f)Y + f\Tilde{\delta_X}Y$.
+
+4.  $\Tilde{\delta_x}y - \Tilde{\delta_y X} = L_x Y$
+
+5.  $Z(g(x,y)) - g(\Tilde{\delta_Z} X,Y) - g(x, \Tilde{\delta_Z}y) = 0$
+
+Let $\gamma$ be a curve, then
+$$\frac{d}{dt} (g(X_\gamma(t)), Y_\gamma (T)) = g(\Tilde{\gamma'(t)}X, Y ) + g(X, \Tilde{\gamma'(t)} Y).$$
+
+::: {.theorem}
+**Theorem 126**. *On a manifold $(M, g)$ there does not exist a
+connection
+$\delta : \mathfrak X \times  \mathfrak X \rightarrow \mathfrak X$
+satisfying (4) $$[X, Y] = \delta_X Y - D_Y X$$ and (5)
+$$Z(g(x,y)) - g(\delta_Z X,Y) - g(x, \delta_Z y) = 0$$ compatible with
+the metric. (5) gives rise to the notion of parallel transport on
+Riemannian manifolds and is called the Levi-Civita connection.*
+
+*So we say that $X$ is parrellel transported on a curve $\gamma$ on $M$
+if $\delta_{\gamma'(t)} X = 0$ for all $t$.*
+:::
+
+::: {.defn}
+**Definition 127**. (Geodesic)
+
+$\gamma$ is a geodesic if $\delta_{\gamma'(t)} X = 0$ for all $t$.
+:::
+
+::: {.theorem}
+**Theorem 128**. *If $d(p,q)$ is attained by a curve $\gamma$, then
+$\gamma$ is a geodesic.*
+:::
+
+Note, the converse is not true. A counter example of a great circle
+minus a small segment will not be the shortest distance between the two
+points.
+
+Let $(U, \phi)$ be a chart.
+$$\delta_{\frac{\partial}{\partial x^i}} \frac{\partial }{\partial x^i}  = \sum_k \Gamma_{ij}^k \frac{\partial}{\partial x^k}$$
+Where $\Gamma_{ij}^k$ are the Levi-Civita connection coeffecients and
+are completely determined by the metric.
+$$\Gamma _{ij}^{k}={\tfrac {1}{2}}g^{mk}\left(
+ \frac{\partial g_{im}}{\partial x^j}
+ + \frac{ \partial g_{jm}}{\partial x^i}
+ -\frac{partial g_{ij}}{\partial x ^m}\right)$$
+
+$$g_{ij} = g(\frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j})$$
+
+The term covariant derivative is often used for the Levi-Civita
+connection. The coefficients of this connection with respect to a system
+of local coordinates are called Christoffel symbols.
+
+## Curvature
+
+Recall $L_[X,Y] = [L_X, L_Y]$. If $[X,Y]=0$ commutes, then
+$L_X L_Y - L_Y L_X = 0$ This fails in general for the covariant
+derivative. This failure is measured by a tensor field that plays a
+central role in all of differential geometry.
+
+$$R(X,Y) Z = \delta_X \delta_Y Z - \delta_Y \delta_X Z - \delta_[X,Y] Z$$
+
+This is a (1, 3) tensor field which can be proven by showing that $R$ is
+$C^\infty$-linear with respect to each component.
 
 # Lie Groups
+
+See notebook on Lie Groups
+
+https://github.com/lukepereira/notebooks/
 
 E. Meinrenken and G. Gross, Introduction to Differential Geometry,
 Lecture Notes for MAT367.
