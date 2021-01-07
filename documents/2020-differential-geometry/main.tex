@@ -38,7 +38,7 @@
 \newtheorem{defn}[theorem]{Definition}
 \newtheorem{example}[theorem]{Example}
 \newenvironment{definition}
-  {\vspace{8pt}\begin{mdframed}[backgroundcolor=blueish]\begin{defn}}
+  {\vspace{8pt}\begin{mdframed}[backgroundcolor=blueish,innertopmargin=4]\begin{defn}}
   {\end{defn}\end{mdframed}\vspace{4pt}}
 
 
@@ -1536,6 +1536,7 @@ Given a smooth path $\gamma : [a,b] \rightarrow M$, we define the integral of a 
 \[
 \int_\gamma \alpha = \int_b^a \gamma^*\alpha.
 \]
+
 \end{definition}
 
 
@@ -1855,6 +1856,16 @@ The previous theorem shows that if $S$ is oriented, and if there is a closed for
 then $\phi$ cannot be smoothly deformed into $\phi 0$.
 
 
+\begin{example} (Winding number). 
+
+Let$ \omega \in \Omega^2 (\mathbb R^2\{0\})$ be the 1-form $\omega = \frac{1}{x^2 +y^2} (xdy-ydx)$. In polar coordinates $x = r \cos\theta, y = r\sin\theta$, one has that $\omega = d\theta$. Using this fact one sees that $\omega$ is closed (but not exact, since $\theta$ is not a globally defined function on $\mathbb R^2\{0\}$.) Hence, if $\gamma : S^1 \rightarrow \mathbb R^2 \{0\}$ is any smooth map (a ‘loop’), then the integral $\int_{S^1} \gamma^*\omega$ does not change under deformations (isotopies) of the loop. In particular, $\gamma$ cannot be deformed into a constant map, unless the integral is zero. The number 
+\[ 
+    w(\gamma) = \frac{1}{2\pi} \int_{S^1} \gamma^*\omega
+\]
+is the \textit{winding number} of $\gamma$. (One can show that this is always an integer, and that two loops can be deformed into each other if and only if they have the same winding number.)
+
+\end{example}
+
 \subsubsection{Volume forms}
 
 \begin{definition}
@@ -1908,17 +1919,155 @@ Note that volume forms are always closed, for degree reasons (since $\Omega^{m+1
 Let $M$ be a compact manifold with a volume form $\Gamma \in \Omega^m(M)$. Then $\Gamma$ cannot be exact.
 \end{theorem}
 
-\subsection{Cartan calculus}
+
+\section{De Rham Cohomology}
+
+The exterior derivative converts the algebra of differential forms on a manifold into a graded differential algebra. The corresponding cohomology is called the de Rham cohomology algebra. 
+
+See Text for full details: \begin{url}
+http://im0.p.lodz.pl/~kubarski/AnalizaIV/Wyklady/GHV/ITOM/G-H-V-1%20Connections,%20Curvature,%20and%20Cohomology.pdf
+\end{url}
+
+In article 1 it is shown that the de Rham cohomology satisfies the dimension, homotopy, disjoint union, and Mayer-Vietoris axioms. In article 2 various examples (retracts, PoincarC lemma, cohomology of Sn, and RP") are discussed. In article 3 everything is done again (with the appropriate modifications) for differential forms with compact carrier. In article 4 the integral is used to establish the PoincarC duality theorem for a smooth orientable manifold. This theorem is applied in article 5 (sec. 5.13 and 5.14) to determine the nth de Rham cohomology space for any n-manifold (orientable or nonorientable). In sec. 5.15 the duality theorem is used to show that a compact manifold has finitedimensional de Rham cohomology. The de Rham cohomology of the product of two manifolds is computed in article 6 (Kunneth theorems). In article 7 one version of the de Rham theorem is established. The results of this article are not quoted elsewhere in the book. 
+
+\section{Overview of Riemannian Geometry}
+Note, there may be changes in notation from switching reading source.
+
+On $\mathbb R^n$ we have notions like:
+\begin{enumerate}
+    \item Length of vectors angles orthonormal/orthogonal geometry
+    \item Areas volumes length of curves
+    \item Distance between 2 points
+    \item Parallel transport
+\end{enumerate}
+
+Observe: All of the elements of Euclidean geometry on $\mathbb R$ is entirely encoded in the inner product. We introduce geometry into smooth manifolds by making a choice of inner products on each $TpM$ that varies smoothly from point to point. This is an inner product.
+
+\begin{definition}
+
+\[
+    g: M \rightarrow T^2 (T^*_pM), p\mapsto g_p \in T^2 (T^*_pM)
+\]
+so that $g_p$ is an inner product on $T_pM$ and is bilinear symmetric, nondegenerative, and positive definite.
+
+Then $g_p \in C^\infty$ iff $g: \mathfrak X(M) \times \mathfrak X(M) \rightarrow C^\infty(M)$, defined by  $g(x,y)(p )= g_p(x_p, y_p)$. Note, $g_p$ is non-linear.
+\end{definition}
+
+\begin{definition}
+
+(M, g) is called a Riemannian manifold.
+\end{definition}
+
+The manifold has the following properties: 
+\begin{enumerate}
+    \item The length of vectors for $v \in T_pm$, $||v|| = \sqrt{g(v,v)}$, $\cos (angle v w) = \frac{g(v,w)}{||v||||w||} $.
+    
+    \begin{lemma}
+    Near each point, there exists an orthonormal local frame.
+    \end{lemma}
+
+    \item The length of curve $\gamma := \int_a^b \sqrt{g(\gamma(t),\gamma ' (t))} dt$.
+    
+    \item Distance $d: M \times M \rightarrow [0, \infty)$ is defined by $d(p,q) = \inf(\int_0^1 || \gamma '(t)|| )dt $ where $\gamma(0) = p, \gamma(1) = q$.
+
+    This makes $(M,d)$ a metric space so that the metric topology is the same as the original topology. One can show that $(M,d)$ is complete as a metric space iff $d(p,q)$ is obtained by a curve $\gamma$ for all $p,q \in M$.
+    
+    \item There is a natural isomorphism $\Phi_p: T_pM \rightarrow T^*_pM, \ v \mapsto (v^* : w \mapsto g(v,w))$. So there is a module isomorphism $\Phi : \mathfrak X \rightarrow \Omega '(M)$.
+    
+    \item Let $S \subseteq M$ be a $k$-dimensional manifold. Then $i^*g$ (induced metric on S) is a Riemannian metric on $S$ giving $S$ the unique geometry inherited by $M$.
+    
+    \item Suppose $M$ in oriented. There does not exist a nowhere vanishing n-form called the volume form satisfying $\omega(x_1,\dots, x_n) = 1$ whenever $x$ is a local orthonormal frame that has positive orientation. This allows for integration of functions for $f \in C^\infty(M)$ defined as $\int_M f := \int_m f \omega $. Also, if $M$ is compact, we have $vol(M) = \int_M 1 \ \int_M  \omega $. Similarly, $Vol_{k-dim}(S) = \int_S 1$ with respect to the induced metric $i^* g$ on $S$.
+    
+    \item We say $(M, g)$, $(\Tilde{M}, \Tilde{g})$ are isometric if there exists a diffeomorphism $F: M \rightarrow \Tilde{M}$ such that $g = F^*\Tilde{g}$
+\end{enumerate}
+
+\subsection{Covariant derivative and curvature}
+
+If a parallel transport of a vector along a curve has the property that $D_{\gamma'(t)} = 0$, then $\gamma$ is the shortest distance between $p$ and $q$ so $\gamma$ is a line.
+
+On a sphere in $S^2$, parrallel transport is equivalent to $(\delta _{\gamma'(t)} X )^T = 0$ intrinsic to the round metric $(S^3, g)$. Then the shortest paths are the curves which form great circles.
 
 
-\subsection{Cohomology Groups}
 
-\newpage
-\section{Riemannian Geometry}
+Define $(\Tilde{\delta _{X}} Y)= (\delta_X Y)^T $ as the connection operator for $X,Y\in \mathfrak{X}(S^2)$. This operator is intrinsic to $S^2$ and satisfies:
+\begin{enumerate}
+    \item $C^\infty$-linear  w.r.t. $X$.
+    \item $\mathbb R$-linear  w.r.t. $Y$.
+    \item $(\Tilde{\delta _{X}} fY) = X(f)Y + f\Tilde{\delta_X}Y$.
+    \item $\Tilde{\delta_x}y - \Tilde{\delta_y X} = L_x Y$
+    \item $Z(g(x,y)) - g(\Tilde{\delta_Z} X,Y) - g(x, \Tilde{\delta_Z}y) = 0$
+    
+\end{enumerate}
 
-\newpage
+Let $\gamma$ be a curve, then 
+\[
+\frac{d}{dt} (g(X_\gamma(t)), Y_\gamma (T)) = g(\Tilde{\gamma'(t)}X, Y ) + g(X, \Tilde{\gamma'(t)} Y). 
+\]
+
+\begin{theorem}
+On a manifold $(M, g)$ there does not exist a connection $\delta : \mathfrak X \times  \mathfrak X \rightarrow \mathfrak X$ satisfying (4)
+\[
+[X, Y] = \delta_X Y - D_Y X
+\]
+and (5)
+\[
+Z(g(x,y)) - g(\delta_Z X,Y) - g(x, \delta_Z y) = 0
+\]
+compatible with the metric. (5) gives rise to the notion of parallel transport on Riemannian manifolds and is called the Levi-Civita connection.
+
+So we say that $X$ is parrellel transported on a curve $\gamma$ on $M$ if $\delta_{\gamma'(t)} X = 0$ for all $t$.
+
+\end{theorem}
+
+
+\begin{definition} (Geodesic)
+ 
+$\gamma$ is a geodesic if  $\delta_{\gamma'(t)} X = 0$ for all $t$.
+
+\end{definition}
+
+\begin{theorem}
+
+If $d(p,q)$ is attained by a curve $\gamma$, then $\gamma$ is a geodesic.
+
+\end{theorem}
+
+Note, the converse is not true. A counter example of a great circle minus a small segment will not be the shortest distance between the two points.
+
+Let $(U, \phi)$ be a chart.
+\[
+    \delta_{\frac{\partial}{\partial x^i}} \frac{\partial }{\partial x^i}  = \sum_k \Gamma_{ij}^k \frac{\partial}{\partial x^k}
+\]
+Where $ \Gamma_{ij}^k$ are the Levi-Civita connection coeffecients and are completely determined by the metric.
+\[
+ \Gamma _{ij}^{k}={\tfrac {1}{2}}g^{mk}\left(
+ \frac{\partial g_{im}}{\partial x^j}
+ + \frac{ \partial g_{jm}}{\partial x^i}
+ -\frac{partial g_{ij}}{\partial x ^m}\right)
+\]
+
+\[
+    g_{ij} = g(\frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j})
+\]
+
+The term covariant derivative is often used for the Levi-Civita connection. The coefficients of this connection with respect to a system of local coordinates are called Christoffel symbols.
+
+\subsection{Curvature}
+
+Recall $L_[X,Y] = [L_X, L_Y]$. If $[X,Y]=0$ commutes, then $L_X L_Y - L_Y L_X = 0$ This fails in general for the covariant derivative. This failure is measured by a tensor field that plays a central role in all of differential geometry.
+
+\[
+    R(X,Y) Z = \delta_X \delta_Y Z - \delta_Y \delta_X Z - \delta_[X,Y] Z
+\]
+
+This is a (1, 3) tensor field which can be proven by showing that $R$ is $C^\infty$-linear with respect to each component.   
+
 \section{Lie Groups}
+See notebook on Lie Groups
 
+\begin{url}
+https://github.com/lukepereira/notebooks/
+\end{url}
 
 % The fundamental objects of study in differential geometry are manifolds. Roughly, an n-dimensional manifold is a mathematical object that ``locally'' looks like $\mathbb R^n$.  Manifolds in euclidean space are described with a \textit{regular level set}, $S = f^{-1}(a)$ which defines a smooth hypersurface $S \subseteq R^n$. For example, the n-dimensional sphere described by:
 % \[
@@ -1960,6 +2109,7 @@ Paul Seidel. 18.950 Differential Geometry. Fall 2008. Massachusetts Institute of
 Sigurdur Helgason. 18.755 Introduction to Lie Groups. Fall 2004. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. License: Creative Commons BY-NC-SA.
 %https://ocw.mit.edu/courses/mathematics/18-755-introduction-to-lie-groups-fall-2004/index.htm#
 
+%https://link.springer.com/book/10.1007/978-1-4612-0281-3
 
 \end{thebibliography}
 
