@@ -247,10 +247,13 @@
 <li><a href="#stokes-theorem">Stokes’ theorem</a></li>
 <li><a href="#volume-forms">Volume forms</a></li>
 </ul></li>
-<li><a href="#cartan-calculus">Cartan calculus</a></li>
-<li><a href="#cohomology-groups">Cohomology Groups</a></li>
 </ul></li>
-<li><a href="#riemannian-geometry">Riemannian Geometry</a></li>
+<li><a href="#de-rham-cohomology">De Rham Cohomology</a></li>
+<li><a href="#overview-of-riemannian-geometry">Overview of Riemannian Geometry</a>
+<ul>
+<li><a href="#covariant-derivative-and-curvature">Covariant derivative and curvature</a></li>
+<li><a href="#curvature">Curvature</a></li>
+</ul></li>
 <li><a href="#lie-groups">Lie Groups</a></li>
 </ul>
 <h1 id="prerequisites">Prerequisites</h1>
@@ -1085,33 +1088,106 @@ L_X (\alpha \wedge\beta) &amp;= (L_X\alpha)\wedge\beta +\alpha \wedge L_X \beta,
 <p>Given a smooth map <span class="math inline">\(\phi : S \rightarrow M\)</span>, one refers to a smooth map <span class="math inline">\(F : R \times S \rightarrow M\)</span> with <span class="math inline">\(F_0 = \phi\)</span> as an <em>smooth deformation or isotopy</em> of <span class="math inline">\(\phi\)</span>. We say that <span class="math inline">\(\phi\)</span> can be smoothly deformed into <span class="math inline">\(\phi&#39;\)</span> if there exists a smooth isotopy <span class="math inline">\(F\)</span> with <span class="math inline">\(\phi = F_0\)</span> and <span class="math inline">\(\phi&#39; = F_1\)</span>.</p>
 </div>
 <p>The previous theorem shows that if <span class="math inline">\(S\)</span> is oriented, and if there is a closed form <span class="math inline">\(\omega \in \Omega^k (M)\)</span> with <span class="math display">\[\int_S \phi^* \omega \neq \int_S (\phi&#39; )^* \omega\]</span> then <span class="math inline">\(\phi\)</span> cannot be smoothly deformed into <span class="math inline">\(\phi 0\)</span>.</p>
+<div class="example">
+<p><strong>Example 116</strong>. (Winding number).</p>
+<p>Let<span class="math inline">\(\omega \in \Omega^2 (\mathbb R^2\{0\})\)</span> be the 1-form <span class="math inline">\(\omega = \frac{1}{x^2 +y^2} (xdy-ydx)\)</span>. In polar coordinates <span class="math inline">\(x = r \cos\theta, y = r\sin\theta\)</span>, one has that <span class="math inline">\(\omega = d\theta\)</span>. Using this fact one sees that <span class="math inline">\(\omega\)</span> is closed (but not exact, since <span class="math inline">\(\theta\)</span> is not a globally defined function on <span class="math inline">\(\mathbb R^2\{0\}\)</span>.) Hence, if <span class="math inline">\(\gamma : S^1 \rightarrow \mathbb R^2 \{0\}\)</span> is any smooth map (a ‘loop’), then the integral <span class="math inline">\(\int_{S^1} \gamma^*\omega\)</span> does not change under deformations (isotopies) of the loop. In particular, <span class="math inline">\(\gamma\)</span> cannot be deformed into a constant map, unless the integral is zero. The number <span class="math display">\[w(\gamma) = \frac{1}{2\pi} \int_{S^1} \gamma^*\omega\]</span> is the <em>winding number</em> of <span class="math inline">\(\gamma\)</span>. (One can show that this is always an integer, and that two loops can be deformed into each other if and only if they have the same winding number.)</p>
+</div>
 <h3 id="volume-forms">Volume forms</h3>
 <div class="defn">
-<p><strong>Definition 116</strong>. A non vanishing 1-form <span class="math inline">\(\alpha\)</span> at point <span class="math inline">\(p\)</span> means that there is a vector <span class="math inline">\(v\)</span> in <span class="math inline">\(T_pM\)</span> such that <span class="math inline">\(\alpha_p(v)\neq 0\)</span>. Similarly for the <span class="math inline">\(k\)</span>-form, it means that there is a set of <span class="math inline">\(k\)</span> vectors such the form is nonzero if evaluated on these vectors.</p>
+<p><strong>Definition 117</strong>. A non vanishing 1-form <span class="math inline">\(\alpha\)</span> at point <span class="math inline">\(p\)</span> means that there is a vector <span class="math inline">\(v\)</span> in <span class="math inline">\(T_pM\)</span> such that <span class="math inline">\(\alpha_p(v)\neq 0\)</span>. Similarly for the <span class="math inline">\(k\)</span>-form, it means that there is a set of <span class="math inline">\(k\)</span> vectors such the form is nonzero if evaluated on these vectors.</p>
 </div>
 <div class="defn">
-<p><strong>Definition 117</strong>. (Volume form)</p>
+<p><strong>Definition 118</strong>. (Volume form)</p>
 <p>A top degree differential form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span> is called a <em>volume form</em> if it is nonvanishing everywhere: <span class="math inline">\(\Gamma_p \neq 0\)</span> for all <span class="math inline">\(p \in M\)</span>. In a local coordinate chart <span class="math inline">\((U,\phi)\)</span>, this means that <span class="math display">\[(\phi^{-1} )^*\Gamma = f dx^1 \wedge \cdots \wedge dx^m\]</span> where <span class="math inline">\(f(x) \neq 0\)</span> for all <span class="math inline">\(x \in \phi(U)\)</span>.</p>
 </div>
 <div class="lemma">
-<p><strong>Lemma 118</strong>. <em>A volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span> determines an orientation on <span class="math inline">\(M\)</span>, by taking as the oriented charts those charts <span class="math inline">\((U,\phi)\)</span> such that</em></p>
+<p><strong>Lemma 119</strong>. <em>A volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span> determines an orientation on <span class="math inline">\(M\)</span>, by taking as the oriented charts those charts <span class="math inline">\((U,\phi)\)</span> such that</em></p>
 <p><em><span class="math display">\[(\phi^{-1})^*\Gamma = f dx^1 \wedge \cdots \wedge dx^m\]</span> with <span class="math inline">\(f &gt; 0\)</span> everywhere on <span class="math inline">\(\Phi(U)\)</span>.</em></p>
 </div>
 <div class="theorem">
-<p><strong>Theorem 119</strong>. <em>A manifold <span class="math inline">\(M\)</span> is orientable if and only if it admits a volume form. In this case, any two volume forms compatible with the orientation differ by an everywhere positive smooth function: <span class="math display">\[\Gamma&#39; = f \Gamma , f &gt; 0.\]</span></em></p>
+<p><strong>Theorem 120</strong>. <em>A manifold <span class="math inline">\(M\)</span> is orientable if and only if it admits a volume form. In this case, any two volume forms compatible with the orientation differ by an everywhere positive smooth function: <span class="math display">\[\Gamma&#39; = f \Gamma , f &gt; 0.\]</span></em></p>
 </div>
 <div class="defn">
-<p><strong>Definition 120</strong>. (Volume)</p>
+<p><strong>Definition 121</strong>. (Volume)</p>
 <p>For a compact manifold <span class="math inline">\(M\)</span> with a given volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span>, one can define the volume of <span class="math inline">\(M\)</span>, <span class="math display">\[vol(M) = \int_M \Gamma.\]</span> Here the orientation used in the definition of the integral is taken to be the orientation given by <span class="math inline">\(\Gamma\)</span> . Thus <span class="math inline">\(vol(M) &gt; 0\)</span>.</p>
 </div>
 <p>Note that volume forms are always closed, for degree reasons (since <span class="math inline">\(\Omega^{m+1} (M) = 0\)</span>). But on a compact manifold, they cannot be exact:</p>
 <div class="theorem">
-<p><strong>Theorem 121</strong>. <em>Let <span class="math inline">\(M\)</span> be a compact manifold with a volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span>. Then <span class="math inline">\(\Gamma\)</span> cannot be exact.</em></p>
+<p><strong>Theorem 122</strong>. <em>Let <span class="math inline">\(M\)</span> be a compact manifold with a volume form <span class="math inline">\(\Gamma \in \Omega^m(M)\)</span>. Then <span class="math inline">\(\Gamma\)</span> cannot be exact.</em></p>
 </div>
-<h2 id="cartan-calculus">Cartan calculus</h2>
-<h2 id="cohomology-groups">Cohomology Groups</h2>
-<h1 id="riemannian-geometry">Riemannian Geometry</h1>
+<h1 id="de-rham-cohomology">De Rham Cohomology</h1>
+<p>The exterior derivative converts the algebra of differential forms on a manifold into a graded differential algebra. The corresponding cohomology is called the de Rham cohomology algebra.</p>
+<p>See Text for full details:</p>
+<p>http://im0.p.lodz.pl/ kubarski/AnalizaIV/Wyklady/GHV/ITOM/G-H-V-1</p>
+<p>In article 1 it is shown that the de Rham cohomology satisfies the dimension, homotopy, disjoint union, and Mayer-Vietoris axioms. In article 2 various examples (retracts, PoincarC lemma, cohomology of Sn, and RP") are discussed. In article 3 everything is done again (with the appropriate modifications) for differential forms with compact carrier. In article 4 the integral is used to establish the PoincarC duality theorem for a smooth orientable manifold. This theorem is applied in article 5 (sec. 5.13 and 5.14) to determine the nth de Rham cohomology space for any n-manifold (orientable or nonorientable). In sec. 5.15 the duality theorem is used to show that a compact manifold has finitedimensional de Rham cohomology. The de Rham cohomology of the product of two manifolds is computed in article 6 (Kunneth theorems). In article 7 one version of the de Rham theorem is established. The results of this article are not quoted elsewhere in the book.</p>
+<h1 id="overview-of-riemannian-geometry">Overview of Riemannian Geometry</h1>
+<p>Note, there may be changes in notation from switching reading source.</p>
+<p>On <span class="math inline">\(\mathbb R^n\)</span> we have notions like:</p>
+<ol type="1">
+<li><p>Length of vectors angles orthonormal/orthogonal geometry</p></li>
+<li><p>Areas volumes length of curves</p></li>
+<li><p>Distance between 2 points</p></li>
+<li><p>Parallel transport</p></li>
+</ol>
+<p>Observe: All of the elements of Euclidean geometry on <span class="math inline">\(\mathbb R\)</span> is entirely encoded in the inner product. We introduce geometry into smooth manifolds by making a choice of inner products on each <span class="math inline">\(TpM\)</span> that varies smoothly from point to point. This is an inner product.</p>
+<div class="defn">
+<p><strong>Definition 123</strong>. <span class="math display">\[g: M \rightarrow T^2 (T^*_pM), p\mapsto g_p \in T^2 (T^*_pM)\]</span> so that <span class="math inline">\(g_p\)</span> is an inner product on <span class="math inline">\(T_pM\)</span> and is bilinear symmetric, nondegenerative, and positive definite.</p>
+<p>Then <span class="math inline">\(g_p \in C^\infty\)</span> iff <span class="math inline">\(g: \mathfrak X(M) \times \mathfrak X(M) \rightarrow C^\infty(M)\)</span>, defined by <span class="math inline">\(g(x,y)(p )= g_p(x_p, y_p)\)</span>. Note, <span class="math inline">\(g_p\)</span> is non-linear.</p>
+</div>
+<div class="defn">
+<p><strong>Definition 124</strong>. (M, g) is called a Riemannian manifold.</p>
+</div>
+<p>The manifold has the following properties:</p>
+<ol type="1">
+<li><p>The length of vectors for <span class="math inline">\(v \in T_pm\)</span>, <span class="math inline">\(||v|| = \sqrt{g(v,v)}\)</span>, <span class="math inline">\(\cos (angle v w) = \frac{g(v,w)}{||v||||w||}\)</span>.</p>
+<div class="lemma">
+<p><strong>Lemma 125</strong>. <em>Near each point, there exists an orthonormal local frame.</em></p>
+</div></li>
+<li><p>The length of curve <span class="math inline">\(\gamma := \int_a^b \sqrt{g(\gamma(t),\gamma &#39; (t))} dt\)</span>.</p></li>
+<li><p>Distance <span class="math inline">\(d: M \times M \rightarrow [0, \infty)\)</span> is defined by <span class="math inline">\(d(p,q) = \inf(\int_0^1 || \gamma &#39;(t)|| )dt\)</span> where <span class="math inline">\(\gamma(0) = p, \gamma(1) = q\)</span>.</p>
+<p>This makes <span class="math inline">\((M,d)\)</span> a metric space so that the metric topology is the same as the original topology. One can show that <span class="math inline">\((M,d)\)</span> is complete as a metric space iff <span class="math inline">\(d(p,q)\)</span> is obtained by a curve <span class="math inline">\(\gamma\)</span> for all <span class="math inline">\(p,q \in M\)</span>.</p></li>
+<li><p>There is a natural isomorphism <span class="math inline">\(\Phi_p: T_pM \rightarrow T^*_pM, \ v \mapsto (v^* : w \mapsto g(v,w))\)</span>. So there is a module isomorphism <span class="math inline">\(\Phi : \mathfrak X \rightarrow \Omega &#39;(M)\)</span>.</p></li>
+<li><p>Let <span class="math inline">\(S \subseteq M\)</span> be a <span class="math inline">\(k\)</span>-dimensional manifold. Then <span class="math inline">\(i^*g\)</span> (induced metric on S) is a Riemannian metric on <span class="math inline">\(S\)</span> giving <span class="math inline">\(S\)</span> the unique geometry inherited by <span class="math inline">\(M\)</span>.</p></li>
+<li><p>Suppose <span class="math inline">\(M\)</span> in oriented. There does not exist a nowhere vanishing n-form called the volume form satisfying <span class="math inline">\(\omega(x_1,\dots, x_n) = 1\)</span> whenever <span class="math inline">\(x\)</span> is a local orthonormal frame that has positive orientation. This allows for integration of functions for <span class="math inline">\(f \in C^\infty(M)\)</span> defined as <span class="math inline">\(\int_M f := \int_m f \omega\)</span>. Also, if <span class="math inline">\(M\)</span> is compact, we have <span class="math inline">\(vol(M) = \int_M 1 \ \int_M \omega\)</span>. Similarly, <span class="math inline">\(Vol_{k-dim}(S) = \int_S 1\)</span> with respect to the induced metric <span class="math inline">\(i^* g\)</span> on <span class="math inline">\(S\)</span>.</p></li>
+<li><p>We say <span class="math inline">\((M, g)\)</span>, <span class="math inline">\((\Tilde{M}, \Tilde{g})\)</span> are isometric if there exists a diffeomorphism <span class="math inline">\(F: M \rightarrow \Tilde{M}\)</span> such that <span class="math inline">\(g = F^*\Tilde{g}\)</span></p></li>
+</ol>
+<h2 id="covariant-derivative-and-curvature">Covariant derivative and curvature</h2>
+<p>If a parallel transport of a vector along a curve has the property that <span class="math inline">\(D_{\gamma&#39;(t)} = 0\)</span>, then <span class="math inline">\(\gamma\)</span> is the shortest distance between <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span> so <span class="math inline">\(\gamma\)</span> is a line.</p>
+<p>On a sphere in <span class="math inline">\(S^2\)</span>, parrallel transport is equivalent to <span class="math inline">\((\delta _{\gamma&#39;(t)} X )^T = 0\)</span> intrinsic to the round metric <span class="math inline">\((S^3, g)\)</span>. Then the shortest paths are the curves which form great circles.</p>
+<p>Define <span class="math inline">\((\Tilde{\delta _{X}} Y)= (\delta_X Y)^T\)</span> as the connection operator for <span class="math inline">\(X,Y\in \mathfrak{X}(S^2)\)</span>. This operator is intrinsic to <span class="math inline">\(S^2\)</span> and satisfies:</p>
+<ol type="1">
+<li><p><span class="math inline">\(C^\infty\)</span>-linear w.r.t. <span class="math inline">\(X\)</span>.</p></li>
+<li><p><span class="math inline">\(\mathbb R\)</span>-linear w.r.t. <span class="math inline">\(Y\)</span>.</p></li>
+<li><p><span class="math inline">\((\Tilde{\delta _{X}} fY) = X(f)Y + f\Tilde{\delta_X}Y\)</span>.</p></li>
+<li><p><span class="math inline">\(\Tilde{\delta_x}y - \Tilde{\delta_y X} = L_x Y\)</span></p></li>
+<li><p><span class="math inline">\(Z(g(x,y)) - g(\Tilde{\delta_Z} X,Y) - g(x, \Tilde{\delta_Z}y) = 0\)</span></p></li>
+</ol>
+<p>Let <span class="math inline">\(\gamma\)</span> be a curve, then <span class="math display">\[\frac{d}{dt} (g(X_\gamma(t)), Y_\gamma (T)) = g(\Tilde{\gamma&#39;(t)}X, Y ) + g(X, \Tilde{\gamma&#39;(t)} Y).\]</span></p>
+<div class="theorem">
+<p><strong>Theorem 126</strong>. <em>On a manifold <span class="math inline">\((M, g)\)</span> there does not exist a connection <span class="math inline">\(\delta : \mathfrak X \times \mathfrak X \rightarrow \mathfrak X\)</span> satisfying (4) <span class="math display">\[[X, Y] = \delta_X Y - D_Y X\]</span> and (5) <span class="math display">\[Z(g(x,y)) - g(\delta_Z X,Y) - g(x, \delta_Z y) = 0\]</span> compatible with the metric. (5) gives rise to the notion of parallel transport on Riemannian manifolds and is called the Levi-Civita connection.</em></p>
+<p><em>So we say that <span class="math inline">\(X\)</span> is parrellel transported on a curve <span class="math inline">\(\gamma\)</span> on <span class="math inline">\(M\)</span> if <span class="math inline">\(\delta_{\gamma&#39;(t)} X = 0\)</span> for all <span class="math inline">\(t\)</span>.</em></p>
+</div>
+<div class="defn">
+<p><strong>Definition 127</strong>. (Geodesic)</p>
+<p><span class="math inline">\(\gamma\)</span> is a geodesic if <span class="math inline">\(\delta_{\gamma&#39;(t)} X = 0\)</span> for all <span class="math inline">\(t\)</span>.</p>
+</div>
+<div class="theorem">
+<p><strong>Theorem 128</strong>. <em>If <span class="math inline">\(d(p,q)\)</span> is attained by a curve <span class="math inline">\(\gamma\)</span>, then <span class="math inline">\(\gamma\)</span> is a geodesic.</em></p>
+</div>
+<p>Note, the converse is not true. A counter example of a great circle minus a small segment will not be the shortest distance between the two points.</p>
+<p>Let <span class="math inline">\((U, \phi)\)</span> be a chart. <span class="math display">\[\delta_{\frac{\partial}{\partial x^i}} \frac{\partial }{\partial x^i}  = \sum_k \Gamma_{ij}^k \frac{\partial}{\partial x^k}\]</span> Where <span class="math inline">\(\Gamma_{ij}^k\)</span> are the Levi-Civita connection coeffecients and are completely determined by the metric. <span class="math display">\[\Gamma _{ij}^{k}={\tfrac {1}{2}}g^{mk}\left(
+ \frac{\partial g_{im}}{\partial x^j}
+ + \frac{ \partial g_{jm}}{\partial x^i}
+ -\frac{partial g_{ij}}{\partial x ^m}\right)\]</span></p>
+<p><span class="math display">\[g_{ij} = g(\frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j})\]</span></p>
+<p>The term covariant derivative is often used for the Levi-Civita connection. The coefficients of this connection with respect to a system of local coordinates are called Christoffel symbols.</p>
+<h2 id="curvature">Curvature</h2>
+<p>Recall <span class="math inline">\(L_[X,Y] = [L_X, L_Y]\)</span>. If <span class="math inline">\([X,Y]=0\)</span> commutes, then <span class="math inline">\(L_X L_Y - L_Y L_X = 0\)</span> This fails in general for the covariant derivative. This failure is measured by a tensor field that plays a central role in all of differential geometry.</p>
+<p><span class="math display">\[R(X,Y) Z = \delta_X \delta_Y Z - \delta_Y \delta_X Z - \delta_[X,Y] Z\]</span></p>
+<p>This is a (1, 3) tensor field which can be proven by showing that <span class="math inline">\(R\)</span> is <span class="math inline">\(C^\infty\)</span>-linear with respect to each component.</p>
 <h1 id="lie-groups">Lie Groups</h1>
+<p>See notebook on Lie Groups</p>
+<p>https://github.com/lukepereira/notebooks/</p>
 <p>E. Meinrenken and G. Gross, Introduction to Differential Geometry, Lecture Notes for MAT367.</p>
 <p>Samelson, H. Review: Werner Greub, Stephen Halperin and Ray Vanstone, Connections, curvature, and cohomology. Bull. Amer. Math. Soc. 83 (1977), no. 5, 1011–1015. https://projecteuclid.org/euclid.bams/1183539466</p>
 <p>Paul Seidel. 18.950 Differential Geometry. Fall 2008. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. License: Creative Commons BY-NC-SA.</p>

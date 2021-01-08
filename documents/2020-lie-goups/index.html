@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Lie Groups and Lie Algebras</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Lie Groups and Lie Algebras</h1>
+</header>
+<ul>
+<li><a href="#terminology-and-notation">Terminology and notation</a>
+<ul>
+<li><a href="#lie-groups">Lie groups</a></li>
+<li><a href="#lie-algebras">Lie algebras</a></li>
+</ul></li>
+<li><a href="#the-covering-operatornamesu2to-operatornameso3">The covering <span class="math inline">\(\operatorname{SU}(2)\to \operatorname{SO}(3)\)</span></a></li>
+<li><a href="#the-lie-algebra-of-a-lie-group">The Lie algebra of a Lie group</a>
+<ul>
+<li><a href="#review-tangent-vectors-and-vector-fields">Review: Tangent vectors and vector fields</a></li>
+<li><a href="#the-lie-algebra-of-a-lie-group-1">The Lie algebra of a Lie group</a></li>
+</ul></li>
+<li><a href="#the-exponential-map">The exponential map</a></li>
+<li><a href="#cartans-theorem-on-closed-subgroups">Cartan’s theorem on closed subgroups</a></li>
+<li><a href="#the-adjoint-representations">The adjoint representations</a>
+<ul>
+<li><a href="#automorphisms">Automorphisms</a></li>
+<li><a href="#the-adjoint-representation-of-g">The adjoint representation of <span class="math inline">\(G\)</span></a></li>
+<li><a href="#the-adjoint-representation-of-mathfrakg">The adjoint representation of <span class="math inline">\(\mathfrak{g}\)</span></a></li>
+</ul></li>
+<li><a href="#the-differential-of-the-exponential-map">The differential of the exponential map</a></li>
+<li><a href="#actions-of-lie-groups-and-lie-algebras">Actions of Lie groups and Lie algebras</a>
+<ul>
+<li><a href="#lie-group-actions">Lie group actions</a></li>
+<li><a href="#lie-algebra-actions">Lie algebra actions</a></li>
+<li><a href="#integrating-lie-algebra-actions">Integrating Lie algebra actions</a></li>
+<li><a href="#proper-actions">Proper actions</a></li>
+</ul></li>
+</ul>
+<h1 id="terminology-and-notation">Terminology and notation</h1>
+<h2 id="lie-groups">Lie groups</h2>
+<p>A Lie group (pronounced "Lee") is a group that is also a differentiable manifold (See differential geometry notebook). Combining these two ideas, one obtains a continuous group where points can be multiplied together, and their inverse can be taken. If the multiplication and taking of inverses are defined to be smooth (differentiable), one obtains a Lie group. Lie groups appear as symmetry groups of physical systems, and their Lie algebras (tangent vectors near the identity) may be thought of as infinitesimal symmetry motions. Thus Lie algebras and their representations are used extensively in physics, notably in quantum mechanics and particle physics.</p>
+<div class="definition">
+<p><em>Definition 1</em>. A Lie group is a group <span class="math inline">\(G\)</span>, equipped with a manifold structure such that the group operations <span class="math display">\[\operatorname{Mult}\colon G\times G\to G,\ \ (g_1,g_2)\mapsto g_1 g_2\]</span> <span class="math display">\[\operatorname{Inv}\colon G\to G,\ \ g\mapsto g^{-1}\]</span> are smooth. A morphism of Lie groups <span class="math inline">\(G,G&#39;\)</span> is a morphism of groups <span class="math inline">\(\phi\colon G\to G&#39;\)</span> that is smooth.</p>
+</div>
+<div class="remark">
+<p><em>Remark 2</em>. Using the implicit function theorem, one can show that smoothness of <span class="math inline">\(\operatorname{Inv}\)</span> is in fact automatic.</p>
+</div>
+<p>The first example of a Lie group is the <em>general linear group</em> <span class="math display">\[\operatorname{GL}(n,\mathbb{R})=\{A\in \operatorname{Mat}_n(\mathbb{R})|\ \det(A)\not=0\}\]</span> of invertible <span class="math inline">\(n\times n\)</span> matrices. It is an open subset of <span class="math inline">\(\operatorname{Mat}_n(\mathbb{R})\)</span>, hence a submanifold, and the smoothness of group multiplication follows since the product map for <span class="math inline">\(\operatorname{Mat}_n(\mathbb{R})\)</span> is obviously smooth.</p>
+<p>Our next example is the orthogonal group <span class="math display">\[\operatorname{O}(n)=\{A\in \operatorname{Mat}_n(\mathbb{R})|\ A^T A=I\}.\]</span> To see that it is a Lie group, it suffices to show that <span class="math inline">\(\operatorname{O}(n)\)</span> is an embedded submanifold of <span class="math inline">\(\operatorname{Mat}_n(\mathbb{R})\)</span>. In order to construct submanifold charts, we use the exponential map of matrices <span class="math display">\[\exp\colon \operatorname{Mat}_n(\mathbb{R})\to \operatorname{Mat}_n(\mathbb{R}),\ \ 
+B\mapsto \exp(B)=\sum_{n=0}^\infty \frac{1}{n!} B^n\]</span> (an absolutely convergent series). One has <span class="math inline">\(\frac{{\mbox{d}}}{{\mbox{d}} t}|_{t=0}\exp(tB)=B\)</span>, hence the differential of <span class="math inline">\(\exp\)</span> at <span class="math inline">\(0\)</span> is the identity <span class="math inline">\(\operatorname{id}_{\operatorname{Mat}_n(\mathbb{R})}\)</span>. By the inverse function theorem, this means that there is <span class="math inline">\(\epsilon&gt;0\)</span> such that <span class="math inline">\(\exp\)</span> restricts to a diffeomorphism from the open neighborhood <span class="math inline">\(U=\{B:\ ||B||&lt;\epsilon\}\)</span> of <span class="math inline">\(0\)</span> onto an open neighborhood <span class="math inline">\(\exp(U)\)</span> of <span class="math inline">\(I\)</span>. Let <span class="math display">\[\mathfrak{o}(n)=\{B\in \operatorname{Mat}_n(\mathbb{R})|\ B+B^T=0\}.\]</span> We claim that <span class="math display">\[\exp(\mathfrak{o}(n)\cap U)=\operatorname{O}(n)\cap \exp(U),\]</span> so that <span class="math inline">\(\exp\)</span> gives a submanifold chart for <span class="math inline">\(\operatorname{O}(n)\)</span> over <span class="math inline">\(\exp(U)\)</span>. To prove the claim, let <span class="math inline">\(B\in U\)</span>. Then <span class="math display">\[\begin{split} \exp(B)\in \operatorname{O}(n) &amp; \Leftrightarrow 
+\exp(B)^T=\exp(B)^{-1}\\
+&amp; \Leftrightarrow 
+\exp(B^T)=\exp(-B)\\
+&amp; \Leftrightarrow 
+B^T=-B\\
+&amp; \Leftrightarrow B\in \mathfrak{o}(n).
+\end{split}\]</span> For a more general <span class="math inline">\(A\in \operatorname{O}(n)\)</span>, we use that the map <span class="math inline">\(\operatorname{Mat}_n(\mathbb{R})\to \operatorname{Mat}_n(\mathbb{R})\)</span> given by left multiplication is a diffeomorphism. Hence, <span class="math inline">\(A\exp(U)\)</span> is an open neighborhood of <span class="math inline">\(A\)</span>, and we have <span class="math display">\[A\exp(U)\cap \operatorname{O}(n)=A(\exp(U)\cap \operatorname{O}(n))=A\exp(U\cap \mathfrak{o}(n)).\]</span> Thus, we also get a submanifold chart near <span class="math inline">\(A\)</span>. This proves that <span class="math inline">\(\operatorname{O}(n)\)</span> is a submanifold. Hence its group operations are induced from those of <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span>, they are smooth. Hence <span class="math inline">\(\operatorname{O}(n)\)</span> is a Lie group. Notice that <span class="math inline">\(\operatorname{O}(n)\)</span> is compact (the column vectors of an orthogonal matrix are an orthonormal basis of <span class="math inline">\(\mathbb{R}^n\)</span>; hence <span class="math inline">\(\operatorname{O}(n)\)</span> is a subset of <span class="math inline">\(S^{n-1}\times\cdots S^{n-1}\subset \mathbb{R}^n\times\cdots \mathbb{R}^n\)</span>).</p>
+<p>A similar argument shows that the <em>special linear group</em> <span class="math display">\[\operatorname{SL}(n,\mathbb{R})=\{A\in \operatorname{Mat}_n(\mathbb{R})|\ \det(A)=1\}\]</span> is an embedded submanifold of <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span>, and hence is a Lie group. The submanifold charts are obtained by exponentiating the subspace <span class="math display">\[\mathfrak{sl}(n,\mathbb{R})=\{B\in \operatorname{Mat}_n(\mathbb{R})|\ \operatorname{tr}(B)=0\},\]</span> using the identity <span class="math inline">\(\det(\exp(B))=\exp(\operatorname{tr}(B))\)</span>.</p>
+<p>Actually, we could have saved most of this work with <span class="math inline">\(\operatorname{O}(n),\
+ \operatorname{SL}(n,\mathbb{R})\)</span> once we have the following beautiful result of E. Cartan:</p>
+<blockquote>
+<p><strong>Fact:</strong> <em>Every closed subgroup of a Lie group is an embedded submanifold, hence is again a Lie group.</em></p>
+</blockquote>
+<p>We will prove this very soon, once we have developed some more basics of Lie group theory. A closed subgroup of <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span> (for suitable <span class="math inline">\(n\)</span>) is called a <em>matrix Lie group</em>. Let us now give a few more examples of Lie groups, without detailed justifications.</p>
+<div class="examples">
+<p><em>Examples 3</em>.</p>
+<ol type="1">
+<li><p>Any finite-dimensional vector space <span class="math inline">\(V\)</span> over <span class="math inline">\(\mathbb{R}\)</span> is a Lie group, with product <span class="math inline">\(\operatorname{Mult}\)</span> given by addition.</p></li>
+<li><p>Let <span class="math inline">\(\mathcal{A}\)</span> be a finite-dimensional associative algebra over <span class="math inline">\(\mathbb{R}\)</span>, with unit <span class="math inline">\(1_\mathcal{A}\)</span>. Then the group <span class="math inline">\(\mathcal{A}^\times\)</span> of invertible elements is a Lie group. More generally, if <span class="math inline">\(n\in\mathbb{N}\)</span> we can create the algebra <span class="math inline">\(\operatorname{Mat}_n(\mathcal{A})\)</span> of matrices with entries in <span class="math inline">\(\mathcal{A}\)</span>, and the <em>general linear group</em> <span class="math display">\[\operatorname{GL}(n,\mathcal{A}):=\operatorname{Mat}_n(\mathcal{A})^\times\]</span> is a Lie group. If <span class="math inline">\(\mathcal{A}\)</span> is <em>commutative</em>, one has a determinant map <span class="math inline">\(\operatorname{det}\colon \operatorname{Mat}_n(\mathcal{A})\to \mathcal{A}\)</span>, and <span class="math inline">\(\operatorname{GL}(n,\mathcal{A})\)</span> is the pre-image of <span class="math inline">\(\mathcal{A}^\times\)</span>. One may then define a <em>special linear group</em> <span class="math display">\[\operatorname{SL}(n,\mathcal{A})=\{g\in  \operatorname{GL}(n,\mathcal{A})|\ \det(g)=1\}.\]</span></p></li>
+<li><p>We mostly have in mind the cases <span class="math inline">\(\mathcal{A}=\mathbb{R},\mathbb{C},\mathbb{H}\)</span>. Here <span class="math inline">\(\mathbb{H}\)</span> is the algebra of <em>quaternions</em> (due to Hamilton). Recall that <span class="math inline">\(\mathbb{H}=\mathbb{R}^4\)</span> as a vector space, with elements <span class="math inline">\((a,b,c,d)\in \mathbb{R}^4\)</span> written as <span class="math display">\[x=a+ib+jc+kd\]</span> with imaginary units <span class="math inline">\(i,j,k\)</span>. The algebra structure is determined by <span class="math display">\[i^2=j^2=k^2=-1,\ ij=k,\ jk=i,\ ki=j.\]</span> Note that <span class="math inline">\(\mathbb{H}\)</span> is non-commutative (e.g. <span class="math inline">\(ji=-ij\)</span>), hence <span class="math inline">\(\operatorname{SL}(n,\mathbb{H})\)</span> is <em>not</em> defined. On the other hand, one can define complex conjugates <span class="math display">\[\overline{x}=a-ib-jc-kd\]</span> and <span class="math display">\[|x|^2:=x\overline{x}=a^2+b^2+c^2+d^2.\]</span> defines a norm <span class="math inline">\(x\mapsto |x|\)</span>, with <span class="math inline">\(|x_1x_2|=|x_1| |x_2|\)</span> just as for complex or real numbers. The spaces <span class="math inline">\(\mathbb{R}^n,\mathbb{C}^n,\mathbb{H}^n\)</span> inherit norms, by putting <span class="math display">\[||x||^2=\sum_{i=1}^n |x_i|^2,\ \ x=(x_1,\ldots,x_n).\]</span> The subgroups of <span class="math inline">\(\operatorname{GL}(n,\mathbb{R}),\  \operatorname{GL}(n,\mathbb{C}),\  \operatorname{GL}(n,\mathbb{H})\)</span> preserving this norm (in the sense that <span class="math inline">\(||Ax||=||x||\)</span> for all <span class="math inline">\(x\)</span>) are denoted <span class="math display">\[\operatorname{O}(n),\ \operatorname{U}(n),\ \operatorname{Sp}(n)\]</span> and are called the <em>orthogonal, unitary, and symplectic group</em>, respectively. Since the norms of <span class="math inline">\(\mathbb{C},\mathbb{H}\)</span> coincide with those of <span class="math inline">\(\mathbb{C}\cong \mathbb{R}^2\)</span>, <span class="math inline">\(\mathbb{H}=\mathbb{C}^2 \cong \mathbb{R}^4\)</span>, we have <span class="math display">\[\operatorname{U}(n)= \operatorname{GL}(n,\mathbb{C})\cap \operatorname{O}(2n),\ \ 
+\operatorname{Sp}(n)= \operatorname{GL}(n,\mathbb{H})\cap \operatorname{O}(4n).\]</span> In particular, all of these groups are compact. One can also define <span class="math display">\[\operatorname{SO}(n)=\operatorname{O}(n)\cap  \operatorname{SL}(n,\mathbb{R}),\ \  \operatorname{SU}(n)=\operatorname{U}(n)\cap  \operatorname{SL}(n,\mathbb{C}),\]</span> these are called the <em>special orthogonal</em> and <em>special unitary</em> groups. The groups <span class="math inline">\(\operatorname{SO}(n),\  \operatorname{SU}(n), \operatorname{Sp}(n)\)</span> are often called the <em>classical groups</em> (but this term is used a bit loosely).</p></li>
+<li><p>For any Lie group <span class="math inline">\(G\)</span>, its universal cover <span class="math inline">\(\widetilde{G}\)</span> is again a Lie group. The universal cover <span class="math inline">\(\widetilde{ \operatorname{SL}(2,\mathbb{R})}\)</span> is an example of a Lie group that is not isomorphic to a matrix Lie group.</p></li>
+</ol>
+</div>
+<h2 id="lie-algebras">Lie algebras</h2>
+<div class="definition">
+<p><em>Definition 4</em>. A Lie algebra is a vector space <span class="math inline">\(\mathfrak{g}\)</span>, together with a bilinear map <span class="math inline">\([\cdot,\cdot]:\,\mathfrak{g}\times\mathfrak{g}\to \mathfrak{g}\)</span> satisfying <em>anti-symmetry</em> <span class="math display">\[[\xi,\eta]=-[\eta,\xi] \mbox{ for all } \xi,\eta\in\mathfrak{g},\]</span> and the <em>Jacobi identity</em>, <span class="math display">\[[\xi,[\eta,\zeta]]+[\eta,[\zeta,\xi]]+[\zeta,[\xi,\eta]]=0
+\mbox{ for all }\xi,\eta,\zeta\in\mathfrak{g}.\]</span> The map <span class="math inline">\([\cdot,\cdot]\)</span> is called the Lie bracket. A morphism of Lie algebras <span class="math inline">\(\mathfrak{g}_1,\mathfrak{g}_2\)</span> is a linear map <span class="math inline">\(\phi\colon \mathfrak{g}_1\to \mathfrak{g}_2\)</span> preserving brackets.</p>
+</div>
+<p>.1in The space <span class="math display">\[\mathfrak{gl}(n,\mathbb{R})=\operatorname{Mat}_n(\mathbb{R})\]</span> is a Lie algebra, with bracket the commutator of matrices. (The notation indicates that we think of <span class="math inline">\(\operatorname{Mat}_n(\mathbb{R})\)</span> as a Lie algebra, not as an algebra.)</p>
+<p>A Lie subalgebra of <span class="math inline">\(\mathfrak{gl}(n,\mathbb{R})\)</span>, i.e. a subspace preserved under commutators, is called a <em>matrix Lie algebra</em>. For instance, <span class="math display">\[\mathfrak{sl}(n,\mathbb{R})=\{B\in\operatorname{Mat}_n(\mathbb{R})\colon \operatorname{tr}(B)=0\}\]</span> and <span class="math display">\[\mathfrak{o}(n)=\{B \in\operatorname{Mat}_n(\mathbb{R})\colon \ B^T=-B\}\]</span> are matrix Lie algebras (as one easily verifies). It turns out that every finite-dimensional real Lie algebra is isomorphic to a matrix Lie algebra (<em>Ado’s theorem</em>), but the proof is not easy.</p>
+<p>The following examples of finite-dimensional Lie algebras correspond to our examples for Lie groups. The origin of this correspondence will soon become clear.</p>
+<div class="examples">
+<p><em>Examples 5</em>.</p>
+<ol type="1">
+<li><p>Any vector space <span class="math inline">\(V\)</span> is a Lie algebra for the zero bracket.</p></li>
+<li><p>Any associative algebra <span class="math inline">\(\mathcal{A}\)</span> can be viewed as a Lie algebra under commutator. Replacing <span class="math inline">\(\mathcal{A}\)</span> with matrix algebras over <span class="math inline">\(\mathcal{A}\)</span>, it follows that <span class="math inline">\(\mathfrak{gl}(n,\mathcal{A})=\operatorname{Mat}_n(\mathcal{A})\)</span>, is a Lie algebra, with bracket the commutator. If <span class="math inline">\(\mathcal{A}\)</span> is commutative, then the subspace <span class="math inline">\(\mathfrak{sl}(n,\mathcal{A})\subset \mathfrak{gl}(n,\mathcal{A})\)</span> of matrices of trace <span class="math inline">\(0\)</span> is a Lie subalgebra.</p></li>
+<li><p>We are mainly interested in the cases <span class="math inline">\(\mathcal{A}=\mathbb{R},\mathbb{C},\mathbb{H}\)</span>. Define an inner product on <span class="math inline">\(\mathbb{R}^n,\mathbb{C}^n,\mathbb{H}^n\)</span> by putting <span class="math display">\[\langle x,y\rangle=\sum_{i=1}^n \overline{x}_i y_i,\]</span> and define <span class="math inline">\(\mathfrak{o}(n),\ \mathfrak{u}(n),\ \mathfrak{sp}(n)\)</span> as the matrices in <span class="math inline">\(\mathfrak{gl}(n,\mathbb{R}),\ \mathfrak{gl}(n,\mathbb{C}),\ \mathfrak{gl}(n,\mathbb{H})\)</span> satisfying <span class="math display">\[\langle B x,y\rangle=-\langle x,By\rangle\]</span> for all <span class="math inline">\(x,y\)</span>. These are all Lie algebras called the (infinitesimal) orthogonal, unitary, and symplectic Lie algebras. For <span class="math inline">\(\mathbb{R},\mathbb{C}\)</span> one can impose the additional condition <span class="math inline">\(\operatorname{tr}(B)=0\)</span>, thus defining the special orthogonal and special unitary Lie algebras <span class="math inline">\(\mathfrak{so}(n),\ \mathfrak{su}(n)\)</span>. Actually, <span class="math display">\[\mathfrak{so}(n)=\mathfrak{o}(n)\]</span> since <span class="math inline">\(B^T=-B\)</span> already implies <span class="math inline">\(\operatorname{tr}(B)=0\)</span>.</p></li>
+</ol>
+</div>
+<h1 id="the-covering-operatornamesu2to-operatornameso3">The covering <span class="math inline">\(\operatorname{SU}(2)\to \operatorname{SO}(3)\)</span></h1>
+<p>The Lie group <span class="math inline">\(\operatorname{SO}(3)\)</span> consists of rotations in 3-dimensional space. Let <span class="math inline">\(D\subset \mathbb{R}^3\)</span> be the closed ball of radius <span class="math inline">\(\pi\)</span>. Any element <span class="math inline">\(x\in D\)</span> represents a rotation by an angle <span class="math inline">\(||x||\)</span> in the direction of <span class="math inline">\(x\)</span>. This is a 1-1 correspondence for points in the interior of <span class="math inline">\(D\)</span>, but if <span class="math inline">\(x\in \partial D\)</span> is a boundary point then <span class="math inline">\(x,-x\)</span> represent the same rotation. Letting <span class="math inline">\(\sim\)</span> be the equivalence relation on <span class="math inline">\(D\)</span>, given by antipodal identification on the boundary, we have <span class="math inline">\(D^3/\sim =\mathbb{R}P(3)\)</span>. Thus <span class="math display">\[\operatorname{SO}(3)=\mathbb{R}P(3)\]</span> (at least, topologically). With a little extra effort (which we’ll make below) one can make this into a diffeomorphism of manifolds.</p>
+<p>By definition <span class="math display">\[\operatorname{SU}(2)=\{A\in \operatorname{Mat}_2(\mathbb{C})|\ A^\dagger=A^{-1},\ \det(A)=1\}.\]</span> Using the formula for the inverse matrix, we see that <span class="math inline">\(\operatorname{SU}(2)\)</span> consists of matrices of the form <span class="math display">\[\operatorname{SU}(2)=\left\{\left(\begin{array}{cc}
+z&amp;-\overline{w}\\ w&amp; \overline{z}
+\end{array}\right)|\ |w|^2+|z|^2=1\right\}.\]</span> That is, <span class="math inline">\(\operatorname{SU}(2)=S^3\)</span> as a manifold. Similarly, <span class="math display">\[\mathfrak{su}(2)=\left\{\left(\begin{array}{cc}
+it &amp;-\overline{u}\\ u&amp; -it
+\end{array}\right)|\ t\in\mathbb{R},\ u\in\mathbb{C}\right\}\]</span> gives an identification <span class="math inline">\(\mathfrak{su}(2)=\mathbb{R}\oplus \mathbb{C}=\mathbb{R}^3\)</span>. Note that for a matrix <span class="math inline">\(B\)</span> of this form, <span class="math inline">\(\det(B)=t^2+|u|^2\)</span>, so that <span class="math inline">\(\det\)</span> corresponds to <span class="math inline">\(||\cdot||^2\)</span> under this identification.</p>
+<p>The group <span class="math inline">\(\operatorname{SU}(2)\)</span> acts linearly on the vector space <span class="math inline">\(\mathfrak{su}(2)\)</span>, by matrix conjugation: <span class="math inline">\(B\mapsto ABA^{-1}\)</span>. Since the conjugation action preserves <span class="math inline">\(\det\)</span>, we obtain a linear action on <span class="math inline">\(\mathbb{R}^3\)</span>, preserving the norm. This defines a Lie group morphism from <span class="math inline">\(\operatorname{SU}(2)\)</span> into <span class="math inline">\(\operatorname{O}(3)\)</span>. Since <span class="math inline">\(\operatorname{SU}(2)\)</span> is connected, this must take values in the identity component: <span class="math display">\[\phi\colon  \operatorname{SU}(2)\to  \operatorname{SO}(3).\]</span> The kernel of this map consists of matrices <span class="math inline">\(A\in \operatorname{SU}(2)\)</span> such that <span class="math inline">\(A B A^{-1}=B\)</span> for all <span class="math inline">\(B\in\mathfrak{su}(2)\)</span>. Thus, <span class="math inline">\(A\)</span> commutes with all skew-adjoint matrices of trace <span class="math inline">\(0\)</span>. Since <span class="math inline">\(A\)</span> commutes with multiples of the identity, it then commutes with all skew-adjoint matrices. But since <span class="math inline">\(\operatorname{Mat}_n(\mathbb{C})=\mathfrak{u}(n)\oplus i\mathfrak{u}(n)\)</span> (the decomposition into skew-adjoint and self-adjoint parts), it then follows that <span class="math inline">\(A\)</span> is a multiple of the identity matrix. Thus <span class="math inline">\(\operatorname{ker}(\phi)=\{I,-I\}\)</span> is discrete. Since <span class="math inline">\({\mbox{d}}_e\phi\)</span> is an isomorphism, it follows that the map <span class="math inline">\(\phi\)</span> is a double covering. This exhibits <span class="math inline">\(\operatorname{SU}(2)=S^3\)</span> as the double cover of <span class="math inline">\(\operatorname{SO}(3)\)</span>.</p>
+<h1 id="the-lie-algebra-of-a-lie-group">The Lie algebra of a Lie group</h1>
+<h2 id="review-tangent-vectors-and-vector-fields">Review: Tangent vectors and vector fields</h2>
+<p>We begin with a quick reminder of some manifold theory, partly just to set up our notational conventions.</p>
+<p>Let <span class="math inline">\(M\)</span> be a manifold, and <span class="math inline">\(C^\infty(M)\)</span> its algebra of smooth real-valued functions. For <span class="math inline">\(m\in M\)</span>, we define the tangent space <span class="math inline">\(T_mM\)</span> to be the space of directional derivatives: <span class="math display">\[T_mM=\{v\in  \operatorname{Hom}(C^\infty(M),\mathbb{R})|\ v(fg)=v(f) g+v(g) f\}.\]</span> Here <span class="math inline">\(v(f)\)</span> is local, in the sense that <span class="math inline">\(v(f)=v(f&#39;)\)</span> if <span class="math inline">\(f&#39;-f\)</span> vanishes on a neighborhood of <span class="math inline">\(m\)</span>.</p>
+<div class="example">
+<p><em>Example 6</em>. If <span class="math inline">\(\gamma\colon J\to M\)</span>, <span class="math inline">\(J\subset \mathbb{R}\)</span> is a smooth curve we obtain tangent vectors to the curve, <span class="math display">\[\dot{\gamma}(t)\in T_{\gamma(t)}M,\ \ \dot{\gamma}(t)(f)= \frac{\partial}{\partial t}|_{t=0}f(\gamma(t)).\]</span></p>
+</div>
+<div class="example">
+<p><em>Example 7</em>. We have <span class="math inline">\(T_x\mathbb{R}^n=\mathbb{R}^n\)</span>, where the isomorphism takes <span class="math inline">\(a\in\mathbb{R}^n\)</span> to the corresponding velocity vector of the curve <span class="math inline">\(x+t a\)</span>. That is, <span class="math display">\[v(f)=\frac{\partial}{\partial t}|_{t=0}f(x+ta)=\sum_{i=1}^n a_i \frac{\partial f}{\partial x_i}.\]</span></p>
+</div>
+<p>A smooth map of manifolds <span class="math inline">\(\phi\colon M\to M&#39;\)</span> defines a <em>tangent map</em>: <span class="math display">\[{\mbox{d}}_m\phi\colon T_mM\to T_{\phi(m)}M&#39;,\ \ 
+({\mbox{d}}_m\phi(v))(f)=v(f\circ \phi).\]</span> The locality property ensures that for an open neighborhood <span class="math inline">\(U\subset M\)</span>, the inclusion identifies <span class="math inline">\(T_mU=T_mM\)</span>. In particular, a coordinate chart <span class="math inline">\(\phi\colon U\to \phi(U)\subset \mathbb{R}^n\)</span> gives an isomorphism <span class="math display">\[{\mbox{d}}_m\phi\colon T_mM=T_mU\to T_{\phi(m)}\phi(U)=T_{\phi(m)}\mathbb{R}^n=\mathbb{R}^n.\]</span> Hence <span class="math inline">\(T_mM\)</span> is a vector space of dimension <span class="math inline">\(n=\dim M\)</span>. The union <span class="math inline">\(TM=\bigcup_{m\in M}T_mM\)</span> is a vector bundle over <span class="math inline">\(M\)</span>, called the tangent bundle. Coordinate charts for <span class="math inline">\(M\)</span> give vector bundle charts for <span class="math inline">\(TM\)</span>. For a smooth map of manifolds <span class="math inline">\(\phi\colon M\to M&#39;\)</span>, the entirety of all maps <span class="math inline">\({\mbox{d}}_m\phi\)</span> defines a smooth vector bundle map <span class="math display">\[{\mbox{d}}\phi\colon TM\to TM&#39;.\]</span></p>
+<p>A <em>vector field</em> on <span class="math inline">\(M\)</span> is a derivation <span class="math inline">\(X\colon C^\infty(M)\to C^\infty(M)\)</span>. That is, it is a linear map satisfying <span class="math display">\[X(fg)=X(f) g+f X(g).\]</span> The space of vector fields is denoted <span class="math inline">\(\mathfrak{X}(M)=\operatorname{Der}(C^\infty(M))\)</span>. Vector fields are local, in the sense that for any open subset <span class="math inline">\(U\)</span> there is a well-defined restriction <span class="math inline">\(X|_U\in\mathfrak{X}(U)\)</span> such that <span class="math inline">\(X|_U(f|_U)=(X(f))|_U\)</span>. For any vector field, one obtains tangent vectors <span class="math inline">\(X_m\in T_mM\)</span> by <span class="math inline">\(X_m(f)=X(f)|_m\)</span>. One can think of a vector field as an assignment of tangent vectors, depending smoothly on <span class="math inline">\(m\)</span>. More precisely, a vector field is a smooth section of the tangent bundle <span class="math inline">\(TM\)</span>. In local coordinates, vector fields are of the form <span class="math inline">\(\sum_i a_i \frac{\partial}{\partial x_i}\)</span> where the <span class="math inline">\(a_i\)</span> are smooth functions.</p>
+<p>It is a general fact that the commutator of derivations of an algebra is again a derivation. Thus, <span class="math inline">\(\mathfrak{X}(M)\)</span> is a Lie algebra for the bracket <span class="math display">\[[X,Y]=X\circ Y-Y\circ X.\]</span></p>
+<p>In general, smooth maps <span class="math inline">\(\phi\colon M\to M&#39;\)</span> of manifolds do not induce maps of the Lie algebras of vector fields (unless <span class="math inline">\(\phi\)</span> is a diffeomorphism). One makes the following definition.</p>
+<div class="definition">
+<p><em>Definition 8</em>. Let <span class="math inline">\(\phi\colon M\to N\)</span> be a smooth map. Vector fields <span class="math inline">\(X,Y\)</span> on <span class="math inline">\(M,N\)</span> are called <span class="math inline">\(\phi\)</span>-related, written <span class="math inline">\(X\sim_\phi Y\)</span>, if <span class="math display">\[X(f\circ \phi)=Y(f)\circ \phi\]</span> for all <span class="math inline">\(f\in C^\infty(M&#39;)\)</span>.</p>
+</div>
+<p>In short, <span class="math inline">\(X\circ \phi^*=\phi^* \circ Y\)</span> where <span class="math inline">\(\phi^*\colon C^\infty(N)\to C^\infty(M),\ f\mapsto f\circ \phi\)</span>.</p>
+<p>One has <span class="math inline">\(X\sim_\phi Y\)</span> if and only if <span class="math inline">\(Y_{\phi(m)} ={\mbox{d}}_m\phi (X_m)\)</span>. From the definitions, one checks <span class="math display">\[X_1\sim_\phi
+Y_1,\ X_2\sim_\phi Y_2\  \Rightarrow\  [X_1,X_2]\sim_\phi[Y_1,Y_2].\]</span></p>
+<div class="example">
+<p><em>Example 9</em>. Let <span class="math inline">\(j\colon S\hookrightarrow M\)</span> be an embedded submanifold. We say that a vector field <span class="math inline">\(X\)</span> is <em>tangent to <span class="math inline">\(S\)</span></em> if <span class="math inline">\(X_m\in T_mS\subset T_mM\)</span> for all <span class="math inline">\(m\in S\)</span>. We claim that if two vector fields are tangent to <span class="math inline">\(S\)</span> then so is their Lie bracket. That is, the vector fields on <span class="math inline">\(M\)</span> that are tangent to <span class="math inline">\(S\)</span> form a Lie subalgebra.</p>
+<p>Indeed, the definition means that there exists a vector field <span class="math inline">\(X_S\in\mathfrak{X}(S)\)</span> such that <span class="math inline">\(X_S\sim_j X\)</span>. Hence, if <span class="math inline">\(X,Y\)</span> are tangent to <span class="math inline">\(S\)</span>, then <span class="math inline">\([X_S,Y_S]\sim_j [X,Y]\)</span>, so <span class="math inline">\([X_S,Y_S]\)</span> is tangent.</p>
+<p>Similarly, the vector fields vanishing on <span class="math inline">\(S\)</span> are a Lie subalgebra.</p>
+</div>
+<p>Let <span class="math inline">\(X\in\mathfrak{X}(M)\)</span>. A curve <span class="math inline">\(\gamma(t),\ t\in J\subset \mathbb{R}\)</span> is called an <em>integral curve</em> of <span class="math inline">\(X\)</span> if for all <span class="math inline">\(t\in J\)</span>, <span class="math display">\[\dot{\gamma}(t)=X_{\gamma(t)}.\]</span> In local coordinates, this is an ODE <span class="math inline">\(\frac{{\mbox{d}}x_i}{{\mbox{d}}t}=a_i(x(t))\)</span>. The existence and uniqueness theorem for ODE’s (applied in coordinate charts, and then patching the local solutions) shows that for any <span class="math inline">\(m\in M\)</span>, there is a unique maximal integral curve <span class="math inline">\(\gamma(t),\ t\in J_m\)</span> with <span class="math inline">\(\gamma(0)=m\)</span>.</p>
+<div class="definition">
+<p><em>Definition 10</em>. A vector field <span class="math inline">\(X\)</span> is <em>complete</em> if for all <span class="math inline">\(m\in M\)</span>, the maximal integral curve with <span class="math inline">\(\gamma(0)=m\)</span> is defined for all <span class="math inline">\(t\in\mathbb{R}\)</span>.</p>
+</div>
+<p>In this case, one obtains a <em>smooth</em> map <span class="math display">\[\Phi\colon \mathbb{R}\times M\to M,\ (t,m)\mapsto \Phi_t(m)\]</span> such that <span class="math inline">\(\gamma(t)=\Phi_{-t}(m)\)</span> is the integral curve through <span class="math inline">\(m\)</span>. The uniqueness property gives <span class="math display">\[\Phi_0=\operatorname{Id},\ \ \Phi_{t_1+t_2}=\Phi_{t_1}\circ \Phi_{t_2}\]</span> i.e. <span class="math inline">\(t\mapsto \Phi_t\)</span> is a group homomorphism. Conversely, given such a group homomorphism such that the map <span class="math inline">\(\Phi\)</span> is smooth, one obtains a vector field <span class="math inline">\(X\)</span> by setting <span class="math display">\[X=\frac{\partial}{\partial t}|_{t=0} \Phi_{-t}^*,\]</span> as operators on functions. That is, <span class="math inline">\(X(f)(m)=\frac{\partial}{\partial t}|_{t=0} f(\Phi_{-t}(m))\)</span>. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>The Lie bracket of vector fields measure the non-commutativity of their flows. In particular, if <span class="math inline">\(X,Y\)</span> are complete vector fields, with flows <span class="math inline">\(\Phi_t^X,\ \Phi_s^Y\)</span>, then <span class="math inline">\([X,Y]=0\)</span> if and only if <span class="math display">\[\Phi_t^X\circ \Phi_s^Y =\Phi_s^Y \circ \Phi_t^X.\]</span> In this case, <span class="math inline">\(X+Y\)</span> is again a complete vector field with flow <span class="math inline">\(\Phi_t^{X+Y}=\Phi_t^X\circ \Phi_t^Y\)</span>. (The right hand side defines a flow since the flows of <span class="math inline">\(X,Y\)</span> commute, and the corresponding vector field is identified by taking a derivative at <span class="math inline">\(t=0\)</span>.)</p>
+<h2 id="the-lie-algebra-of-a-lie-group-1">The Lie algebra of a Lie group</h2>
+<p>Let <span class="math inline">\(G\)</span> be a Lie group, and <span class="math inline">\(TG\)</span> its tangent bundle. For all <span class="math inline">\(a\in G\)</span>, the left,right translations <span class="math display">\[L_a\colon G\to G,\ g\mapsto ag\]</span> <span class="math display">\[R_a\colon G\to G,\ g\mapsto ga\]</span> are smooth maps. Their differentials at <span class="math inline">\(e\)</span> define isomorphisms <span class="math inline">\({\mbox{d}}_g L_a\colon T_g G\to T_{ag} G\)</span>, and similarly for <span class="math inline">\(R_a\)</span>. Let <span class="math display">\[\mathfrak{g}=T_eG\]</span> be the tangent space to the group unit.</p>
+<p>A vector field <span class="math inline">\(X\in \mathfrak{X}(G)\)</span> is called left-invariant if <span class="math display">\[X\sim_{L_a} X\]</span> for all <span class="math inline">\(a\in G\)</span>, i.e. if it commutes with <span class="math inline">\(L_a^*\)</span>. The space <span class="math inline">\(\mathfrak{X}^L(G)\)</span> of left-invariant vector fields is thus a Lie subalgebra of <span class="math inline">\(\mathfrak{X}(G)\)</span>. Similarly the space of right-invariant vector fields <span class="math inline">\(\mathfrak{X}^R(G)\)</span> is a Lie subalgebra.</p>
+<div class="lemma">
+<p><strong>Lemma 11</strong>. <em>The map <span class="math display">\[\mathfrak{X}^L(G)\to \mathfrak{g},\ X\mapsto X_e\]</span> is an isomorphism of vector spaces. (Similarly for <span class="math inline">\(\mathfrak{X}^R(G)\)</span>.)</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> For a left-invariant vector field, <span class="math inline">\(X_a=({\mbox{d}}_eL_a)X_e\)</span>, hence the map is injective. To show that it is surjective, let <span class="math inline">\(\xi\in \mathfrak{g}\)</span>, and put <span class="math inline">\(X_a=({\mbox{d}}_eL_a)\xi \in T_a G\)</span>. We have to show that the map <span class="math inline">\(G\to TG,\  a\mapsto X_a\)</span> is smooth. It is the composition of the map <span class="math inline">\(G\to G\times\mathfrak{g},\ g\mapsto (g,\xi)\)</span> (which is obviously smooth) with the map <span class="math inline">\(G\times\mathfrak{g}\to TG,\ (g,\xi)\mapsto {\mbox{d}}_e L_g(\xi)\)</span>. The latter map is the restriction of <span class="math inline">\({\mbox{d}}\operatorname{Mult}\colon TG\times TG\to TG\)</span> to <span class="math inline">\(G\times\mathfrak{g}\subset TG\times TG\)</span>, and hence is smooth. ◻</p>
+</div>
+<p>We denote by <span class="math inline">\(\xi^L\in\mathfrak{X}^L(G),\ \xi^R\in\mathfrak{X}^R(G)\)</span> the left,right invariant vector fields defined by <span class="math inline">\(\xi\in \mathfrak{g}\)</span>. Thus <span class="math display">\[\xi^L|_e=\xi^R|_e=\xi\]</span></p>
+<div class="definition">
+<p><em>Definition 12</em>. The Lie algebra of a Lie group <span class="math inline">\(G\)</span> is the vector space <span class="math inline">\(\mathfrak{g}=T_eG\)</span>, equipped with the unique bracket such that <span class="math display">\[[\xi,\eta]^L=[\xi^L,\eta^L],\ \ \xi\in\mathfrak{g}.\]</span></p>
+</div>
+<div class="remark">
+<p><em>Remark 13</em>. If you use the right-invariant vector fields to define the bracket on <span class="math inline">\(\mathfrak{g}\)</span>, we get a minus sign. Indeed, note that <span class="math inline">\(\operatorname{Inv}\colon G\to G\)</span> takes left translations to right translations. Thus, <span class="math inline">\(\xi^R\)</span> is <span class="math inline">\(\operatorname{Inv}\)</span>-related to some left invariant vector field. Since <span class="math inline">\({\mbox{d}}_e\operatorname{Inv}=-\operatorname{Id}\)</span>, we see <span class="math inline">\(\xi^R\sim_{\operatorname{Inv}}-\xi^L\)</span>. Consequently, <span class="math display">\[[\xi^R,\eta^R]\sim_{\operatorname{Inv}} [-\xi^L,-\eta^L]=[\xi,\eta]^L.\]</span> But also <span class="math inline">\(-[\xi,\eta]^R\sim_{\operatorname{Inv}} [\xi,\eta]^L\)</span>, hence we get <span class="math display">\[[\xi^R,\zeta^R]=-[\xi,\zeta]^R.\]</span></p>
+</div>
+<p>The construction of a Lie algebra is compatible with morphisms. That is, we have a <em>functor</em> from Lie groups to finite-dimensional Lie algebras.</p>
+<div id="th:phirelated" class="theorem">
+<p><strong>Theorem 14</strong>. <em>For any morphism of Lie groups <span class="math inline">\(\phi\colon G\to G&#39;\)</span>, the tangent map <span class="math inline">\({\mbox{d}}_e\phi\colon \mathfrak{g}\to \mathfrak{g}&#39;\)</span> is a morphism of Lie algebras. For all <span class="math inline">\(\xi\in\mathfrak{g},\ \xi&#39;={\mbox{d}}_e\phi(\xi)\)</span> one has <span class="math display">\[\xi^L\sim_\phi (\xi&#39;)^L,\ \xi^R\sim_\phi (\xi&#39;)^R.\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Suppose <span class="math inline">\(\xi\in\mathfrak{g}\)</span>, and let <span class="math inline">\(\xi&#39;={\mbox{d}}_e\phi(\xi)\in\mathfrak{g}&#39;\)</span>. The property <span class="math inline">\(\phi(ab)=\phi(a)\phi(b)\)</span> shows that <span class="math inline">\(L_{\phi(a)}\circ \phi=\phi\circ L_a\)</span>. Taking the differential at <span class="math inline">\(e\)</span>, and applying to <span class="math inline">\(\xi\)</span> we find <span class="math inline">\(({\mbox{d}}_e L_{\phi(a)})\xi&#39;=({\mbox{d}}_a\phi)({\mbox{d}}_e L_a(\xi))\)</span> hence <span class="math inline">\((\xi&#39;)^L_{\phi(a)}= ({\mbox{d}}_a\phi)(\xi^L_a)\)</span>. That is <span class="math inline">\(\xi^L\sim_{\phi}(\xi&#39;)^L\)</span>. The proof for right-invariant vector fields is similar. Since the Lie brackets of two pairs of <span class="math inline">\(\phi\)</span>-related vector fields are again <span class="math inline">\(\phi\)</span>-related, it follows that <span class="math inline">\({\mbox{d}}_e\phi\)</span> is a Lie algebra morphism. ◻</p>
+</div>
+<div class="remark">
+<p><em>Remark 15</em>. Two special cases are worth pointing out.</p>
+<ol type="1">
+<li><p>Let <span class="math inline">\(V\)</span> be a finite-dimensional (real) vector space. A representation of a Lie group <span class="math inline">\(G\)</span> on <span class="math inline">\(V\)</span> is a Lie group morphism <span class="math inline">\(G\to \operatorname{GL}(V)\)</span>. A representation of a Lie algebra <span class="math inline">\(\mathfrak{g}\)</span> on <span class="math inline">\(V\)</span> is a Lie algebra morphism <span class="math inline">\(\mathfrak{g}\to \mathfrak{gl}(V)\)</span>. The Theorem shows that the differential of any Lie group representation is a representation of its a Lie algebra.</p></li>
+<li><p>An <em>automorphism of a Lie group <span class="math inline">\(G\)</span></em> is a Lie group morphism <span class="math inline">\(\phi\colon G\to G\)</span> from <span class="math inline">\(G\)</span> to itself, with <span class="math inline">\(\phi\)</span> a diffeomorphism. An <em>automorphism of a Lie algebra</em> is an invertible morphism from <span class="math inline">\(\mathfrak{g}\)</span> to itself. By the Theorem, the differential of any Lie group automorphism is an automorphism of its Lie algebra. As an example, <span class="math inline">\(\operatorname{SU}(n)\)</span> has a Lie group automorphism given by complex conjugation of matrices; its differential is a Lie algebra automorphism of <span class="math inline">\(\mathfrak{su}(n)\)</span> given again by complex conjugation.</p></li>
+</ol>
+</div>
+<div class="exercise">
+<p><em>Exercise 16</em>. Let <span class="math inline">\(\phi\colon G\to G\)</span> be a Lie group automorphism. Show that its fixed point set is a closed subgroup of <span class="math inline">\(G\)</span>, hence a Lie subgroup. Similarly for Lie algebra automorphisms. What is the fixed point set for the complex conjugation automorphism of <span class="math inline">\(\operatorname{SU}(n)\)</span>?</p>
+</div>
+<h1 id="the-exponential-map">The exponential map</h1>
+<div class="theorem">
+<p><strong>Theorem 17</strong>. <em>The left-invariant vector fields <span class="math inline">\(\xi^L\)</span> are complete, i.e. they define a flow <span class="math inline">\(\Phi^\xi_t\)</span> such that <span class="math display">\[\xi^L=\frac{\partial}{\partial t}|_{t=0}(\Phi^\xi_{-t})^*.\]</span> Letting <span class="math inline">\(\phi^\xi(t)\)</span> denote the unique integral curve with <span class="math inline">\(\phi^\xi(0)=e\)</span>. It has the property <span class="math display">\[\phi^\xi(t_1+t_2)=\phi^\xi(t_1)\phi^\xi(t_2),\]</span> and the flow of <span class="math inline">\(\xi^L\)</span> is given by right translations: <span class="math display">\[\Phi^\xi_t(g)=g\phi^\xi(-t).\]</span> Similarly, the right-invariant vector fields <span class="math inline">\(\xi^R\)</span> are complete. <span class="math inline">\(\phi^\xi(t)\)</span> is an integral curve for <span class="math inline">\(\xi^R\)</span> as well, and the flow of <span class="math inline">\(\xi^R\)</span> is given by left translations, <span class="math inline">\(g\mapsto \phi^\xi(-t)g\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> If <span class="math inline">\(\gamma(t),\ t\in J\subset \mathbb{R}\)</span> is an integral curve of a left-invariant vector field <span class="math inline">\(\xi^L\)</span>, then its left translates <span class="math inline">\(a\gamma(t)\)</span> are again integral curves. In particular, for <span class="math inline">\(t_0\in J\)</span> the curve <span class="math inline">\(t\mapsto \gamma(t_0)\gamma(t)\)</span> is again an integral curve. Hence it coincides with <span class="math inline">\(\gamma(t_0+t)\)</span> for all <span class="math inline">\(t\in J\cap (J-t_0)\)</span>. In this way, an integral curve defined for small <span class="math inline">\(|t|\)</span> can be extended to an integral curve for all <span class="math inline">\(t\)</span>, i.e. <span class="math inline">\(\xi^L\)</span> is complete.</p>
+<p>Since <span class="math inline">\(\xi^L\)</span> is left-invariant, so is its flow <span class="math inline">\(\Phi^\xi_t\)</span>. Hence <span class="math display">\[\Phi^\xi_t(g)=\Phi^\xi_t \circ L_g(e)=L_g\circ \Phi^\xi_t(e)
+=g \Phi^\xi_t(e)=g\phi^\xi(-t).\]</span> The property <span class="math inline">\(\Phi^\xi_{t_1+t_2}=\Phi^\xi_{t_1}\Phi^\xi_{t_2}\)</span> shows that <span class="math inline">\(\phi^\xi(t_1+t_2)=\phi^\xi(t_1)\phi^\xi(t_2)\)</span>. Finally, since <span class="math inline">\(\xi^L\sim_{\operatorname{Inv}}-\xi^R\)</span>, the image <span class="math display">\[\operatorname{Inv}(\phi^\xi(t))=\phi^\xi(t)^{-1}=\phi^\xi(-t)\]</span> is an integral curve of <span class="math inline">\(-\xi^R\)</span>. Equivalently, <span class="math inline">\(\phi^\xi(t)\)</span> is an integral curve of <span class="math inline">\(\xi^R\)</span>. ◻</p>
+</div>
+<p>Since left and right translations commute, it follows in particular that <span class="math display">\[[\xi^L,\eta^R]=0.\]</span></p>
+<div class="definition">
+<p><em>Definition 18</em>. A 1-parameter subgroup of <span class="math inline">\(G\)</span> is a group homomorphism <span class="math inline">\(\phi\colon \mathbb{R}\to G\)</span>.</p>
+</div>
+<p>We have seen that every <span class="math inline">\(\xi\in\mathfrak{g}\)</span> defines a 1-parameter group, by taking the integral curve through <span class="math inline">\(e\)</span> of the left-invariant vector field <span class="math inline">\(\xi^L\)</span>. Every 1-parameter group arises in this way:</p>
+<div class="proposition">
+<p><strong>Proposition 19</strong>. <em>If <span class="math inline">\(\phi\)</span> is a 1-parameter subgroup of <span class="math inline">\(G\)</span>, then <span class="math inline">\(\phi=\phi^\xi\)</span> where <span class="math inline">\(\xi=\dot{\phi}(0)\)</span>. One has <span class="math display">\[\phi^{s\xi}(t)=\phi^\xi(st).\]</span> The map <span class="math display">\[\mathbb{R}\times\mathfrak{g}\to G,\ (t,\xi)\mapsto \phi^\xi(t)\]</span> is smooth.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\phi(t)\)</span> be a 1-parameter group. Then <span class="math inline">\(\Phi_t(g):=g\phi(-t)\)</span> defines a flow. Since this flow commutes with left translations, it is the flow of a left-invariant vector field, <span class="math inline">\(\xi^L\)</span>. Here <span class="math inline">\(\xi\)</span> is determined by taking the derivative of <span class="math inline">\(\Phi_{-t}(e)=\phi(t)\)</span> at <span class="math inline">\(t=0\)</span>: <span class="math inline">\(\xi=\dot{\phi}(0)\)</span>. This shows <span class="math inline">\(\phi=\phi^\xi\)</span>. As an application, since <span class="math inline">\(\psi(t)=\phi^{\xi}(st)\)</span> is a 1-parameter group with <span class="math inline">\(\dot{\psi}^{\xi}(0)=s\dot{\phi}^\xi(0)=s\xi\)</span>, we have <span class="math inline">\(\phi^\xi(st)=\phi^{s\xi}(t)\)</span>. Smoothness of the map <span class="math inline">\((t,\xi)\mapsto \phi^\xi(t)\)</span> follows from the smooth dependence of solutions of ODE’s on parameters. ◻</p>
+</div>
+<div class="definition">
+<p><em>Definition 20</em>. The <em>exponential map</em> for the Lie group <span class="math inline">\(G\)</span> is the smooth map defined by <span class="math display">\[\exp\colon \mathfrak{g}\to G,\ \xi\mapsto \phi^\xi(1),\]</span> where <span class="math inline">\(\phi^\xi(t)\)</span> is the 1-parameter subgroup with <span class="math inline">\(\dot{\phi}^\xi(0)=\xi\)</span>.</p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 21</strong>. <em>We have <span class="math display">\[\phi^\xi(t)=\exp(t\xi).\]</span> If <span class="math inline">\([\xi,\eta]=0\)</span> then <span class="math display">\[\exp(\xi+\eta)=\exp(\xi)\exp(\eta).\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By the previous Proposition, <span class="math inline">\(\phi^\xi(t)=\phi^{t\xi}(1)=\exp(t\xi)\)</span>. For the second claim, note that <span class="math inline">\([\xi,\eta]=0\)</span> implies that <span class="math inline">\(\xi^L,\eta^L\)</span> commute. Hence their flows <span class="math inline">\(\Phi^\xi_t,\ \Phi^\eta_t\)</span>, and <span class="math inline">\(\Phi^\xi_t \circ \Phi^\eta_t\)</span> is the flow of <span class="math inline">\(\xi^L+\eta^L\)</span>. Hence it coincides with <span class="math inline">\(\Phi^{\xi+\eta}_t\)</span>. Applying to <span class="math inline">\(e\)</span>, we get <span class="math inline">\(\phi^\xi(t)\phi^\eta(t)=\phi^{\xi+\eta}(t)\)</span>. Now put <span class="math inline">\(t=1\)</span>. ◻</p>
+</div>
+<p>In terms of the exponential map, we may now write the flow of <span class="math inline">\(\xi^L\)</span> as <span class="math inline">\(\Phi^\xi_t(g)=g\exp(-t\xi)\)</span>, and similarly for the flow of <span class="math inline">\(\xi^R\)</span>. That is, <span class="math display">\[\xi^L=\frac{\partial}{\partial t}|_{t=0}R_{\exp(t\xi)}^*,\ \ 
+\xi^R=\frac{\partial}{\partial t}|_{t=0}L_{\exp(t\xi)}^*.\]</span></p>
+<div class="proposition">
+<p><strong>Proposition 22</strong>. <em>The exponential map is functorial with respect to Lie group homomorphisms <span class="math inline">\(\phi\colon G\to H\)</span>. That is, we have a commutative diagram <span class="math display">\[\begin{CD} G @&gt;{\phi}&gt;&gt; H \\
+@A{\exp}AA @AA{\exp}A \\
+\mathfrak{g}@&gt;&gt;{{\mbox{d}}_e\phi}&gt; \mathfrak{h}
+\end{CD}\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span class="math inline">\(t\mapsto \phi(\exp(t\xi))\)</span> is a 1-parameter subgroup of <span class="math inline">\(H\)</span>, with differential at <span class="math inline">\(e\)</span> given by <span class="math display">\[\frac{d}{d t}\Big|_{t=0} \phi(\exp(t\xi))={\mbox{d}}_e\phi(\xi).\]</span> Hence <span class="math inline">\(\phi(\exp(t\xi))=\exp(t {\mbox{d}}_e\phi(\xi))\)</span>. Now put <span class="math inline">\(t=1\)</span>. ◻</p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 23</strong>. <em>Let <span class="math inline">\(G\subset \operatorname{GL}(n,\mathbb{R})\)</span> be a matrix Lie group, and <span class="math inline">\(\mathfrak{g}\subset \mathfrak{gl}(n,\mathbb{R})\)</span> its Lie algebra. Then <span class="math inline">\(\exp\colon \mathfrak{g}\to G\)</span> is just the exponential map for matrices, <span class="math display">\[\exp(\xi)=\sum_{n=0}^\infty \frac{1}{n!}\xi^n.\]</span> Furthermore, the Lie bracket on <span class="math inline">\(\mathfrak{g}\)</span> is just the commutator of matrices.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> By the previous Proposition, applied to the inclusion of <span class="math inline">\(G\)</span> in <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span>, the exponential map for <span class="math inline">\(G\)</span> is just the restriction of that for <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span>. Hence it suffices to prove the claim for <span class="math inline">\(G= \operatorname{GL}(n,\mathbb{R})\)</span>. The function <span class="math inline">\(\sum_{n=0}^\infty \frac{t^n}{n!}\xi^n\)</span> is a 1-parameter group in <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span>, with derivative at <span class="math inline">\(0\)</span> equal to <span class="math inline">\(\xi\in \mathfrak{gl}(n,\mathbb{R})\)</span>. Hence it coincides with <span class="math inline">\(\exp(t\xi)\)</span>. Now put <span class="math inline">\(t=1\)</span>. ◻</p>
+</div>
+<div class="proposition">
+<p><strong>Proposition 24</strong>. <em>For a matrix Lie group <span class="math inline">\(G\subset \operatorname{GL}(n,\mathbb{R})\)</span>, the Lie bracket on <span class="math inline">\(\mathfrak{g}=T_IG\)</span> is just the commutator of matrices.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> It suffices to prove for <span class="math inline">\(G= \operatorname{GL}(n,\mathbb{R})\)</span>. Using <span class="math inline">\(\xi^L=\frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(t\xi)}^*\)</span> we have <span class="math display">\[\begin{split}
+\lefteqn{\frac{\partial}{\partial s}\Big|_{s=0}\frac{\partial}{\partial t}\Big|_{t=0} 
+(R_{\exp(-t\xi)}^*R_{\exp(-s\eta)}^* 
+R_{\exp(t\xi)}^* R_{\exp(s\eta)}^*)}\\
+&amp;=\frac{\partial}{\partial s}\Big|_{s=0}(R_{\exp(-s\eta)}^* \xi^L R_{\exp(s\eta)}^*-\xi^L)\\
+&amp;= \xi^L\eta^L-\eta^L\xi^L\\
+&amp;=[\xi,\eta]^L.
+\end{split}\]</span> On the other hand, write <span class="math display">\[R_{\exp(-t\xi)}^*R_{\exp(-s\eta)}^* 
+R_{\exp(t\xi)}^* R_{\exp(s\eta)}^*
+=R_{\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)}^*.\]</span> Since the Lie group exponential map for <span class="math inline">\(\operatorname{GL}(n,\mathbb{R})\)</span> coincides with the exponential map for matrices, we may use Taylor’s expansion, <span class="math display">\[\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)=I+st(\xi\eta-\eta\xi)+\ldots
+=\exp(st(\xi\eta-\eta\xi))+\ldots\]</span> where <span class="math inline">\(\ldots\)</span> denotes terms that are cubic or higher in <span class="math inline">\(s,t\)</span>. Hence <span class="math display">\[R_{\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)}^*=R_{\exp(st (\xi\eta-\eta\xi)}^*+\ldots\]</span> and consequently <span class="math display">\[\frac{\partial}{\partial s}\Big|_{s=0}\frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)}^*
+=\frac{\partial}{\partial s}\Big|_{s=0}\frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(st (\xi\eta-\eta\xi))}^*
+=(\xi\eta-\eta\xi)^L.\]</span> We conclude that <span class="math inline">\([\xi,\eta]=\xi\eta-\eta\xi\)</span>. ◻</p>
+</div>
+<div class="remark">
+<p><em>Remark 25</em>. Had we defined the Lie algebra using right-invariant vector fields, we would have obtained <em>minus</em> the commutator of matrices. Nonetheless, some authors use that convention.</p>
+</div>
+<p>The exponential map gives local coordinates for the group <span class="math inline">\(G\)</span> on a neighborhood of <span class="math inline">\(e\)</span>:</p>
+<div class="proposition">
+<p><strong>Proposition 26</strong>. <em>The differential of the exponential map at the origin is <span class="math inline">\({\mbox{d}}_0\exp=\operatorname{id}\)</span>. As a consequence, there is an open neighborhood <span class="math inline">\(U\)</span> of <span class="math inline">\(0\in\mathfrak{g}\)</span> such that the exponential map restricts to a diffeomorphism <span class="math inline">\(U\to \exp(U)\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Let <span class="math inline">\(\gamma(t)=t\xi\)</span>. Then <span class="math inline">\(\dot{\gamma}(0)=\xi\)</span> since <span class="math inline">\(\exp(\gamma(t))=\exp(t\xi)\)</span> is the 1-parameter group, we have <span class="math display">\[({\mbox{d}}_0\exp)(\xi)=\frac{\partial}{\partial t}|_{t=0} \exp(t\xi)=\xi.\]</span> ◻</p>
+</div>
+<h1 id="cartans-theorem-on-closed-subgroups">Cartan’s theorem on closed subgroups</h1>
+<p>Using the exponential map, we are now in position to prove Cartan’s theorem on closed subgroups.</p>
+<div class="theorem">
+<p><strong>Theorem 27</strong>. <em>Let <span class="math inline">\(H\)</span> be a closed subgroup of a Lie group <span class="math inline">\(G\)</span>. Then <span class="math inline">\(H\)</span> is an embedded submanifold, and hence is a Lie subgroup.</em></p>
+</div>
+<p>We first need a Lemma. Let <span class="math inline">\(V\)</span> be a Euclidean vector space, and <span class="math inline">\(S(V)\)</span> its unit sphere. For <span class="math inline">\(v\in V\backslash\{0\}\)</span>, let <span class="math inline">\([v]=\frac{v}{||v||}\in S(V)\)</span>.</p>
+<div class="lemma">
+<p><strong>Lemma 28</strong>. <em>Let <span class="math inline">\(v_n,v\in V\backslash\{0\}\)</span> with <span class="math inline">\(\lim_{n\to \infty}v_n=0\)</span>. Then <span class="math display">\[\lim_{n\to \infty} [v_n]=[v] \Leftrightarrow \exists a_n\in\mathbb{N}\colon \lim_{n\to \infty} a_nv_n=v.\]</span></em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> The implication <span class="math inline">\(\Leftarrow\)</span> is obvious. For the opposite direction, suppose <span class="math inline">\(\lim_{n\to \infty} [v_n]=[v]\)</span>. Let <span class="math inline">\(a_n\in\mathbb{N}\)</span> be defined by <span class="math inline">\(a_n-1&lt;\frac{||v||}{||v_n||}\le a_n\)</span>. Since <span class="math inline">\(v_n\to 0\)</span>, we have <span class="math inline">\(\lim_{n\to \infty} a_n \frac{||v_n||}{||v||}=1\)</span>, and <span class="math display">\[a_n v_n =\left(a_n  \frac{||v_n||}{||v||}\right) [v_n]\, ||v||\to [v]\,||v||=v.\qedhere\]</span> ◻</p>
+</div>
+<div class="proof">
+<p><em>Proof of E. Cartan’s theorem.</em> It suffices to construct a submanifold chart near <span class="math inline">\(e\in H\)</span>. (By left translation, one then obtains submanifold charts near arbitrary <span class="math inline">\(a\in H\)</span>.) Choose an inner product on <span class="math inline">\(\mathfrak{g}\)</span>.</p>
+<p>We begin with a candidate for the Lie algebra of <span class="math inline">\(H\)</span>. Let <span class="math inline">\(W\subset \mathfrak{g}\)</span> be the subset such that <span class="math inline">\(\xi\in W\)</span> if and only if either <span class="math inline">\(\xi=0\)</span>, or <span class="math inline">\(\xi\not=0\)</span> and there exists <span class="math inline">\(\xi_n\not=0\)</span> with <span class="math display">\[\exp(\xi_n)\in H,\ \ \xi_n\to 0,\ \ [\xi_n]\to [\xi].\]</span> We will now show the following:</p>
+<ol type="1">
+<li><p><span class="math inline">\(\exp(W)\subset H\)</span>,</p></li>
+<li><p><span class="math inline">\(W\)</span> is a subspace of <span class="math inline">\(\mathfrak{g}\)</span>,</p></li>
+<li><p>There is an open neighborhood <span class="math inline">\(U\)</span> of <span class="math inline">\(0\)</span> and a diffeomorphism <span class="math inline">\(\phi\colon U\to \phi(U)\subset G\)</span> with <span class="math inline">\(\phi(0)=e\)</span> such that <span class="math display">\[\phi(U\cap W)=\phi(U)\cap H.\]</span> (Thus <span class="math inline">\(\phi\)</span> defines a submanifold chart near <span class="math inline">\(e\)</span>.)</p></li>
+</ol>
+<p>Step (i). Let <span class="math inline">\(\xi\in W\backslash\{0\}\)</span>, with sequence <span class="math inline">\(\xi_n\)</span> as in the definition of <span class="math inline">\(W\)</span>. By the Lemma, there are <span class="math inline">\(a_n\in\mathbb{N}\)</span> with <span class="math inline">\(a_n\xi_n\to \xi\)</span>. Since <span class="math inline">\(\exp(a_n\xi_n)=\exp(\xi_n)^{a_n}\in H\)</span>, and <span class="math inline">\(H\)</span> is closed, it follows that <span class="math display">\[\exp(\xi)=\lim_{n\to \infty} \exp(a_n\xi_n)\in H.\]</span></p>
+<p>Step (ii). Since the subset <span class="math inline">\(W\)</span> is invariant under scalar multiplication, we just have to show that it is closed under addition. Suppose <span class="math inline">\(\xi,\eta\in W\)</span>. To show that <span class="math inline">\(\xi+\eta\in W\)</span>, we may assume that <span class="math inline">\(\xi,\eta,\xi+\eta\)</span> are all non-zero. For <span class="math inline">\(t\)</span> sufficiently small, we have <span class="math display">\[\exp(t \xi)\exp(t \eta)=\exp(u(t))\]</span> for some smooth curve <span class="math inline">\(t\mapsto u(t)\in\mathfrak{g}\)</span> with <span class="math inline">\(u(0)=0\)</span>. Then <span class="math inline">\(\exp(u(t))\in H\)</span> and <span class="math display">\[\lim_{n\to \infty} n\, u(\frac{1}{n})=
+\lim_{h\to 0} \frac{u(h)}{h}=\dot{u}(0)=\xi+\eta.\]</span> hence <span class="math inline">\(u(\frac{1}{n})\to 0,\ \exp(u(\frac{1}{n})\in H,\  [u(\frac{1}{n})]\to [\xi+\eta]\)</span>. This shows <span class="math inline">\([\xi+\eta]\in W\)</span>, proving (ii).</p>
+<p>Step (iii). Let <span class="math inline">\(W&#39;\)</span> be a complement to <span class="math inline">\(W\)</span> in <span class="math inline">\(\mathfrak{g}\)</span>, and define <span class="math display">\[\phi\colon \mathfrak{g}\cong W\oplus W&#39;\to G,\ \ \phi(\xi+\xi&#39;)=\exp(\xi)
+\exp(\xi&#39;).\]</span> Since <span class="math inline">\({\mbox{d}}_0\phi\)</span> is the identity, there is an open neighborhood <span class="math inline">\(U\subset\mathfrak{g}\)</span> of <span class="math inline">\(0\)</span> such that <span class="math inline">\(\phi\colon U\to \phi(U)\)</span> is a diffeomorphism. It is automatic that <span class="math inline">\(\phi(W\cap U)\subset \phi(W)\cap \phi(U)\subset H\cap \phi(U)\)</span>. We want to show that we can take <span class="math inline">\(U\)</span> sufficiently small so that we also have the opposite inclusion <span class="math display">\[H\cap \phi(U)\subset \phi(W\cap U).\]</span> Suppose not. Then, any neighborhood <span class="math inline">\(U_n\subset \mathfrak{g}=W\oplus W&#39;\)</span> of <span class="math inline">\(0\)</span> contains an element <span class="math inline">\((\eta_n,\eta_n&#39;)\)</span> such that <span class="math display">\[\phi(\eta_n,\eta_n&#39;)=\exp(\eta_n)\exp(\eta_n&#39;)\in H\]</span> (i.e. <span class="math inline">\(\exp(\eta_n&#39;)\in H\)</span>) but <span class="math inline">\((\eta_n,\eta_n&#39;)\not\in W\)</span> (i.e. <span class="math inline">\(\eta_n&#39;\not=0\)</span>). Thus, taking <span class="math inline">\(U_n\)</span> to be a nested sequence of neighborhoods with intersection <span class="math inline">\(\{0\}\)</span>, we could construct a sequence <span class="math inline">\(\eta_n&#39;\in W&#39;-\{0\}\)</span> with <span class="math inline">\(\eta_n&#39;\to 0\)</span> and <span class="math inline">\(\exp(\eta_n&#39;)\in H\)</span>. Passing to a subsequence we may assume that <span class="math inline">\([\eta_n&#39;]\to [\eta]\)</span> for some <span class="math inline">\(\eta\in W&#39;\backslash \{0\}\)</span>. On the other hand, such a convergence would mean <span class="math inline">\(\eta\in W\)</span>, by definition of <span class="math inline">\(W\)</span>. Contradiction. ◻</p>
+</div>
+<p>As remarked earlier, Cartan’s theorem is very useful in practice. For a given Lie group <span class="math inline">\(G\)</span>, the term ‘closed subgroup’ is often used as synonymous to ‘embedded Lie subgroup’.</p>
+<div class="examples">
+<p><em>Examples 29</em>.</p>
+<ol type="1">
+<li><p>The matrix groups <span class="math inline">\(G=\operatorname{O}(n), \operatorname{Sp}(n), \operatorname{SL}(n,\mathbb{R}),\ldots\)</span> are all closed subgroups of some <span class="math inline">\(\operatorname{GL}(N,\mathbb{R})\)</span>, and hence are Lie groups.</p></li>
+<li><p>Suppose that <span class="math inline">\(\phi\colon G\to H\)</span> is a morphism of Lie groups. Then <span class="math inline">\(\operatorname{ker}(\phi)=\phi^{-1}(e)\subset G\)</span> is a closed subgroup. Hence it is an embedded Lie subgroup of <span class="math inline">\(G\)</span>.</p></li>
+<li><p>The center <span class="math inline">\(Z(G)\)</span> of a Lie group <span class="math inline">\(G\)</span> is the set of all <span class="math inline">\(a\in G\)</span> such that <span class="math inline">\(ag=ga\)</span> for all <span class="math inline">\(a\in G\)</span>. It is a closed subgroup, and hence an embedded Lie subgroup.</p></li>
+<li><p>Suppose <span class="math inline">\(H\subset G\)</span> is a closed subgroup. Its <em>normalizer</em> <span class="math inline">\(N_G(H)\subset G\)</span> is the set of all <span class="math inline">\(a\in G\)</span> such that <span class="math inline">\(aH=Ha\)</span>. (I.e. <span class="math inline">\(h\in H\)</span> implies <span class="math inline">\(aha^{-1}\in H\)</span>.) This is a closed subgroup, hence a Lie subgroup. The <em>centralizer</em> <span class="math inline">\(Z_G(H)\)</span> is the set of all <span class="math inline">\(a\in G\)</span> such that <span class="math inline">\(ah=ha\)</span> for all <span class="math inline">\(h\in H\)</span>, it too is a closed subgroup, hence a Lie subgroup.</p></li>
+</ol>
+</div>
+<p>The E. Cartan theorem is just one of many ‘automatic smoothness’ results in Lie theory. Here is another.</p>
+<div class="theorem">
+<p><strong>Theorem 30</strong>. <em>Let <span class="math inline">\(G,H\)</span> be Lie groups, and <span class="math inline">\(\phi\colon G\to H\)</span> be a continuous group morphism. Then <span class="math inline">\(\phi\)</span> is smooth.</em></p>
+</div>
+<p>As a corollary, a given topological group carries at most one smooth structure for which it is a Lie group. For profs of these (and stronger) statements, see the book by Duistermaat-Kolk.</p>
+<h1 id="the-adjoint-representations">The adjoint representations</h1>
+<h2 id="automorphisms">Automorphisms</h2>
+<p>The group <span class="math inline">\(\operatorname{Aut}(\mathfrak{g})\)</span> of automorphisms of a Lie algebra <span class="math inline">\(\mathfrak{g}\)</span> is closed in the group <span class="math inline">\(\operatorname{End} (\mathfrak{g})^\times\)</span> of vector space automorphisms, hence it is a Lie group. To identify its Lie algebra, let <span class="math inline">\(D\in \operatorname{End} (\mathfrak{g})\)</span> be such that <span class="math inline">\(\exp(tD)\in \operatorname{Aut} (\mathfrak{g})\)</span> for <span class="math inline">\(t\in\mathbb{R}\)</span>. Taking the derivative of the defining condition <span class="math inline">\(\exp(tD)[\xi,\eta]=[\exp(tD)\xi,\exp(tD)\eta]\)</span>, we obtain the property <span class="math display">\[D[\xi,\eta]=[D\xi,\eta]+[\xi,D\eta]\]</span> saying that <span class="math inline">\(D\)</span> is a <em>derivation</em> of the Lie algebra. Conversely, if <span class="math inline">\(D\)</span> is a derivation then <span class="math display">\[D^n[\xi,\eta]=\sum_{k=0}^n \binom{n}{k} [D^k \xi,\,D^{n-k}\eta]\]</span> by induction, which then shows that <span class="math inline">\(\exp(D)=\sum_n \frac{D^n}{n!}\)</span> is an automorphism. Hence the Lie algebra of <span class="math inline">\(\operatorname{Aut}(\mathfrak{g})\)</span> is the Lie algebra <span class="math inline">\(\operatorname{Der}(\mathfrak{g})\)</span> of derivations of <span class="math inline">\(\mathfrak{g}\)</span>.</p>
+<h2 id="the-adjoint-representation-of-g">The adjoint representation of <span class="math inline">\(G\)</span></h2>
+<p>Recall that an automorphism of a Lie group <span class="math inline">\(G\)</span> is an invertible morphism from <span class="math inline">\(G\)</span> to itself. The automorphisms form a group <span class="math inline">\(\operatorname{Aut}(G)\)</span>. Any <span class="math inline">\(a\in G\)</span> defines an ‘inner’ automorphism <span class="math inline">\(\operatorname{Ad} _a\in \operatorname{Aut}(G)\)</span> by conjugation: <span class="math display">\[\operatorname{Ad} _a(g)=aga^{-1}\]</span> Indeed, <span class="math inline">\(\operatorname{Ad} _a\)</span> is an automorphism since <span class="math inline">\(\operatorname{Ad} _a^{-1}= \operatorname{Ad} _{a^{-1}}\)</span> and <span class="math display">\[\operatorname{Ad} _a(g_1g_2)= ag_1g_2 a^{-1}=ag_1 a^{-1}ag_2
+a^{-1}= \operatorname{Ad} _a(g_1) \operatorname{Ad} _a(g_2).\]</span> Note also that <span class="math inline">\(\operatorname{Ad} _{a_1 a_2}= \operatorname{Ad} _{a_1} \operatorname{Ad} _{a_2}\)</span>, thus we have a group morphism <span class="math display">\[\operatorname{Ad} \colon G\to \operatorname{Aut}(G)\]</span> into the group of automorphisms. The kernel of this morphism is the center <span class="math inline">\(Z(G)\)</span>, the image is (by definition) the subgroup <span class="math inline">\(\operatorname{Int}(G)\)</span> of inner automorphisms. Note that for any <span class="math inline">\(\phi\in \operatorname{Aut}(G)\)</span>, and any <span class="math inline">\(a\in G\)</span>, <span class="math display">\[\phi\circ  \operatorname{Ad} _a\circ \phi^{-1}= \operatorname{Ad} _{\phi(a)}.\]</span> That is, <span class="math inline">\(\operatorname{Int}(G)\)</span> is a <em>normal</em> subgroup of <span class="math inline">\(\operatorname{Aut}(G)\)</span>. (I.e. the conjugate of an inner automorphism by any automorphism is inner.) It follows that <span class="math inline">\(\operatorname{Out}(G)=\operatorname{Aut}(G)/\operatorname{Int}(G)\)</span> inherits a group structure; it is called the <em>outer automorphism group</em>.</p>
+<div class="example">
+<p><em>Example 31</em>. If <span class="math inline">\(G= \operatorname{SU}(2)\)</span> the complex conjugation of matrices is an inner automorphism, but for <span class="math inline">\(G= \operatorname{SU}(n)\)</span> with <span class="math inline">\(n\ge 3\)</span> it cannot be inner (since an inner automorphism has to preserve the spectrum of a matrix). Indeed, one know that <span class="math inline">\(\operatorname{Out}( \operatorname{SU}(n))=\mathbb{Z}_2\)</span> for <span class="math inline">\(n\ge 3\)</span>.</p>
+</div>
+<p>The differential of the automorphism <span class="math inline">\(\operatorname{Ad} _a\colon G\to G\)</span> is a Lie algebra automorphism, denoted by the same letter: <span class="math inline">\(\operatorname{Ad} _a={\mbox{d}}_e \operatorname{Ad} _a\colon\mathfrak{g}\to \mathfrak{g}\)</span>. The resulting map <span class="math display">\[\operatorname{Ad} \colon G\to \operatorname{Aut}(\mathfrak{g})\]</span> is called the <em>adjoint representation of <span class="math inline">\(G\)</span></em>. Since the <span class="math inline">\(\operatorname{Ad} _a\)</span> are Lie algebra/group morphisms, they are compatible with the exponential map, <span class="math display">\[\exp( \operatorname{Ad} _a\xi)= \operatorname{Ad} _a\exp(\xi).\]</span></p>
+<div class="remark">
+<p><em>Remark 32</em>. If <span class="math inline">\(G\subset \operatorname{GL}(n,\mathbb{R})\)</span> is a matrix Lie group, then <span class="math inline">\(\operatorname{Ad} _a\in \operatorname{Aut}(\mathfrak{g})\)</span> is the conjugation of matrices <span class="math display">\[\operatorname{Ad} _a(\xi)= a\xi a^{-1}.\]</span> This follows by taking the derivative of <span class="math inline">\(\operatorname{Ad} _a(\exp(t\xi))=a\exp(t\xi)a^{-1}\)</span>, using that <span class="math inline">\(\exp\)</span> is just the exponential series for matrices.</p>
+</div>
+<h2 id="the-adjoint-representation-of-mathfrakg">The adjoint representation of <span class="math inline">\(\mathfrak{g}\)</span></h2>
+<p>Let <span class="math inline">\(\operatorname{Der}(\mathfrak{g})\)</span> be the Lie algebra of derivations of the Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>. There is a Lie algebra morphism, <span class="math display">\[\operatorname{ad} \colon \mathfrak{g}\to \operatorname{Der}(\mathfrak{g}),\ \ \xi\mapsto [\xi,\cdot].\]</span> The fact that <span class="math inline">\(\operatorname{ad} _\xi\)</span> is a derivation follows from the Jacobi identity; the fact that <span class="math inline">\(\xi\mapsto \operatorname{ad} _\xi\)</span> it is a Lie algebra morphism is again the Jacobi identity. The kernel of <span class="math inline">\(\operatorname{ad}\)</span> is the center of the Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>, i.e. elements having zero bracket with all elements of <span class="math inline">\(\mathfrak{g}\)</span>, while the image is the Lie subalgebra <span class="math inline">\(\operatorname{Int}(\mathfrak{g})\subset \operatorname{Der}(\mathfrak{g})\)</span> of <em>inner</em> derivations. It is a normal Lie subalgebra, i.e <span class="math inline">\([\operatorname{Der}(\mathfrak{g}),\operatorname{Int}(\mathfrak{g})]\subset \operatorname{Int}(\mathfrak{g})\)</span>, and the quotient Lie algebra <span class="math inline">\(\operatorname{Out}(\mathfrak{g})\)</span> are the <em>outer automorphims</em>.</p>
+<p>Suppose now that <span class="math inline">\(G\)</span> is a Lie group, with Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>. We have remarked above that the Lie algebra of <span class="math inline">\(\operatorname{Aut}(\mathfrak{g})\)</span> is <span class="math inline">\(\operatorname{Der}(\mathfrak{g})\)</span>. Recall that the differential of any <span class="math inline">\(G\)</span>-representation is a <span class="math inline">\(\mathfrak{g}\)</span>-representation. In particular, we can consider the differential of <span class="math inline">\(G\to \operatorname{Aut}(\mathfrak{g})\)</span>.</p>
+<div class="theorem">
+<p><strong>Theorem 33</strong>. <em>If <span class="math inline">\(\mathfrak{g}\)</span> is the Lie algebra of <span class="math inline">\(G\)</span>, then the adjoint representation <span class="math inline">\(\operatorname{ad} \colon \mathfrak{g}\to \operatorname{Der}(\mathfrak{g})\)</span> is the differential of the adjoint representation <span class="math inline">\(\operatorname{Ad} \colon G\to \operatorname{Aut}(\mathfrak{g})\)</span>. One has the equality of operators <span class="math display">\[\exp( \operatorname{ad} _\xi)= \operatorname{Ad} (\exp\xi)\]</span> for all <span class="math inline">\(\xi\in\mathfrak{g}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> For the first part we have to show <span class="math inline">\(\frac{\partial}{\partial t}\big|_{t=0} \operatorname{Ad} _{\exp(t\xi)}\eta= \operatorname{ad} _\xi\eta\)</span>. This is easy if <span class="math inline">\(G\)</span> is a matrix Lie group: <span class="math display">\[\frac{\partial}{\partial t}\Big|_{t=0} \operatorname{Ad} _{\exp(t\xi)}\eta=\frac{\partial}{\partial t}\Big|_{t=0}\exp(t\xi)\eta\exp(-t\xi)=\xi\eta-\eta\xi=[\xi,\eta].\]</span> For general Lie groups we compute, using <span class="math display">\[\exp(s \operatorname{Ad} _{\exp(t\xi)}\eta)= \operatorname{Ad} _{\exp(t\xi)}\exp(s\eta)
+=\exp(t\xi)\exp(s\eta)\exp(-t\xi),\]</span> <span class="math display">\[\begin{split}
+\frac{\partial}{\partial t}\Big|_{t=0} ( \operatorname{Ad} _{\exp(t\xi)}\eta)^L
+&amp;=\frac{\partial}{\partial t}\Big|_{t=0} \frac{\partial}{\partial s}\Big|_{s=0}
+R_{\exp(s \operatorname{Ad} _{\exp(t\xi)}\eta)}^*
+\\
+&amp;=\frac{\partial}{\partial t}\Big|_{t=0} \frac{\partial}{\partial s}\Big|_{s=0}
+R_{\exp(t\xi)\exp(s\eta)\exp(-t\xi)}^*\\
+&amp;=\frac{\partial}{\partial t}\Big|_{t=0} \frac{\partial}{\partial s}\Big|_{s=0}
+R_{\exp(t\xi)}^*R_{\exp(s\eta)}^*R_{\exp(-t\xi)}^*\\
+&amp;=\frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(t\xi)}^*\ \eta^L\ R_{\exp(-t\xi)}^*\\
+&amp;=[\xi^L,\eta^L]\\
+&amp;=[\xi,\eta]^L=( \operatorname{ad} _\xi\eta)^L. 
+\end{split}\]</span> This proves the first part. The second part is the commutativity of the diagram <span class="math display">\[\begin{CD} G @&gt;{\operatorname{Ad}}&gt;&gt; \operatorname{Aut}(\mathfrak{g}) \\
+@A{\exp}AA @AA{\exp}A \\
+\mathfrak{g}@&gt;&gt;{\operatorname{ad}}&gt; \operatorname{Der}(\mathfrak{g})
+\end{CD}\]</span> which is just a special case of the functoriality property of <span class="math inline">\(\exp\)</span> with respect to Lie group morphisms. ◻</p>
+</div>
+<div class="remark">
+<p><em>Remark 34</em>. As a special case, this formula holds for matrices. That is, for <span class="math inline">\(B,C\in \operatorname{Mat}_n(\mathbb{R})\)</span>, <span class="math display">\[e^B\, C\, e^{-B}=\sum_{n=0}^\infty \frac{1}{n!} [B,[B,\cdots [B,C]\cdots]].\]</span> The formula also holds in some other contexts, e.g. if <span class="math inline">\(B,C\)</span> are elements of an algebra with <span class="math inline">\(B\)</span> nilpotent (i.e. <span class="math inline">\(B^N=0\)</span> for some <span class="math inline">\(N\)</span>). In this case, both the exponential series for <span class="math inline">\(e^B\)</span> and the series on the right hand side are finite. (Indeed, <span class="math inline">\([B,[B,\cdots [B,C]\cdots]]\)</span> with <span class="math inline">\(n\)</span> <span class="math inline">\(B\)</span>’s is a sum of terms <span class="math inline">\(B^j C B^{n-j}\)</span>, and hence must vanish if <span class="math inline">\(n\ge 2N\)</span>.)</p>
+</div>
+<h1 id="the-differential-of-the-exponential-map">The differential of the exponential map</h1>
+<p>We had seen that <span class="math inline">\({\mbox{d}}_0\exp=\operatorname{id}\)</span>. More generally, one can derive a formula for the differential of the exponential map at arbitrary points <span class="math inline">\(\xi\in\mathfrak{g}\)</span>, <span class="math display">\[{\mbox{d}}_\xi\exp\colon \mathfrak{g}=T_\xi\mathfrak{g}\to T_{\exp\xi}G.\]</span> Using left translation, we can move <span class="math inline">\(T_{\exp\xi}G\)</span> back to <span class="math inline">\(\mathfrak{g}\)</span>, and obtain an endomorphism of <span class="math inline">\(\mathfrak{g}\)</span>.</p>
+<div class="theorem">
+<p><strong>Theorem 35</strong>. <em>The differential of the exponential map <span class="math inline">\(\exp\colon \mathfrak{g}\to G\)</span> at <span class="math inline">\(\xi\in \mathfrak{g}\)</span> is the linear operator <span class="math inline">\({\mbox{d}}_\xi\exp\colon\mathfrak{g}\to T_{\exp(\xi)}\mathfrak{g}\)</span> given by the formula, <span class="math display">\[{\mbox{d}}_\xi\exp=({\mbox{d}}_e L_{\exp\xi})\circ \frac{1-\exp(- \operatorname{ad} _\xi)}{ \operatorname{ad} _\xi}.\]</span></em></p>
+</div>
+<p>Here the operator on the right hand side is defined to be the result of substituting <span class="math inline">\(\operatorname{ad} _\xi\)</span> in the entire holomorphic function <span class="math inline">\(\frac{1-e^{-z}}{z}\)</span>. Equivalently, it may be written as an integral <span class="math display">\[\frac{1-\exp(- \operatorname{ad} _\xi)}{ \operatorname{ad} _\xi}=\int_0^1 {\mbox{d}}s\  \exp(-s \operatorname{ad} _\xi).\]</span></p>
+<div class="proof">
+<p><em>Proof.</em> We have to show that for all <span class="math inline">\(\xi,\eta\in\mathfrak{g}\)</span>, <span class="math display">\[({\mbox{d}}_\xi\exp)(\eta)\circ L_{\exp(-\xi)}^*=\int_0^1 {\mbox{d}}s\ (\exp(-s \operatorname{ad} _\xi)\eta)\]</span> as operators on functions <span class="math inline">\(f\in C^\infty(G)\)</span>. To compute the left had side, write <span class="math display">\[({\mbox{d}}_\xi\exp)(\eta)\circ L_{\exp(-\xi)}^*(f)=\frac{\partial}{\partial t}\Big|_{t=0} 
+(L_{\exp(-\xi)}^*(f))(\exp(\xi+t\eta))=\frac{\partial}{\partial t}\Big|_{t=0} f(\exp(-\xi)\exp(\xi+t\eta)).\]</span> We think of this as the value of <span class="math inline">\(\frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(-\xi)}^* R_{\exp(\xi+t\eta)}^* f\)</span> at <span class="math inline">\(e\)</span>, and compute as follows: <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> <span class="math display">\[\begin{split}
+\frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(-\xi)}^* R_{\exp(\xi+t\eta)}^* 
+&amp;=\int_0^1 {\mbox{d}}s\ \frac{\partial}{\partial t}\Big|_{t=0} \frac{\partial}{\partial s} R_{\exp(-s\xi)}^*R_{\exp(s(\xi+t\eta)}^* \\
+&amp;=\int_0^1 {\mbox{d}}s\ \frac{\partial}{\partial t}\Big|_{t=0} R_{\exp(-s\xi)}^*  (t\eta)^L R_{\exp(s(\xi+t\eta)}^*\\
+&amp;=\int_0^1 {\mbox{d}}s\ R_{\exp(-s\xi)}^*\ \eta^L\  R_{\exp(s(\xi))}^*\\
+&amp;=\int_0^1 {\mbox{d}}s\ ( \operatorname{Ad} _{\exp(-s\xi)}\eta)^L\\
+&amp;=\int_0^1 {\mbox{d}}s\ (\exp(-s \operatorname{ad} _\xi)\eta)^L.
+\end{split}\]</span> Applying this result to <span class="math inline">\(f\)</span> at <span class="math inline">\(e\)</span>, we obtain <span class="math inline">\(\int_0^1 {\mbox{d}}s\ (\exp(-s \operatorname{ad} _\xi)\eta)(f)\)</span> as desired. ◻</p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 36</strong>. <em>The exponential map is a local diffeomorphism near <span class="math inline">\(\xi\in\mathfrak{g}\)</span> if and only if <span class="math inline">\(\operatorname{ad} _\xi\)</span> has no eigenvalue in the set <span class="math inline">\(2 \pi i \mathbb{Z}\backslash\{0\}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> <span class="math inline">\({\mbox{d}}_\xi\exp\)</span> is an isomorphism if and only if <span class="math inline">\(\frac{1-\exp(- \operatorname{ad} _\xi)}{ \operatorname{ad} _\xi}\)</span> is invertible, i.e. has non-zero determinant. The determinant is given in terms of the eigenvalues of <span class="math inline">\(\operatorname{ad} _\xi\)</span> as a product, <span class="math inline">\(\prod_{\lambda} \frac{1-e^{-\lambda}}{\lambda}\)</span>. This vanishes if and only if there is a non-zero eigenvalue <span class="math inline">\(\lambda\)</span> with <span class="math inline">\(e^\lambda=1\)</span>. ◻</p>
+</div>
+<p>As an application, one obtains a version of the <em>Baker-Campbell-Hausdorff formula</em>. Let <span class="math inline">\(g\mapsto \log(g)\)</span> be the inverse function to <span class="math inline">\(\exp\)</span>, defined for <span class="math inline">\(g\)</span> close to <span class="math inline">\(e\)</span>. For <span class="math inline">\(\xi,\eta\in\mathfrak{g}\)</span> close to <span class="math inline">\(0\)</span>, the function <span class="math display">\[\log(\exp(\xi)\exp(\eta))\]</span> The BCH formula gives the Taylor series expansion of this function. The series starts out with <span class="math display">\[\log(\exp(\xi)\exp(\eta))=\xi+\eta+{\textstyle \frac{1}{2}}[\xi,\eta]+\cdots\]</span> but gets rather complicated. To derive the formula, introduce a <span class="math inline">\(t\)</span>-dependence, and let <span class="math inline">\(f(t,\xi,\eta)\)</span> be defined by <span class="math inline">\(\exp(\xi)\exp(t\eta)=\exp(f(t,\xi,\eta))\)</span> (for <span class="math inline">\(\xi,\eta\)</span> sufficiently small). Thus <span class="math display">\[\exp(f)=\exp(\xi)\exp(t\eta)\]</span> We have, on the one hand, <span class="math display">\[({\mbox{d}}_eL_{\exp(f)})^{-1}\frac{\partial}{\partial t}\exp(f)=
+{\mbox{d}}_e L_{\exp(t\eta)}^{-1}\frac{\partial}{\partial t}\exp(t\eta)
+=\eta.\]</span> On the other hand, by the formula for the differential of <span class="math inline">\(\exp\)</span>, <span class="math display">\[({\mbox{d}}_eL_{\exp(f)})^{-1}\frac{\partial}{\partial t}\exp(f)
+=({\mbox{d}}_eL_{\exp(f)})^{-1}({\mbox{d}}_f\exp) (\frac{\partial f}{\partial t})
+= \frac{1-e^{- \operatorname{ad} _f}}{ \operatorname{ad} _f}(\frac{\partial f}{\partial t}).\]</span> Hence <span class="math display">\[\frac{{\mbox{d}}f}{{\mbox{d}}t}=\frac{ \operatorname{ad} _f}{1-e^{- \operatorname{ad} _f}}\eta.\]</span> Letting <span class="math inline">\(\chi\)</span> be the function, holomorphic near <span class="math inline">\(w=1\)</span>, <span class="math display">\[\chi(w)=\frac{\log(w)}{1-w^{-1}}=1+\sum_{n=1}^\infty \frac{(-1)^{n+1} }{n(n+1)}(w-1)^n,\]</span> we may write the right hand side as <span class="math inline">\(\chi(e^{ \operatorname{ad} _f})\eta\)</span>. By Applying <span class="math inline">\(\operatorname{Ad}\)</span> to the defining equation for <span class="math inline">\(f\)</span> we obtain <span class="math inline">\(e^{ \operatorname{ad} _f}=e^{ \operatorname{ad} _\xi}e^{t \operatorname{ad} _\eta}\)</span>. Hence <span class="math display">\[\frac{{\mbox{d}}f}{{\mbox{d}}t}=\chi(e^{ \operatorname{ad} _\xi}e^{t \operatorname{ad} _\eta}) \eta.\]</span> Finally, integrating from <span class="math inline">\(0\)</span> to <span class="math inline">\(1\)</span> and using <span class="math inline">\(f(0)=\xi,\ f(1)=\log(\exp(\xi)\exp(\eta))\)</span>, we find: <span class="math display">\[\log(\exp(\xi)\exp(\eta))=\xi+\Big(\int_0^1 \chi(e^{ \operatorname{ad} _\xi}e^{t \operatorname{ad} _\eta}){\mbox{d}}t\Big) \eta.\]</span> To work out the terms of the series, one puts <span class="math display">\[w-1=e^{ \operatorname{ad} _\xi} e^{t \operatorname{ad} _\eta}-1=\sum_{i+j\ge 1} \frac{t^j}{i! j!} \operatorname{ad} _\xi^i  \operatorname{ad} _\eta^j\]</span> in the power series expansion of <span class="math inline">\(\chi\)</span>, and integrates the resulting series in <span class="math inline">\(t\)</span>. We arrive at:</p>
+<div class="theorem">
+<p><strong>Theorem 37</strong> (Baker-Campbell-Hausdorff series). <em>Let <span class="math inline">\(G\)</span> be a Lie group, with exponential map <span class="math inline">\(\exp\colon\mathfrak{g}\to G\)</span>. For <span class="math inline">\(\xi,\eta\in\mathfrak{g}\)</span> sufficiently small we have the following formula <span class="math display">\[\log(\exp(\xi)\exp(\eta))=\xi+\eta+\sum_{n=1}^\infty \frac{(-1)^{n+1} }{n(n+1)}\Big(\int_0^1{\mbox{d}}t\ \Big(\sum_{i+j\ge 1} \frac{t^j}{i! j!} \operatorname{ad} _\xi^i  \operatorname{ad} _\eta^j \Big)^n\Big)\eta.\]</span></em></p>
+</div>
+<p>An important point is that the resulting Taylor series in <span class="math inline">\(\xi,\eta\)</span> is a <em>Lie series</em>: all terms of the series are of the form of a constant times <span class="math inline">\(\operatorname{ad} _\xi^{n_1} \operatorname{ad} _\eta^{m_2}\cdots \operatorname{ad} _\xi^{n_r}\eta\)</span>. The first few terms read, <span class="math display">\[\log(\exp(\xi)\exp(\eta))=\xi+\eta+{\textstyle \frac{1}{2}}[\xi,\eta]+\frac{1}{12}[\xi,[\xi,\eta]]-\frac{1}{12}[\eta,[\xi,\eta]]+
+\frac{1}{24} [\eta,[\xi,[\eta,\xi]]]+
+\ldots.\]</span></p>
+<div class="exercise">
+<p><em>Exercise 38</em>. Work out these terms from the formula.</p>
+</div>
+<p>There is a somewhat better version of the BCH formula, due to Dynkin. A good discussion can be found in the book by Onishchik-Vinberg, Chapter I.3.2.</p>
+<h1 id="actions-of-lie-groups-and-lie-algebras">Actions of Lie groups and Lie algebras</h1>
+<h2 id="lie-group-actions">Lie group actions</h2>
+<div class="definition">
+<p><em>Definition 39</em>. An <em>action of a Lie group <span class="math inline">\(G\)</span> on a manifold <span class="math inline">\(M\)</span></em> is a group homomorphism <span class="math display">\[\mathcal{A}\colon G\to \operatorname{Diff}(M),\ g\mapsto \mathcal{A}_g\]</span> into the group of diffeomorphisms on <span class="math inline">\(M\)</span>, such that the <em>action map</em> <span class="math display">\[G\times M\to M,\ \ (g,m)\mapsto \mathcal{A}_g(m)\]</span> is smooth.</p>
+</div>
+<p>We will often write <span class="math inline">\(g.m\)</span> rather than <span class="math inline">\(\mathcal{A}_g(m)\)</span>. With this notation, <span class="math inline">\(g_1.(g_2.m)=(g_1g_2).m\)</span> and <span class="math inline">\(e.m=m\)</span>. A map <span class="math inline">\(\Phi\colon M_1\to M_2\)</span> between <span class="math inline">\(G\)</span>-manifolds is called <span class="math inline">\(G\)</span>-equivariant if <span class="math inline">\(g.\Phi(m)=\Phi(g.m)\)</span> for all <span class="math inline">\(m\in M\)</span>, i.e. the following diagram commutes: <span class="math display">\[\begin{CD}
+G\times M_1 @&gt;&gt;&gt; M_1\\
+@VV{\operatorname{id}\times \Phi}V @VV{\Phi}V\\
+G\times M_2 @&gt;&gt;&gt; M_2
+\end{CD}\]</span> where the horizontal maps are the action maps.</p>
+<div class="examples">
+<p><em>Examples 40</em>.</p>
+<ol type="1">
+<li><p>An <span class="math inline">\(\mathbb{R}\)</span>-action on <span class="math inline">\(M\)</span> is the same thing as a global flow.</p></li>
+<li><p>The group <span class="math inline">\(G\)</span> acts <span class="math inline">\(M=G\)</span> by right multiplication, <span class="math inline">\(\mathcal{A}_g=R_{g^{-1}}\)</span>, left multiplication, <span class="math inline">\(\mathcal{A}_g=L_g\)</span>, and by conjugation, <span class="math inline">\(\mathcal{A}_g= \operatorname{Ad} _g=L_g\circ R_{g^{-1}}\)</span>. The left and right action commute, hence they define an action of <span class="math inline">\(G\times G\)</span>. The conjugation action can be regarded as the action of the diagonal subgroup <span class="math inline">\(G\subset G\times G\)</span>.</p></li>
+<li><p>Any <span class="math inline">\(G\)</span>-representation <span class="math inline">\(G\to \operatorname{End}(V)\)</span> can be regarded as a <span class="math inline">\(G\)</span>-action, by viewing <span class="math inline">\(M\)</span> as a manifold.</p></li>
+<li><p>For any closed subgroup <span class="math inline">\(H\subset G\)</span>, the space of right cosets <span class="math inline">\(G/H=\{gH|\ g\in G\}\)</span> has a unique manifold structure such that the quotient map <span class="math inline">\(G\to G/H\)</span> is a smooth submersion, and the action of <span class="math inline">\(G\)</span> by left multiplication on <span class="math inline">\(G\)</span> descends to a smooth <span class="math inline">\(G\)</span>-action on <span class="math inline">\(G/H\)</span>. (Some ideas of teh proof will be explained below.)</p></li>
+<li><p>The defining represenation of the orthogonal group <span class="math inline">\(\operatorname{O}(n)\)</span> on <span class="math inline">\(\mathbb{R}^n\)</span> restricts to an action on the unit sphere <span class="math inline">\(S^{n-1}\)</span>, which in turn descends to an action on the projective space <span class="math inline">\(\mathbb{R}P(n-1)\)</span>. One also has actions on the Grassmann manifold <span class="math inline">\(\operatorname{Gr}_\mathbb{R}(k,n)\)</span> of <span class="math inline">\(k\)</span>-planes in <span class="math inline">\(\mathbb{R}^n\)</span>, or on the flag manifold <span class="math inline">\(\operatorname{Fl}(n)\)</span> (consisting of sequences <span class="math inline">\(\{0\}=V_0\subset V_1\subset \cdots V_{n-1}\subset V_n=\mathbb{R}^n\)</span> with <span class="math inline">\(\dim V_i=i\)</span>). These examples are all of the form <span class="math inline">\(\operatorname{O}(n)/H\)</span> for various choices of <span class="math inline">\(H\)</span>. (E.g, for <span class="math inline">\(\operatorname{Gr}(k,n)\)</span> one takes <span class="math inline">\(H\)</span> to be the subgroup preserving <span class="math inline">\(\mathbb{R}^k\subset \mathbb{R}^n\)</span>.)</p></li>
+</ol>
+</div>
+<h2 id="lie-algebra-actions">Lie algebra actions</h2>
+<div class="definition">
+<p><em>Definition 41</em>. An <em>action of a finite-dimensional Lie algebra <span class="math inline">\(\mathfrak{g}\)</span></em> on <span class="math inline">\(M\)</span> is a Lie algebra homomorphism <span class="math inline">\(\mathfrak{g}\to \mathfrak{X}(M),\ \xi\mapsto \mathcal{A}_\xi\)</span> such that the action map <span class="math display">\[\mathfrak{g}\times M\to TM,\ \ (\xi,m)\mapsto \mathcal{A}_\xi|_m\]</span> is smooth.</p>
+</div>
+<p>We will often write <span class="math inline">\(\xi_M=:\mathcal{A}_\xi\)</span> for the vector field corresponding to <span class="math inline">\(\xi\)</span>. Thus, <span class="math inline">\([\xi_M,\eta_M]=[\xi,\eta]_M\)</span> for all <span class="math inline">\(\xi,\eta\in\mathfrak{g}\)</span>. A smooth map <span class="math inline">\(\Phi\colon M_1\to M_2\)</span> between to <span class="math inline">\(\mathfrak{g}\)</span>-manifolds is called equivariant if <span class="math inline">\(\xi_{M_1}\sim_\Phi \xi_{M_2}\)</span> for all <span class="math inline">\(\xi\in\mathfrak{g}\)</span>.</p>
+<div class="examples">
+<p><em>Examples 42</em>.</p>
+<ol type="1">
+<li><p>Any vector field <span class="math inline">\(X\)</span> defines an action of the Abelian Lie algebra <span class="math inline">\(\mathbb{R}\)</span>, by <span class="math inline">\(\lambda\mapsto \lambda X\)</span>.</p></li>
+<li><p>Any Lie algebra representation <span class="math inline">\(\phi\colon \mathfrak{g}\to \operatorname{gl}(V)\)</span> may be viewed as a Lie algebra action. Indeed, if <span class="math inline">\(f\in C^\infty(V)\)</span> we have <span class="math inline">\({\mbox{d}}_vf\in V^*\)</span>, and <span class="math display">\[(\mathcal{A}_\xi f)(v)=\frac{{\mbox{d}}}{{\mbox{d}}t}|_{t=0} f(v-t\xi.v)\]</span> defines a <span class="math inline">\(\mathfrak{g}\)</span>-action.</p></li>
+<li><p>For any Lie group <span class="math inline">\(G\)</span>, we have actions of its Lie algebra <span class="math inline">\(\mathfrak{g}\)</span> by <span class="math inline">\(\mathcal{A}_\xi=\xi^L,\ \mathcal{A}_\xi=-\xi^R\)</span> and <span class="math inline">\(\mathcal{A}_\xi=\xi^L-\xi^R\)</span>.</p></li>
+<li><p>Given a closed subgroup <span class="math inline">\(H\subset G\)</span>, the vector fields <span class="math inline">\(-\xi^R\in\mathfrak{X}(G),\ \xi\in\mathfrak{g}\)</span> are invariant under the right multiplication, hence they are related under the quotient map to vector fields on <span class="math inline">\(G/H\)</span>. That is, there is a unique <span class="math inline">\(\mathfrak{g}\)</span>-action on <span class="math inline">\(G/H\)</span> such that the quotient map <span class="math inline">\(G\to G/H\)</span> is equivariant.</p></li>
+</ol>
+</div>
+<div class="definition">
+<p><em>Definition 43</em>. Let <span class="math inline">\(G\)</span> be a Lie group with Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>. Given a <span class="math inline">\(G\)</span>-action <span class="math inline">\(g\mapsto \mathcal{A}_g\)</span> on <span class="math inline">\(M\)</span>, one defines its <em>generating vector fields</em> by <span class="math display">\[\mathcal{A}_\xi=\frac{d}{d t}\Big|_{t=0} \mathcal{A}_{\exp(-t\xi)}^*.\]</span></p>
+</div>
+<div class="example">
+<p><em>Example 44</em>. The generating vector field for the action by right multiplication <span class="math display">\[\mathcal{A}_a=R_{a^{-1}}\in \operatorname{Diff}(G)\]</span> are the left-invariant vector fields, <span class="math display">\[\mathcal{A}(\xi)=\frac{\partial}{\partial t}|_{t=0} R_{\exp(t\xi)}^* =\xi^L.\]</span> Similarly, the generating vector fields for the action by left multiplication are <span class="math inline">\(-\xi^R\)</span>, and those for the conjugation action are <span class="math inline">\(\xi^L-\xi^R\)</span>.</p>
+</div>
+<p>Observe that if <span class="math inline">\(\Phi\colon M_1\to M_2\)</span> is an equivariant map of <span class="math inline">\(G\)</span>-manifolds, then the generating vector fields for the action are <span class="math inline">\(\Phi\)</span>-related.</p>
+<div class="theorem">
+<p><strong>Theorem 45</strong>. <em>The generating vector fields of any <span class="math inline">\(G\)</span>-action <span class="math inline">\(g\to \mathcal{A}_g\)</span> define a <span class="math inline">\(\mathfrak{g}\)</span>-action <span class="math inline">\(\xi\to \mathcal{A}_\xi\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Write <span class="math inline">\(\xi_M:=\mathcal{A}_\xi\)</span> for the generating vector fields of a <span class="math inline">\(G\)</span>-action on <span class="math inline">\(M\)</span>. We have to show that <span class="math inline">\(\xi\mapsto \xi_M\)</span> is a Lie algebra morphism. Note that the map <span class="math display">\[\Phi\colon G\times M\to M,\ (a,m)\mapsto a^{-1}.m\]</span> is <span class="math inline">\(G\)</span>-equivariant if we take the <span class="math inline">\(G\)</span>-action on <span class="math inline">\(G\times M\)</span> to be <span class="math inline">\(g.(a,m)=(ag^{-1},m)\)</span>. Hence <span class="math inline">\(\xi_{G\times M}\sim_\Phi \xi_M\)</span>. But <span class="math inline">\(\xi_{G\times M}=\xi^L\)</span> (viewed as vector fields on the product <span class="math inline">\(G\times M\)</span>), hence <span class="math inline">\(\xi\mapsto \xi_{G\times M}\)</span> is a Lie algebra morphism. It follows that <span class="math display">\[0=[(\xi_1)_{G\times M}, (\xi_1)_{G\times M}]-([\xi_1,\xi_2])_{G\times M}
+\sim [(\xi_1)_M,(\xi_2)_M]-[\xi_1,\xi_2]_M.\]</span> Since <span class="math inline">\(\Phi\)</span> is a surjective submersion (i.e. the differential <span class="math inline">\({\mbox{d}}\Phi\colon T(G\times M)\to TM\)</span> is surjective), this shows that <span class="math inline">\([(\xi_1)_M,(\xi_2)_M]-[\xi_1,\xi_2]_M=0\)</span>. ◻</p>
+</div>
+<h2 id="integrating-lie-algebra-actions">Integrating Lie algebra actions</h2>
+<p>Let us now consider the inverse problem: For a Lie group <span class="math inline">\(G\)</span> with Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>, integrating a given <span class="math inline">\(\mathfrak{g}\)</span>-action to a <span class="math inline">\(G\)</span>-action. The construction will use some facts about <em>foliations</em>.</p>
+<p>Let <span class="math inline">\(M\)</span> be a manifold. A <em><span class="math inline">\(k\)</span>-dimensional distribution</em> on <span class="math inline">\(M\)</span> is a linear subspace <span class="math inline">\(\mathfrak{R}\subset \mathfrak{X}(M)\)</span> of the space of vector fields such that at any point <span class="math inline">\(m\in M\)</span>, the subspace <span class="math inline">\(E_m\subset T_mM\)</span> spanned by all <span class="math inline">\(X_m,\ X\in \mathfrak{R}\)</span> is of dimension <span class="math inline">\(k\)</span>. The subspaces <span class="math inline">\(E_m\)</span> define a rank <span class="math inline">\(k\)</span> vector bundle <span class="math inline">\(E\subset TM\)</span> with <span class="math inline">\(\mathfrak{R}=\Gamma(E)\)</span>, hence a distribution is equivalently given by this subbundle <span class="math inline">\(E\)</span>. An integral submanifold of the distribution <span class="math inline">\(\mathfrak{R}\)</span> is a <span class="math inline">\(k\)</span>-dimensional submanifold <span class="math inline">\(S\)</span> such that all <span class="math inline">\(X\in\mathfrak{R}\)</span> are tangent to <span class="math inline">\(S\)</span>. In terms of <span class="math inline">\(E\)</span>, this means that <span class="math inline">\(T_mS=E_m\)</span> for all <span class="math inline">\(m\in S\)</span>. The distribution is called <em>integrable</em> if for all <span class="math inline">\(m\in M\)</span> there exists an integral submanifold containing <span class="math inline">\(m\)</span>. In this case, there exists a maximal such submanifold, <span class="math inline">\(\mathcal{L}_m\)</span>. The decomposition of <span class="math inline">\(M\)</span> into maximal integral submanifolds is called a <span class="math inline">\(k\)</span>-dimensional foliation of <span class="math inline">\(M\)</span>, the maximal integral submanifolds themselves are called the <em>leaves</em> of the foliation.</p>
+<p>Not every distribution is integrable. Recall that if two vector fields are tangent to a submanifold, then so is their Lie bracket. Hence, a <em>necessary</em> condition for integrability of a distribution is that <span class="math inline">\(\mathfrak{R}\)</span> is a Lie subalgebra. Frobenius’ theorem gives the converse:</p>
+<div class="theorem">
+<p><strong>Theorem 46</strong> (Frobenius theorem). <em>A rank <span class="math inline">\(k\)</span> distibution <span class="math inline">\(\mathfrak{R}\subset \mathfrak{X}(M)\)</span> is integrable if and only if <span class="math inline">\(\mathfrak{R}\)</span> is a Lie subalgebra.</em></p>
+</div>
+<p>The idea of proof is to show that if <span class="math inline">\(\mathfrak{R}\)</span> is a Lie subalgebra, then <span class="math inline">\(\mathfrak{R}\)</span> is spanned, near any <span class="math inline">\(m\in M\)</span>, by <span class="math inline">\(k\)</span> <em>commuting</em> vector fields. one then uses the flow of these vector fields to construct integral submanifold.</p>
+<p>Given a Lie algebra of dimension <span class="math inline">\(k\)</span> and an <em>effective</em> <span class="math inline">\(\mathfrak{g}\)</span>-action on <span class="math inline">\(M\)</span> (i.e. <span class="math inline">\(\xi_M=0\)</span> implies <span class="math inline">\(\xi=0\)</span>), one obtains an integrable rank <span class="math inline">\(k\)</span> distribution <span class="math inline">\(\mathfrak{R}\)</span> as the span (over <span class="math inline">\(C^\infty(M)\)</span>) of the <span class="math inline">\(\xi_M\)</span>’s. We use this to prove:</p>
+<div class="theorem">
+<p><strong>Theorem 47</strong>. <em>Let <span class="math inline">\(G\)</span> be a connected, simply connected Lie group with Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>. A Lie algebra action <span class="math inline">\(\mathfrak{g}\to \mathfrak{X}(M),\ \xi\mapsto \xi_M\)</span> integrates to an action of <span class="math inline">\(G\)</span> if and only if the vector fields <span class="math inline">\(\xi_M\)</span> are all complete.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof of the theorem.</em> The idea of proof is as follows. Let <span class="math inline">\(\widehat{M}=G\times M\)</span>, and <span class="math inline">\(\operatorname{pr}_1,\operatorname{pr}_2\)</span> the projections to the two factors. A <span class="math inline">\(G\)</span>-action on <span class="math inline">\(M\)</span> defines a foliation of <span class="math inline">\(\widehat{M}=G\times M\)</span>, with leafs the orbits of the diagonal action (where <span class="math inline">\(G\)</span> acts on itself by left multiplication). Equivalently, the leaves are the fibers of the map <span class="math inline">\(\widehat{M}\to M,\ (g,m)\mapsto g^{-1}.m\)</span>. Hence they are indexed by the elements of <span class="math inline">\(m\)</span>, as follows <span class="math display">\[\mathcal{L}_m=\{(g,g.m)|\,g\in G\}.\]</span> <span class="math inline">\(\operatorname{pr}_1\)</span> restricts to diffeomorphisms <span class="math inline">\(\pi_m\colon \mathcal{L}_m\to G\)</span>, and we recover the action as <span class="math display">\[g.m= \operatorname{pr}_2(\pi_m^{-1}(g)).\]</span> Given a <span class="math inline">\(\mathfrak{g}\)</span>-action, our plan is to construct the foliation from an integrable distribution.</p>
+<p>Consider the Lie algebra action on <span class="math inline">\(\widehat{M}=G\times M\)</span>, given by <span class="math display">\[\xi_{\widehat{M}}=(-\xi^R,\xi_M)\in\mathfrak{X}(G\times M).\]</span> Note that the vector fields <span class="math inline">\(\xi_{\widehat{M}}\)</span> are complete, since <span class="math inline">\(\xi_M\)</span> are by assumption complete: If <span class="math inline">\(\Phi_t^\xi\)</span> is the flow of <span class="math inline">\(\xi_M\)</span>, the flow of <span class="math inline">\(\xi_{\widehat{M}}=(-\xi^R,\xi_M)\)</span> is given by <span class="math display">\[\widehat{\Phi}_t^\xi=(L_{\exp(t\xi)},\Phi_t^\xi)\in\operatorname{Diff}(G\times M).\]</span> The action <span class="math inline">\(\xi\mapsto \xi_{\widehat{M}}\)</span> is effective, hence it defines an integable <span class="math inline">\(\dim G\)</span>-dimensional distribution <span class="math inline">\(\mathfrak{R}\subset \mathfrak{X}(\widehat{M})\)</span>. Let <span class="math inline">\(\mathcal{L}_m\hookrightarrow G\times M\)</span> be the unique leaf containing the point <span class="math inline">\((e,m)\)</span>. Projection to the first factor induces a smooth map <span class="math inline">\(\pi_m:\ \mathcal{L}_m\to G\)</span>.</p>
+<p>The map <span class="math inline">\(\pi_m\)</span> is <em>surjective</em>: Given <span class="math inline">\(g\in G\)</span> write <span class="math inline">\(g=g_r\ldots g_1\)</span> where <span class="math inline">\(g_i=\exp(\xi_i)\)</span>. The path <span class="math inline">\(\widehat{\Phi}_{t}^{\xi_1}(e,m),\ t\in [0,1]\)</span> lies in <span class="math inline">\(\mathcal{L}_m\)</span>, and has end point <span class="math inline">\((g_1,m_1)\)</span> where <span class="math inline">\(m_1=\Phi_1^{\xi_1}(m)\)</span>. Concatenation with the path <span class="math inline">\(\widehat{\Phi}_{t}^{\xi_2}(g_1,m_1),\ t\in [0,1]\)</span> gives a (piecewise smooth) path from <span class="math inline">\((m,e)\)</span> to <span class="math inline">\((g_2g_1,m_2)\)</span> where <span class="math inline">\(m_2=\Phi_1^{\xi_2}\Phi_1^{\xi_1}(m)\)</span>. Proceeding in this manner, we obtain a piecewise smooth path in <span class="math inline">\(\mathcal{L}_m\)</span> from <span class="math inline">\((e,m)\)</span> to <span class="math inline">\((g_r\cdots g_1,m_r)=(g,m_r)\)</span>. This shows <span class="math inline">\(\pi_m^{-1}(g)\not=\emptyset\)</span>.</p>
+<p>For any <span class="math inline">\((g,x)\in\mathcal{L}_m\)</span> the tangent map <span class="math inline">\({\mbox{d}}_{(g,x)} \pi_m\)</span> is an isomorphism. Hence <span class="math inline">\(\pi_m\colon \mathcal{L}_m\to G\)</span> is a (surjective) covering map. Since <span class="math inline">\(G\)</span> is simply connected by assumption, we conclude that <span class="math inline">\(\pi_m\colon \mathcal{L}_m\to G\)</span> is a diffeomorphism. We now define <span class="math inline">\(\mathcal{A}_g(m)= \operatorname{pr}_2(\pi_m^{-1}(g))\)</span>. Concretely, the construction above shows that if <span class="math inline">\(g=\exp(\xi_r)\cdots \exp(\xi_1)\)</span> then <span class="math display">\[\mathcal{A}_g(m)=(\Phi^{\xi_r}_{1}\circ \cdots \circ \Phi^{\xi_1}_{1})(m).\]</span> From this description it is clear that <span class="math inline">\(\mathcal{A}_{gh}=\mathcal{A}_g\circ \mathcal{A}_h\)</span>. ◻</p>
+</div>
+<p>Let us remark that, in general, one cannot drop the assumption that <span class="math inline">\(G\)</span> is simply connected. Consider for example <span class="math inline">\(G= \operatorname{SU}(2)\)</span>, with <span class="math inline">\(\mathfrak{su}(2)\)</span>-action <span class="math inline">\(\xi\mapsto-\xi^R\)</span>. This exponentiates to an action of <span class="math inline">\(\operatorname{SU}(2)\)</span> by left multiplication. But <span class="math inline">\(\mathfrak{su}(2)\cong \mathfrak{so}(3)\)</span> as Lie algebras, and the action does not exponentiate to an action of the group <span class="math inline">\(\operatorname{SO}(3)\)</span>.</p>
+<p>As an important special case, we obtain:</p>
+<div class="theorem">
+<p><strong>Theorem 48</strong>. <em>Let <span class="math inline">\(H,G\)</span> be Lie groups, with Lie algebras <span class="math inline">\(\mathfrak{h}\to \mathfrak{g}\)</span>. If <span class="math inline">\(H\)</span> is connected and simply connected, then any Lie algebra morphism <span class="math inline">\(\phi\colon \mathfrak{h}\to \mathfrak{g}\)</span> integrates uniquely to a Lie group morphism <span class="math inline">\(\psi\colon H\to G\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Define an <span class="math inline">\(\mathfrak{h}\)</span>-action on <span class="math inline">\(G\)</span> by <span class="math inline">\(\xi\mapsto -\phi(\xi)^R\)</span>. Since the right-invariant vector fields are complete, this action integrates to a Lie group action <span class="math inline">\(\mathcal{A}\colon H\to \operatorname{Diff}(G)\)</span>. This action commutes with the action of <span class="math inline">\(G\)</span> by right multiplication. Hence, <span class="math inline">\(\mathcal{A}_h(g)=\psi(h)g\)</span> where <span class="math inline">\(\psi(h)=\mathcal{A}_h(e)\)</span>. The action property now shows <span class="math inline">\(\psi(h_1)\psi(h_2)=\psi(h_1h_2)\)</span>, so that <span class="math inline">\(\psi\colon H\to G\)</span> is a Lie group morphism integrating <span class="math inline">\(\phi\)</span>. ◻</p>
+</div>
+<div class="corollary">
+<p><strong>Corollary 49</strong>. <em>Let <span class="math inline">\(G\)</span> be a connected, simply connected Lie group, with Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>. Then any <span class="math inline">\(\mathfrak{g}\)</span>-representation on a finite-dimensional vector space <span class="math inline">\(V\)</span> integrates to a <span class="math inline">\(G\)</span>-representation on <span class="math inline">\(V\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> A <span class="math inline">\(\mathfrak{g}\)</span>-representation on <span class="math inline">\(V\)</span> is a Lie algebra morphism <span class="math inline">\(\mathfrak{g}\to \operatorname{End} (V)\)</span>, hence it integrates to a Lie group morphism <span class="math inline">\(G\to \operatorname{End} (V)^\times\)</span>. ◻</p>
+</div>
+<p>By a Lie subgroup of a Lie group <span class="math inline">\(H\)</span>, we mean a Lie group <span class="math inline">\(G\)</span> together with an injective Lie group morphism <span class="math inline">\(G\hookrightarrow H\)</span>. That is, the inclusion map need not be an embedding.</p>
+<div class="lemma">
+<p><strong>Lemma 50</strong>. <em>Let <span class="math inline">\(\mathfrak{g}\subset \mathfrak{h}\)</span> be a Lie subalgebra of a finite-dimensional Lie algebra, and <span class="math inline">\(H\)</span> a Lie group integrating <span class="math inline">\(\mathfrak{h}\)</span>. Then there exists a unique connected Lie subgroup <span class="math inline">\(G\subset H\)</span> integrating <span class="math inline">\(\mathfrak{g}\)</span>.</em></p>
+</div>
+<div class="proof">
+<p><em>Proof.</em> Consider the distribution on <span class="math inline">\(H\)</span> spanned by the vector fields <span class="math inline">\(-\xi^R,\ \xi\in\mathfrak{g}\)</span>. It is integrable, hence it defines a foliation of <span class="math inline">\(H\)</span>. The leaves of any foliation carry a unique manifold structure such that the inclusion map is an immersion. Take <span class="math inline">\(G\subset H\)</span> to be the leaf through <span class="math inline">\(e\in H\)</span>, with this manifold structure. Explicitly, <span class="math inline">\(G\)</span> consists of products <span class="math inline">\(\exp(\xi_r)\cdots \exp(\xi_1)\)</span> where <span class="math inline">\(\xi_i\in\mathfrak{g}\)</span>. From this description it follows that <span class="math inline">\(G\)</span> is a Lie group. ◻</p>
+</div>
+<p>By Ado’s theorem, any finite-dimensional Lie algebra <span class="math inline">\(\mathfrak{g}\)</span> is isomorphic to a matrix Lie algebra. We will skip the proof of this important (but relatively deep) result, since it involves a considerable amount of structure theory of Lie algebras. Given such a presentation <span class="math inline">\(\mathfrak{g}\subset \mathfrak{gl}(n,\mathbb{R})\)</span>, the Lemma gives a Lie subgroup <span class="math inline">\(G\subset \operatorname{GL}(n,\mathbb{R})\)</span> integrating <span class="math inline">\(\mathfrak{g}\)</span>. Replacing <span class="math inline">\(G\)</span> with its universal covering, this proves:</p>
+<div class="theorem">
+<p><strong>Theorem 51</strong> (Lie’s third theorem). <em>For any finite-dimensional real Lie algebra <span class="math inline">\(\mathfrak{g}\)</span>, there exists a connected, simply connected Lie group <span class="math inline">\(G\)</span>, unique up to isomorphism, having <span class="math inline">\(\mathfrak{g}\)</span> as its Lie algebra.</em></p>
+</div>
+<p>The book by Duistermaat-Kolk contains a different, more conceptual proof of Cartan’s theorem. This new proof has found important generalizations to the integration of <em>Lie algebroids</em>. In conjunction with the previous Theorem, Lie’s third theorem gives an equivalence between the categories of finite-dimensional Lie algebras <span class="math inline">\(\mathfrak{g}\)</span> and connected, simply-connected Lie groups <span class="math inline">\(G\)</span>.</p>
+<h2 id="proper-actions">Proper actions</h2>
+<p>Let us quickly list some terminology for Lie group actions <span class="math inline">\(\mathcal{A}\colon G\to \operatorname{Diff}(M)\)</span>. For any <span class="math inline">\(m\in M\)</span>, the set <span class="math inline">\(G.m:=\{(g,m)\,g\in G\}\)</span> is called the <em>orbit</em> of <span class="math inline">\(m\)</span>. The space <span class="math inline">\(M/G=\{G.m|\,m\in M\}\)</span> is called the <em>orbit space</em> for the given action. It inherits a topology as a quotient space of <span class="math inline">\(M\)</span>, but can be a very singular space. The action <span class="math inline">\(\mathcal{A}\)</span> is called <em>transitive</em> if there is only one orbit, i.e. <span class="math inline">\(M/G=\operatorname{pt}\)</span>. In this case, <span class="math inline">\(M\)</span> is called a <em>homogeneous space</em>.</p>
+<p>The subgroup <span class="math inline">\(G_m=\{g\in G|\,g.m=m\}\)</span> is called the <em>stabilizer</em> of <span class="math inline">\(m\)</span>. From the definition, it is clear that stabilizer subgroups are closed subgroups of <span class="math inline">\(G\)</span>, hence are embedded Lie subgroups. In particular, the orbit <span class="math inline">\(G/G_m\)</span> inherits a manifold structure. The inclusion of the orbit is smooth relative to this manifold structure. For any <span class="math inline">\(g\in G\)</span>, the stabilizers of a point <span class="math inline">\(m\)</span> and of its translate <span class="math inline">\(g.m\)</span> are related by the adjoint action: <span class="math display">\[G_{g.m}= \operatorname{Ad} _g(G_m).\]</span> The action is <em>free</em> if all stabilizers <span class="math inline">\(G_m\)</span> are trivial. For instance, the actions of <span class="math inline">\(G\)</span> by left or right multiplication on <span class="math inline">\(G\)</span> are both free, but the conjugation action is not. The action <span class="math inline">\(\mathcal{A}\)</span> is <em>effective</em> if <span class="math inline">\(\operatorname{ker}(\mathcal{A})=\{e\}\)</span>, i.e. <span class="math inline">\(\mathcal{A}_g=\operatorname{id}_M\)</span> implies <span class="math inline">\(g=e\)</span>. For instance, the conjugation action of <span class="math inline">\(G\)</span> on itself is effective if and only if the center of <span class="math inline">\(G\)</span> is trivial.</p>
+<p>The action <span class="math inline">\(\mathcal{A}\)</span> is called <em>proper</em> if the action map <span class="math inline">\(G\times M\to M\)</span> is proper (i.e. pre-images of compact sets are compact). For example, the left or right actions of <span class="math inline">\(G\)</span> on itself are proper. Note that for a proper <span class="math inline">\(G\)</span>-action, the action of any closed subgroup <span class="math inline">\(H\subset G\)</span> is still proper. Also, for <span class="math inline">\(G\)</span> compact any <span class="math inline">\(G\)</span>-action is proper.</p>
+<p>For a proper action, the stabilizer groups <span class="math inline">\(G_m\)</span> are <em>compact</em> since <span class="math inline">\(G_m\)</span> may be viewed as the intersection of the closed subspace <span class="math inline">\(G\times\{m\}\subset G\times M\)</span> with the preimage of <span class="math inline">\(\{m\}\in M\)</span> under the action map. One can use this fact to construct <em>slices</em> for the action, i.e. <span class="math inline">\(G_m\)</span>-invariant embedded submanifolds <span class="math inline">\(S\subset M\)</span> with <span class="math inline">\(m\in S\)</span> such that <span class="math inline">\(G.S\)</span> is an open neighborhood of the orbit <span class="math inline">\(G.m\)</span>, and such that <span class="math inline">\(gS\cap S\not=\emptyset \Leftrightarrow g\in G_m\)</span>. Slices give models a neighborhood of <span class="math inline">\(G.m\)</span> in the orbit space, since <span class="math inline">\((G.S)/G=S/G_m\)</span>. In particular, if <span class="math inline">\(G_m\)</span> is trivial, we see that a neighborhood of <span class="math inline">\(G.m\subset M/G\)</span> is a manifold (modeled by <span class="math inline">\(S\)</span>).</p>
+<div class="theorem">
+<p><strong>Theorem 52</strong>. <em>For a free, proper action on a manifold <span class="math inline">\(M\)</span>, the orbit space <span class="math inline">\(M/G\)</span> inherits a manifold structure such that the quotient map <span class="math inline">\(M\to M/G\)</span> is a smooth submersion. Given an <span class="math inline">\(H\)</span>-action on <span class="math inline">\(M\)</span> that commutes with the <span class="math inline">\(G\)</span>-action, the orbit space <span class="math inline">\(M/G\)</span> inherits an <span class="math inline">\(H\)</span>-action.</em></p>
+</div>
+<div class="example">
+<p><em>Example 53</em>. Let <span class="math inline">\(H\)</span> be a closed subgroup of <span class="math inline">\(G\)</span>, acting on <span class="math inline">\(G\)</span> by right multiplication. This action is proper, hence <span class="math inline">\(G/H\)</span> is a manifold. The action of <span class="math inline">\(G\)</span> by left multiplication commutes with the actuion of <span class="math inline">\(H\)</span>, hence it descends to a smooth action on <span class="math inline">\(G/H\)</span>.</p>
+</div>
+<p>E. Meinrenken, MAT 1120HF Lie groups and Lie algebras Lecture Notes</p>
+<p>Sigurdur Helgason. 18.755 Introduction to Lie Groups. Fall 2004. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. License: Creative Commons BY-NC-SA.</p>
+<p>A. Kirillov Jr.: An Introduction to Lie Groups and Lie Algebras , Cambridge University Press</p>
+<p>T. Broecker. T. tom Dieck: Representations of compact Lie groups , Springer</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>The minus sign is convention, but it is motivated as follows. Let <span class="math inline">\(\operatorname{Diff}(M)\)</span> be the infinite-dimensional group of diffeomorphisms of <span class="math inline">\(M\)</span>. It acts on <span class="math inline">\(C^\infty(M)\)</span> by <span class="math inline">\(\Phi.f=f\circ \Phi^{-1}=(\Phi^{-1})^* f\)</span>. Here, the inverse is needed so that <span class="math inline">\(\Phi_1.\Phi_2.f=(\Phi_1\Phi_2).f\)</span>. We think of vector fields as ‘infinitesimal flows’, i.e. informally as the tangent space at <span class="math inline">\(\operatorname{id}\)</span> to <span class="math inline">\(\operatorname{Diff}(M)\)</span>. Hence, given a curve <span class="math inline">\(t\mapsto \Phi_t\)</span> through <span class="math inline">\(\Phi_0=\operatorname{id}\)</span>, smooth in the sense that the map <span class="math inline">\(\mathbb{R}\times M\to M,\ (t,m)\mapsto \Phi_t(m)\)</span> is smooth, we define the corresponding vector field <span class="math inline">\(X=\frac{\partial}{\partial t}|_{t=0}\Phi_t\)</span> in terms of the action on functions: as <span class="math display">\[X.f=\frac{\partial}{\partial t}|_{t=0} \Phi_t.f=\frac{\partial}{\partial t}|_{t=0} (\Phi_t^{-1})^*f.\]</span> If <span class="math inline">\(\Phi_t\)</span> is a flow, we have <span class="math inline">\(\Phi_t^{-1}=\Phi_{-t}\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>We will use the identities <span class="math inline">\(\frac{\partial}{\partial s} R_{\exp(s\zeta)}^*= R_{\exp(s\zeta)}^*\ \zeta^L=\zeta^L\ R_{\exp(s\zeta)}^*\)</span> for all <span class="math inline">\(\zeta\in\mathfrak{g}\)</span>. Proof: <span class="math inline">\(\frac{\partial}{\partial s} R_{\exp(s\zeta)}^*=\frac{\partial}{\partial u}|_{u=0} R_{\exp((s+u)\zeta)}^*=\frac{\partial}{\partial u}|_{u=0}R_{\exp(u\zeta)}^* R_{\exp(s\zeta)}^*= \zeta^L R_{\exp(s\zeta)}^*\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
