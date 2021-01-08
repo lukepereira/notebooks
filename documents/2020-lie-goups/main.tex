@@ -1,0 +1,1826 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[super,square]{natbib}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage[margin=1.4in]{geometry}
+\usepackage{csquotes}
+\usepackage{mathrsfs}
+\usepackage{amsmath,amscd,amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[cmtip,matrix,arrow]{xy}
+\usepackage{mdframed}
+\usepackage[dvipsnames]{xcolor}
+
+% Book headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+
+\definecolor{blueish}{HTML}{CAC8FA}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{theo}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+
+%\theoremstyle{definition}
+
+
+
+\theoremstyle{remark}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remarks}[theorem]{Remarks}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{examples}[theorem]{Examples}
+\newtheorem{problems}[theorem]{Problems}
+% Calligraphic and bold face letters 
+%
+\newcommand\A{\mathcal{A}}
+\newcommand\be{\begin{equation}\label}
+\newcommand\ee{\end{equation}}
+\newcommand\M{\mathcal{M}}
+\renewcommand\L{\mathcal{L}}
+\newcommand\G{\mathcal{G}}
+\newcommand{\K}{\mathcal{K}}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\V}{\mathcal{V}}
+\renewcommand{\O}{\mathcal{O}}
+\newcommand{\Co}{\mathcal{C}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\J}{\mathcal{J}}
+\newcommand{\JJ}{{J}}
+\newcommand{\cg}{g}
+\newcommand{\U}{\on{U}}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\N}{\mathbb{N}}
+%\newcommand{\N}{\mathcal{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\nh}{{}}
+\newcommand{\pr}{\on{pr}}
+\newcommand{\Id}{\on{Id}}
+
+% Lie algebras
+
+\newcommand\lie[1]{\mathfrak{#1}}
+\renewcommand{\k}{\lie{k}}
+\newcommand{\h}{\lie{h}}
+\newcommand{\g}{\lie{g}}
+\newcommand{\m}{\lie{m}}
+\newcommand{\w}{\lie{w}}
+\newcommand{\z}{\lie{z}}
+\renewcommand{\t}{\lie{t}}
+\newcommand{\Alc}{\lie{A}}
+\renewcommand{\u}{\lie{u}}
+\newcommand{\su}{\lie{su}}
+\newcommand{\so}{\lie{so}}
+% Operatornames
+\newcommand{\on}{\operatorname}
+\newcommand{\length}{\on{length}} \newcommand{\Aut}{ \on{Aut} }
+\newcommand{\curv}{ \on{curv} } \newcommand{\Map}{ \on{Map} }
+\newcommand{\Ad}{ \on{Ad} } 
+\newcommand{\ad}{ \on{ad} } 
+\newcommand{\Hol}{ \on{Hol} }
+\newcommand{\Eul}{ \on{Eul} } 
+\newcommand{\End}{ \on{End} } 
+\newcommand{\Rep}{\on{Rep}}
+\newcommand{\Hom}{ \on{Hom}} \newcommand{\Ind}{ \on{Ind}}
+\renewcommand{\ker}{ \on{ker}} \newcommand{\im}{ \on{im}}
+\newcommand{\ind}{ \on{ind}} \newcommand{\Spin}{ \on{Spin}}
+\newcommand{\SU}{ \on{SU}} 
+\newcommand{\GL}{ \on{GL}}
+\newcommand{\SL}{ \on{SL}}
+ 
+\newcommand{\SO}{ \on{SO}} 
+\newcommand{\SOF}{ \on{SOF}}
+\newcommand{\UU}{ \on{U}(1)}
+\newcommand{\Mult}{ \on{Mult}} \newcommand{\Vol}{ \on{Vol}}
+\newcommand{\diag}{ \on{diag}} \newcommand{\Vect}{ \on{Vect}}
+\newcommand{\Oma}{{\underline \Om}}
+
+% Other macros
+
+\renewcommand{\index}{ \on{index}}
+\newcommand{\codim}{\on{codim}}
+\newcommand{\cone}{ \on{cone} }
+\newcommand{\D}{ \mathcal{D} }
+\newcommand{\ts}{\textstyle}
+
+\newcommand\dirac{/\kern-1.2ex\partial} % Dirac operator
+\newcommand\qu{/\kern-.7ex/} % Categorical quotients
+\newcommand{\fus}{\circledast} \newcommand{\lev}{{\lambda}} % Level
+\newcommand{\levi}{{k}} % Integral Level
+\newcommand{\cx}{{n_G}} %dual Coxeter number 
+\newcommand{\Waff}{W_{\on{aff}}} % affine Weylgroup 
+\newcommand{\ipwc}{\on{int}(\t^*_+)} % interior of the positive Weyl chamber
+
+
+\renewcommand\a{\mathfrak{a}}
+\newcommand{\lra}{\longrightarrow}
+\newcommand{\hra}{\hookrightarrow}
+\newcommand{\ra}{\rightarrow}
+\newcommand{\bib}{\bibitem}
+\renewcommand{\d}{{\mbox{d}}}
+\newcommand{\ol}{\overline}
+\newcommand\Gpar{\G_\partial}
+\newcommand\Phinv{\Phi^{-1}}
+\newcommand\phinv{\phi^{-1}}
+\newcommand{\Conj}{\on{Conj}}
+\newcommand\lam{\lambda}
+\newcommand\Lam{\Lambda}
+\newcommand\Sig{\Sigma}
+\newcommand\sig{\sigma}
+\newcommand\eps{\epsilon}
+\newcommand\Om{\Omega}
+\newcommand\om{\omega}
+\newcommand{\Del}{\Delta}
+\newcommand{\peps}{{(\eps)}}
+\newcommand{\del}{\delta}
+\newcommand{\f}{\frac}
+\renewcommand{\c}{\mathcal{C}}
+\renewcommand{\H}{\mathbb{H}}
+\newcommand{\p}{\partial}
+\renewcommand{\l}{\langle}
+\renewcommand{\r}{\rangle}
+\newcommand{\hh}{{\textstyle \f{1}{2}}}
+\newcommand{\ti}{\tilde}
+\newcommand{\olt}{\overline{\theta}}
+\newcommand{\maxx}{0}
+\newcommand\pt{\on{pt}}
+\newcommand\cE{\mathcal{E}}
+\newcommand\cL{\mathcal{L}}
+\newcommand\cF{\mathcal{F}}
+\newcommand\cQ{\mathcal{Q}}
+\newcommand\pardeg{\on{pardeg}}
+\newcommand\rk{\on{rk}}
+\newcommand\coker{\on{coker}}
+\newcommand\vol{\on{vol}}
+\newcommand\aff{\on{aff}}
+\renewcommand{\ss}{\on{ss}}
+\newcommand\Tr{\on{B }}
+\newcommand\Td{\on{Td}}
+\newcommand\Ch{\on{Ch}}      
+\newcommand\mult{\on{mult}}      
+\newcommand\LG{\widehat{LG}}      
+\newcommand\beqn{\begin{equation}}      
+\newcommand\eeqn{\end{equation}}      
+\newcommand{\ca}{\mathcal}
+\newcommand{\wh}{\widehat}
+\newcommand{\wt}{\widetilde}
+\newcommand{\mf}{\mathfrak}
+\newcommand{\beq}{\begin{eqnarray*}}
+\newcommand{\eeq}{\end{eqnarray*}}
+\newcommand{\Duf}{\on{Duf}}
+\newcommand{\B}{\mathcal{B}}
+
+
+\title{\vspace{-3cm}  Lie Groups and Lie Algebras}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+\vspace{-1.5cm}
+\tableofcontents
+\newpage
+
+
+\section{Terminology and notation}
+\subsection{Lie groups}
+%
+
+A Lie group (pronounced "Lee") is a group that is also a differentiable manifold (See differential geometry notebook). Combining these two ideas, one obtains a continuous group where points can be multiplied together, and their inverse can be taken. If the multiplication and taking of inverses are defined to be smooth (differentiable), one obtains a Lie group. Lie groups appear as symmetry groups of physical systems, and their Lie algebras (tangent vectors near the identity) may be thought of as infinitesimal symmetry motions. Thus Lie algebras and their representations are used extensively in physics, notably in quantum mechanics and particle physics.
+
+\begin{definition}
+A Lie group is a group $G$, equipped with a manifold structure such that the 
+group operations 
+\[ \on{Mult}\colon G\times G\to G,\ \ (g_1,g_2)\mapsto g_1 g_2\]
+\[ \on{Inv}\colon G\to G,\ \ g\mapsto g^{-1}\]
+are smooth. A morphism of Lie groups $G,G'$ is a morphism of groups
+$\phi\colon G\to G'$ that is smooth.   
+\end{definition}
+%
+\begin{remark}
+Using the implicit function theorem, one can show that smoothness of $\on{Inv}$ is in fact automatic. 
+\end{remark}
+
+The first example of a Lie group is the \emph{general linear group}
+\[ \GL(n,\R)=\{A\in \on{Mat}_n(\R)|\ \det(A)\not=0\}\]
+of invertible  $n\times n$ matrices. It is an open subset of $\on{Mat}_n(\R)$, hence a submanifold, and the smoothness of group multiplication follows since the product map for $\on{Mat}_n(\R)$ is obviously smooth. 
+
+Our next example is the orthogonal group
+%
+\[ \on{O}(n)=\{A\in \on{Mat}_n(\R)|\ A^T A=I\}.\]
+% 
+To see that it is a Lie group, it suffices to show that $\on{O}(n)$ is an embedded submanifold of $\on{Mat}_n(\R)$. In order to construct submanifold charts, we use the exponential map of matrices 
+%
+\[ \exp\colon \on{Mat}_n(\R)\to \on{Mat}_n(\R),\ \ 
+B\mapsto \exp(B)=\sum_{n=0}^\infty \f{1}{n!} B^n\]
+%
+(an absolutely convergent series). One has $\f{\d}{\d
+t}|_{t=0}\exp(tB)=B$, hence the differential of $\exp$ at $0$ is the
+identity $\on{id}_{\on{Mat}_n(\R)}$. By the inverse function theorem,
+this means that there is $\eps>0$ such that $\exp$ restricts to a 
+diffeomorphism from the open neighborhood $U=\{B:\ ||B||<\eps\}$ of $0$ 
+onto an open neighborhood $\exp(U)$ of $I$. 
+Let 
+\[ \mf{o}(n)=\{B\in \on{Mat}_n(\R)|\ B+B^T=0\}.\]
+%
+We claim that 
+\[ \exp(\mf{o}(n)\cap U)=\on{O}(n)\cap \exp(U),\]
+%
+so that $\exp$ gives a submanifold chart for $\on{O}(n)$ over 
+$\exp(U)$. To prove the claim, let $B\in U$. Then 
+\[ \begin{split} \exp(B)\in \on{O}(n) & \Leftrightarrow 
+\exp(B)^T=\exp(B)^{-1}\\
+& \Leftrightarrow 
+\exp(B^T)=\exp(-B)\\
+& \Leftrightarrow 
+B^T=-B\\
+& \Leftrightarrow B\in \mf{o}(n).
+\end{split} 
+\]
+For a more general $A\in \on{O}(n)$, we use that the map 
+$\on{Mat}_n(\R)\to \on{Mat}_n(\R)$ given by left multiplication is a 
+diffeomorphism. Hence, $A\exp(U)$ is an open neighborhood of $A$, 
+and we have 
+\[ A\exp(U)\cap \on{O}(n)=A(\exp(U)\cap \on{O}(n))=A\exp(U\cap \mf{o}(n)).\]
+%
+Thus, we also get a submanifold chart near $A$. This proves that $\on{O}(n)$ 
+is a submanifold. Hence its group operations are induced from those of 
+$\GL(n,\R)$, they are smooth. Hence $\on{O}(n)$ is a Lie group. 
+Notice that $\on{O}(n)$ is compact (the column vectors of an orthogonal matrix 
+are an orthonormal basis of $\R^n$; hence $\on{O}(n)$ is a subset of 
+$S^{n-1}\times\cdots S^{n-1}\subset \R^n\times\cdots \R^n$). 
+
+A similar argument shows that the \emph{special linear group}
+\[ \SL(n,\R)=\{A\in \on{Mat}_n(\R)|\ \det(A)=1\}\]
+is an embedded submanifold of $\GL(n,\R)$, and hence is a Lie group. 
+The submanifold charts are obtained by exponentiating the subspace 
+\[ \mf{sl}(n,\R)=\{B\in \on{Mat}_n(\R)|\ \on{tr}(B)=0\},\]
+using the identity $\det(\exp(B))=\exp(\on{tr}(B))$. 
+
+Actually, we could have saved most of this work with $\on{O}(n),\
+\SL(n,\R)$ once we have the following beautiful result of E. Cartan:
+\begin{quote}
+{\bf Fact:} \emph{Every closed subgroup of a Lie group is an embedded submanifold, 
+hence is again a Lie group.} 
+\end{quote}
+%
+We will prove this very soon, once we have developed some more basics
+of Lie group theory. A closed subgroup of $\GL(n,\R)$ (for suitable $n$) is 
+called a \emph{matrix Lie group}. Let us now give a few more examples of Lie
+groups, without detailed justifications. 
+
+\begin{examples}
+\begin{enumerate}
+\item Any finite-dimensional vector space $V$ over $\R$ is a Lie group, with product $\on{Mult}$ given by addition. 
+\item 
+Let $\A$ be a finite-dimensional associative algebra over $\R$, with
+unit $1_\A$. Then the group $\A^\times$ of invertible elements is a
+Lie group. More generally, if $n\in\N$ we can create the algebra
+$\on{Mat}_n(\A)$ of matrices with entries in $\A$, and the
+\emph{general linear group}
+%
+\[ \GL(n,\A):=\on{Mat}_n(\A)^\times\]
+%
+is a Lie group. If $\A$ is \emph{commutative}, one has a determinant map  
+$\on{det}\colon \on{Mat}_n(\A)\to \A$, and $\GL(n,\A)$ is the pre-image of $\A^\times$. One may then define a \emph{special linear group}
+\[ \on{SL}(n,\A)=\{g\in \GL(n,\A)|\ \det(g)=1\}.\]
+\item 
+We mostly have in mind the cases $\A=\R,\C,\H$. Here $\H$ is the algebra of 
+\emph{quaternions} (due to Hamilton). Recall that $\H=\R^4$ as a vector space, with elements 
+$(a,b,c,d)\in \R^4$ written as 
+%
+\[ x=a+ib+jc+kd\]
+%
+with imaginary units $i,j,k$. The algebra structure is determined by 
+\[ i^2=j^2=k^2=-1,\ ij=k,\ jk=i,\ ki=j.\]
+%
+Note that $\H$ is non-commutative (e.g. $ji=-ij$), hence $\on{SL}(n,\H)$ is 
+\emph{not} defined. On the other hand, one can define complex conjugates
+\[ \ol{x}=a-ib-jc-kd\]
+and 
+\[ |x|^2:=x\ol{x}=a^2+b^2+c^2+d^2.\]
+defines a norm $x\mapsto |x|$, with $|x_1x_2|=|x_1| |x_2|$ just as for 
+complex or real numbers. The spaces $\R^n,\C^n,\H^n$ inherit norms, 
+by putting 
+\[ ||x||^2=\sum_{i=1}^n |x_i|^2,\ \ x=(x_1,\ldots,x_n).\]
+%
+The subgroups of $\GL(n,\R),\ \GL(n,\C),\ \GL(n,\H)$ preserving this 
+norm (in the sense that $||Ax||=||x||$ for all $x$) are denoted
+%
+\[ \on{O}(n),\ \on{U}(n),\ \on{Sp}(n)\]
+%
+and are called the \emph{orthogonal, unitary, and symplectic group}, 
+respectively.  Since the norms of $\C,\H$ coincide with those of 
+$\C\cong \R^2$, $\H=\C^2 \cong \R^4$,  we have 
+\[ \U(n)=\GL(n,\C)\cap \on{O}(2n),\ \ 
+\on{Sp}(n)=\GL(n,\H)\cap \on{O}(4n).\]
+%
+In particular, all of these groups are compact.  
+One can also define 
+%
+\[ \SO(n)=\on{O}(n)\cap \SL(n,\R),\ \ \SU(n)=\on{U}(n)\cap \SL(n,\C),\]
+% 
+these are called the \emph{special orthogonal} and \emph{special unitary}
+groups. The groups $\SO(n),\ \SU(n), \on{Sp}(n)$ are often called the 
+\emph{classical groups} (but this term is used a bit loosely). 
+\item 
+For any Lie group $G$, its universal cover $\wt{G}$ is again a Lie group. 
+The universal cover $\wt{\SL(2,\R)}$ is an example of a Lie group that is not 
+isomorphic to a matrix Lie group. 
+\end{enumerate}
+\end{examples}
+
+\subsection{Lie algebras}
+%
+\begin{definition}
+A Lie algebra is a vector space $\g$, together with a bilinear map 
+$[\cdot,\cdot]:\,\g\times\g\to \g$ satisfying {\em anti-symmetry}
+%
+$$ [\xi,\eta]=-[\eta,\xi] \mbox{ for all } \xi,\eta\in\g,$$
+%
+and the {\em Jacobi identity},
+%
+$$ [\xi,[\eta,\zeta]]+[\eta,[\zeta,\xi]]+[\zeta,[\xi,\eta]]=0
+\mbox{ for all }\xi,\eta,\zeta\in\g.
+$$
+The map $[\cdot,\cdot]$ is called the Lie bracket. A morphism of Lie algebras 
+$\g_1,\g_2$ is a linear map $\phi\colon \g_1\to \g_2$ preserving brackets.
+\end{definition}
+\vskip.1in
+%
+The space 
+\[ \mf{gl}(n,\R)=\on{Mat}_n(\R)\]
+% 
+is a Lie algebra, with bracket the commutator of matrices. 
+(The notation indicates that we think of $\on{Mat}_n(\R)$ 
+as a Lie algebra, not as an algebra.) 
+
+A Lie subalgebra of  $\mf{gl}(n,\R)$, i.e. a subspace preserved under commutators,  is called a \emph{matrix Lie algebra}. For instance, 
+\[ \mf{sl}(n,\R)=\{B\in\on{Mat}_n(\R)\colon \on{tr}(B)=0\}\]
+and 
+\[ \mf{o}(n)=\{B \in\on{Mat}_n(\R)\colon \ B^T=-B\}\]
+are matrix Lie algebras (as one easily verifies). 
+It turns out that every finite-dimensional real Lie algebra is
+isomorphic to a matrix Lie algebra (\emph{Ado's theorem}), but the proof is
+not easy. 
+
+The following examples of finite-dimensional Lie algebras correspond 
+to our examples for Lie groups. The origin of this correspondence will 
+soon become clear. 
+
+\begin{examples}
+\begin{enumerate}
+\item 
+Any vector space $V$ is a Lie algebra for the zero bracket. 
+\item 
+Any associative algebra $\A$ can be viewed as a Lie algebra under commutator. 
+Replacing $\A$ with matrix algebras over $\A$, it follows that 
+$\mf{gl}(n,\A)=\on{Mat}_n(\A)$, is a Lie algebra, with bracket the commutator. 
+If $\A$ is commutative, then the subspace $\mf{sl}(n,\A)\subset \mf{gl}(n,\A)$
+of matrices of trace $0$ is a Lie subalgebra. 
+\item 
+We are mainly interested in the cases $\A=\R,\C,\H$. Define an inner product on $\R^n,\C^n,\H^n$ by putting
+%
+\[ \l x,y\r=\sum_{i=1}^n \ol{x}_i y_i,\]
+%
+and define $\mf{o}(n),\ \mf{u}(n),\ \mf{sp}(n)$ as the matrices in 
+$\mf{gl}(n,\R),\ \mf{gl}(n,\C),\ \mf{gl}(n,\H)$ satisfying 
+\[ \l B x,y\r=-\l x,By\r\] 
+for all $x,y$. These are all Lie algebras called the (infinitesimal)
+orthogonal, unitary, and symplectic Lie algebras. For $\R,\C$ one can impose the additional condition $\on{tr}(B)=0$, thus defining the special 
+orthogonal and special unitary Lie algebras
+$\mf{so}(n),\ \mf{su}(n)$. Actually, 
+\[ \mf{so}(n)=\mf{o}(n)\]
+%
+since $B^T=-B$ already implies $\on{tr}(B)=0$.
+\end{enumerate}
+\end{examples}
+
+% \vskip1in
+
+% \begin{exercise}
+% Show that $\on{Sp}(n)$ can be characterized as follows. Let $J\in U(2n)$ 
+% be the unitary matrix
+% \[ \left(\begin{array}{cc}0&I_n\\ -I_n&0 
+% \end{array}\right)\]
+% where $I_n$ is the $n\times n$ identity matrix. Then 
+% \[ \on{Sp}(n)=\{A\in \U(2n)|\ \ol{A}=J A J^{-1}\}.\]
+% Here $\ol{A}$ is the componentwise complex conjugate of $A$. 
+% \end{exercise}
+
+% \begin{exercise}
+% Let $R(\theta)$ denote the $2\times 2$ rotation matrix 
+% \[ R(\theta)=\left(\begin{array}{cc} \cos\theta & -\sin\theta\\
+% \sin\theta &\cos\theta\end{array}\right).\]
+% Show that for all $A\in \SO(2m)$ there exists $O\in \SO(2m)$ such that 
+% $O A O^{-1}$ is of the block diagonal form 
+% \[ \left( \begin{array}{ccccc} R(\theta_1) & 0& 0&\cdots&0\\
+%  0& R(\theta_2)&0&\cdots &0\\ \cdots&\cdots&\cdots&\cdots&\cdots\\
+% 0&0&0&\cdots&R(\theta_m)\end{array}\right).\] For $A\in \SO(2m+1)$ one
+% has a similar block diagonal presentation, with $m$ $2\times 2$ blocks
+% $R(\theta_i)$ and an extra $1$ in the lower right corner. Conclude that 
+% $\SO(n)$ is connected. 
+% \end{exercise}
+
+
+% \begin{exercise}\label{ex:3}
+% Let $G$ be a connected Lie group, and $U$ an open neighborhood of the group unit $e$. Show that 
+% any $g\in G$ can be written as a product $g=g_1\cdots g_N$ of elements $g_i\in U$. 
+% \end{exercise}
+
+% \begin{exercise}
+% Let $\phi\colon G\to H$ be a morphism of connected Lie groups, and assume that the differential 
+% $\d_e\phi\colon T_eG\to T_eH$ is bijective (resp.~ surjective). 
+% Show that $\phi$ is a covering (resp.~ surjective).  
+% Hint: Use Exercise \ref{ex:3}. 
+% \end{exercise}
+
+\section{The covering $\SU(2)\to \SO(3)$}
+%
+The Lie group $\SO(3)$ consists of rotations in 3-dimensional space. 
+Let $D\subset \R^3$ be the closed ball of radius $\pi$. Any 
+element $x\in D$ represents a rotation by an angle $||x||$ in the direction 
+of $x$. This is a 1-1 correspondence for points in the interior of $D$, but 
+if $x\in \partial D$ is a boundary point then $x,-x$ represent the same rotation. Letting $\sim$ be the equivalence relation on $D$, given by antipodal identification on the boundary, we have $D^3/\sim =\R P(3)$. Thus 
+%
+\[ \SO(3)=\R P(3)\]
+%
+(at least, topologically). With a little extra effort (which we'll make below)
+one can make this into a diffeomorphism of manifolds. 
+ 
+By definition 
+\[ \SU(2)=\{A\in \on{Mat}_2(\C)|\ A^\dagger=A^{-1},\ \det(A)=1\}.\]
+%
+Using the formula for the inverse matrix, we see that $\SU(2)$ consists of matrices of the form 
+%
+\[ \SU(2)=\left\{\left(\begin{array}{cc}
+z&-\ol{w}\\ w& \ol{z}
+\end{array}\right)|\ |w|^2+|z|^2=1\right\}.\]
+%
+That is, $\SU(2)=S^3$ as a manifold. Similarly, 
+\[ \mf{su}(2)=\left\{\left(\begin{array}{cc}
+it &-\ol{u}\\ u& -it
+\end{array}\right)|\ t\in\R,\ u\in\C\right\}\]
+%
+gives an identification $\mf{su}(2)=\R\oplus \C=\R^3$. 
+Note that for a matrix $B$ of this form, $\det(B)=t^2+|u|^2$, so that 
+$\det$ corresponds to $||\cdot||^2$ under this identification. 
+
+The group $\SU(2)$ acts linearly on the vector space $\mf{su}(2)$, 
+by matrix conjugation: $B\mapsto ABA^{-1}$. 
+Since  the conjugation action preserves $\det$, we obtain a linear 
+action on $\R^3$, preserving the norm. This defines a Lie group morphism 
+from $\SU(2)$ into $\on{O}(3)$. Since $\SU(2)$ is connected, this must take values in the identity component:
+\[ \phi\colon \SU(2)\to \SO(3).\]
+The kernel of this map consists of matrices $A\in\SU(2)$ such that $A
+B A^{-1}=B$ for all $B\in\mf{su}(2)$. Thus, $A$ commutes with all skew-adjoint matrices of trace $0$. 
+Since $A$ commutes with multiples of the identity, it then commutes with all skew-adjoint matrices. 
+But since $\on{Mat}_n(\C)=\mf{u}(n)\oplus i\mf{u}(n)$ (the decomposition into skew-adjoint and self-adjoint parts), 
+it then follows that $A$ is a multiple of the identity matrix. Thus $\ker(\phi)=\{I,-I\}$ is discrete. Since $\d_e\phi$ is
+an isomorphism, it follows that the map $\phi$ is a double
+covering. This exhibits $\SU(2)=S^3$ as the double cover of $\SO(3)$. 
+
+
+% \begin{exercise}
+% Give an explicit construction of a double covering of $\SO(4)$ by 
+% $\SU(2)\times\SU(2)$. Hint: Represent the quaternion algebra $\H$ as 
+% an algebra of matrices $\H\subset \on{Mat}_2(\C)$, by 
+% \[ x=a+ib+jc+kd\mapsto x=\left(\begin{array}{cc}
+% a+ib & c+id\\ -c+id & a-ib
+% \end{array}\right).\]
+% Note that $|x|^2=\det(x)$, and that $\SU(2)=\{x\in \H|\ \det(x)=1\}$. 
+% Use this to define an action of $\SU(2)\times\SU(2)$ on $\H$ preserving 
+% the norm. 
+% \end{exercise}
+
+
+
+
+
+\section{The Lie algebra of a Lie group}
+%
+\subsection{Review: Tangent vectors and vector fields}
+%
+We begin with a quick reminder of some manifold theory, partly just to set up our notational conventions.
+
+Let $M$ be a manifold, and $C^\infty(M)$ its algebra of smooth real-valued 
+functions.  For $m\in M$, we define the tangent space 
+$T_mM$ to be the space of directional derivatives: 
+%
+\[ T_mM=\{v\in \Hom(C^\infty(M),\R)|\ v(fg)=v(f) g+v(g) f\}.\]
+%
+Here $v(f)$ is local, in the sense that $v(f)=v(f')$ if $f'-f$ vanishes on a neighborhood of $m$. 
+%
+\begin{example}
+If $\gamma\colon J\to M$, $J\subset \R$ is a smooth curve we obtain tangent vectors to the curve,
+%
+\[ \dot{\gamma}(t)\in T_{\gamma(t)}M,\ \ \dot{\gamma}(t)(f)= \f{\p}{\p t}|_{t=0}f(\gamma(t)).\] 
+%
+\end{example}
+\begin{example}
+We have $T_x\R^n=\R^n$, where the isomorphism takes $a\in\R^n$ to the 
+corresponding velocity vector of the curve $x+t a$. That is, 
+\[ v(f)=\f{\p}{\p t}|_{t=0}f(x+ta)=\sum_{i=1}^n a_i \f{\p f}{\p x_i}.\] 
+\end{example}
+
+A smooth map of manifolds $\phi\colon M\to M'$ defines a 
+\emph{tangent map}:
+\[ \d_m\phi\colon T_mM\to T_{\phi(m)}M',\ \ 
+(\d_m\phi(v))(f)=v(f\circ \phi).\]
+%
+The locality property ensures that for an open neighborhood $U\subset M$, 
+the inclusion identifies $T_mU=T_mM$. In particular, a coordinate chart 
+$\phi\colon U\to \phi(U)\subset \R^n$ gives an isomorphism 
+%
+\[ \d_m\phi\colon T_mM=T_mU\to T_{\phi(m)}\phi(U)=T_{\phi(m)}\R^n=\R^n.\]
+%
+Hence $T_mM$ is a vector space of dimension $n=\dim M$. 
+The union $TM=\bigcup_{m\in M}T_mM$ is a vector bundle over $M$, 
+called the tangent bundle. Coordinate charts for $M$ give vector 
+bundle charts for $TM$. For a smooth map of manifolds  
+$\phi\colon M\to M'$, the entirety of all maps $\d_m\phi$ defines a smooth vector bundle map 
+\[ \d\phi\colon TM\to TM'.\]
+
+
+
+
+A \emph{vector field} on $M$ is a derivation $X\colon C^\infty(M)\to C^\infty(M)$. That is, it is a linear map satisfying 
+%
+\[ X(fg)=X(f) g+f X(g).\]
+%  
+The space of vector fields is denoted $\mf{X}(M)=\on{Der}(C^\infty(M))$.  
+Vector fields are local, in the sense that for any open subset $U$ there is 
+a well-defined restriction $X|_U\in\mf{X}(U)$ such that $X|_U(f|_U)=(X(f))|_U$. 
+For any vector field, one obtains tangent vectors $X_m\in T_mM$ by
+$X_m(f)=X(f)|_m$. One can think of a vector field as an assignment of
+tangent vectors, depending smoothly on $m$. More precisely, a vector
+field is a smooth section of the tangent bundle $TM$. In local
+coordinates, vector fields are of the form $\sum_i a_i \f{\p}{\p x_i}$ 
+where the $a_i$ are smooth functions. 
+
+It is a general fact that the commutator of derivations of an
+algebra is again a derivation. Thus, $\mf{X}(M)$ is a Lie algebra for
+the bracket
+%
+\[ [X,Y]=X\circ Y-Y\circ X.\]
+%
+
+In general, smooth maps $\phi\colon M\to M'$ of manifolds do not induce maps 
+of the Lie algebras of vector fields (unless $\phi$ is a diffeomorphism). 
+One makes the following definition. 
+%
+\begin{definition}
+Let $\phi\colon M\to N$ be a smooth map. 
+Vector fields $X,Y$ on $M,N$ are called $\phi$-related,  written 
+$X\sim_\phi Y$, if 
+\[ X(f\circ \phi)=Y(f)\circ \phi\]
+for all $f\in C^\infty(M')$. 
+\end{definition}
+In short, $X\circ \phi^*=\phi^* \circ Y$ where $\phi^*\colon C^\infty(N)\to C^\infty(M),\ f\mapsto f\circ \phi$. 
+
+One has $X\sim_\phi Y$ if and only if $Y_{\phi(m)}
+=\d_m\phi (X_m)$. From the definitions, one checks 
+\[ X_1\sim_\phi
+Y_1,\ X_2\sim_\phi Y_2\  \Rightarrow\  [X_1,X_2]\sim_\phi[Y_1,Y_2].\] 
+%
+\begin{example}
+Let $j\colon S\hra M$ be an embedded submanifold. We say that a vector field $X$ is \emph{tangent to $S$}  if $X_m\in T_mS\subset T_mM$ for all $m\in S$. We claim that if two vector fields are tangent to $S$ then so is their Lie bracket. 
+That is, the vector fields on $M$ that are tangent to $S$ form a Lie subalgebra. 
+
+Indeed, the definition means that there exists a vector field $X_S\in\mf{X}(S)$ such that $X_S\sim_j X$. Hence, if $X,Y$ are tangent to $S$, then 
+$[X_S,Y_S]\sim_j [X,Y]$, so $[X_S,Y_S]$ is tangent. 
+
+Similarly, the vector fields vanishing on $S$ are a Lie subalgebra. 
+\end{example}
+
+Let $X\in\mf{X}(M)$. A curve $\gamma(t),\ t\in J\subset \R$ is called an \emph{integral curve} of $X$ 
+if for all $t\in J$, 
+%
+\[ \dot{\gamma}(t)=X_{\gamma(t)}.\]
+%
+In local coordinates, this is an ODE $\f{\d x_i}{\d t}=a_i(x(t))$. 
+The existence and uniqueness theorem for ODE's (applied in coordinate charts, and then patching the local solutions) 
+shows that for any $m\in M$, there is a unique maximal
+integral curve $\gamma(t),\ t\in J_m$ with $\gamma(0)=m$. 
+\begin{definition} A vector
+field $X$ is \emph{complete} if for all $m\in M$, the maximal integral curve with $\gamma(0)=m$ 
+is defined for all $t\in\R$. 
+\end{definition}
+%
+In this case, one obtains a \emph{smooth} map 
+%
+\[ \Phi\colon \R\times M\to M,\ (t,m)\mapsto \Phi_t(m)\]
+%
+such that $\gamma(t)=\Phi_{-t}(m)$ is the integral curve through $m$. 
+The uniqueness property gives 
+%
+\[ \Phi_0=\on{Id},\ \ \Phi_{t_1+t_2}=\Phi_{t_1}\circ \Phi_{t_2}\]
+%
+i.e. $t\mapsto \Phi_t$ is a group homomorphism. Conversely, given such a 
+group homomorphism such that the map $\Phi$ is smooth, one obtains a vector field $X$ by setting 
+%
+\[ X=\f{\p}{\p t}|_{t=0} \Phi_{-t}^*,\]
+%
+as operators on functions. That is, 
+$X(f)(m)=\f{\p}{\p t}|_{t=0} f(\Phi_{-t}(m))$. 
+\footnote{The minus sign is convention, but it is motivated as follows. Let $\on{Diff}(M)$ be 
+the infinite-dimensional group of diffeomorphisms of $M$. It acts on 
+$C^\infty(M)$ by $\Phi.f=f\circ \Phi^{-1}=(\Phi^{-1})^* f$. 
+Here, the inverse is needed so that $\Phi_1.\Phi_2.f=(\Phi_1\Phi_2).f$. 
+We think of vector fields as `infinitesimal flows', i.e. informally 
+as the tangent space at $\on{id}$ to $\on{Diff}(M)$. 
+Hence, given a curve $t\mapsto \Phi_t$ through $\Phi_0=\on{id}$, 
+smooth in the sense that 
+the map $\R\times M\to M,\ (t,m)\mapsto \Phi_t(m)$ is smooth, we 
+define the corresponding vector field $X=\f{\p}{\p t}|_{t=0}\Phi_t$ in terms of the action on functions: 
+as 
+\[ X.f=\f{\p}{\p t}|_{t=0} \Phi_t.f=\f{\p}{\p t}|_{t=0} (\Phi_t^{-1})^*f.
+\]
+If $\Phi_t$ is a flow, we have $\Phi_t^{-1}=\Phi_{-t}$.}
+
+
+The Lie bracket of vector fields measure the non-commutativity of their flows. In particular, 
+if $X,Y$ are complete vector fields, with flows $\Phi_t^X,\ \Phi_s^Y$, then $[X,Y]=0$ if and 
+only if 
+\[\Phi_t^X\circ \Phi_s^Y =\Phi_s^Y \circ \Phi_t^X.\]
+% 
+In this case, $X+Y$ is again a complete vector field with flow
+$\Phi_t^{X+Y}=\Phi_t^X\circ \Phi_t^Y$. (The right hand side defines a
+flow since the flows of $X,Y$ commute, and the corresponding vector
+field is identified by taking a derivative at $t=0$.)
+
+\subsection{The Lie algebra of a Lie group}
+%
+Let $G$ be a Lie group, and $TG$ its tangent bundle.  For all $a\in
+G$, the left,right translations
+%
+\[ L_a\colon G\to G,\ g\mapsto ag\]
+\[ R_a\colon G\to G,\ g\mapsto ga\]
+%
+are smooth maps. Their differentials at $e$ define isomorphisms $\d_g
+L_a\colon T_g G\to T_{ag} G$, and similarly for $R_a$. Let
+\[ \g=T_eG\]
+be the tangent space to the group unit. 
+
+A vector field $X\in \mf{X}(G)$ is called left-invariant if 
+\[ X\sim_{L_a} X\]
+for all $a\in G$, i.e. if it commutes with $L_a^*$. 
+The space $\mf{X}^L(G)$ of left-invariant vector fields is thus a Lie subalgebra of 
+$\mf{X}(G)$. Similarly the space of right-invariant vector fields $\mf{X}^R(G)$ is a Lie subalgebra. 
+
+%
+\begin{lemma}
+The map 
+\[ \mf{X}^L(G)\to \g,\ X\mapsto X_e\] 
+is an isomorphism of vector 
+spaces.  (Similarly for $\mf{X}^R(G)$.) 
+\end{lemma}
+\begin{proof}
+For a left-invariant vector field, $X_a=(\d_eL_a)X_e$, hence the map 
+is  injective. To show that it is surjective, let $\xi\in \g$, and 
+put $X_a=(\d_eL_a)\xi \in T_a G$. We have to show that the map $G\to TG,\ 
+a\mapsto X_a$ is smooth. It is the composition of the map 
+$G\to G\times\g,\ g\mapsto (g,\xi)$ (which is obviously smooth) 
+with the map $G\times\g\to TG,\ (g,\xi)\mapsto \d_e L_g(\xi)$. 
+The latter map is the restriction of $\d\on{Mult}\colon TG\times TG\to TG$ 
+to $G\times\g\subset TG\times TG$, and hence is smooth. 
+\end{proof}
+
+%
+We denote by
+$\xi^L\in\mf{X}^L(G),\ \xi^R\in\mf{X}^R(G)$ 
+the left,right invariant vector fields defined by
+$\xi\in \g$. Thus
+\[ \xi^L|_e=\xi^R|_e=\xi\]
+%
+\begin{definition}
+The Lie algebra of a Lie group $G$ is the vector space $\g=T_eG$, equipped with the unique bracket such that 
+%
+\[ [\xi,\eta]^L=[\xi^L,\eta^L],\ \ \xi\in\g.\]
+%
+\end{definition}
+
+\begin{remark}
+If you use the right-invariant vector fields to define the bracket on $\g$, we get a minus sign.
+Indeed, note that $\on{Inv}\colon G\to G$ takes left translations to right translations. 
+Thus, $\xi^R$ is $\on{Inv}$-related to some left invariant vector field. Since 
+$\d_e\on{Inv}=-\on{Id}$, we see  
+$\xi^R\sim_{\on{Inv}}-\xi^L$. Consequently, 
+\[ [\xi^R,\eta^R]\sim_{\on{Inv}} [-\xi^L,-\eta^L]=[\xi,\eta]^L.\]
+But also $ -[\xi,\eta]^R\sim_{\on{Inv}} [\xi,\eta]^L$, hence we get 
+%
+\[ [\xi^R,\zeta^R]=-[\xi,\zeta]^R.\]
+%
+\end{remark}
+
+The construction of a Lie algebra is compatible with morphisms.
+That is, we have a \emph{functor} from Lie groups to 
+finite-dimensional Lie algebras. 
+%
+\begin{theorem}\label{th:phirelated}
+For any morphism of Lie groups $\phi\colon G\to G'$, the tangent map 
+$\d_e\phi\colon \g\to \g'$ is a morphism of Lie algebras. For all 
+$\xi\in\g,\ \xi'=\d_e\phi(\xi)$ one has
+%
+\[ \xi^L\sim_\phi (\xi')^L,\ \xi^R\sim_\phi (\xi')^R.\]
+%
+\end{theorem}
+\begin{proof}
+Suppose $\xi\in\g$, and let $\xi'=\d_e\phi(\xi)\in\g'$. 
+The property $\phi(ab)=\phi(a)\phi(b)$ shows that 
+$L_{\phi(a)}\circ \phi=\phi\circ L_a$. Taking the differential 
+at $e$, and applying to $\xi$ we find
+$(\d_e L_{\phi(a)})\xi'=(\d_a\phi)(\d_e L_a(\xi))$
+hence $(\xi')^L_{\phi(a)}= (\d_a\phi)(\xi^L_a)$. That is
+$\xi^L\sim_{\phi}(\xi')^L$. The proof for right-invariant 
+vector fields is similar. Since the Lie brackets of two pairs of 
+$\phi$-related vector fields are again $\phi$-related, it follows that 
+$\d_e\phi$ is a Lie algebra morphism. 
+\end{proof}
+%
+
+\begin{remark}
+Two special cases are worth pointing out.  
+\begin{enumerate}
+\item Let $V$ be a finite-dimensional (real) vector space. 
+A representation of a Lie group $G$ on $V$ is a 
+Lie group morphism $G\to \GL(V)$. A representation of a 
+Lie algebra $\g$ on $V$ is a Lie algebra morphism $\g\to \mf{gl}(V)$. 
+The Theorem shows that the differential of any Lie group representation is a 
+representation of its a Lie algebra. 
+\item
+An \emph{automorphism of a Lie group $G$} is a Lie group morphism
+$\phi\colon G\to G$ from $G$ to itself, with $\phi$ a
+diffeomorphism. An \emph{automorphism of a Lie algebra} is an
+invertible morphism from $\g$ to itself.  By the Theorem, the
+differential of any Lie group automorphism is an automorphism of its
+Lie algebra. As an example, $\SU(n)$ has a Lie group automorphism 
+given by complex conjugation of matrices; its differential 
+is a Lie algebra automorphism of $\mf{su}(n)$ given again by complex 
+conjugation. 
+\end{enumerate}
+\end{remark}
+
+
+\begin{exercise}
+Let $\phi\colon G\to G$ be a Lie group automorphism. Show that its 
+fixed point set is a closed subgroup of $G$, hence a Lie subgroup. 
+Similarly for Lie algebra automorphisms. What is the fixed point set 
+for the complex conjugation automorphism of $\SU(n)$?
+\end{exercise}
+
+\section{The exponential map}
+%
+\begin{theorem}
+The left-invariant vector fields $\xi^L$ are complete, i.e. they define a flow 
+$\Phi^\xi_t$ such that 
+\[ \xi^L=\f{\p}{\p t}|_{t=0}(\Phi^\xi_{-t})^*.\]
+% 
+Letting $\phi^\xi(t)$ denote the unique integral curve with $\phi^\xi(0)=e$. 
+It has the property 
+\[ \phi^\xi(t_1+t_2)=\phi^\xi(t_1)\phi^\xi(t_2),\]
+and the flow of $\xi^L$ is given by right translations:
+%
+\[ \Phi^\xi_t(g)=g\phi^\xi(-t).\]
+%
+Similarly, the right-invariant vector fields $\xi^R$ are complete. 
+$\phi^\xi(t)$ is an integral curve for $\xi^R$ as well, and
+the flow of $\xi^R$ is  given by left translations, $g\mapsto \phi^\xi(-t)g$. 
+\end{theorem}
+\begin{proof}
+If $\gamma(t),\ t\in J\subset \R$ is an integral curve of a
+left-invariant vector field $\xi^L$, then its left translates
+$a\gamma(t)$ are again integral curves. In particular, for $t_0\in J$
+the curve $t\mapsto \gamma(t_0)\gamma(t)$ is again an integral
+curve. Hence it coincides with $\gamma(t_0+t)$ for all $t\in J\cap
+(J-t_0)$. In this way, an integral curve defined for small $|t|$ can
+be extended to an integral curve for all $t$, i.e. $\xi^L$ is complete. 
+
+Since $\xi^L$ is left-invariant, so is its flow $\Phi^\xi_t$. Hence 
+\[ \Phi^\xi_t(g)=\Phi^\xi_t \circ L_g(e)=L_g\circ \Phi^\xi_t(e)
+=g \Phi^\xi_t(e)=g\phi^\xi(-t).\] The property 
+$\Phi^\xi_{t_1+t_2}=\Phi^\xi_{t_1}\Phi^\xi_{t_2}$ shows that 
+$\phi^\xi(t_1+t_2)=\phi^\xi(t_1)\phi^\xi(t_2)$. Finally, since 
+$\xi^L\sim_{\on{Inv}}-\xi^R$, the image 
+\[ \on{Inv}(\phi^\xi(t))=\phi^\xi(t)^{-1}=\phi^\xi(-t)\]
+is an integral curve of $-\xi^R$. Equivalently, $\phi^\xi(t)$ is an integral curve of $\xi^R$. 
+\end{proof}
+%
+Since left and right translations commute, it follows in particular that 
+\[[\xi^L,\eta^R]=0.\]
+
+\begin{definition}
+A 1-parameter subgroup of $G$ is a group homomorphism $\phi\colon \R\to G$.
+\end{definition}
+%
+We have seen that every $\xi\in\g$ defines a 1-parameter group, by taking 
+the integral curve through $e$ of the left-invariant vector field $\xi^L$. 
+Every 1-parameter group arises in this way: 
+
+\begin{proposition}
+If $\phi$ is a 1-parameter subgroup of $G$, then $\phi=\phi^\xi$ where 
+$\xi=\dot{\phi}(0)$. One has 
+%
+\[ \phi^{s\xi}(t)=\phi^\xi(st).\]
+%
+The map 
+\[ \R\times\g\to G,\ (t,\xi)\mapsto \phi^\xi(t)\]
+is smooth. 
+\end{proposition}
+\begin{proof}
+Let $\phi(t)$ be a 1-parameter group. 
+Then $\Phi_t(g):=g\phi(-t)$
+defines a flow. Since this flow commutes with left translations, it is
+the flow of a left-invariant vector field, $\xi^L$. Here $\xi$ is
+determined by taking the derivative of $\Phi_{-t}(e)=\phi(t)$ at
+$t=0$: $\xi=\dot{\phi}(0)$.  This shows $\phi=\phi^\xi$. As an application, 
+since $\psi(t)=\phi^{\xi}(st)$ is a 1-parameter group with 
+$\dot{\psi}^{\xi}(0)=s\dot{\phi}^\xi(0)=s\xi$, we have 
+$\phi^\xi(st)=\phi^{s\xi}(t)$. Smoothness of the map $(t,\xi)\mapsto
+\phi^\xi(t)$ follows from the smooth dependence of solutions of ODE's
+on parameters.
+\end{proof}
+
+
+%
+\begin{definition} 
+The \emph{exponential map} for the Lie group $G$ is the smooth map defined by
+%
+\[ \exp\colon \g\to G,\ \xi\mapsto \phi^\xi(1),\]
+% 
+where $\phi^\xi(t)$ is the 1-parameter subgroup with $\dot{\phi}^\xi(0)=\xi$. 
+\end{definition}
+%
+\begin{proposition}
+We have 
+\[ \phi^\xi(t)=\exp(t\xi).\] 
+%
+If $[\xi,\eta]=0$ then 
+%
+\[ \exp(\xi+\eta)=\exp(\xi)\exp(\eta).\]
+%
+\end{proposition}
+\begin{proof}
+By the previous Proposition, $\phi^\xi(t)=\phi^{t\xi}(1)=\exp(t\xi)$. 
+ For the second claim, note that 
+$[\xi,\eta]=0$ implies that $\xi^L,\eta^L$ commute. Hence their flows $\Phi^\xi_t,\ \Phi^\eta_t$, and 
+$\Phi^\xi_t \circ \Phi^\eta_t$ is the flow of $\xi^L+\eta^L$. Hence it coincides with 
+$\Phi^{\xi+\eta}_t$. Applying to $e$, we get $\phi^\xi(t)\phi^\eta(t)=\phi^{\xi+\eta}(t)$. Now put $t=1$. 
+\end{proof}
+
+In terms of the exponential map, we may now write the flow of $\xi^L$ as 
+$\Phi^\xi_t(g)=g\exp(-t\xi)$, and similarly for the flow of $\xi^R$. 
+That is, 
+\[ \xi^L=\f{\p}{\p t}|_{t=0}R_{\exp(t\xi)}^*,\ \ 
+\xi^R=\f{\p}{\p t}|_{t=0}L_{\exp(t\xi)}^*.\]
+
+
+
+
+
+
+
+
+\begin{proposition}
+The exponential map is functorial with respect to Lie group homomorphisms
+$\phi\colon G\to H$. That is, we have a commutative diagram 
+\[ \begin{CD} G @>{\phi}>> H \\
+@A{\exp}AA @AA{\exp}A \\
+\g @>>{\d_e\phi}> \h
+\end{CD}\]
+%
+\end{proposition}
+\begin{proof}
+$t\mapsto \phi(\exp(t\xi))$ is a 1-parameter subgroup of $H$, with differential at $e$ given by 
+\[ \f{d}{d t}\Big|_{t=0} \phi(\exp(t\xi))=\d_e\phi(\xi).\]
+Hence $ \phi(\exp(t\xi))=\exp(t \d_e\phi(\xi))$. Now put $t=1$. 
+\end{proof}
+
+\begin{proposition}
+%
+Let $G\subset \GL(n,\R)$ be a matrix Lie group, and $\g\subset \mf{gl}(n,\R)$ its Lie algebra. 
+Then $\exp\colon \g\to G$ is just the exponential map for matrices, 
+\[ \exp(\xi)=\sum_{n=0}^\infty \f{1}{n!}\xi^n.\]
+Furthermore, the Lie bracket on $\g$ is just the commutator of matrices.
+\end{proposition}
+\begin{proof}
+By the previous Proposition, applied to the inclusion of $G$ in
+$\GL(n,\R)$, the exponential map for $G$ is just the restriction of
+that for $\GL(n,\R)$.  Hence it suffices to prove the claim for
+$G=\GL(n,\R)$.  The function $\sum_{n=0}^\infty \f{t^n}{n!}\xi^n$ is a
+1-parameter group in $\GL(n,\R)$, with derivative at $0$ equal to
+$\xi\in \mf{gl}(n,\R)$.  Hence it coincides with $\exp(t\xi)$. Now put
+$t=1$.
+\end{proof}
+
+\begin{proposition}
+For a matrix Lie group $G\subset \GL(n,\R)$, the Lie bracket on $\g=T_IG$ is just the commutator of matrices.
+\end{proposition}
+\begin{proof}
+It suffices to prove for $G=\GL(n,\R)$. Using 
+$\xi^L=\f{\p}{\p t}\Big|_{t=0} R_{\exp(t\xi)}^*$
+we have
+\[ \begin{split}
+\lefteqn{\f{\p}{\p s}\Big|_{s=0}\f{\p}{\p t}\Big|_{t=0} 
+(R_{\exp(-t\xi)}^*R_{\exp(-s\eta)}^* 
+R_{\exp(t\xi)}^* R_{\exp(s\eta)}^*)}\\
+&=\f{\p}{\p s}\Big|_{s=0}(R_{\exp(-s\eta)}^* \xi^L R_{\exp(s\eta)}^*-\xi^L)\\
+&= \xi^L\eta^L-\eta^L\xi^L\\
+&=[\xi,\eta]^L.
+\end{split}\]
+On the other hand, write 
+\[ R_{\exp(-t\xi)}^*R_{\exp(-s\eta)}^* 
+R_{\exp(t\xi)}^* R_{\exp(s\eta)}^*
+=R_{\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)}^*.\]
+Since the Lie group exponential map for $\GL(n,\R)$ coincides with the 
+exponential map for matrices, we may use Taylor's expansion, 
+\[\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)=I+st(\xi\eta-\eta\xi)+\ldots
+=\exp(st(\xi\eta-\eta\xi))+\ldots
+\]
+where $\ldots$ denotes terms that are cubic or higher in $s,t$. 
+Hence 
+\[ R_{\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)}^*=R_{\exp(st (\xi\eta-\eta\xi)}^*+\ldots\]
+and consequently
+\[ \f{\p}{\p s}\Big|_{s=0}\f{\p}{\p t}\Big|_{t=0} R_{\exp(-t\xi)\exp(-s\eta)\exp(t\xi)\exp(s\eta)}^*
+=\f{\p}{\p s}\Big|_{s=0}\f{\p}{\p t}\Big|_{t=0} R_{\exp(st (\xi\eta-\eta\xi))}^*
+=(\xi\eta-\eta\xi)^L.\]
+We conclude that $[\xi,\eta]=\xi\eta-\eta\xi$. 
+\end{proof}
+
+\begin{remark}
+Had we defined the Lie algebra using right-invariant vector fields, we would have 
+obtained \emph{minus} the commutator of matrices. Nonetheless, some authors use that convention. 
+\end{remark}
+
+The exponential map gives local coordinates for the group $G$ on a
+neighborhood of $e$:
+%
+\begin{proposition}
+The differential of the exponential map at the origin is $\d_0\exp=\on{id}$. As a consequence, 
+there is an open neighborhood $U$ of $0\in\g$ such that the exponential map restricts to a diffeomorphism 
+$U\to \exp(U)$. 
+\end{proposition}
+\begin{proof}
+Let $\gamma(t)=t\xi$. Then $\dot{\gamma}(0)=\xi$ 
+since $\exp(\gamma(t))=\exp(t\xi)$ is the 1-parameter group, we have 
+\[ (\d_0\exp)(\xi)=\f{\p}{\p t}|_{t=0} \exp(t\xi)=\xi.\] 
+\end{proof}
+%
+%
+% \begin{exercise}
+% Show hat the exponential map for $\SU(n),\ \SO(n)\  \on{U}(n)$ are surjective. 
+% (We will soon see that the exponential map for any compact, connected Lie group is 
+% surjective.)
+% \end{exercise}
+% \begin{exercise}
+% A matrix Lie group $G\subset \GL(n,\R)$ is called \emph{unipotent} if for all $A\in G$, 
+% the matrix $A-I$ is nilpotent (i.e. $(A-I)^r=0$ for some $r$). The prototype of such a group are 
+% the upper triangular matrices with $1$'s down the diagonal. Show that for a connected 
+% unipotent matrix Lie group, the exponential map is a diffeomorphism. 
+% \end{exercise}
+% \begin{exercise} Show that $\exp\colon \mf{gl}(2,\C)\to \GL(2,\C)$ is 
+% surjective. More generally, show that the exponential map for 
+% $\GL(n,\C)$ is surjective. (Hint: First conjugate the given matrix into 
+% Jordan normal form). 
+% \end{exercise}
+% \begin{exercise}
+% Show that $\exp\colon \mf{sl}(2,\R)\to \SL(2,\R)$ is not surjective, by proving that 
+% the matrices
+% $\left(\begin{array}{cc} -1&\pm 1\\0&-1\end{array}\right)\in \SL(2,\R)$ are not in the image. 
+% (Hint: Assuming these matrices are of the form $\exp(B)$, what would the 
+% eigenvalues of $B$ have to be?) Show that these two matrices represent 
+% \emph{all} conjugacy classes of elements that are not in the image of $\exp$. 
+%  (Hint: Find a classification of the conjugacy classes of $\SL(2,\R)$, e.g. in terms of eigenvalues.) 
+% %Consider the exponential map $\exp\colon \mf{sl}(2,\R)\to \SL(2,\R)$ for the 
+% %group $\SL(2,\R)$. Let $\mf{sl}(2,\R)_0,\ \mf{sl}(2,\R)_{\on{re}},\  \mf{sl}(2,\R)_{\on{im}}$ 
+% %denote the subset of $\mf{sl}(2,\R)$ consisting of matrices with zero, non-zero real, or 
+% %non-zero imaginary eigenvalues.  
+% %Prove: 
+% %\begin{itemize}
+% %\item[(i)] Any $B\in \mf{sl}(2,\R)$ is in one of these three sets. 
+% %\item[(ii)] $B\in \mf{sl}(2,\R)_{\on{re}} \Rightarrow \on{tr}(\exp(B))>2$. 
+% %\item[(iii)] $B\in \mf{sl}(2,\R)_{0} \Rightarrow \on{tr}(\exp(B))=2$. 
+% %\item[(iv)] $B\in \mf{sl}(2,\R)_{\on{im}} \Rightarrow -2\le\on{tr}(\exp(B))\le 2$. 
+% %\item[(v)] The matrix $A=\left(\begin{array}{cc} -1&1\\0&-1\end{array}\right)\in \SL(2,\R)$ does not lie in the image of %the exponential map for $\SL(2,\R)$. 
+% %\end{itemize}
+% %Encore: Can you find all conjugacy classes of elements that are not in the image of $\exp$? Try to visualize the 
+% %set of conjugacy classes of $\SL(2,\R)$ (is it a Hausdorff space?). 
+% \end{exercise}
+
+
+
+
+
+
+
+
+
+
+\section{Cartan's theorem on closed subgroups}
+%
+Using the exponential map, we are now in position to prove Cartan's theorem on closed subgroups. 
+%
+\begin{theorem}
+Let $H$ be a closed subgroup of a Lie group $G$. Then $H$ is an embedded submanifold, and hence is a Lie subgroup.  
+\end{theorem}
+We first need a Lemma. 
+Let $V$ be a Euclidean vector space, and $S(V)$ its unit sphere. For $v\in V\backslash\{0\}$, let 
+$[v]=\f{v}{||v||}\in S(V)$.   
+
+\begin{lemma}
+Let $v_n,v\in V\backslash\{0\}$ with $\lim_{n\to \infty}v_n=0$. Then 
+\[ \lim_{n\to \infty} [v_n]=[v] \Leftrightarrow \exists a_n\in\N\colon \lim_{n\to \infty} a_nv_n=v.\]
+\end{lemma}
+\begin{proof} The implication $\Leftarrow$ is obvious. For the opposite direction, 
+suppose $\lim_{n\to \infty} [v_n]=[v] $. 
+Let $a_n\in\N$ be defined by $a_n-1<\f{||v||}{||v_n||}\le a_n$. Since $v_n\to 0$, we have 
+$\lim_{n\to \infty} a_n  \f{||v_n||}{||v||}=1$, and  
+\[ a_n v_n =\left(a_n  \f{||v_n||}{||v||}\right) [v_n]\, ||v||\to [v]\,||v||=v.\qedhere\]
+%   
+\end{proof}
+
+\begin{proof}[Proof of E. Cartan's theorem]
+It suffices to construct a submanifold chart near $e\in H$. (By left 
+translation, one then obtains submanifold charts near arbitrary $a\in H$.) 
+Choose an inner product on $\g$. 
+
+We begin with a candidate for the Lie algebra of $H$. Let $W\subset
+\g$ be the subset such that $\xi\in W$ if and only if either $\xi=0$, or
+$\xi\not=0$ and there exists $\xi_n\not=0$ with
+%
+\[ \exp(\xi_n)\in H,\ \ \xi_n\to 0,\ \ [\xi_n]\to [\xi].\] 
+%
+We will now show the following: 
+\begin{enumerate}
+\item[(i)]  $\exp(W)\subset H$,
+\item[(ii)] $W$ is a subspace of $\g$,
+\item[(iii)] There is an open neighborhood $U$ of $0$ and a diffeomorphism 
+$\phi\colon U\to \phi(U)\subset G$ with $\phi(0)=e$ such that 
+\[ \phi(U\cap W)=\phi(U)\cap H.\]
+(Thus $\phi$ defines a submanifold chart near $e$.) 
+\end{enumerate}
+Step (i). Let  $\xi\in W\backslash\{0\}$, with  sequence $\xi_n$ as in 
+the definition of $W$. By the Lemma, there are $a_n\in\N$ with 
+$a_n\xi_n\to \xi$. Since $\exp(a_n\xi_n)=\exp(\xi_n)^{a_n}\in H$, and $H$ is closed, it follows that  
+\[ \exp(\xi)=\lim_{n\to \infty} \exp(a_n\xi_n)\in H.\] 
+
+Step (ii). Since the subset $W$ is invariant under scalar
+multiplication, we just have to show that it is closed under
+addition. Suppose $\xi,\eta\in W$. To show that $\xi+\eta\in W$, we
+may assume that $\xi,\eta,\xi+\eta$ are all non-zero.  For $t$
+sufficiently small, we have
+\[ \exp(t \xi)\exp(t \eta)=\exp(u(t))\] 
+for some smooth curve 
+$t\mapsto u(t)\in\g$ with $u(0)=0$.  Then $\exp(u(t))\in H$ and 
+\[ \lim_{n\to \infty} n\, u(\f{1}{n})=
+\lim_{h\to 0} \f{u(h)}{h}=\dot{u}(0)=\xi+\eta.\]
+hence $u(\f{1}{n})\to 0,\ \exp(u(\f{1}{n})\in H,\  
+[u(\f{1}{n})]\to [\xi+\eta]$. This shows $[\xi+\eta]\in W$, 
+proving (ii). 
+
+Step (iii). Let $W'$ be a complement to $W$ in $\g$, and define 
+\[ \phi\colon \g\cong W\oplus W'\to G,\ \ \phi(\xi+\xi')=\exp(\xi)
+\exp(\xi').\]
+%
+Since $\d_0\phi$ is the identity, there is an open neighborhood
+$U\subset\g$ of $0$ such that $\phi\colon U\to \phi(U)$ is a
+diffeomorphism.  It is automatic that $\phi(W\cap U)\subset
+\phi(W)\cap \phi(U)\subset H\cap \phi(U)$. We want to show that we can
+take $U$ sufficiently small so that we also have the opposite
+inclusion
+% 
+\[  H\cap \phi(U)\subset \phi(W\cap U).\]
+%
+Suppose not. Then, any neighborhood $U_n\subset \g=W\oplus W'$
+of $0$ contains an element $(\eta_n,\eta_n')$ such that 
+\[ \phi(\eta_n,\eta_n')=\exp(\eta_n)\exp(\eta_n')\in H\] 
+(i.e. $\exp(\eta_n')\in H$) but $(\eta_n,\eta_n')\not\in W$ (i.e. 
+$\eta_n'\not=0$). Thus, taking $U_n$ to be a nested sequence
+of neighborhoods with intersection $\{0\}$,  we could construct a sequence 
+$\eta_n'\in W'-\{0\}$ with $\eta_n'\to 0$ 
+and $\exp(\eta_n')\in H$. Passing to a subsequence we may assume that 
+$[\eta_n']\to [\eta]$ for some $\eta\in W'\backslash \{0\}$. On the 
+other hand, such a convergence would mean $\eta\in W$, by definition of $W$. 
+Contradiction. 
+\end{proof}
+
+
+As remarked earlier, Cartan's theorem is very useful in practice. 
+For a given Lie group $G$, the term `closed subgroup' is often used 
+as synonymous to `embedded Lie subgroup'. 
+ 
+\begin{examples}
+\begin{enumerate}
+\item The matrix groups $G=\on{O}(n), \on{Sp}(n), \SL(n,\R),\ldots$ are 
+all closed subgroups of some $\GL(N,\R)$, and hence are Lie groups. 
+\item 
+Suppose that $\phi\colon G\to H$ is a morphism of Lie groups. 
+Then $\ker(\phi)=\phi^{-1}(e)\subset G$ is a closed subgroup. Hence 
+it is an embedded Lie subgroup of $G$. 
+\item 
+The center $Z(G)$ of a Lie group $G$ is the set of all $a\in G$ such
+that $ag=ga$ for all $a\in G$. It is a closed subgroup, and hence an
+embedded Lie subgroup.
+\item 
+Suppose $H\subset G$ is a closed subgroup. Its \emph{normalizer} 
+$N_G(H)\subset G$  is the set of all $a\in G$ such that $aH=Ha$. 
+(I.e. $h\in H$ implies $aha^{-1}\in H$.) This is a closed subgroup, hence 
+a Lie subgroup. The \emph{centralizer} $Z_G(H)$ is the set of all 
+$a\in G$ such that $ah=ha$ for all $h\in H$, it too is a closed 
+subgroup, hence a Lie subgroup. 
+\end{enumerate}
+\end{examples}
+The E. Cartan theorem is just one of many `automatic smoothness' results in Lie theory. 
+Here is another. 
+\begin{theorem}
+Let $G,H$ be Lie groups, and $\phi\colon G\to H$ be a continuous group morphism. Then 
+$\phi$ is smooth.  
+\end{theorem}
+As a corollary, a given topological group carries at most one smooth structure for which 
+it is a Lie group. For profs of these (and stronger) statements, see the book by 
+Duistermaat-Kolk. 
+%\begin{proof}
+%Let $\on{gr}(\phi)\subset G\times H$ be the graph of $\phi$. It is a closed subset, since $\phi$ is 
+%continuous.  It is also a subgroup of $G\times H$. Hence it is an embedded submanifold. The projection 
+%$G\times H\to H$ restricts to a smooth map $\alpha\colon \on{gr}(\phi)\to H$. On the other hand, projection to the first 
+%factor gives a smooth bijection $\beta\colon \on{gr}(\phi)\to G$. 
+% with invertible differential.\footnote{The kernel of the differential of the projection map is the intersection of $G\times TH\subset T(G\times H)$ with $T\on{gr}(\phi)$.  
+%Thus, we have to show that the graph does not contain vectors of the form $(0,w)$. 
+%Hence $\beta$ is a diffeomorphism and, $\alpha\circ \beta^{-1}$ is smooth. 
+%\end{proof}
+
+
+\section{The adjoint representations}
+%
+\subsection{Automorphisms}
+
+The group $\on{Aut}(\g)$ of automorphisms of a Lie algebra $\g$ is closed in the
+group $\End(\g)^\times$ of vector space automorphisms, hence it is a
+Lie group. To identify its Lie algebra, let $D\in \End(\g)$ be such that $\exp(tD)\in \Aut(\g)$ for 
+$t\in\R$. Taking the derivative of the defining condition 
+$\exp(tD)[\xi,\eta]=[\exp(tD)\xi,\exp(tD)\eta]$, we obtain the property 
+\[ D[\xi,\eta]=[D\xi,\eta]+[\xi,D\eta]\]
+saying that $D$ is a \emph{derivation} of the Lie algebra. Conversely, if 
+$D$ is a derivation then 
+\[ D^n[\xi,\eta]=\sum_{k=0}^n \binom{n}{k} [D^k \xi,\,D^{n-k}\eta]\]
+by induction, which then shows that $\exp(D)=\sum_n \f{D^n}{n!}$ is an automorphism. 
+Hence the Lie algebra of $\on{Aut}(\g)$ is the Lie algebra $\on{Der}(\g)$ of derivations 
+of $\g$. 
+% \begin{exercise} 
+% Using similar arguments, verify that the Lie algebra of $\SO(n),\SU(n),\on{Sp}(n),\ldots$
+% are $\mf{so}(n),\ \mf{su}(n),\ \mf{sp}(n),\ldots$.  
+% \end{exercise}
+
+\subsection{The adjoint representation of $G$}
+%
+Recall that an automorphism of a Lie group $G$ is an invertible morphism 
+from $G$ to itself. The automorphisms form a group $\on{Aut}(G)$. 
+Any $a\in G$ defines an `inner' automorphism $\Ad_a\in \on{Aut}(G)$ 
+by conjugation: 
+%
+\[ \Ad_a(g)=aga^{-1}\]
+%
+Indeed, $\Ad_a$ is an automorphism since $\Ad_a^{-1}=\Ad_{a^{-1}}$ and 
+% 
+\[ \Ad_a(g_1g_2)= ag_1g_2 a^{-1}=ag_1 a^{-1}ag_2
+a^{-1}=\Ad_a(g_1)\Ad_a(g_2).\] 
+%
+Note also that $\Ad_{a_1 a_2}=\Ad_{a_1}\Ad_{a_2}$, thus we have a 
+group morphism 
+\[ \Ad\colon G\to \on{Aut}(G)\] 
+%
+into the group of automorphisms. The kernel of this morphism is the center $Z(G)$, 
+the image is (by definition) the subgroup $\on{Int}(G)$ of inner 
+automorphisms. Note that for any $\phi\in \on{Aut}(G)$, and any $a\in G$, 
+\[ \phi\circ \Ad_a\circ \phi^{-1}=\Ad_{\phi(a)}.\]
+That is, $\on{Int}(G)$ is a \emph{normal} subgroup of $\on{Aut}(G)$. 
+(I.e. the conjugate of an inner automorphism by any automorphism is inner.) 
+It follows that $\on{Out}(G)=\on{Aut}(G)/\on{Int}(G)$ inherits a group 
+structure; it is called the \emph{outer automorphism group}.  
+\begin{example}
+If $G=\SU(2)$ the complex conjugation of matrices is an inner automorphism, but for $G=\SU(n)$ with $n\ge 3$ it 
+cannot be inner (since an inner automorphism has to preserve the 
+spectrum of a matrix). Indeed, one know that $\on{Out}(\SU(n))=\Z_2$ for $n\ge 3$. 
+\end{example}
+
+The differential of the automorphism $\Ad_a\colon G\to G$ is a Lie algebra automorphism, 
+denoted by the same letter: $\Ad_a=\d_e\Ad_a\colon\g\to \g$. 
+The resulting map 
+\[ \Ad\colon G\to \on{Aut}(\g)\] 
+is called the \emph{adjoint representation of $G$}.
+%
+%By Theorem \ref{th:phirelated} we have 
+%$ \xi^L\sim_{\Ad_a} (\Ad_a\xi)^L,\ \ \xi^R\sim_{\Ad_a} (\Ad_a\xi)^R$. 
+Since the $\Ad_a$ are Lie algebra/group morphisms, they are 
+compatible with the exponential map, 
+%
+\[ \exp(\Ad_a\xi)=\Ad_a\exp(\xi).\]
+%
+ 
+\begin{remark}
+If $G\subset \GL(n,\R)$ is a matrix Lie group, then 
+$\Ad_a\in \on{Aut}(\g)$ is the conjugation of matrices
+%
+\[ \Ad_a(\xi)= a\xi a^{-1}.\] 
+%
+This follows by taking the derivative of $\Ad_a(\exp(t\xi))=a\exp(t\xi)a^{-1}$, using that $\exp$ is just the exponential series for matrices. 
+\end{remark}
+
+
+
+\subsection{The adjoint representation of $\g$}
+%
+Let $\on{Der}(\g)$ be the Lie algebra of derivations of the Lie algebra $\g$. 
+There is a Lie algebra morphism, 
+\[ \ad\colon \g\to \on{Der}(\g),\ \ \xi\mapsto [\xi,\cdot].\]
+%
+The fact that $\ad_\xi$ is a derivation follows from the Jacobi identity; 
+the fact that $\xi\mapsto \ad_\xi$ it is a Lie algebra morphism is again the 
+Jacobi identity. 
+The kernel of $\ad$ is the center of the Lie algebra $\g$, i.e. elements 
+having zero bracket with all elements of $\g$, while the image is the 
+Lie subalgebra $\on{Int}(\g)\subset \on{Der}(\g)$ of \emph{inner} derivations. 
+It is a normal Lie subalgebra, i.e $[\on{Der}(\g),\on{Int}(\g)]\subset \on{Int}(\g)$, and the quotient Lie algebra $\on{Out}(\g)$ are the 
+\emph{outer automorphims}. 
+
+
+
+Suppose now that $G$ is a Lie group, with Lie algebra $\g$.  
+We have remarked above that the Lie algebra of $\on{Aut}(\g)$ is $\on{Der}(\g)$. 
+Recall that the differential of any $G$-representation is a 
+$\g$-representation. In particular, we can consider the differential 
+of $G\to \on{Aut}(\g)$. 
+%
+\begin{theorem}
+If $\g$ is the Lie algebra of $G$, then the adjoint representation
+$\ad\colon \g\to \on{Der}(\g)$ is the differential of the adjoint 
+representation $\Ad\colon G\to \on{Aut}(\g)$. 
+One has the equality of operators 
+\[ \exp(\ad_\xi)=\Ad(\exp\xi)\]
+for all $\xi\in\g$. 
+\end{theorem}
+\begin{proof}
+For the first part we have to show 
+$\f{\p}{\p t}\big|_{t=0}\Ad_{\exp(t\xi)}\eta=\ad_\xi\eta$. 
+This is easy if $G$ is a matrix Lie group: 
+\[ \f{\p}{\p t}\Big|_{t=0}\Ad_{\exp(t\xi)}\eta=\f{\p}{\p t}\Big|_{t=0}\exp(t\xi)\eta\exp(-t\xi)=\xi\eta-\eta\xi=[\xi,\eta].\]
+For general Lie groups we compute, using 
+\[\exp(s\Ad_{\exp(t\xi)}\eta)=\Ad_{\exp(t\xi)}\exp(s\eta)
+=\exp(t\xi)\exp(s\eta)\exp(-t\xi),\]
+\[ \begin{split}
+\f{\p}{\p t}\Big|_{t=0} (\Ad_{\exp(t\xi)}\eta)^L
+&=\f{\p}{\p t}\Big|_{t=0} \f{\p}{\p s}\Big|_{s=0}
+R_{\exp(s\Ad_{\exp(t\xi)}\eta)}^*
+\\
+&=\f{\p}{\p t}\Big|_{t=0} \f{\p}{\p s}\Big|_{s=0}
+R_{\exp(t\xi)\exp(s\eta)\exp(-t\xi)}^*\\
+&=\f{\p}{\p t}\Big|_{t=0} \f{\p}{\p s}\Big|_{s=0}
+R_{\exp(t\xi)}^*R_{\exp(s\eta)}^*R_{\exp(-t\xi)}^*\\
+&=\f{\p}{\p t}\Big|_{t=0} R_{\exp(t\xi)}^*\ \eta^L\ R_{\exp(-t\xi)}^*\\
+&=[\xi^L,\eta^L]\\
+&=[\xi,\eta]^L=(\ad_\xi\eta)^L. 
+\end{split}\] 
+This proves the first part. The second part is the commutativity of the diagram
+\[ \begin{CD} G @>{\on{Ad}}>> \on{Aut}(\g) \\
+@A{\exp}AA @AA{\exp}A \\
+\g @>>{\on{ad}}> \on{Der}(\g)
+\end{CD}\]
+%
+which is just a special case of the functoriality property of $\exp$
+with respect to Lie group morphisms.   
+\end{proof}
+
+\begin{remark}
+As a special case, this formula holds for matrices. That is, for 
+$B,C\in \on{Mat}_n(\R)$, 
+\[ e^B\, C\, e^{-B}=\sum_{n=0}^\infty \f{1}{n!} [B,[B,\cdots [B,C]\cdots]].\]
+The formula also holds in some other contexts, e.g. if $B,C$ are elements 
+of an algebra with $B$ nilpotent (i.e. $B^N=0$ for some $N$). In this case, both the exponential series for 
+$e^B$ and the series on the right hand side are finite. (Indeed, $[B,[B,\cdots [B,C]\cdots]]$ with $n$ $B$'s is a 
+sum of terms $B^j C B^{n-j}$, and hence must vanish if $n\ge 2N$.)  
+\end{remark}
+
+
+
+
+
+\section{The differential of the exponential map}
+%
+We had seen that $\d_0\exp=\on{id}$. More generally, one can derive a formula for 
+the differential of the exponential map at arbitrary points $\xi\in\g$, 
+\[ \d_\xi\exp\colon \g=T_\xi\g\to T_{\exp\xi}G.\] 
+%
+Using left translation, we can move $T_{\exp\xi}G$ back to $\g$, and obtain an endomorphism 
+of $\g$. 
+%
+\begin{theorem}
+The differential of the exponential map $\exp\colon \g\to G$ at
+$\xi\in \g$ is the linear operator $\d_\xi\exp\colon\g\to T_{\exp(\xi)}\g$ given
+by the formula,
+%
+\[  \d_\xi\exp=(\d_e L_{\exp\xi})\circ \f{1-\exp(-\ad_\xi)}{\ad_\xi}.\]
+%
+\end{theorem}
+%
+Here the operator on the right hand side is defined to be the result of substituting $\ad_\xi$ in the 
+entire holomorphic function $\f{1-e^{-z}}{z}$. Equivalently, it may be written as an integral
+\[ \f{1-\exp(-\ad_\xi)}{\ad_\xi}=\int_0^1 \d s\  \exp(-s\ad_\xi).\]
+%
+\begin{proof}
+We have to show that for all $\xi,\eta\in\g$, 
+%
+\[ (\d_\xi\exp)(\eta)\circ L_{\exp(-\xi)}^*=\int_0^1 \d s\ (\exp(-s\ad_\xi)\eta)\]
+%
+as operators on functions  $f\in C^\infty(G)$.
+To compute the left had side, write
+%
+\[ (\d_\xi\exp)(\eta)\circ L_{\exp(-\xi)}^*(f)=\f{\p}{\p t}\Big|_{t=0} 
+(L_{\exp(-\xi)}^*(f))(\exp(\xi+t\eta))=\f{\p}{\p t}\Big|_{t=0} f(\exp(-\xi)\exp(\xi+t\eta)).\]
+%
+We think of this as the value of $\f{\p}{\p t}\Big|_{t=0} R_{\exp(-\xi)}^* R_{\exp(\xi+t\eta)}^* f$ 
+at $e$, and compute as follows: \footnote{We will use the identities 
+$\f{\p}{\p s} R_{\exp(s\zeta)}^*= R_{\exp(s\zeta)}^*\ \zeta^L=\zeta^L\ R_{\exp(s\zeta)}^*$
+for all $\zeta\in\g$. 
+Proof: $\f{\p}{\p s} R_{\exp(s\zeta)}^*=\f{\p}{\p u}|_{u=0} 
+R_{\exp((s+u)\zeta)}^*=\f{\p}{\p u}|_{u=0}R_{\exp(u\zeta)}^* R_{\exp(s\zeta)}^*=
+\zeta^L R_{\exp(s\zeta)}^*$.}
+% 
+\[ \begin{split}
+\f{\p}{\p t}\Big|_{t=0} R_{\exp(-\xi)}^* R_{\exp(\xi+t\eta)}^* 
+&=\int_0^1 \d s\ \f{\p}{\p t}\Big|_{t=0} \f{\p}{\p s} R_{\exp(-s\xi)}^*R_{\exp(s(\xi+t\eta)}^* \\
+&=\int_0^1 \d s\ \f{\p}{\p t}\Big|_{t=0} R_{\exp(-s\xi)}^*  (t\eta)^L R_{\exp(s(\xi+t\eta)}^*\\
+&=\int_0^1 \d s\ R_{\exp(-s\xi)}^*\ \eta^L\  R_{\exp(s(\xi))}^*\\
+&=\int_0^1 \d s\ (\Ad_{\exp(-s\xi)}\eta)^L\\
+&=\int_0^1 \d s\ (\exp(-s\ad_\xi)\eta)^L.
+\end{split}\]
+Applying this result to $f$ at $e$, we obtain 
+$\int_0^1 \d s\ (\exp(-s\ad_\xi)\eta)(f)$ as desired.
+\end{proof}
+%
+\begin{corollary}
+The exponential map is a local diffeomorphism near $\xi\in\g$ if and only if
+$\ad_\xi$ has no eigenvalue in the set $2 \pi i \Z\backslash\{0\}$.
+\end{corollary}
+\begin{proof}
+$\d_\xi\exp$ is an isomorphism if and only if $\f{1-\exp(-\ad_\xi)}{\ad_\xi}$ is invertible, i.e. has 
+non-zero determinant. The determinant is given in terms of the eigenvalues of $\ad_\xi$ as a product, 
+$\prod_{\lambda} \f{1-e^{-\lambda}}{\lambda}$. This vanishes if and only if there is a non-zero eigenvalue 
+$\lambda$ with $e^\lambda=1$. 
+\end{proof}
+
+As an application, one obtains a version of the 
+\emph{Baker-Campbell-Hausdorff formula}. 
+%
+Let $g\mapsto \log(g)$ be the inverse function to $\exp$, defined for $g$ close to $e$. 
+For $\xi,\eta\in\g$ close to $0$, the function 
+\[ \log(\exp(\xi)\exp(\eta))\] 
+The BCH formula gives the Taylor series expansion of this function. 
+The series starts out with 
+\[ \log(\exp(\xi)\exp(\eta))=\xi+\eta+\hh [\xi,\eta]+\cdots\]
+but gets rather complicated.  To derive the formula, introduce a $t$-dependence, and let 
+$f(t,\xi,\eta)$ be defined by 
+$\exp(\xi)\exp(t\eta)=\exp(f(t,\xi,\eta))$ (for $\xi,\eta$ sufficiently small). Thus 
+\[ \exp(f)=\exp(\xi)\exp(t\eta)\]
+We have, on the one hand, 
+\[ (\d_eL_{\exp(f)})^{-1}\f{\p}{\p t}\exp(f)=
+\d_e L_{\exp(t\eta)}^{-1}\f{\p}{\p t}\exp(t\eta)
+=\eta.\]
+On the other hand, by the formula for the differential of $\exp$, 
+\[ (\d_eL_{\exp(f)})^{-1}\f{\p}{\p t}\exp(f)
+=(\d_eL_{\exp(f)})^{-1}(\d_f\exp) (\f{\p f}{\p t})
+= \f{1-e^{-\ad_f}}{\ad_f}(\f{\p f}{\p t}).\]
+Hence 
+%
+\[ \f{\d f}{\d t}=\f{\ad_f}{1-e^{-\ad_f}}\eta.\]
+%
+Letting $\chi$ be the function, holomorphic near $w=1$,
+%
+\[ \chi(w)=\f{\log(w)}{1-w^{-1}}=1+\sum_{n=1}^\infty \f{(-1)^{n+1} }{n(n+1)}(w-1)^n,\] 
+we may write the right hand side as $\chi(e^{\ad_f})\eta$. 
+By Applying $\Ad$ 
+to the defining equation for $f$ 
+we obtain $e^{\ad_f}=e^{\ad_\xi}e^{t\ad_\eta}$. 
+Hence 
+%
+\[ \f{\d f}{\d t}=\chi(e^{\ad_\xi}e^{t\ad_\eta}) \eta.\]
+%
+Finally, integrating from $0$ to $1$ and using $f(0)=\xi,\ f(1)=\log(\exp(\xi)\exp(\eta))$, we find:
+%
+\[ \log(\exp(\xi)\exp(\eta))=\xi+\Big(\int_0^1 \chi(e^{\ad_\xi}e^{t\ad_\eta})\d t\Big) \eta.\]
+%
+To work out the terms of the series, one puts 
+\[ w-1=e^{\ad_\xi} e^{t\ad_\eta}-1=\sum_{i+j\ge 1} \f{t^j}{i! j!}\ad_\xi^i \ad_\eta^j \]
+in the power series expansion of $\chi$, and integrates the resulting series in $t$. We arrive at: 
+
+\begin{theorem}[Baker-Campbell-Hausdorff series] Let $G$ be a Lie group, with exponential map $\exp\colon\g\to G$. For $\xi,\eta\in\g$ sufficiently small we have the following formula
+\[  \log(\exp(\xi)\exp(\eta))=\xi+\eta+\sum_{n=1}^\infty \f{(-1)^{n+1} }{n(n+1)}\Big(\int_0^1\d t\ \Big(\sum_{i+j\ge 1} \f{t^j}{i! j!}\ad_\xi^i \ad_\eta^j \Big)^n\Big)\eta.\]
+\end{theorem}
+%
+An important point is that the resulting Taylor series in $\xi,\eta$ 
+is a \emph{Lie series}: all terms of the series are of the form of a constant times $\ad_\xi^{n_1}\ad_\eta^{m_2}\cdots \ad_\xi^{n_r}\eta$. 
+The first few terms read, 
+\[  \log(\exp(\xi)\exp(\eta))=\xi+\eta+\hh [\xi,\eta]+\f{1}{12}[\xi,[\xi,\eta]]-\f{1}{12}[\eta,[\xi,\eta]]+
+\f{1}{24} [\eta,[\xi,[\eta,\xi]]]+
+\ldots.\]
+%
+\begin{exercise}
+Work out these terms from the formula. 
+\end{exercise}
+%
+There is a somewhat better version of the BCH formula, due to Dynkin.
+A good discussion can be found in the book by Onishchik-Vinberg, Chapter I.3.2.  
+
+
+\section{Actions of Lie groups and Lie algebras}
+\subsection{Lie group actions}
+%
+\begin{definition}
+An {\em action of a Lie group $G$ on a manifold $M$} is a group 
+homomorphism 
+%
+$$\A\colon G\to \on{Diff}(M),\ g\mapsto \ca{A}_g$$ 
+%
+into the group of diffeomorphisms
+on $M$, such that the {\em action map} 
+%
+$$  G\times M\to M,\ \ (g,m)\mapsto \A_g(m)$$
+%
+is smooth.
+\end{definition}
+%
+We will often write $g.m$ rather than $\A_g(m)$. With this notation, 
+$g_1.(g_2.m)=(g_1g_2).m$ and $e.m=m$. A map $\Phi\colon M_1\to M_2$ between $G$-manifolds is called 
+$G$-equivariant if $g.\Phi(m)=\Phi(g.m)$ for all $m\in M$, i.e. the following diagram commutes:
+\[ \begin{CD}
+G\times M_1 @>>> M_1\\
+@VV{\on{id}\times \Phi}V @VV{\Phi}V\\
+G\times M_2 @>>> M_2
+\end{CD}\]
+where the horizontal maps are the action maps. 
+
+\begin{examples}
+\begin{enumerate}
+\item 
+An $\R$-action on $M$ is the same thing as a global flow. 
+\item 
+The group $G$ acts $M=G$ by right multiplication, $\A_g=R_{g^{-1}}$, left multiplication, 
+$\A_g=L_g$, and by conjugation, $\A_g=\Ad_g=L_g\circ R_{g^{-1}}$. The left and right action commute, hence 
+they define an action of $G\times G$. The conjugation action can be regarded as the action of the diagonal 
+subgroup $G\subset G\times G$. 
+\item 
+Any $G$-representation $G\to \on{End}(V)$ can be regarded as a $G$-action, by viewing $M$ as a manifold.  
+\item 
+For any closed subgroup $H\subset G$, the space of right cosets $G/H=\{gH|\ g\in G\}$ has a unique manifold structure 
+such that the quotient map $G\to G/H$  is a smooth submersion, and the action of $G$ by left multiplication on $G$ 
+descends to a smooth $G$-action on $G/H$. (Some ideas of teh proof will be explained below.)  
+\item 
+The defining represenation of the orthogonal group $\on{O}(n)$ on $\R^n$ restricts to an action on the unit 
+sphere $S^{n-1}$, which in turn descends to an action on the projective space $\R P(n-1)$. One also has 
+actions on the Grassmann manifold $\on{Gr}_\R(k,n)$ of $k$-planes in $\R^n$, or on the flag manifold
+$\on{Fl}(n)$ (consisting of sequences $\{0\}=V_0\subset V_1\subset \cdots V_{n-1}\subset V_n=\R^n$ with 
+$\dim V_i=i$). These examples are all of the form  $\on{O}(n)/H$ for various choices of $H$. (E.g, 
+for $\on{Gr}(k,n)$ one takes $H$ to be the subgroup preserving $\R^k\subset \R^n$.) 
+\end{enumerate}
+\end{examples}
+
+\subsection{Lie algebra actions}
+
+\begin{definition}
+An {\em action of a finite-dimensional Lie algebra $\g$} on $M$ is a 
+Lie algebra homomorphism $\g\to \mf{X}(M),\ \xi\mapsto \A_\xi$ 
+such that the action map
+%
+$$ \g\times M\to TM,\ \ (\xi,m)\mapsto \A_\xi|_m$$ 
+%
+is smooth. 
+ 
+\end{definition}
+We will often write $\xi_M=:\A_\xi$ for the vector field corresponding to $\xi$. Thus, 
+$[\xi_M,\eta_M]=[\xi,\eta]_M$ for all $\xi,\eta\in\g$.  A smooth map 
+$\Phi\colon M_1\to M_2$ between to $\g$-manifolds is called equivariant if 
+$\xi_{M_1}\sim_\Phi \xi_{M_2}$ for all $\xi\in\g$. 
+
+\begin{examples}
+\begin{enumerate}
+\item 
+Any vector field $X$ defines an action of the Abelian Lie algebra $\R$, by $\lambda\mapsto \lambda X$. 
+\item 
+Any Lie algebra representation $\phi\colon \g\to \on{gl}(V)$ may be viewed as a
+Lie algebra action. Indeed, if $f\in C^\infty(V)$ we have $\d_vf\in V^*$, and 
+\[ (\A_\xi f)(v)=\f{\d}{\d t}|_{t=0} f(v-t\xi.v)\]
+defines a $\g$-action.
+\item 
+For any Lie group $G$, we have actions of its Lie algebra $\g$ by $\A_\xi=\xi^L,\ \A_\xi=-\xi^R$ and 
+$\A_\xi=\xi^L-\xi^R$.
+\item 
+Given a closed subgroup $H\subset G$, the vector fields $-\xi^R\in\mf{X}(G),\ \xi\in\g$ are 
+invariant under the right multiplication, hence they are related under the quotient map 
+to vector fields on $G/H$. That is, there is a unique $\g$-action on $G/H$ such that 
+the quotient map $G\to G/H$ is equivariant.  
+\end{enumerate} 
+\end{examples}
+
+\begin{definition}
+Let $G$ be a Lie group with Lie algebra $\g$. 
+Given a $G$-action $g\mapsto \A_g$ on $M$, one defines its \emph{generating vector fields} by 
+%
+$$ \A_\xi=\f{d}{d t}\Big|_{t=0} \A_{\exp(-t\xi)}^*.$$
+%
+\end{definition}
+
+\begin{example}
+The generating vector field for the action by right multiplication 
+\[ \A_a=R_{a^{-1}}\in \on{Diff}(G)\]
+are the left-invariant vector fields,
+%
+\[ \A(\xi)=\f{\p}{\p t}|_{t=0} R_{\exp(t\xi)}^* =\xi^L.\]
+% 
+Similarly, the generating vector fields for the action by left multiplication are $-\xi^R$, and those for the conjugation action are $\xi^L-\xi^R$. 
+\end{example}
+
+Observe that if $\Phi\colon M_1\to M_2$ is an equivariant map of $G$-manifolds, then the 
+generating vector fields for the action are $\Phi$-related.
+
+\begin{theorem}
+The generating vector fields of any $G$-action $g\to \A_g$ define a $\g$-action $\xi\to \A_\xi$. 
+\end{theorem}
+\begin{proof}
+Write $\xi_M:=\A_\xi$ for the generating vector fields of a $G$-action on $M$. We have to show 
+that $\xi\mapsto \xi_M$ is a Lie algebra morphism. Note that the map
+%
+\[ \Phi\colon G\times M\to M,\ (a,m)\mapsto a^{-1}.m\]
+%
+is $G$-equivariant if we take the $G$-action on $G\times M$ to be $g.(a,m)=(ag^{-1},m)$. Hence 
+$\xi_{G\times M}\sim_\Phi \xi_M$. But $\xi_{G\times M}=\xi^L$ (viewed as vector fields on 
+the product $G\times M$), hence $\xi\mapsto \xi_{G\times M}$ is a Lie algebra morphism. 
+It follows that 
+\[ 0=[(\xi_1)_{G\times M}, (\xi_1)_{G\times M}]-([\xi_1,\xi_2])_{G\times M}
+\sim [(\xi_1)_M,(\xi_2)_M]-[\xi_1,\xi_2]_M.\]
+%
+Since $\Phi$ is a surjective submersion (i.e. the differential $\d\Phi\colon T(G\times M)\to TM$ is surjective), 
+this shows that $[(\xi_1)_M,(\xi_2)_M]-[\xi_1,\xi_2]_M=0$. 
+\end{proof}
+
+
+
+
+
+\subsection{Integrating Lie algebra actions}
+%
+Let us now consider the inverse problem: For a Lie group $G$ with Lie algebra $\g$, 
+integrating a given $\g$-action to a $G$-action. 
+The construction will use some facts about \emph{foliations}. 
+
+Let $M$ be a manifold.  A \emph{$k$-dimensional distribution} on $M$ is a linear subspace 
+$\mf{R}\subset \mf{X}(M)$ of the space of vector fields such that at any point $m\in M$, the subspace $E_m\subset T_mM$ spanned by all $X_m,\ X\in \mf{R}$ is of dimension $k$. The subspaces $E_m$ define a rank $k$ 
+vector bundle  $E\subset TM$ with $\mf{R}=\Gamma(E)$, hence a distribution is equivalently given by this subbundle $E$. 
+An integral submanifold of the distribution $\mf{R}$ is a $k$-dimensional submanifold $S$ such that all $X\in\mf{R}$ are 
+tangent to $S$. In terms of $E$, this means that $T_mS=E_m$ for all $m\in S$. 
+The distribution is called \emph{integrable} if for all $m\in M$ there exists an integral submanifold containing
+$m$. In this case, there exists a maximal such submanifold, $\ca{L}_m$. The decomposition of $M$ into maximal integral submanifolds is called a
+$k$-dimensional foliation of $M$, the maximal integral submanifolds
+themselves are called the \emph{leaves} of the foliation. 
+
+Not every distribution is integrable. Recall that if two vector fields are tangent to a submanifold, then so 
+is their Lie bracket. Hence, a \emph{necessary} condition for integrability of a distribution is that 
+$\mf{R}$ is a Lie subalgebra. Frobenius' theorem gives the converse: 
+%
+\begin{theorem}[Frobenius theorem] A rank $k$ distibution $\mf{R}\subset \mf{X}(M)$ 
+is integrable if and only if $\mf{R}$ is a Lie subalgebra. 
+\end{theorem}
+%
+The idea of proof is to show that if $\mf{R}$ is a Lie subalgebra, then  
+$\mf{R}$ is spanned, near any $m\in M$, by $k$ \emph{commuting} vector fields. 
+one then uses the flow of these vector fields to construct integral submanifold. 
+%
+% \begin{exercise}
+% Prove Frobenius' theorem for distributions $\mf{R}$ of rank $k=2$. (Hint: If $X\in\mf{R}$ with 
+% $X_m\not=0$, one can choose local coordinates such that $X=\f{\p}{\p x_1}$. Given a second vector field 
+% $Y\in \mf{R}$, such that 
+% $[X,Y]\in \mf{R}$ and $X_m,Y_m$ are linearly independent, show that one can replace $Y$ by 
+% some $Z=aX+bY\in \mf{R}$ such that $b_m\not=0$ and $[X,Z]=0$ on a neighborhood of $m$.)  
+% \end{exercise}
+
+Given a Lie algebra of dimension $k$ and an \emph{effective} $\g$-action on $M$ (i.e. $\xi_M=0$ implies $\xi=0$), 
+one obtains an integrable rank $k$ distribution $\mf{R}$ as the span (over $C^\infty(M)$) of the $\xi_M$'s. 
+We use this to prove: 
+
+\begin{theorem}
+Let $G$ be a connected, simply connected Lie group with Lie algebra $\g$. 
+A Lie algebra action $\g\to \mf{X}(M),\ \xi\mapsto \xi_M$ integrates to an 
+action of $G$ if and only if the vector fields $\xi_M$ are all complete.  
+\end{theorem}
+
+\begin{proof}[Proof of the theorem]
+The idea of proof is as follows. Let $\wh{M}=G\times M$, and $\pr_1,\pr_2$ the projections to the 
+two factors. A $G$-action on $M$ defines a foliation of $\wh{M}=G\times M$, with leafs 
+the orbits of the diagonal action (where $G$ acts on itself by left multiplication). Equivalently, the 
+leaves are the fibers of the map $\wh{M}\to M,\ (g,m)\mapsto g^{-1}.m$. Hence they are indexed by 
+the elements of $m$, as follows  
+% 
+\[ \ca{L}_m=\{(g,g.m)|\,g\in G\}.\] 
+%
+$\pr_1$ restricts to diffeomorphisms $\pi_m\colon \ca{L}_m\to G$, and we recover the action as 
+\[ g.m= \pr_2(\pi_m^{-1}(g)).\]
+%
+Given a $\g$-action, our plan is to construct the foliation from an integrable distribution. 
+
+Consider the Lie algebra action on $\wh{M}=G\times M$, given by 
+\[ \xi_{\wh{M}}=(-\xi^R,\xi_M)\in\mf{X}(G\times M).\]
+%
+Note that the vector fields $\xi_{\wh{M}}$ are complete, since $\xi_M$ are by assumption complete: If $\Phi_t^\xi$ is the flow of $\xi_M$, the flow of $\xi_{\wh{M}}=(-\xi^R,\xi_M)$ is given by 
+%
+\[ \wh{\Phi}_t^\xi=(L_{\exp(t\xi)},\Phi_t^\xi)\in\on{Diff}(G\times M).\] 
+%  
+The action $\xi\mapsto \xi_{\wh{M}}$ is effective, hence it defines an integable $\dim G$-dimensional distribution 
+$\mf{R}\subset \mf{X}(\wh{M})$.  Let $\ca{L}_m\hra G\times M$ be the unique leaf
+containing the point $(e,m)$. Projection to the first factor induces
+a smooth map $\pi_m:\ \ca{L}_m\to G$. 
+%
+
+The map $\pi_m$ is \emph{surjective}: Given $g\in G$ write $g=g_r\ldots g_1$ where 
+$g_i=\exp(\xi_i)$.
+The path $\wh{\Phi}_{t}^{\xi_1}(e,m),\ t\in [0,1]$ lies in $\ca{L}_m$, and has end point $(g_1,m_1)$ 
+where $m_1=\Phi_1^{\xi_1}(m)$. Concatenation with the path 
+$\wh{\Phi}_{t}^{\xi_2}(g_1,m_1),\ t\in [0,1]$ gives a (piecewise smooth) path from $(m,e)$ to 
+$(g_2g_1,m_2)$ where $m_2=\Phi_1^{\xi_2}\Phi_1^{\xi_1}(m)$. Proceeding in this manner, 
+we obtain a piecewise smooth path in $\ca{L}_m$ from $(e,m)$ to $(g_r\cdots g_1,m_r)=(g,m_r)$. 
+This shows $\pi_m^{-1}(g)\not=\emptyset$. 
+
+For any $(g,x)\in\ca{L}_m$ the tangent map $\d_{(g,x)} \pi_m$ is an isomorphism. 
+Hence $\pi_m\colon \ca{L}_m\to G$ is a (surjective) covering map. Since $G$ is simply connected 
+by assumption, we conclude that $\pi_m\colon \ca{L}_m\to G$ is a diffeomorphism.  
+We now define $\A_g(m)= \pr_2(\pi_m^{-1}(g))$. Concretely, the construction above shows that if $g=\exp(\xi_r)\cdots \exp(\xi_1)$ then 
+%
+\[ \A_g(m)=(\Phi^{\xi_r}_{1}\circ \cdots \circ \Phi^{\xi_1}_{1})(m).\]
+%
+From this description it is clear that $\A_{gh}=\A_g\circ \A_h$. 
+\end{proof}
+
+Let us remark that, in general, one cannot drop the assumption that $G$ is simply connected. Consider for example 
+$G=\SU(2)$, with $\mf{su}(2)$-action $\xi\mapsto-\xi^R$. This exponentiates  to an action of $\SU(2)$ by left multiplication. But $\mf{su}(2)\cong \mf{so}(3)$ as Lie algebras, and the action does not exponentiate to 
+an action of the group $\SO(3)$.
+ 
+As an important special case, we obtain: 
+%
+\begin{theorem}
+Let $H,G$ be Lie groups, with Lie algebras $\h\to \g$. If $H$ is connected and simply connected, then any Lie algebra 
+morphism $\phi\colon \h\to \g$ integrates uniquely to a Lie group morphism $\psi\colon H\to G$.
+\end{theorem}
+\begin{proof}
+Define an $\h$-action on $G$ by $\xi\mapsto -\phi(\xi)^R$. Since the right-invariant vector fields are complete, this action integrates to a Lie group action $\A\colon H\to \on{Diff}(G)$. 
+This action commutes with the action of $G$ by right multiplication. Hence, $\A_h(g)=\psi(h)g$ where 
+$\psi(h)=\A_h(e)$. The action property now shows $\psi(h_1)\psi(h_2)=\psi(h_1h_2)$, so that 
+$\psi\colon H\to G$ is a Lie group morphism integrating $\phi$. 
+\end{proof}
+%
+\begin{corollary}
+Let $G$ be a connected, simply connected Lie group, with Lie algebra $\g$. Then any 
+$\g$-representation on a finite-dimensional vector space $V$ 
+integrates to a $G$-representation on $V$. 
+\end{corollary}
+\begin{proof}
+A $\g$-representation on $V$ is a Lie algebra morphism $\g\to \End(V)$, hence it integrates to a 
+Lie group morphism $G\to \End(V)^\times$. 
+\end{proof}
+
+By a Lie subgroup of a Lie group $H$, we mean a Lie group $G$ together with an injective Lie group morphism  
+$G\hra H$. That is, the inclusion map need not be an embedding.  
+%
+\begin{lemma}
+Let $\g\subset \h$ be a Lie subalgebra of a finite-dimensional Lie algebra, and $H$ a Lie group integrating 
+$\h$. Then there exists a unique connected Lie subgroup $G\subset H$ integrating $\g$. 
+\end{lemma}
+\begin{proof}
+Consider the distribution on $H$ spanned by the vector fields $-\xi^R,\ \xi\in\g$. It is integrable, 
+hence it defines a foliation of $H$. The leaves of any foliation carry a unique manifold structure such that the 
+inclusion map is an immersion. Take $G\subset H$ to be the leaf through $e\in H$, with this manifold structure. 
+Explicitly, $G$ consists of products $\exp(\xi_r)\cdots \exp(\xi_1)$ where $\xi_i\in\g$. From this description it 
+follows that $G$ is a Lie group.  
+\end{proof}
+%
+By Ado's theorem, any finite-dimensional Lie algebra $\g$ is isomorphic to 
+a matrix Lie algebra. We will skip the proof of this important (but relatively deep) result, since  
+it involves a considerable amount of structure theory of Lie algebras. Given such a presentation 
+$\g\subset \mf{gl}(n,\R)$, the Lemma gives a Lie subgroup $G\subset \GL(n,\R)$ integrating 
+$\g$. Replacing  $G$ with its universal covering, this proves:
+%
+\begin{theorem} [Lie's third theorem]
+For any finite-dimensional real Lie algebra $\g$, there exists a connected,  
+simply connected Lie group $G$, unique up to isomorphism, having $\g$ as its Lie algebra. 
+\end{theorem} 
+%
+The book by Duistermaat-Kolk contains a different, more conceptual proof of Cartan's theorem. This new 
+proof has found important generalizations to the integration of \emph{Lie algebroids}. In conjunction with the previous Theorem, Lie's third theorem gives an equivalence between the categories of finite-dimensional Lie algebras $\g$
+and connected, simply-connected Lie groups $G$. 
+
+
+
+
+
+\subsection{Proper actions}
+
+Let us quickly list some terminology for Lie group actions $\A\colon G\to \on{Diff}(M)$. 
+For any $m\in M$, the set $G.m:=\{(g,m)\,g\in G\}$ is called the 
+{\em orbit} of $m$. The space $M/G=\{G.m|\,m\in M\}$ is called the \emph{orbit space} 
+for the given action. It inherits a topology as a quotient space of $M$, but can be 
+a very singular space. The action $\A$ is called {\em transitive} if there is only one orbit, i.e. 
+$M/G=\pt$. In this case, $M$ is called a \emph{homogeneous space}. 
+
+The subgroup $G_m=\{g\in G|\,g.m=m\}$ is 
+called the {\em stabilizer} of $m$. From the definition, it is clear that stabilizer subgroups are closed 
+subgroups of $G$, hence are embedded Lie subgroups. In particular, the orbit $G/G_m$ inherits a manifold 
+structure. The inclusion of the orbit is smooth relative to this manifold structure.  
+For any $g\in G$, the stabilizers of a point $m$ and of its translate $g.m$ are 
+related by the adjoint action: 
+%
+$$ G_{g.m}=\Ad_g(G_m).$$
+%
+The action is {\em free} if all stabilizers $G_m$ 
+are trivial. For instance, the actions of $G$ by left or right multiplication on $G$ are both 
+free, but the conjugation action is not. The action $\A$ is  {\em effective} if $\ker(\A)=\{e\}$, i.e. 
+$\A_g=\on{id}_M$ implies $g=e$. For instance, the conjugation action of $G$ on itself is 
+effective if and only if the center of $G$ is trivial. 
+
+The action $\A$ is called {\em proper} if the action map $G\times M\to M$ is proper (i.e. pre-images of 
+compact sets are compact). For example, the left or right actions of $G$ on itself are proper.
+Note that for a proper $G$-action, the action of any closed subgroup $H\subset G$ is still proper.  
+Also, for $G$ compact any $G$-action is proper. 
+
+For a proper action, the stabilizer groups $G_m$ are \emph{compact} since $G_m$ may be viewed as the 
+intersection of the closed subspace $G\times\{m\}\subset G\times M$ with the 
+preimage of $\{m\}\in M$ under the action map. One can use this fact to construct \emph{slices} 
+for the action, i.e. $G_m$-invariant embedded submanifolds $S\subset M$ with $m\in S$ such that 
+$G.S$ is an open neighborhood of the orbit $G.m$, and such that $gS\cap S\not=\emptyset
+\Leftrightarrow g\in G_m$. Slices give models a neighborhood of $G.m$ 
+in the orbit space, since $(G.S)/G=S/G_m$. In particular, if $G_m$ is trivial, we see that 
+a neighborhood of $G.m\subset M/G$ is a manifold (modeled by $S$).
+% 
+\begin{theorem}
+For a free, proper action on a manifold $M$, the orbit space $M/G$ inherits a manifold structure 
+such that the quotient map $M\to M/G$ is a smooth submersion. Given an $H$-action on $M$ that commutes 
+ with the $G$-action, the orbit space $M/G$ inherits an $H$-action.  
+\end{theorem}
+
+\begin{example}
+Let $H$ be a closed subgroup of $G$, acting on $G$ by right multiplication. This action is proper, hence
+$G/H$ is a manifold. The action of $G$ by left multiplication commutes with the actuion of $H$, hence it 
+descends to a smooth action on $G/H$.  
+\end{example}
+
+
+% \begin{exercise}
+% Show that the conjugation action of $G$ is proper if and only if $G$ is compact. 
+% \end{exercise} 
+
+
+
+% \section{Universal
+%   cover} \section{The universal enveloping algebra} \section{Tori}
+% \end{document}
+
+
+\newpage
+\begin{thebibliography}{}
+\bibitem[]{}
+E. Meinrenken, MAT 1120HF Lie groups and Lie algebras Lecture Notes
+
+\bibitem[]{}
+Sigurdur Helgason. 18.755 Introduction to Lie Groups. Fall 2004. Massachusetts Institute of Technology: MIT OpenCourseWare, https://ocw.mit.edu. License: Creative Commons BY-NC-SA.
+%https://ocw.mit.edu/courses/mathematics/18-755-introduction-to-lie-groups-fall-2004/index.htm#
+
+%https://link.springer.com/book/10.1007/978-1-4612-0281-3
+
+\bibitem[]{}
+A. Kirillov Jr.: An Introduction to Lie Groups and Lie Algebras , Cambridge University Press
+
+\bibitem[]{}
+T. Broecker. T. tom Dieck: Representations of compact Lie groups , Springer
+
+
+\end{thebibliography}
+
+
+\end{document}
