@@ -8,7 +8,7 @@ lukejoepereira`@`gmail.com $\;$ (705) 305-4057\
 **Employment**\
 
 **Amazon** \
-*Software Engineer*
+*Software Development Engineer*
 
 **BenchSci** \
 *Full Stack Software Engineer* <https://www.benchsci.com>
@@ -30,6 +30,10 @@ lukejoepereira`@`gmail.com $\;$ (705) 305-4057\
 
 **Contract and Freelance**
 
+-   Created Kubernetes deployments and GCP compute infrastructure for an
+    alpha stage startup. Used machine-specific auto-scaling &
+    auto-provisioning to remain cost efficient while minimizing latency
+
 -   Developed C++ software for secure and robust radio frequency
     communication between two Arduino microprocessors. Currently used to
     detect malfunctions in hydraulic lifts: <https://git.io/Jkmnw>
@@ -39,9 +43,6 @@ lukejoepereira`@`gmail.com $\;$ (705) 305-4057\
 **Honours Bachelor of Science**\
 Computer Science and Mathematics Double Major\
 University of Toronto
-
-**Art Fundamentals Certificate**\
-York University
 
 **Projects**\
 
