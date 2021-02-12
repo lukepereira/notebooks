@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Fiber Bundles, Gauges, and Connections</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      word-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Fiber Bundles, Gauges, and Connections</h1>
+</header>
+<ul>
+<li><a href="#bundles">Bundles</a>
+<ul>
+<li><a href="#fiber-bundles">Fiber Bundles</a></li>
+<li><a href="#vector-bundles">Vector Bundles</a></li>
+<li><a href="#group-bundle">Group Bundle</a></li>
+<li><a href="#principal-bundle">Principal Bundle</a>
+<ul>
+<li><a href="#associated-bundles">Associated Bundles</a></li>
+<li><a href="#adjoint-bundle">Adjoint Bundle</a></li>
+</ul></li>
+<li><a href="#fibrations">Fibrations</a></li>
+</ul></li>
+<li><a href="#connections">Connections</a>
+<ul>
+<li><a href="#ehresmann-and-principal-connections">Ehresmann and Principal Connections</a></li>
+<li><a href="#cartan-connections">Cartan Connections</a></li>
+</ul></li>
+<li><a href="#gauges">Gauges</a></li>
+<li><a href="#moduli-spaces">Moduli Spaces</a>
+<ul>
+<li><a href="#review-of-differential-forms">Review of differential forms</a></li>
+<li><a href="#moduli-space-of-connections">Moduli Space of Connections</a></li>
+<li><a href="#moduli-space-of-yang-mills-connections">Moduli Space of Yang-Mills Connections</a></li>
+</ul></li>
+<li><a href="#examples">Examples</a>
+<ul>
+<li><a href="#relativity">Relativity</a></li>
+</ul></li>
+</ul>
+<h1 id="bundles">Bundles</h1>
+<h2 id="fiber-bundles">Fiber Bundles</h2>
+<p>A fiber bundle makes precise the idea of one topological space (called a fiber) being “parameterized” by another topological space (called a base). A fiber bundle also comes with a group action on the fiber. This group action represents the different ways the fiber can be viewed as equivalent. Formally, a fibre bundle is a structure <span class="math inline">\({\displaystyle (E,\,B,\,\pi ,\,F)}\)</span>. The topological space <span class="math inline">\(E\)</span> is known as the <em>total space</em> of the fibre bundle, <span class="math inline">\(B\)</span> as the <em>base space</em>, and <span class="math inline">\(F\)</span> the standard or template <em>fiber</em>. The map <span class="math inline">\({\displaystyle \pi :E\rightarrow B}\)</span>, called the <em>projection map</em> or <em>submersion</em> of the bundle, is a continuous surjection satisfying a <em>local triviality condition</em>. This condition enables a local section of a manifold to be interpreted as a trivial i.e. as cartesian product space (<span class="math inline">\(B\times F\)</span>), despite global topology possibly being more complicated, i.e. twisted or non-orientable.</p>
+<p>For any <span class="math inline">\(p \in B\)</span>, the pre-image <span class="math inline">\({\displaystyle \pi ^{-1}(\{p\})}\)</span> is homeomorphic to <span class="math inline">\(F\)</span> and is called a <em>fiber</em> over <span class="math inline">\(p\)</span>. Recall, a homeomorphism is a kind of topological isomorphism, i.e. it is a continuous bijective (invertible) function between topological spaces. Every fibre bundle <span class="math inline">\({\displaystyle \pi :E\rightarrow B}\)</span> is an open map, since projections of products are open maps. Specifically, we require that for every <span class="math inline">\(p \in B\)</span>, there is an open neighborhood <span class="math inline">\({\displaystyle U\subset B}\)</span> of <span class="math inline">\(p\)</span> (a trivializing neighborhood) such that there is a homeomorphism <span class="math inline">\({\displaystyle \varphi :\pi ^{-1}(U)\rightarrow U\times F}\)</span> (where <span class="math inline">\({\displaystyle U\times F}\)</span> is the product space) in such a way that <span class="math inline">\(\pi\)</span> agrees with the projection onto the first factor.</p>
+<p>The canonical example of a nontrivial bundle <span class="math inline">\(E\)</span> is the Möbius strip. It has the circle that runs lengthwise along the center of the strip as a base <span class="math inline">\(B\)</span> and a line segment for the fiber <span class="math inline">\(F\)</span>. A neighborhood <span class="math inline">\(U\)</span> of <span class="math inline">\({\displaystyle \pi (x)\in B}\)</span> (where <span class="math inline">\(x \in E\)</span>) is an arc. The preimage <span class="math inline">\(\pi ^{-1}(U)\)</span> is a partially twisted slice of the strip four squares wide and one long. A homeomorphism <span class="math inline">\(\varphi\)</span> exists that maps the preimage of <span class="math inline">\(U\)</span> to a slice of a cylinder: curved, but not twisted. This pair locally trivializes the strip, with the corresponding trivial bundle <span class="math inline">\(\displaystyle B\times F\)</span> being a cylinder whereas the Möbius strip has an overall twist that is only visible globally.</p>
+<p>A <em>section</em> (or cross section) of a fiber bundle <span class="math inline">\(E\)</span> is a continuous right inverse of the projection function <span class="math inline">\(\pi\)</span>. In other words, if <span class="math inline">\(E\)</span> is a fiber bundle over a base space, <span class="math inline">\(B\)</span>, then a section of that fiber bundle is a continuous map, <span class="math inline">\({\displaystyle \sigma \colon B\to E}\)</span> such that <span class="math inline">\(\pi (\sigma (x))=x\)</span> for all <span class="math inline">\({\displaystyle x\in B}\)</span>.</p>
+<p>Additional structures on <span class="math inline">\(F\)</span> give rise to special types of fiber bundles, e.g. vector bundles or group bundles. Associated bundles allow derivation of bundles in which the typical fiber of a bundle changes from <span class="math inline">\(F_{1}\)</span> to <span class="math inline">\(F_{2}\)</span>, which are both topological spaces with a group action of <span class="math inline">\(G\)</span>, e.g. adjoint bundles, frame bundles, determinant bundles, dual bundles.</p>
+<h2 id="vector-bundles">Vector Bundles</h2>
+<p>If <span class="math inline">\(F = V\)</span> is a vector space, one defines a <em>vector bundle</em> with standard fiber <span class="math inline">\(V\)</span> to be a fiber bundle <span class="math inline">\(\pi : E \rightarrow B\)</span> where all fibers <span class="math inline">\(\pi^{-1} (b)\)</span> are vector spaces and the local trivializations <span class="math inline">\(\phi_\alpha\)</span> can be chosen to be fiberwise linear. A homomorphism of two vector bundles is a fiber bundle homomorphism that is fiberwise linear. The fibered product of vector bundles <span class="math inline">\(E_1; E_2\)</span> is a vector bundle (also called Whitney sum and denoted <span class="math inline">\(E1 \oplus E2\)</span>).</p>
+<h2 id="group-bundle">Group Bundle</h2>
+<p>Recall, a Lie group is a group that is also a differentiable manifold where points can be multiplied together, they have inverses, and these operations are defined to be smooth (differentiable). If <span class="math inline">\(F = G\)</span> has the structure of a Lie group, one defines a <em>group bundle</em>, <span class="math inline">\(\mathcal G \rightarrow B\)</span> with standard fiber <span class="math inline">\(G\)</span> to be a fiber bundle where all fibers carry group structures and the local trivializations can be chosen to be a fiberwise group homomorphisms. A group bundle homomorphism is a fiber bundle homomorphism which is fiberwise a group homomorphism. The fibered product of group bundles is a group bundle. One has natural bundle maps <span class="math inline">\(\mathcal G \times^B \mathcal G \rightarrow \mathcal G\)</span> (fiberwise group multiplication) and <span class="math inline">\(\mathcal G \rightarrow \mathcal G\)</span> (fiberwise inversion). Similarly, one defines algebra bundles, Lie algebra bundle as well as fiberwise linear actions of group or algebra bundles on vector bundle</p>
+<h2 id="principal-bundle">Principal Bundle</h2>
+<p>A principal <span class="math inline">\(G\)</span>-bundle (also called a G-torsor over X) share similar properties to the resulting space of a Cartesian product of a space with a group. They are a fiber bundle <span class="math inline">\(\pi: \mathcal P \rightarrow X\)</span> together with a continuous right action <span class="math inline">\(\mathcal P \times G \rightarrow \mathcal P\)</span> such that <span class="math inline">\(G\)</span> preserves the fibers of <span class="math inline">\(\mathcal P\)</span> (i.e. if <span class="math inline">\(y \in \mathcal P_x\)</span> then <span class="math inline">\(yg \in \mathcal P_x\)</span> for all <span class="math inline">\(g \in G\)</span>) and acts freely and transitively (i.e. regularly) on them in such a way that for each <span class="math inline">\(x\in X\)</span> and <span class="math inline">\(y \in \mathcal P_x\)</span>, the map <span class="math inline">\(G \rightarrow \mathcal P_x\)</span> sending <span class="math inline">\(g\)</span> to <span class="math inline">\(yg\)</span> is a homeomorphism. In particular each fiber of the bundle is homeomorphic to the group <span class="math inline">\(G\)</span> itself. One can also define principal <span class="math inline">\(G\)</span>-bundles in the category of smooth manifolds. Here <span class="math inline">\(\pi : \mathcal P \rightarrow X\)</span> is required to be a smooth map between smooth manifolds, <span class="math inline">\(G\)</span> is required to be a Lie group, and the corresponding action on <span class="math inline">\(\mathcal P\)</span> should be smooth.</p>
+<h3 id="associated-bundles">Associated Bundles</h3>
+<p>Recall, associated bundles allow derivation of bundles in which the typical fiber of a bundle changes from <span class="math inline">\(F_{1}\)</span> to <span class="math inline">\(F_{2}\)</span>, which are both topological spaces with a group action of <span class="math inline">\(G\)</span>, e.g. adjoint bundles, frame bundles, determinant bundles, dual bundles.</p>
+<p>Let <span class="math inline">\(\pi : \mathcal P \rightarrow B\)</span> be a principal <span class="math inline">\(G\)</span>-bundle. Given a <span class="math inline">\(G\)</span>-manifold <span class="math inline">\(F\)</span>, one defines the associated fiber bundle by <span class="math display">\[F (\mathcal P) \equiv \mathcal P \times_G F := (\mathcal P \times F) / G:\]</span> The space <span class="math inline">\(\mathcal P \times_G F\)</span> is a fiber bundle over <span class="math inline">\(B = \mathcal P=G\)</span> with standard fiber <span class="math inline">\(F\)</span>. The sections <span class="math inline">\(\Gamma^\infty(\mathcal B, \mathcal P \times_G F )\)</span> of this fiber bundle are naturally identified with the space <span class="math inline">\(C^\infty (\mathcal P, F )^G\)</span> of equivariant maps <span class="math inline">\(\mathcal P \rightarrow F\)</span>.</p>
+<h3 id="adjoint-bundle">Adjoint Bundle</h3>
+<p>An adjoint bundle is a vector bundle naturally associated to any principal bundle. The fibers of the adjoint bundle carry a Lie algebra structure making the adjoint bundle into a (nonassociative) algebra bundle. If <span class="math inline">\(V\)</span> is a vector space on which <span class="math inline">\(G\)</span> acts linearly, then <span class="math inline">\(P \times_G V\)</span> is a vector bundle. Taking <span class="math inline">\(V = g\)</span> with the adjoint representation one obtains the adjoint bundle <span class="math inline">\(\mathfrak g(\mathcal P ) := \mathcal P \times_G \mathfrak g\)</span>.</p>
+<p>If <span class="math inline">\(K\)</span> is a Lie group on which <span class="math inline">\(G\)</span> acts by automorphisms, <span class="math inline">\(\mathcal P \times_G K\)</span> is a group bundle. Taking <span class="math inline">\(K = G\)</span> with <span class="math inline">\(G\)</span> acting by the adjoint action, one obtains a group bundle <span class="math inline">\(G( \mathcal P) := \mathcal P \times_G G\)</span> which is also called the adjoint bundle. It has <span class="math inline">\(\mathfrak g( \mathcal P)\)</span> as its Lie algebra bundle.</p>
+<h2 id="fibrations">Fibrations</h2>
+<p>Fibrations do not necessarily have the local Cartesian product structure that defines the more restricted fiber bundle case, but something weaker that still allows “sideways” movement from fiber to fiber. A fibration is like a fiber bundle, except that the fibers need not be the same space, nor even homeomorphic; rather, they are just homotopy equivalent. Recall, homotopy equivalent implies that if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are a pair of continuous maps <span class="math inline">\(f : X \rightarrow Y\)</span> and <span class="math inline">\(g : Y \rightarrow X\)</span>, such that <span class="math inline">\(g \circ f\)</span> is homotopic to the identity map <span class="math inline">\(id_X\)</span> and <span class="math inline">\(f \circ g\)</span> is homotopic to <span class="math inline">\(id_Y\)</span>. Intuitively, two spaces <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are homotopy equivalent if they can be transformed into one another by bending, shrinking and expanding operations</p>
+<p>A fibration satisfies an additional condition (the homotopy lifting property) guaranteeing that it will behave like a fiber bundle from the point of view of homotopy theory. Weak fibrations discard even this equivalence for a more technical property. Every vector bundle is a fiber bundle with a fiber homotopy equivalent to a point. Fibrations are dual to cofibrations, with a correspondingly dual notion of the homotopy extension property; this is loosely known as Eckmann–Hilton duality.</p>
+<h1 id="connections">Connections</h1>
+<p>The notion of a <em>connection</em> defines the idea of transporting data along a curve or family of curves in a parallel and consistent manner. A <em>covariant derivative</em> is a linear differential operator which takes the directional derivative of a section of a vector bundle in a covariant manner. It also allows one to formulate a notion of a parallel section of a bundle in the direction of a vector: a <em>section</em> <span class="math inline">\(s\)</span> is parallel along a vector <span class="math inline">\(X\)</span> if <span class="math inline">\(\nabla _{X}s=0\)</span>.</p>
+<h2 id="ehresmann-and-principal-connections">Ehresmann and Principal Connections</h2>
+<p>An <em>Ehresmann connection</em> is a connection in a fibre bundle or a principal bundle made by specifying the allowed directions of motion of the field. Specifically, it singles out a vector subspace of each tangent space to the total space of the fiber bundle, called the horizontal space. A section <span class="math inline">\(s\)</span> is then horizontal (i.e., parallel) in the direction <span class="math inline">\(X\)</span> if <span class="math inline">\(\rm {d}s(X)\)</span> lies in a horizontal space.</p>
+<p>For any fiber bundle <span class="math inline">\(\pi : E \rightarrow B\)</span> the tangent bundle <span class="math inline">\(T E\)</span> of the total space has a distinguished subbundle, the vertical bundle <span class="math inline">\(V E \hookrightarrow T E\)</span>. The fiber <span class="math inline">\(V_xE\)</span> for <span class="math inline">\(\pi(x) = b\)</span> is the image of <span class="math inline">\(T_x(F_b)\)</span> under the natural inclusion <span class="math inline">\(T F_b \hookrightarrow T E\)</span>. An Ehresmann connection on <span class="math inline">\(E\)</span> is the choice of a complementary horizontal subbundle <span class="math inline">\(HE\)</span> such that <span class="math inline">\(T E = V E \oplus HE\)</span>. Equivalently, a connection is a bundle projection <span class="math inline">\(T E \rightarrow V E\)</span> which is left-inverse to the inclusion <span class="math inline">\(V E \rightarrow T E\)</span>; one defines <span class="math inline">\(HE\)</span> as the kernel of this projection.</p>
+<p>The Ehresmann connection has the immediate benefit of being definable on a much broader class of structures than vector bundles and is well-defined on a general fiber bundle. Many of the features of the covariant derivative still remain: parallel transport, curvature, and holonomy. With the classical covariant derivatives, covariance is an a posteriori feature of the derivative. However, for an Ehresmann connection, it is possible to impose a generalized covariance principle from the beginning by introducing a Lie group acting on the fibers of the fiber bundle. The appropriate condition is to require that the horizontal spaces be equivariant with respect to the group action.</p>
+<p>If the standard object <span class="math inline">\(F\)</span> has additional structure, one is interested in connections such that parallel transport preserves that structure. For example, if <span class="math inline">\(E\)</span> is a vector bundle, each parallel transport operation, <span class="math inline">\(\Pi^\gamma\)</span>, should be a linear map, and for group bundles it should be a fiberwise group homomorphism, and so on. An important special case of Ehresmann connections are principal connections on principal bundles, which are required to be equivariant in the principal Lie group action. A principal connection on a fiber bundle is an equivariant Lie algebra valued 1-form <span class="math inline">\(\theta \in \Gamma^1 (\mathcal P, \mathfrak g)^G\)</span> such that <span class="math inline">\(\iota(\xi_{\mathcal P})\theta = \xi\)</span> (where <span class="math inline">\(\iota\)</span> is an inclusion embedding) for all <span class="math inline">\(\xi \in \mathfrak g\)</span>, the Lie algebra.</p>
+<p>The space of principal connections will be denoted <span class="math inline">\(\mathcal A(P)\)</span>. The space <span class="math inline">\(\mathcal A(P)\)</span> has a natural affine structure, with underlying vector space the space <span class="math inline">\(\Gamma^1 (B, \mathfrak g( \mathcal P))\)</span> of 1-forms on <span class="math inline">\(B\)</span> with values in the adjoint bundle.</p>
+<h2 id="cartan-connections">Cartan Connections</h2>
+<p>TODO</p>
+<h1 id="gauges">Gauges</h1>
+<p>A gauge can be thought of as a coordinate system that varies depending on one’s location with respect to some base space or parameter space. A gauge transform is a change of coordinates applied to each such location, and a gauge theory is a model for some physical or mathematical system to which gauge transforms can be applied and is typically gauge invariant, in that all physically meaningful quantities are left unchanged or transform naturally under gauge. A principal bundle automorphism is a <span class="math inline">\(G\)</span>-equivariant diffeomorphism <span class="math inline">\(\phi : \mathcal P \rightarrow \mathcal P\)</span> taking fibers to fibers. The group of principal bundle automorphisms will be denoted <span class="math inline">\(\hbox{Aut}( \mathcal P)\)</span>.</p>
+<p>The space of "coordinate systems" is (non-canonically) identifiable with the isomorphism group <span class="math inline">\(\hbox{Isom}(G)\)</span> of template <span class="math inline">\(G\)</span>. This isomorphism group is called the structure group or gauge group of the class of geometric objects. The gauge group <span class="math inline">\(\hbox{Gau}( \mathcal P) \subseteq \hbox{Aut}(\mathcal P)\)</span> consists of automorphisms <span class="math inline">\(\phi : \mathcal P \rightarrow \mathcal P\)</span> inducing the identity map on the base <span class="math inline">\(B\)</span>. That is, <span class="math inline">\(\hbox{Gau}( \mathcal P)\)</span> is defned by an <em>exact sequence</em> of groups <span class="math display">\[1 \longrightarrow \hbox{Gau}( \mathcal P) \longrightarrow \hbox{Aut}( \mathcal P) \longrightarrow \hbox{Diff} B)\]</span> Let <span class="math inline">\(\theta\)</span> be a principal connection on <span class="math inline">\(\pi : \mathcal P \rightarrow B\)</span>. For any path <span class="math inline">\(\gamma : [t_0, t_1] \rightarrow B\)</span>, let <span class="math display">\[\Pi^\theta_\gamma : P_{\gamma(t_0)} \rightarrow P_{(t_1)}\]</span> denote parallel transport with respect to <span class="math inline">\(\theta\)</span>. For all <span class="math inline">\(\phi \in \hbox{Gau}(\mathcal P)\)</span>, <span class="math display">\[\Pi_{\gamma}^{\phi,\theta} = \phi(\gamma(t_1)) \circ  \Pi_{\gamma}^{\theta} \circ  \phi(\gamma(t_0))^{-1}\]</span> The group of automorphisms <span class="math inline">\(\hbox{Aut}( \mathcal P)\)</span> acts on the space <span class="math inline">\(\mathcal A( \mathcal P)\)</span> of principal connections by pull-back by the inverse. This can be understood as the gauge transformations of connections. We can interpret <span class="math inline">\(\mathcal A( \mathcal P)\)</span> as an infinite dimensional manifold, equipped with an action of an infinite-dimensional Lie Group.</p>
+<h1 id="moduli-spaces">Moduli Spaces</h1>
+<h2 id="review-of-differential-forms">Review of differential forms</h2>
+<p>Recall from differential geometry notebook <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> the definitions of differential forms, wedge products and the hodge star operations:</p>
+<ul>
+<li><p>A differential <em><span class="math inline">\(k\)</span>-form</em> on an open subset <span class="math inline">\(U \subseteq \mathbb R^m\)</span> is an expression of the form <span class="math display">\[\omega = \sum_{i_1 \dots i_k} \omega i_1\dots i_k dx^{i_1} \wedge \dots \wedge  dx^{i_k}\]</span> where <span class="math inline">\(\omega_{i_1\dots i_k} \in C^\infty(U)\)</span> are functions, and the indices are numbers <span class="math inline">\(1 \leq i_1 &lt; \dots &lt; i_k \leq m\)</span>. The symbol <span class="math inline">\(\wedge\)</span> denotes the exterior product of two differential forms.</p></li>
+<li><p>The <em>exterior product</em> or <em>wedge product</em> is the product operator in an exterior algebra. If <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are differential <span class="math inline">\(k\)</span>-forms of degrees <span class="math inline">\(p\)</span> and <span class="math inline">\(q\)</span>, respectively, then <span class="math display">\[\alpha \wedge \beta=(-1)^{pq} \beta \wedge \alpha.\]</span> It is not (in general) commutative, but it is associative, and bilinear.</p>
+<p>Let <span class="math inline">\(\alpha, \beta \in \Omega^1(M)\)</span>. Then we define a wedge product <span class="math inline">\(\alpha \wedge \beta \in \Omega^2 (M)\)</span>, as follows: <span class="math display">\[(\alpha \wedge \beta)(X,Y) = \alpha (X)\beta(Y)-\alpha(Y)\beta(X).\]</span></p></li>
+<li><p>Let <span class="math inline">\(V\)</span> be an n-dimensional vector space with basis <span class="math inline">\(\{ e_1, \cdots, e_n \}\)</span> and with unit vector given by <span class="math inline">\(\omega := e_1 \wedge \cdots \wedge e_n\)</span> . Note, the dual of <span class="math inline">\(\omega\)</span> is the volume form, <span class="math inline">\(\hbox{det}\)</span>.</p>
+<p>An inner product <span class="math inline">\(\langle \cdot,\cdot \rangle\)</span> induces pairs of k-vectors <span class="math inline">\(\alpha, \beta \wedge^k V\)</span> and has the Gram determinant: <span class="math display">\[{\displaystyle \langle \alpha ,\beta \rangle =\det \left(\left\langle \alpha _{i},\beta _{j}\right\rangle \right)_{i,j=1}^{k}}\]</span> For all pairs of k-vectors, the <em>Hodge Star operator</em> can be defined as having property, <span class="math display">\[\alpha \wedge (* \beta ) = \langle \alpha, \beta \rangle \omega.\]</span> Applying <span class="math inline">\({\displaystyle \det }\)</span> to the above equation, we obtain the dual definition: <span class="math display">\[{\displaystyle \det(\alpha \wedge {\star }\beta )=\langle \alpha ,\beta \rangle .}\]</span></p></li>
+</ul>
+<h2 id="moduli-space-of-connections">Moduli Space of Connections</h2>
+<p>The quotient space of the space of principal connections and the Gauge <span class="math inline">\(\mathcal A(P) / \hbox{Gau}(P)\)</span> is called the moduli space of connections. It is still infnite-dimensional. To obtain a finite dimensional moduli spaces, one has to impose additional gauge-invariant constraints on <span class="math inline">\(\theta\)</span>: e.g. that it is a flat connection, or more generally a Yang-Mills connection.</p>
+<h2 id="moduli-space-of-yang-mills-connections">Moduli Space of Yang-Mills Connections</h2>
+<p>On a principal bundle, we want to choose a canonical connection so that curvature <span class="math inline">\(F_\theta\)</span> vanishes. But not every principal bundle can have a flat connection, and the best one can hope for is that the bundle has curvature as small as possible. On a bundle of connections, a connection is defined by its local forms <span class="math inline">\({\displaystyle \theta_{\alpha }\in \Omega ^{1}(U_{\alpha },\operatorname {ad} (P))}\)</span>. The Yang-Mills action functional <span class="math inline">\(YM(\theta)\)</span> is precisely the square of the <span class="math inline">\({\displaystyle L^{2}}\)</span>-norm of the curvature which has critical points, i.e. local minima, that minimize curvature called Yang-mills connections. These Yang-mills connections, <span class="math inline">\(\mathcal M\)</span>, are a finite subset of the moduli space of connections that was originally sought after, i.e. <span class="math inline">\(\mathcal M \subset \mathcal A(P) / \hbox{Gau}(P)\)</span>. This is more rigoursly described below. As a side note, in physics the gauge field strength is given by curvature of connections, <span class="math inline">\(F^\theta\)</span>, and the energy of the gauge field is the Yang-mills functional.</p>
+<p>Suppose <span class="math inline">\(\pi : \mathcal P \rightarrow B\)</span> is a principal <span class="math inline">\(G\)</span>-bundle over a compact, oriented, Riemannian manifold <span class="math inline">\(B\)</span>. The inner product on <span class="math inline">\(T B\)</span> gives rise to an inner product on <span class="math inline">\(T M\)</span> and on all <span class="math inline">\(\wedge^k T^*M\)</span>. Taking the inner product of the differential form, followed by integration over <span class="math inline">\(B\)</span> with respect to the Riemannian volume form, defines an inner product on <span class="math inline">\(\Omega^* (B)\)</span>. In terms of the Hodge star operator, <span class="math display">\[\langle \alpha, \beta \rangle = \int_B \alpha \wedge  * \beta\]</span> Let <span class="math inline">\(|| \cdot ||\)</span> be the norm corresponding to <span class="math inline">\(\langle \cdot, \cdot \rangle\)</span>. The Yang-Mills functional on <span class="math inline">\(\mathcal A(\mathcal P)\)</span> is the functional <span class="math display">\[\hbox{YM}(\theta) = ||F ||^2 = \int_B (F^\theta, * F^\theta)\]</span> The Yang-Mills functional is invariant under the action of the gauge group, i.e. <span class="math inline">\(YM(\theta) = YM(\phi,\theta)\)</span>, hence all its critical points (called Yang-Mills connections) are invariant as well. A connection <span class="math inline">\(\theta\)</span> is a critical point of the Yang-Mills functional if and only if it satisfies the Yang-Mills equation, <span class="math inline">\(d^\theta * F^\theta = 0\)</span>. The quotient of the space of Yang-Mills connections by the action of the gauge group is called the Yang-Mills moduli space. In this context, the term “moduli” is used synonymously with “parameter”.</p>
+<p>Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold X is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, known as the anti-self-duality equations. The Yang-Mills equations depend upon the Riemannian metric on <span class="math inline">\(B\)</span> only via the star operator on <span class="math inline">\(\Gamma^2 (B)\)</span>. The case <span class="math inline">\(\dim B = 4\)</span> is special in that it takes <span class="math inline">\(\Gamma^2 (B)\)</span> to itself, since <span class="math inline">\(4 - 2 = 2\)</span>. We mentioned already that in this case the Yang-Mills equations are conformally invariant: Multiplying the metric by a positive function does not change the star operator in middle dimension, hence does not change the Yang-Mills equations. A special type of Yang-Mills connections in <span class="math inline">\(4\)</span> dimensions are those satisfying one of the equations <span class="math display">\[*F^\theta = F^\theta \text{\ \ or \ \  }  *F^\theta = - F^\theta\]</span> (self-duality and anti-self-duality respectively) because for such connections, the Yang-Mills equations are a consequence of the Bianchy identity <span class="math inline">\(d^\theta F^\theta = 0\)</span>. A change of orientation of <span class="math inline">\(B\)</span> changes the sign of the operator, and therefore exchanges the notion of duality and anti-self duality. For certain principal bundles (<span class="math inline">\(\theta\)</span> is a multiple of the second Chern number), ASD connections give the absolute minimum of the Yang-Mills functional.</p>
+<h1 id="examples">Examples</h1>
+<h2 id="relativity">Relativity</h2>
+<p>In gauge theories, physicists begin with a Lagrangian <span class="math inline">\(L[\phi, \phi&#39;]\)</span>. The claim is that this <span class="math inline">\(L\)</span> is invariant under the action of some group. What is a bit tricky is that to make this statement a bit more precise requires that we have two fiber bundles at once, namely the principal-<span class="math inline">\(G\)</span> bundle and its associated vector bundle. For each patch of spacetime, <span class="math inline">\(U_i\)</span> where <span class="math inline">\(M\)</span> is base manifold, we pick a map <span class="math inline">\(S:U_i \rightarrow G\)</span> (this will later be the gauge group). Then we pick a certain representation of the group, i.e <span class="math inline">\(\rho :G \rightarrow V\)</span> where <span class="math inline">\(V\)</span> is a vector space. We now define what will later be a section <span class="math inline">\(\psi : U_i \rightarrow[x,\phi]\)</span> where <span class="math inline">\(x\)</span> is a point on the manifold. In this context, gauge invariance means that <span class="math inline">\([x,\phi] \sim [x,\rho (g^{-1})\phi]\)</span>.</p>
+<p>Recall, we have the spacetime patch <span class="math inline">\(U_i\)</span> with the map <span class="math inline">\(S\)</span>. With this, we construct the cartesian product <span class="math inline">\(U_i \times G\)</span>. If we happen to find two overlapping open sets <span class="math inline">\(U_i\)</span> and <span class="math inline">\(U_j\)</span> then for the sets of points in the intersection we have to make sure things are consistent and so we define functions <span class="math inline">\(t_{ij} : U_i \cap U_j \rightarrow G\)</span> that will act on <span class="math inline">\(G\)</span> i.e <span class="math inline">\((x,G) \rightarrow (x, t_{ij}(x)G)\)</span>. Doing this for the whole manifold <span class="math inline">\(M\)</span> gives us another manifold <span class="math inline">\(P\)</span> that is locally <span class="math inline">\(U_i \times G\)</span>. This the principal-G bundle.</p>
+<p>Requiring local gauge invariance in the first step meets a snag. The problem involves the map <span class="math inline">\(S\)</span>; as we go around on the manifold <span class="math inline">\(M\)</span> we need a method to go from one fiber to another fiber on the principal-G bundle. To do this requires we introduce a connection <span class="math inline">\(\Omega\)</span> on the principal-G bundle. But physicists always work on the base manifold, so we need to pull back <span class="math inline">\(\Omega\)</span> to the base manifold by some section <span class="math inline">\(\sigma\)</span> i.e calculate <span class="math inline">\(\sigma^*\Omega \equiv A\)</span>. Since these are locally defined sections, when we are in intersection of two spacetime patches, <span class="math inline">\(U_i \cap U_j\)</span>, we will have two sections, <span class="math inline">\(\sigma,\sigma&#39;\)</span>. This means we will get <span class="math inline">\(\sigma^*\Omega=A\)</span> and <span class="math inline">\(\sigma&#39;^*\Omega=A&#39;\)</span>. The two sections are related by the map <span class="math inline">\(S\)</span> i.e <span class="math inline">\(\sigma&#39;=R_{S(x)}\sigma=\sigma_{S(x)}=\sigma g\)</span>. That is, the group acts by a right action.</p>
+<p>To calculate <span class="math inline">\(\sigma^*\Omega\)</span> we note that <span class="math inline">\(\langle \sigma^*\Omega, v \rangle = \langle \Omega, \sigma_* v\rangle\)</span> where <span class="math inline">\(v\)</span> is a vector on the principal bundle. A tricky calculation shows <span class="math inline">\(\sigma&#39;_*v = R_{g*}(\sigma_{*}v)+\eta_x(p)\)</span> where <span class="math inline">\(\eta X\)</span> is a fundamental vector field, <span class="math inline">\(X = \langle S^*\theta,v \rangle\)</span> and <span class="math inline">\(\theta\)</span> is the Maurer-Cartan form and <span class="math inline">\(g\)</span> is the image of <span class="math inline">\(S\)</span>. To show this works we do the calculation <span class="math display">\[\begin{aligned}
+            (\sigma&#39;^* \omega)(v) &amp; = &lt;\Omega,\sigma&#39;v&gt; \\
+            &amp;= &lt;\Omega,R_{g*}(\sigma_*v)&gt;+&lt;\Omega,\eta_X(pg)\\
+            &amp;= &lt;R^*_g\Omega,\sigma_*v&gt; +X \\
+            &amp;= &lt;Ad_{g^-1}\Omega,\sigma_*v&gt;+X=&lt;Ad_{g^{-1}}A + S^*\theta,v&gt;
+    \end{aligned}\]</span> This is the usual transformation rule for the gauge field on the base manifold. We can now state the fact that we have an associated bundle <span class="math inline">\(\mathcal A\)</span> which is <span class="math inline">\(\mathcal{P}\times_G V = (\mathcal{P}\times V)/G\)</span> and is locally <span class="math inline">\(U_i \times V\)</span> with sections as defined in the first step. The sections on this bundle are what physicists call the fields.</p>
+<div class="thebibliography">
+<p>Tao, T. What is a gauge? (2008).<br />
+<a href="https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/" class="uri">https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/</a></p>
+<p>Eckhard Meinrenken, Principal bundles and connections.<br />
+<a href="http://www.math.toronto.edu/mein/teaching/moduli.pdf" class="uri">http://www.math.toronto.edu/mein/teaching/moduli.pdf</a></p>
+<p>Kobayaschi, S. Theory of connections. Annali di Matematica 43, 119–194 (1957).</p>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p><a href="https://github.com/lukepereira/notebooks" class="uri">https://github.com/lukepereira/notebooks</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
