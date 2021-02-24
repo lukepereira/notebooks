@@ -1,0 +1,188 @@
+\documentclass{article}
+\usepackage{comment}
+\usepackage[final]{styles}
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{csquotes}
+\usepackage{float}
+% \title{Harmonic Flows on Guage Equivariant Moduli Space of Connection }
+% \title{Ergodic Flows on Guage Equivariant \\ Space of Connection }
+% \title{Ergodic flow on Moduli\\  Space of Connections }
+% \title{Attention and Energy Minimization \\ on Moduli  Space of Connections }
+\title{Learning Energy Minimization on \\  Moduli Space of Connections }
+
+% The \author macro works with any number of authors. There are two commands
+% used to separate the names and addresses of multiple authors: \And and \AND.
+%
+% Using \And between authors leaves it to LaTeX to determine where to break the
+% lines. Using \AND forces a line break at that point. So, if LaTeX puts 3 of 4
+% authors names on the first line, and the last on the second line, try using
+% \AND instead of \And before the third author name.
+
+\author{%
+%   L. J. Pereira \\
+%   \texttt{lukejoepereira@gmail.com} \\
+  % examples of more authors
+  % \And
+  % Coauthor \\
+  % Affiliation \\ consciousness
+  % Address \\
+  % \texttt{email} \\
+  % \AND
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+  % \And
+  % Coauthor \\
+  % Affiliation \\
+  % Address \\
+  % \texttt{email} \\
+}
+
+\begin{document}
+% \vspace{-2.5cm}
+\maketitle
+\vspace{-1.5cm}
+
+\begin{comment}
+\begin{abstract}
+
+% A novel energy-based learning model is described using gauge theory and is speculated to produce dynamics similar to those in found in neuronal activity. 
+In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space; in particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). 
+% The harmonic model can be applied to these dynamics with behaviour comparable to connectome-specific self-localized critical waves. 
+Examining mathematical research in ergodic and hyperbolic dynamics of moduli spaces allows the ergodic free-energy minimizing model described in previous works to be developed further.
+An autoencoding method using the cobordism property of the space is considered.
+
+% This yang mills space of connection curvature can be represented with holomorphic vector bundles on which variational noise generates energy-based attention. In a statistical learning and information geometry setting, this space can be viewed as a kernel manifold which interfaces with specialist neural networks in a product of experts summation. This formulation of general intelligence provides a simple and biologically plausible model of 
+ 
+
+% Fiber bundles of manifolds from differential geometry can be applied to the meta-learning task of the classification of subtasks to subnetworks. Assuming the input of a typical machine learning task can be associated with some Lie Group, then a differentiable manfiold can be constructed to represent the space of all tasks. Using gauge theory, this manifold can be  formalized as a Yang-mills moduli space.
+\end{abstract}
+
+\end{comment}
+
+% gauge Dynamics of moduli spaces
+\section{Overview}
+In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles, which can be though of as minimizing relative entropy or divergence.
+% The harmonic model can be applied to these dynamics with behaviour comparable to connectome-specific self-localized critical waves. 
+Examining research in ergodic and hyperbolic dynamics of moduli spaces allows the ergodic free-energy minimizing model described in previous works to be developed further.
+An encoding mechanism using the cobordism property of the Yang-mills moduli space is considered.
+
+
+\subsection{Prerequisite Review}
+    A fiber bundle serves as a useful mathematical object to analyse both the recursive construction of artificial and biological neurons and neural networks, as well as their application in the geometry of latent information which uses manifold representations  for information processing and statistical learning.
+    Finer details can be found in my notebooks on differential geometry, Lie groups and algebras, and gauge theory. A fiber bundle makes precise the idea of one topological space (called a fiber) being parameterized by another topological space (called a base). The bundle also comes with a group action on the fiber that represents the different ways the fiber can be viewed as equivalent. The fiber bundle has a property, known as local trivialization, that allows neighborhoods of the bundle to be computed as simple, oriented product spaces, despite the global space possibly being unoriented or twisted.
+    
+    A family of fibers associated to a base can be described by defining a template standard fiber which all other fibers are isomporphic to. This is formalized by defining a projection mapping, which may be diffeomorphic or homotopic, that connects positional data from the entirety of fibers to a base and implicitly from one fiber to another. When the template fiber is a vector space, the bundle is called a vector bundle. The standard connections between fibers, known as a principal Ehresmann connection, can intuitively be understood as a covariant directional derivative on the tangent spaces of the manifolds and will always exist. An interesting type of connection occurs when using a fiber bundle equipped with a Lie group action, which has a unique recursive nature as a result of the Lie group being itself a differentiable manifold. In particular, the bundle structure can be used to represent both the original fiber or vector bundle as well as the higher level collections of tangent spaces between bundles in what's known as a bundle of connections. As will be explained in the section on moduli spaces, The Yang-Mills or instanton connections of this bundle correspond to those connections that minimize their curvature. 
+    
+\subsection{A Priori Structure Groups}
+    
+    % Hebbian learning is a form of activity-dependent synaptic plasticity where correlated activation of pre- and postsynaptic neurons leads to the strengthening of the connection between the two neurons. Another central theory of cognitive neuroscience is that different parts or modules of the brain perform different functions, known as functional localization.
+    % We can develop a simple partition scheme by initially assigning a Bernoulli random variable to each synapse. Then, while ``zooming out" we merge random variables together based on their covariance and locality to build a course-grained model. Recall, \textit{covariance} is a measure of the joint variability of two random variables and is increasingly positive when the variables tend to show similar behavior and grow increasingly negative when dissimilar. This conversion of physical synapses into a set of random variables can be described with Markov partitions and Bernoulli Schemes. 
+    % At each step, the accuracy of the model naturally decrease as a result of merging imperfectly covariant random variables.
+    %     However, some form of a priori covariance is necessary for maintaining information integrity through bilateral and hierarchical dynamics, i.e. to allow a connection to communicate in a general and equivariant way between modules and within their intrinsic substructures. 
+    
+   A biological first principle of covariance arises naturally from analysis of neuronal activity, which appears to favour functional localization and Hebbian learning.
+    Moreover, human brain networks appear to flow in connectome-specific smooth diffusive waves along gyrification paths which are theorized to be caused by differential tangential growth. 
+    Recall, covariance is a measure of the joint variability of two random variables and is increasingly positive when a pair show similar behavior and is negative when dissimilar.
+    Covariance finds a direct description in differential geometry as a principal Ehressmann connection, which represents the covariant derivative between fibers of a bundle. To analyze dynamics on a bundle using gauge theory, it becomes necessary to impose a generalized a priori covariance principle to maintain integrity of information being transported in bilateral and hierarchical directions.
+    Yet for a standard learning model, covariance of functionality is an a posteriori feature since the joint variability is unknown until individual modules are fully trained. 
+    Covariance of fibers can be achieved by imposing the structure group to be a Lie Group, but can also be achieved by imposing restrictions on the projection map of Riemannian manifolds without explicitly defining the structure group beforehand. 
+    
+    
+\subsection{Moduli Spaces}
+    With covariance established on connections, it becomes possible to perform inference using higher levels of abstraction on gauge fields. This is done by constructing a gauge equivariant bundle of connections known as a moduli space of connections which  can be further reduced into a Yang-Mills moduli space defined to be a finite dimensional manifold. This reduced space has local and global minima being connections with minimized energy known as Yang-Mills connections or instantons. Yang-Mills connections serve as a natural choice of connection on principal and vector bundles since they minimize their curvature. From an information geometric perspective, this can be thought of as minimizing relative entropy between sampled trajectories of two manifolds which happen to be gauge equivariant. The gauge field strength is the curvature $F_{A}$ of the connection, and the energy of the gauge field is given by the Yang–Mills action functional:
+    \[
+    {\displaystyle \operatorname {YM} (A)=\int _{X}\|F_{A}\|^{2}\,d\mathrm {vol} _{g}.}
+    \]
+    In search of zero or vanishing curvature, one aims for a bundle with curvature as small as possible. The Yang–Mills action functional described above is the square of the $L^{2}$-norm of the curvature, and its Euler–Lagrange equations describe the critical points of this functional, either the absolute minima or local minima, i.e. Yang–Mills connections are those that minimize their curvature.  
+    
+    
+    Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. Additionally, these manifolds demonstrate a cobordism scheme where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This provides a naturally occurring symmetry (gauge invariance) of hierarchical encoding.
+    
+% \section{Ideas and Experiments}
+%     does cobordism of moduli enable encoding via dimensionality reduction heirarchy. Symmetry/Guage equivarient hierarchical auto encoder. Symmetry of time to symmetry of space in particle and boson, next is approximate/broken symmetry in hierarchy (and lateral).  
+    
+%     If the brain indeed has ergodic dynamics imitable through a bernoulli scheme, then this architecture and 
+
+%     The Abelian sandpile group describes a manifold that is able to be parameterized by its points of self-localized criticality.   The sandpile model is a rudimentary cellular automaton defined on a rectangular domain of the standard square lattice
+
+%     Conversely, the computation of n a (lattice) gauge theory with unknown parameters can be done using machine learning techniques
+
+    % on which inference can be performed using natural gradient descent where minima are
+% \section{}
+%     % https://arxiv.org/pdf/1705.05582.pdf
+%     Machine Learning of Explicit Order Parameters: From the Ising Model to SU(2) Lattice Gauge Theory
+
+% \subsection{Harmonic Model Interpretation}
+
+% \subsubsection*{Harmonics}
+
+% \subsubsection*{Abelian Sandpile Self-Local Criticality}
+%     % https://www.pnas.org/content/116/8/2821
+    
+%     The Abelian sandpile model offers an interesting experimental opportunity for a manifold to be parameterized by its self-localized criticality. 
+    
+%     The sandpile model is a cellular automaton defined on a rectangular domain of the standard square lattice
+
+
+
+
+% \subsection{Dimensionality Reduction}
+% \subsubsection*{Cobordism}
+    
+% \subsection{Ergodic Dynamics}
+
+%     Through the process of unfolding, i.e., passing from a polygonal billiard table to a Riemann manifold equipped with a holomorphic 1-form, a billiard trajectory which reflects off the sides of the table unfolds into a straight line or geodesic on the manifold. We define the symmetry group$ SL(X, \omega)$ associated to any translation surface. We extend the notions of ergodically optimal and topologically optimal to general translation surfaces. Finally, we introduce the notion of a lattice surface and compare it to an ergodically optimal surface.
+
+% \subsection*{Hyperbolic Dynamics}
+
+% \subsubsection{Conformal Invariance}
+
+
+
+\section*{References}
+
+\small
+
+[1] Gao, Tingran. "The diffusion geometry of fibre bundles: Horizontal diffusion maps." Applied and Computational Harmonic Analysis 50 (2021): 147-215.
+% https://arxiv.org/pdf/1602.02330.pdf
+
+[2] Eckhard Meinrenken, "Principal bundles and connections", Lecture Notes. 
+% http://www.math.toronto.edu/mein/teaching/moduli.pdf
+
+[3] Tao, T. "What is a gauge?" (2008) https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/
+% https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/
+
+[4] Wetzel, Sebastian J., and Manuel Scherzer. "Machine learning of explicit order parameters: From the Ising model to SU (2) lattice gauge theory." Physical Review B 96.18 (2017): 184410.
+% https://arxiv.org/pdf/1705.05582.pdf
+
+% [3] Paul, Arnab, and Suresh Venkatasubramanian. "Why does deep learning work?-a perspective from group theory." arXiv preprint arXiv:1412.6621 (2014).
+% https://arxiv.org/pdf/1412.6621.pdf
+
+
+% https://ncatlab.org/nlab/show/principal+bundle
+
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
+
+
+    
+
+\end{document}
