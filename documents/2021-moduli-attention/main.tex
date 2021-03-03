@@ -15,6 +15,9 @@
 \usepackage{tikz}
 \usepackage{csquotes}
 \usepackage{float}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+% \title{Harmonic Flows on Guage Equivariant Moduli Space of Connection }
 % \title{Ergodic Flows on Guage Equivariant \\ Space of Connection }
 % \title{Ergodic flow on Moduli\\  Space of Connections }
 % \title{Attention and Energy Minimization \\ on Moduli  Space of Connections }
@@ -29,7 +32,7 @@
 % \AND instead of \And before the third author name.
 
 \author{%
-%   L. J. Pereira \\
+  L. J. Pereira \\
 %   \texttt{lukejoepereira@gmail.com} \\
   % examples of more authors
   % \And
@@ -57,7 +60,7 @@
 \begin{document}
 % \vspace{-2.5cm}
 \maketitle
-\vspace{-1.5cm}
+\vspace{-1.2cm}
 
 \begin{comment}
 \begin{abstract}
@@ -78,7 +81,8 @@ An autoencoding method using the cobordism property of the space is considered.
 
 % gauge Dynamics of moduli spaces
 \section{Overview}
-In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles, which can be though of as minimizing relative entropy or divergence.
+In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles and from an information geometric perspective, they minimize relative entropy or KL divergence between two manifolds that are gauge equivariant. Allowing these connections to function as sources of variational noise, we aim to minimize the total energy of the moduli space. 
+% by minimizing the relative entropy or KL divergence between active bundles.
 % The harmonic model can be applied to these dynamics with behaviour comparable to connectome-specific self-localized critical waves. 
 Examining research in ergodic and hyperbolic dynamics of moduli spaces allows the ergodic free-energy minimizing model described in previous works to be developed further.
 An encoding mechanism using the cobordism property of the Yang-mills moduli space is considered.
@@ -88,8 +92,11 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
     A fiber bundle serves as a useful mathematical object to analyse both the recursive construction of artificial and biological neurons and neural networks, as well as their application in the geometry of latent information which uses manifold representations  for information processing and statistical learning.
     Finer details can be found in my notebooks on differential geometry, Lie groups and algebras, and gauge theory. A fiber bundle makes precise the idea of one topological space (called a fiber) being parameterized by another topological space (called a base). The bundle also comes with a group action on the fiber that represents the different ways the fiber can be viewed as equivalent. The fiber bundle has a property, known as local trivialization, that allows neighborhoods of the bundle to be computed as simple, oriented product spaces, despite the global space possibly being unoriented or twisted.
     
-    A family of fibers associated to a base can be described by defining a template standard fiber which all other fibers are isomporphic to. This is formalized by defining a projection mapping, which may be diffeomorphic or homotopic, that connects positional data from the entirety of fibers to a base and implicitly from one fiber to another. When the template fiber is a vector space, the bundle is called a vector bundle. The standard connections between fibers, known as a principal Ehresmann connection, can intuitively be understood as a covariant directional derivative on the tangent spaces of the manifolds and will always exist. An interesting type of connection occurs when using a fiber bundle equipped with a Lie group action, which has a unique recursive nature as a result of the Lie group being itself a differentiable manifold. In particular, the bundle structure can be used to represent both the original fiber or vector bundle as well as the higher level collections of tangent spaces between bundles in what's known as a bundle of connections. As will be explained in the section on moduli spaces, The Yang-Mills or instanton connections of this bundle correspond to those connections that minimize their curvature. 
+    A family of fibers associated to a base can be described by defining a template (or standard) fiber which all other fibers are isomporphic to. This is formalized by defining a projection mapping, which may be diffeomorphic or homotopic, that connects positional data from the entirety of the space of fibers to a base and implicitly from one fiber to another. When the template fiber is a vector space, the bundle is called a vector bundle. The standard connections between fibers, known as a principal Ehresmann connection, can intuitively be understood as a covariant directional derivative on the tangent spaces of the manifolds and will always exist. An interesting type of connection occurs when using a fiber bundle equipped with a Lie group action. Lie groups have a unique recursive nature as a result of the group being itself a differentiable manifold and when the equipping this group action, the structure can be used to represent both the original fiber or vector bundle as well as a higher level collections of tangent spaces between bundles, in what's known as a bundle of connections. As will be explained in the section on moduli spaces, The Yang-Mills or instanton connections within this bundle of connections correspond to those that minimize their curvature. 
     
+% \newpage
+    
+
 \subsection{A Priori Structure Groups}
     
     % Hebbian learning is a form of activity-dependent synaptic plasticity where correlated activation of pre- and postsynaptic neurons leads to the strengthening of the connection between the two neurons. Another central theory of cognitive neuroscience is that different parts or modules of the brain perform different functions, known as functional localization.
@@ -97,12 +104,32 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
     % At each step, the accuracy of the model naturally decrease as a result of merging imperfectly covariant random variables.
     %     However, some form of a priori covariance is necessary for maintaining information integrity through bilateral and hierarchical dynamics, i.e. to allow a connection to communicate in a general and equivariant way between modules and within their intrinsic substructures. 
     
+    % \begin{wrapfigure}{r}{0.5\textwidth}
+    %     \begin{center}
+    %     \includegraphics[width=0.43\textwidth]{DTI-sagittal-fibers.jpg}
+    %     % \caption{Fiber tracts that run through the mid-sagittal plane}
+    %     \end{center}
+    % \end{wrapfigure}
+    
    A biological first principle of covariance arises naturally from analysis of neuronal activity, which appears to favour functional localization and Hebbian learning.
     Moreover, human brain networks appear to flow in connectome-specific smooth diffusive waves along gyrification paths which are theorized to be caused by differential tangential growth. 
     Recall, covariance is a measure of the joint variability of two random variables and is increasingly positive when a pair show similar behavior and is negative when dissimilar.
     Covariance finds a direct description in differential geometry as a principal Ehressmann connection, which represents the covariant derivative between fibers of a bundle. To analyze dynamics on a bundle using gauge theory, it becomes necessary to impose a generalized a priori covariance principle to maintain integrity of information being transported in bilateral and hierarchical directions.
     Yet for a standard learning model, covariance of functionality is an a posteriori feature since the joint variability is unknown until individual modules are fully trained. 
-    Covariance of fibers can be achieved by imposing the structure group to be a Lie Group, but can also be achieved by imposing restrictions on the projection map of Riemannian manifolds without explicitly defining the structure group beforehand. 
+    Covariance of fibers can be achieved by imposing the structure group to be a Lie Group, but can also be achieved by imposing restrictions on the projection map of Riemannian manifolds without explicitly defining the structure group beforehand.
+    
+    % \begin{figure}[h]
+    %     \centering
+    %     \includegraphics[width=5.5cm]{DTI-sagittal-fibers.jpg}
+    %     \caption{Fiber tracts that run through the mid-sagittal plane}
+    % \end{figure}
+    
+    % \begin{figure}[h]
+    %     \centering
+    %     \includegraphics[width=8cm]{eeg-meg-neuron.png}
+    %     \caption{Diffusive electric and magnetic signals in neurons}
+    % \end{figure}
+
     
     
 \subsection{Moduli Spaces}
@@ -110,11 +137,24 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
     \[
     {\displaystyle \operatorname {YM} (A)=\int _{X}\|F_{A}\|^{2}\,d\mathrm {vol} _{g}.}
     \]
-    In search of zero or vanishing curvature, one aims for a bundle with curvature as small as possible. The Yang–Mills action functional described above is the square of the $L^{2}$-norm of the curvature, and its Euler–Lagrange equations describe the critical points of this functional, either the absolute minima or local minima, i.e. Yang–Mills connections are those that minimize their curvature.  
+    With the aim of having zero or vanishing curvature, we search for a bundle with curvature as small as possible. The Yang–Mills action functional corresponds to the $L^{2}$-norm of the curvature, and its Euler–Lagrange equations describe the critical points of this functional, either the absolute minima or local minima. That is, Yang–Mills connections (or instantons) are those that minimize their curvature.  
+
+\subsection{Variational Inference and Energy Composition}
+    As underlying neural networks perform inference, their trajectories pass through hierarchies of weighted hidden layers in a bottom-up manner. At the same time, a top-down variational noise is produced around the instantons that best minimize energy of total activity on the moduli space of connections. Sampling through the joint distribution on all latents is represented by generation on an energy-based model (EBM) that is the sum of each conditional EBM and corresponds to a product of experts model. This energy minimization forms an attention mechanism that is learned on the top-down manifold as well as having a generative effect on underlying neural networks through variational inference. The main idea behind variational methods is to pick a family of distributions over the latent variables with its own variational parameters, $q(z_{1:m} | v)$, and then attempt to find the setting of the parameters that makes $q$ close to the posterior of interest (the instantion). Closeness of the two distributions in variational inference is measured with the Kullback-Leibler (KL) divergence, 
+    \[
+        KL(q||p)=  E_q\bigg[ \log \frac{ q(Z)}{p(Z | x)} \bigg].
+    \]
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=13cm]{openai-ebm.png}
+        % \caption{Fiber tracts that run through the mid-sagittal plane}
+    \end{figure}
     
+    \subsection{Cobordism}
+    % [TODO]
     
-    Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. Additionally, these manifolds demonstrate a cobordism scheme where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This provides a naturally occurring symmetry (gauge invariance) of hierarchical encoding.
-    
+    Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. 
+    Additionally, these manifolds demonstrate a cobordism property where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This might provide a natural and gauge invariant method of dimensionality reduction to be applied to the hierarchical encoding and decoding of an upper bounding layer.
 % \section{Ideas and Experiments}
 %     does cobordism of moduli enable encoding via dimensionality reduction heirarchy. Symmetry/Guage equivarient hierarchical auto encoder. Symmetry of time to symmetry of space in particle and boson, next is approximate/broken symmetry in hierarchy (and lateral).  
     
@@ -131,7 +171,7 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
 
 % \subsection{Harmonic Model Interpretation}
 
-% \subsubsection*{Harmonics}
+% \subsubsection*{Connectome-Specific Harmonics}
 
 % \subsubsection*{Abelian Sandpile Self-Local Criticality}
 %     % https://www.pnas.org/content/116/8/2821
@@ -172,6 +212,12 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
 [4] Wetzel, Sebastian J., and Manuel Scherzer. "Machine learning of explicit order parameters: From the Ising model to SU (2) lattice gauge theory." Physical Review B 96.18 (2017): 184410.
 % https://arxiv.org/pdf/1705.05582.pdf
 
+
+[5] Du, Yilun, and Igor Mordatch. "Implicit generation and generalization in energy-based models." arXiv preprint arXiv:1903.08689 (2019).
+% https://arxiv.org/abs/1903.08689
+
+[6] Blei, David M., Alp Kucukelbir, and Jon D. McAuliffe. "Variational inference: A review for statisticians." Journal of the American statistical Association 112.518 (2017): 859-877.
+
 % [3] Paul, Arnab, and Suresh Venkatasubramanian. "Why does deep learning work?-a perspective from group theory." arXiv preprint arXiv:1412.6621 (2014).
 % https://arxiv.org/pdf/1412.6621.pdf
 
@@ -182,6 +228,144 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 
 
+
+
+\begin{comment}
+% The gauge theoretic model of neural activity is described using fiber and vector bundles with their respective connections (covariant derivatives). 
     
+    % The moduli space of connections can be formulated by quotienting the space of principal connections by its gauge group, generating a gauge equivariant space that is also a smooth and finite dimensional manifold. This can be formalized as a Yang-Mills moduli space or as a moduli space of principal flat connections. 
+
+
+    % https://papers.nips.cc/paper/2017/file/0ebcc77dc72360d0eb8e9504c78d38bd-Paper.pdf
+    
+    % This study deals with neural networks in the sense of geometric transformations
+    % acting on the coordinate representation of the underlying data manifold which
+    % the data is sampled from. It forms part of an attempt to construct a formalized
+    % general theory of neural networks in the setting of Riemannian geometry. From
+    % this perspective, the following theoretical results are developed and proven for
+    % feedforward networks. First it is shown that residual neural networks are -
+    % nite dierence approximations to dynamical systems of rst order dierential
+    % equations, as opposed to ordinary networks that are static. This implies that the
+    % network is learning systems of dierential equations governing the coordinate
+    % transformations that represent the data. Second it is shown that a closed form
+    % solution of the metric tensor on the underlying data manifold can be found by
+    % backpropagating the coordinate representations learned by the neural network
+    % itself. This is formulated in a formal abstract sense as a sequence of Lie group
+    % actions on the metric bre space in the principal and associated bundles on the
+    % data manifold
+
+
+    
+    % introduce Ergodic justifactions:
+    % - recursive neuron structure uses joint divergence 
+    % Applications of this manifold in machine-learning may prove useful in the task of meta-learning, i.e. classification of inputs into subtasks and subnetworks, as well as in pre-training covariance. Lastly, examining mathematical research in ergodic dynamics of Moduli spaces allows the ergodic free-energy model described in previous works to be developed further.
+
+
+    % Theorem 1 ([Her60],[Bes07, Theorem 9.3]). Let pi : E → M be a Riemannian submersion (c.f. [Bes07, Definition 9.8]). If E is a complete, then pi : E → M is a fibre bundle
+
+    % In a nutshell, Hermann explicitly constructed local trivializations around each x ∈ M, by connecting points on the fibre pi −1 (x) to points on any neighboring fibre pi −1 (y) by horizontally lifting the geodesic on M that connects x to y. Here the horizontal lifting is made possible by the Riemannian structure on E, which canonically splits the tangent bundle of E into the direct sum of a horizontal and vertical subbundles. As pointed out in [Bes07, §9.E], the horizontal subbundle is an Ehresmann connection (see A) on the fibre bundle. The structure group of the fibre bundle can then be determined from the holonomy of the Ehresmann connection; see [Bes07, §9.47] for more details. 
+    
+    % In other words, a fibre bundle can be defined equivalently by a smooth submersion between the total and base manifold (with appropriate completeness assumptions), a Riemannian structure on the base manifold, and an Ehresmann connection. We close the discussion in this section by emphasizing that, though it might appear that our fibre bundle framework “discards” the notion of structure groups compared with the fibre bundle formulation pioneered in [SW12, SW16], structure groups indeed are specified, just in an indirect manner.
+\end{comment}
+
+
+
+\begin{comment}
+\section{Definitions}
+    % - Kernel space
+    % - feature space
+
+    % Manifolds appear frequently in macine learning and statistical learning; in the form of cost functions, divergences, kernel spaces, feature space
+
+    Input Space ($X$): It is the original space that the signal inhabits. Most signals of interest are compactly supported bounded real functions over a vector space $X$. The function space is denoted by $C^0(X,\mathbb R) = {\phi | \phi : X \rightarrow \mathbb R}$. We define Intrinsic space as: $S = X \times \mathbb R$. Every $\phi \in C^0(X, \mathbb R)$ is a subset of $S$. A neural network maps a point in $C^0(X, \mathbb R)$ to another point in $C^0(X,\mathbb R)$; Inside $S$, this induces a deformation between subsets.
+    
+    Figure: A subset of the intrinsic space is called a figure, i.e., $f \subseteq S$. Note that a point $\phi \in C^0(X,\mathbb R)$ is actually a figure over $S$.
+    
+    Moduli space of Figures: One can imagine a space that parametrizes various figures over $S$. We denote this by $F(S)$ and call the moduli space of figures. Each point in $F(S)$ corresponds to a figure over $S$. A group $G$ that acts on $S$, consistently extends over $F(S)$, i.e., for $g \in G, f \in S$, we get another figure $g(f) = f' \in F(S)$.
+    
+    
+    At its root, lies the principle of layer-wise pre-training for the identity function. In particular, we show that this succinct step, as an algorithmic principle, is quite powerful. The principle stays the same across layers; hence every layer only learns the simplest possible objects from its own input space. Yet, a simple objects at a deeper layer can represent a complex object at the input space. This construction is recursive over layers, so one can envision a neural net building representations of moduli spaces over moduli spaces, hierarchically, one after another. These moduli-spaces are determined by the underlying input-space, and the nature of training. So, doing precise calculations over them, such as defining the space of all automorphisms, or computing volumes over corresponding stabilizer sets, may be very difficult.
+    
+    \subsection{Kernel machines}
+    \subsection{Attention}
+    \subsection{Pretraining}
+\end{comment}
+
+\begin{comment}
+\section{Appendix}
+\subsection{Fiber and vector bundles}
+    A \textit{fiber bundle} serves as a useful mathematical object to analyse both the recursive behaviour of artificial and biological neurons and neural networks, as well as their application in information processing and manifold representation. A fiber bundle makes precise the idea of one topological space (called a fiber) being ``parameterized'' by another topological space (called a base). The bundle also comes with a group action on the fiber that represents the different ways the fiber can be viewed as equivalent. Let $F$ be a given manifold. A smooth fiber bundle with standard fiber $F$ is a smooth map $\pi : E \rightarrow B$ from a manifold $E$ (the total space) to a manifold $B$ (the base) with the following property, called local triviality: There exists an open covering $U_\alpha$ of $B$ and difeomorphisms 
+    \[
+        \phi_\alpha : \pi^{-1}(U_\alpha) \rightarrow U_\alpha  \times F
+    \] 
+    such that $\hbox{proj}_{U_\alpha}(\phi(x)) = \pi(x)$. Recall, a diffeomorphism is an isomorphism of smooth manifolds, so $\phi$ intertwines $\pi$ with projection to the first factor. We will denote the fibers by $E_b = \pi^{-1}(b)$. Additional structures on $F$ give rise to special types of fiber bundles:
+    \begin{itemize}
+        \item If $F = V$ is a vector space, one defines a \textit{vector bundle} with standard fiber $V$ to be a fiber bundle $\pi : E \rightarrow B$ where all fibers $\pi^{-1} (b)$ are vector spaces and the local trivializations $\phi_\alpha$ can be chosen to be fiberwise linear. A homomorphism of two vector bundles is a fiber bundle homomorphism that is fiberwise linear. The fibered product of vector bundles $E_1; E_2$ is a vector bundle (also called Whitney sum and denoted $E1 \oplus E2$).
+        
+        \item Recall, a Lie group is a group that is also a differentiable manifold where points can be multiplied together, they have inverses, and these operations are defined to be smooth (differentiable). If $F = G$ has the structure of a Lie group, one defines a \textit{group bundle}, $\mathcal G \rightarrow B$ with standard fiber $G$ to be a fiber bundle where all fibers carry group structures and the local trivializations can be chosen to be a fiberwise group homomorphisms. A group bundle homomorphism is a fiber bundle homomorphism which is fiberwise a group homomorphism. The fibered product of group bundles is a group bundle. One has natural bundle maps $\mathcal G \times^B \mathcal G \rightarrow \mathcal G$ (fiberwise group multiplication) and $\mathcal G \rightarrow \mathcal G $ (fiberwise inversion). Similarly, one defines algebra bundles, Lie algebra bundle as well as fiberwise linear actions of group or algebra bundles on vector bundle.
+        
+        \item  A principal $G$-bundle (also called a G-torsor over X) share similar properties to the resulting space of a Cartesian product of a space with a group. They are a fiber bundle $\pi: \mathcal P \rightarrow X$ together with a continuous right action $\mathcal P \times G \rightarrow \mathcal P$ such that $G$ preserves the fibers of $\mathcal P$ (i.e. if $y \in \mathcal P_x$ then $yg \in \mathcal P_x$ for all $g \in G$) and acts freely and transitively (i.e. regularly) on them in such a way that for each $x\in X$ and $y \in \mathcal P_x$, the map $G \rightarrow \mathcal P_x$ sending $g$ to $yg$ is a homeomorphism. In particular each fiber of the bundle is homeomorphic to the group $G$ itself. One can also define principal $G$-bundles in the category of smooth manifolds. Here $\pi : \mathcal P \rightarrow X$ is required to be a smooth map between smooth manifolds, $G$ is required to be a Lie group, and the corresponding action on $\mathcal P$ should be smooth. 
+    \end{itemize}
+
+ 
+\subsection{Connections}
+    The notion of a \textit{connection} defines the idea of transporting data along a curve or family of curves in a parallel and consistent manner. A \textit{covariant derivative} is a linear differential operator which takes the directional derivative of a section of a vector bundle in a covariant manner. It also allows one to formulate a notion of a parallel section of a bundle in the direction of a vector: a \textit{section} $s$ is parallel along a vector $X$ if $\nabla _{X}s=0$. An \textit{Ehresmann connection} is a connection in a fibre bundle or a principal bundle made by specifying the allowed directions of motion of the field. Specifically, it singles out a vector subspace of each tangent space to the total space of the fiber bundle, called the horizontal space. A section $s$ is then horizontal (i.e., parallel) in the direction $X$ if $\rm {d}s(X)$ lies in a horizontal space.
+
+    For any fiber bundle $\pi : E \rightarrow B$ the tangent bundle $T E$ of the total space has a distinguished subbundle, the vertical bundle $V E \hookrightarrow T E$. The fiber $V_xE$ for $\pi(x) = b$ is the image of $T_x(F_b)$ under the natural inclusion $T F_b \hookrightarrow T E$. An Ehresmann connection on $E$ is the choice of a complementary horizontal subbundle $HE$ such that $T E = V E \oplus HE$. Equivalently, a connection is a bundle projection $T E \rightarrow V E$ which is left-inverse to the inclusion $V E \rightarrow T E$; one defines $HE$ as the kernel of this projection. 
+    
+    The Ehresmann connection has the immediate benefit of being definable on a much broader class of structures than vector bundles and is well-defined on a general fiber bundle. Many of the features of the covariant derivative still remain: parallel transport, curvature, and holonomy. With the classical covariant derivatives, covariance is an a posteriori feature of the derivative. However, for an Ehresmann connection, it is possible to impose a generalized covariance principle from the beginning by introducing a Lie group acting on the fibers of the fiber bundle. The appropriate condition is to require that the horizontal spaces be equivariant with respect to the group action.
+
+    If the standard object $F$ has additional structure, one is interested in connections such that parallel transport preserves that structure. For example, if $E$ is a vector bundle, each parallel transport operation, $\Pi^\gamma$, should be a linear map, and for group bundles it should be a fiberwise group homomorphism, and so on.
+    An important special case of Ehresmann connections are principal connections on principal bundles, which are required to be equivariant in the principal Lie group action.   A principal connection on a fiber bundle is an equivariant Lie algebra valued 1-form $\theta \in \Gamma^1 (\mathcal P, \mathfrak g)^G$ such that $\iota(\xi_{\mathcal P})\theta = \xi$ (where $\iota$ is an inclusion embedding) for all $\xi \in \mathfrak g$, the Lie algebra.  
+    
+    The space of principal connections will be denoted $\mathcal A(P)$. The space $\mathcal A(P)$  has a natural affine structure, with underlying vector space the space $\Gamma^1 (B, \mathfrak g( \mathcal P))$ of 1-forms on $B$ with values in the adjoint bundle.
+
+
+
+\subsection{Gauges}
+    
+    A gauge can be thought of as a coordinate system that varies depending on one’s location with respect to some base space or parameter space. A gauge transform is a change of coordinates applied to each such location, and a gauge theory is a model for some physical or mathematical system to which gauge transforms can be applied and is typically gauge invariant, in that all physically meaningful quantities are left unchanged or transform naturally under gauge. A principal bundle automorphism is a $G$-equivariant diffeomorphism $\phi : \mathcal P \rightarrow \mathcal P$ taking fibers to fibers. The group of principal bundle automorphisms will be denoted $\hbox{Aut}( \mathcal P)$. 
+    
+    The space of "coordinate systems" is (non-canonically) identifiable with the isomorphism group $\hbox{Isom}(G)$ of template $G$.  This isomorphism group is called the structure group or gauge group of the class of geometric objects. The gauge group $\hbox{Gau}( \mathcal P) \subseteq \hbox{Aut}(\mathcal P)$ consists of automorphisms $ \phi : \mathcal P \rightarrow \mathcal P$ inducing the identity map on the base $B$. That is, $\hbox{Gau}( \mathcal P)$ is defned by an \textit{exact sequence} of groups
+    \[
+        1 \longrightarrow \hbox{Gau}( \mathcal P) \longrightarrow \hbox{Aut}( \mathcal P) \longrightarrow \hbox{Diff} B)
+    \]
+    Let $\theta$ be a principal connection on $\pi : \mathcal P \rightarrow B$. For any path $\gamma : [t_0, t_1] \rightarrow B$, let 
+    \[
+        \Pi^\theta_\gamma : P_{\gamma(t_0)} \rightarrow P_{(t_1)} 
+    \]
+    denote parallel transport with respect to $\theta$. For all $\phi \in \hbox{Gau}(\mathcal P)$,
+    \[
+        \Pi_{\gamma}^{\phi,\theta} = \phi(\gamma(t_1)) \circ  \Pi_{\gamma}^{\theta} \circ  \phi(\gamma(t_0))^{-1}
+    \]
+    The group of automorphisms $\hbox{Aut}( \mathcal P)$ acts on the space $\mathcal A( \mathcal P)$ of principal connections by pull-back by the inverse. This can be understood as the gauge transformations of connections. We can interpret $\mathcal A( \mathcal P)$ as an infinite dimensional manifold, equipped with an action of an infinite-dimensional Lie Group. 
+    % The generating vector field for the action of the bundle section $\zeta$ on $\mathcal A( \mathcal P)$ is given by the covariant differential.
+    
+
+    % For the action of the subgroup $\hbox{Gau}( \mathcal P)$, there is an alternative formula for this action.
+
+\section{Moduli Spaces}
+    The quotient space of the space of principal connections and the Gauge  $\mathcal A(P) / \hbox{Gau}(P)$ is called the moduli space of connections. It is still infnite-dimensional. To obtain a finite dimensional moduli spaces, one has to impose additional gauge-invariant constraints on $\theta$: e.g. that it is a flat connection, or more generally a Yang-Mills connection. Suppose $\pi : \mathcal P \rightarrow B$ is a principal $G$-bundle over a compact, oriented, Riemannian manifold $B$. The inner product on $T B$ gives rise to an inner product on $T M$ and on all $ \wedge^k T^*M$. Taking the inner product of the differential form, followed by integration over $B$ with respect to the Riemannian volume form, defines an inner product on $\Omega^* (B)$. In terms of the Hodge star operator, 
+    \[
+        \langle \alpha, \beta \rangle = \int_B \alpha \wedge  * \beta
+    \]
+    Let $|| \cdot ||$ be the norm corresponding to $\langle \cdot, \cdot \rangle$. The Yang-Mills functional on $\mathcal A(\mathcal P)$ is the functional 
+    \[
+        \hbox{YM}(\theta) = ||F ||^2 = \int_B (F^\theta, * F^\theta)
+    \]
+    The Yang-Mills functional is invariant under the action of the gauge group, i.e. $YM(\theta) = YM(\phi,\theta)$, hence all its critical points (called Yang-Mills connections) are invariant as well. A connection $\theta$ is a critical point of the Yang-Mills functional if and only if it satisfies the Yang-Mills equation, $d^\theta * F^\theta = 0$. The quotient of the space of Yang-Mills connections by the action of the gauge group is called the Yang-Mills moduli space. In this context, the term ``moduli'' is used synonymously with ``parameter''. 
+    
+    
+    Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold X is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, known as the anti-self-duality equations. The Yang-Mills equations depend upon the Riemannian metric on $B$ only via the star operator on $\Gamma^2 (B)$. The case $\dim B = 4$ is special in that it takes $\Gamma^2 (B)$ to itself, since $4 - 2 = 2$. We mentioned already that in this case the Yang-Mills equations are conformally invariant: Multiplying the metric by a positive function does not change the star operator in middle dimension, hence does not change the Yang-Mills equations. A special type of Yang-Mills connections in $4$ dimensions are those satisfying one of the equations 
+    \[
+        *F^\theta = F^\theta \text{\ \ or \ \  }  *F^\theta = - F^\theta 
+    \]
+    (self-duality and anti-self-duality respectively) because for such connections, the Yang-Mills equations are a consequence of the Bianchy identity $d^\theta F^\theta = 0$. A change of orientation of $B$ changes the sign of the  operator, and therefore exchanges the notion of duality and anti-self duality. For certain principal bundles ($\theta$ is a multiple of the second Chern number), ASD connections give the absolute minimum of the Yang-Mills functional.
+    
+    % Anti-self dual connections over S4 are also called instantons.
+    
+    % The moduli space for anti-self dual YM-connections for G = SU(2) is the starting point for Donaldson theory of 4-manifolds. As realized by Donaldson, they contain information not only about the topology but also the differentiable structure of 4-manifolds.
+    
+\end{comment}    
 
 \end{document}
