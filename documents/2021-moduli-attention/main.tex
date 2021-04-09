@@ -83,7 +83,7 @@ An autoencoding method using the cobordism property of the space is considered.
 
 % gauge Dynamics of moduli spaces
 \section{Overview}
-In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles and, from an information geometric perspective, they minimize relative entropy or KL divergence between two manifolds that are gauge equivariant. Allowing these connections to function as sources of variational noise, we aim to minimize the total energy of the moduli space. 
+In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles and, from an information geometric perspective, they minimize relative entropy or KL divergence between two manifolds that are gauge equivariant. Allowing these connections to function as sources of variational noise, we aim to minimize the total energy of the moduli space. Associating the physics of unifed field theories to findings in neuroscience and machine learning theory may justify further introspection into the Anthropic Principle.
 % by minimizing the relative entropy or KL divergence between active bundles.
 % The harmonic model can be applied to these dynamics with behaviour comparable to connectome-specific self-localized critical waves. 
 
@@ -152,7 +152,7 @@ In gauge theory, the moduli space of connections results from quotienting the sp
     \end{figure}
     
 \section{Exploratory }
-    Recent research in ML, Neuroscience, and Physics strengthens this direction of research; including the GLOM system for representing part-whole hierarchies in neural networks (Hinton 2021), similar part-whole investigations of biological neural trajectories using geometric analysis (Russo et al, 2020), as well as demonstrations of soliton generation from Bose-Einstein condensate. Associating the physics of speculated unifed field theories to neuroscience and learning theory may serve as evidence of Anthropic Principle. Examining pure mathematics research in ergodic theory and hyperbolic dynamics on moduli spaces enforces the ergodic free-energy minimizing model described in previous notebooks. An encoding mechanism using the cobordism property of the Yang-mills moduli space is also considered.
+    Recent research in ML, Neuroscience, and Physics strengthens this direction of research; including the GLOM system for representing part-whole hierarchies in neural networks (Hinton 2021), similar part-whole investigations of biological neural trajectories using geometric analysis (Russo et al, 2020), as well as demonstrations of soliton generation from Bose-Einstein condensate. Examining pure mathematics research in ergodic theory and hyperbolic dynamics on moduli spaces enforces the ergodic free-energy minimizing model described in previous notebooks. An encoding mechanism using the cobordism property of the Yang-mills moduli space is also considered.
     
     
     \subsection{Part-Whole Hierarchies}
@@ -214,7 +214,16 @@ In gauge theory, the moduli space of connections results from quotienting the sp
     \]
     With variational methods, instead of only minimizing the energy function with respect to $z$ we prevent the energy function from being 0 everywhere by constraining the flexibility of the latent variable $z$. The energy function is defined as sampling $z$ randomly according to a distribution whose logarithm is the cost that links it to $z$. This distribution is commonly chosen to be a Gaussian with mean $\bar z$ which results in Gaussian noise being added to $\bar z$. The reparameterization trick is often used to allow for backpropagation during training despite the random sampling.
 
-\newpage
+% \newpage
+\textit{Work in progress}
+
+% \subsubsection{Self-Organized Criticality}
+%     Condensation of instantons (and noise-induced anti-instantons) are believed to be the explanation of the noise-induced chaotic phase known as self-organized criticality.
+
+%     \url{https://arxiv.org/pdf/1102.1791.pdf}
+    
+%     parameterizing SOC by gaussian noise may be useful in drawing statistical comparisons between biological neural networks (via connectome harmonic analysis and the Abelian sandpile group) and quantum phenomena.
+
 \begin{comment}
 \section{Exploratory }
     \subsection{Cobordism}
