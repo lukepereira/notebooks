@@ -3,7 +3,7 @@
 \usepackage[final]{styles}
 \usepackage[utf8]{inputenc} % allow utf-8 input
 \usepackage[T1]{fontenc}    % use 8-bit T1 fonts
-\usepackage{hyperref}       % hyperlinks
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}       % hyperlinks
 \usepackage{url}            % simple URL typesetting
 \usepackage{booktabs}       % professional-quality tables
 \usepackage{amsfonts}       % blackboard math symbols
@@ -17,6 +17,7 @@
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{wrapfig}
+\usepackage{multicol}
 % \title{Harmonic Flows on Guage Equivariant Moduli Space of Connection }
 % \title{Ergodic Flows on Guage Equivariant \\ Space of Connection }
 % \title{Ergodic flow on Moduli\\  Space of Connections }
@@ -60,7 +61,8 @@
 \begin{document}
 % \vspace{-2.5cm}
 \maketitle
-\vspace{-1.2cm}
+
+\vspace{-0.8cm}
 
 \begin{comment}
 \begin{abstract}
@@ -81,18 +83,17 @@ An autoencoding method using the cobordism property of the space is considered.
 
 % gauge Dynamics of moduli spaces
 \section{Overview}
-In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles and from an information geometric perspective, they minimize relative entropy or KL divergence between two manifolds that are gauge equivariant. Allowing these connections to function as sources of variational noise, we aim to minimize the total energy of the moduli space. 
+In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant space. A moduli space of connections can be used to cover the activity of a collection of deep neural networks, which are represented as trajectories on vector bundles. On this upper bounding space, a top-down energy-based attention mechanism can be trained from sampled activity of the bottom-up trajectories of the underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles and, from an information geometric perspective, they minimize relative entropy or KL divergence between two manifolds that are gauge equivariant. Allowing these connections to function as sources of variational noise, we aim to minimize the total energy of the moduli space. 
 % by minimizing the relative entropy or KL divergence between active bundles.
 % The harmonic model can be applied to these dynamics with behaviour comparable to connectome-specific self-localized critical waves. 
-Examining research in ergodic and hyperbolic dynamics of moduli spaces allows the ergodic free-energy minimizing model described in previous works to be developed further.
-An encoding mechanism using the cobordism property of the Yang-mills moduli space is considered.
+
 
 
 \subsection{Prerequisite Review}
-    A fiber bundle serves as a useful mathematical object to analyse both the recursive construction of artificial and biological neurons and neural networks, as well as their application in the geometry of latent information which uses manifold representations  for information processing and statistical learning.
+    A fiber bundle serves as a useful mathematical object to analyse both the recursive construction of artificial and biological neurons and neural networks, as well as their application in the geometry of latent information, which uses manifold representations for information processing and statistical learning.
     Finer details can be found in my notebooks on differential geometry, Lie groups and algebras, and gauge theory. A fiber bundle makes precise the idea of one topological space (called a fiber) being parameterized by another topological space (called a base). The bundle also comes with a group action on the fiber that represents the different ways the fiber can be viewed as equivalent. The fiber bundle has a property, known as local trivialization, that allows neighborhoods of the bundle to be computed as simple, oriented product spaces, despite the global space possibly being unoriented or twisted.
     
-    A family of fibers associated to a base can be described by defining a template (or standard) fiber which all other fibers are isomporphic to. This is formalized by defining a projection mapping, which may be diffeomorphic or homotopic, that connects positional data from the entirety of the space of fibers to a base and implicitly from one fiber to another. When the template fiber is a vector space, the bundle is called a vector bundle. The standard connections between fibers, known as a principal Ehresmann connection, can intuitively be understood as a covariant directional derivative on the tangent spaces of the manifolds and will always exist. An interesting type of connection occurs when using a fiber bundle equipped with a Lie group action. Lie groups have a unique recursive nature as a result of the group being itself a differentiable manifold and when the equipping this group action, the structure can be used to represent both the original fiber or vector bundle as well as a higher level collections of tangent spaces between bundles, in what's known as a bundle of connections. As will be explained in the section on moduli spaces, The Yang-Mills or instanton connections within this bundle of connections correspond to those that minimize their curvature. 
+    A family of fibers associated to a base can be described by defining a standard (or template) fiber which all other fibers are isomporphic to. This is formalized by defining a projection mapping, which may be diffeomorphic or homotopic, that connects positional data from the entirety of the space of fibers to a base and implicitly from one fiber to another. When the template fiber is a vector space, the bundle is called a vector bundle. Similarly, the standard connections between fibers, known as a principal Ehresmann connection, can intuitively be understood as a covariant directional derivative on the tangent spaces of the manifolds and will always exist. An interesting type of connection occurs when using a fiber bundle equipped with a Lie group action. Lie groups have a unique recursive nature as a result of the group being itself a differentiable manifold. When equipped with a Lie group action, the bundle structure can be used to represent both the original fiber or vector bundle as well as a higher level collection of tangent spaces connecting bundles, in what's known as a bundle of connections. As will be explained in the section on moduli spaces, The Yang-Mills or instanton connections within this bundle of connections correspond to those that minimize their curvature. 
     
 % \newpage
     
@@ -112,9 +113,9 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
     % \end{wrapfigure}
     
    A biological first principle of covariance arises naturally from analysis of neuronal activity, which appears to favour functional localization and Hebbian learning.
-    Moreover, human brain networks appear to flow in connectome-specific smooth diffusive waves along gyrification paths which are theorized to be caused by differential tangential growth. 
+    Moreover, brain networks appear to flow in connectome-specific smooth diffusive waves along gyrification paths which are theorized to be caused by differential tangential growth. 
     Recall, covariance is a measure of the joint variability of two random variables and is increasingly positive when a pair show similar behavior and is negative when dissimilar.
-    Covariance finds a direct description in differential geometry as a principal Ehressmann connection, which represents the covariant derivative between fibers of a bundle. To analyze dynamics on a bundle using gauge theory, it becomes necessary to impose a generalized a priori covariance principle to maintain integrity of information being transported in bilateral and hierarchical directions.
+    Covariance finds a direct description in differential geometry as a principal Ehressmann connection, which represents the covariant derivative between fibers of a bundle. To allow dynamics on a bundle using gauge theory, it becomes necessary to impose a generalized a priori covariance principle to maintain integrity of information being transported in bilateral and hierarchical directions.
     Yet for a standard learning model, covariance of functionality is an a posteriori feature since the joint variability is unknown until individual modules are fully trained. 
     Covariance of fibers can be achieved by imposing the structure group to be a Lie Group, but can also be achieved by imposing restrictions on the projection map of Riemannian manifolds without explicitly defining the structure group beforehand.
     
@@ -137,24 +138,102 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
     \[
     {\displaystyle \operatorname {YM} (A)=\int _{X}\|F_{A}\|^{2}\,d\mathrm {vol} _{g}.}
     \]
-    With the aim of having zero or vanishing curvature, we search for a bundle with curvature as small as possible. The Yang–Mills action functional corresponds to the $L^{2}$-norm of the curvature, and its Euler–Lagrange equations describe the critical points of this functional, either the absolute minima or local minima. That is, Yang–Mills connections (or instantons) are those that minimize their curvature.  
+    With the aim of having zero or vanishing curvature, we search for a connection with curvature as small as possible. The Yang–Mills action functional corresponds to the $L^{2}$-norm of the curvature, and its Euler–Lagrange equations describe the critical points of this functional, either the absolute minima or local minima. That is, Yang–Mills connections are those that minimize their curvature.  
 
 \subsection{Variational Inference and Energy Composition}
-    As underlying neural networks perform inference, their trajectories pass through hierarchies of weighted hidden layers in a bottom-up manner. At the same time, a top-down variational noise is produced around the instantons that best minimize energy of total activity on the moduli space of connections. Sampling through the joint distribution on all latents is represented by generation on an energy-based model (EBM) that is the sum of each conditional EBM and corresponds to a product of experts model. This energy minimization forms an attention mechanism that is learned on the top-down manifold as well as having a generative effect on underlying neural networks through variational inference. The main idea behind variational methods is to pick a family of distributions over the latent variables with its own variational parameters, $q(z_{1:m} | v)$, and then attempt to find the setting of the parameters that makes $q$ close to the posterior of interest (the instantion). Closeness of the two distributions in variational inference is measured with the Kullback-Leibler (KL) divergence, 
+    As underlying neural networks perform inference, their trajectories pass through hierarchies of weighted hidden layers in a bottom-up manner. At the same time, a top-down variational noise is produced around the instantons that best minimize energy of total activity on the moduli space of connections. Sampling through the joint distribution on all latent variables is represented by generation on an energy-based model (EBM) that is the sum of each conditional EBM and corresponds to a product of experts model. This energy minimization forms an attention mechanism that is learned on the top-down manifold as well as having a generative effect on underlying neural networks through variational inference. The main idea behind variational methods is to pick a family of distributions over the latent variables with its own variational parameters, $q(z_{1:m} | v)$, and then attempt to find the setting of the parameters that makes $q$ close to the posterior of interest (the instantion). Closeness of the two distributions in variational inference is measured with the Kullback-Leibler (KL) divergence, 
     \[
-        KL(q||p)=  E_q\bigg[ \log \frac{ q(Z)}{p(Z | x)} \bigg].
+        KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].
     \]
-    \begin{figure}[h]
+    \begin{figure}[H]
         \centering
         \includegraphics[width=13cm]{openai-ebm.png}
         % \caption{Fiber tracts that run through the mid-sagittal plane}
     \end{figure}
     
-    \subsection{Cobordism}
-    % [TODO]
+\section{Exploratory }
+    Recent research in ML, Neuroscience, and Physics strengthens this direction of research; including the GLOM system for representing part-whole hierarchies in neural networks (Hinton 2021), similar part-whole investigations of biological neural trajectories using geometric analysis (Russo et al, 2020), as well as demonstrations of soliton generation from Bose-Einstein condensate. Associating the physics of speculated unifed field theories to neuroscience and learning theory may serve as evidence of Anthropic Principle. Examining pure mathematics research in ergodic theory and hyperbolic dynamics on moduli spaces enforces the ergodic free-energy minimizing model described in previous notebooks. An encoding mechanism using the cobordism property of the Yang-mills moduli space is also considered.
     
+    
+    \subsection{Part-Whole Hierarchies}
+    In Artificial Neural Networks (Hinton 2021): \url{https://arxiv.org/abs/2102.12627}.
+    
+    In the brain, using geometric analysis (Russo et al, 2020):
+    
+    \url{https://www.sciencedirect.com/science/article/abs/pii/S0896627320303664}.
+    
+    \url{https://www.sciencedirect.com/science/article/abs/pii/S0092867420312289}
+    
+    \subsection{Cobordism}
     Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. 
     Additionally, these manifolds demonstrate a cobordism property where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This might provide a natural and gauge invariant method of dimensionality reduction to be applied to the hierarchical encoding and decoding of an upper bounding layer.
+        
+    \subsection{Solitons and Instantons}
+    
+    A soliton is a localized, non-dispersive solution of a nonlinear theory in Euclidean space and is a real object. Conversely, instantons are not real and only exist as solutions to the equations of motion of a quantum field theory after a Wick rotation, in which time is made imaginary. Note, a Wick rotation is a transformation that substitutes an imaginary-number variable for a real-number variable in order to solve a problem of (complex) Minkowski space in Euclidean space. Therefore, instantons are not observable, but are used to calculate and explain quantum mechanical effects that can be observed, such as tunneling. In quantum chromodynamics (QCD), instantons are believed to tunnel between the topologically different color vacua.
+    
+    \subsection{Bose-Einstein Condesate}
+    
+    % In quantum mechanics, variational method are used to find approximations of the lowest energy eigenstate or ground state, and some excited states which allows for calculating approximate wavefunctions. Variational methods can also be used to calculate position and trajectories of instantons. 
+    
+    A Bose–Einstein condensate (BEC) is a state of matter which is typically formed when a gas of bosons at low densities is cooled to temperatures very close to absolute zero causing a large fraction of the bosons to occupy the lowest quantum state, at which point microscopic quantum mechanical phenomena, particularly wavefunction interference, become macroscopic. This transition to BEC occurs below a critical temperature that is given by:
+    \begin{multicols}{2}
+    \noindent
+    \begin{align*}
+        \\
+        \\
+        \displaystyle T_{\rm {c}} &=\left({\frac {n}{\zeta (3/2)}}\right)^{2/3}{\frac {2\pi \hbar ^{2}}{mk_{\rm {B}}}} 
+    \end{align*}
+    \begin{align*}
+        {\displaystyle \,T_{\rm {c}}} \,  &\text{is the critical temperature,}\\
+        \displaystyle \,n \, 	 &\text{ the particle density,}\\
+        {\displaystyle \,m}	\, &\text{the mass per boson,}\\
+        {\displaystyle \hbar } \, 	&\text{the reduced Planck constant,}\\
+        {\displaystyle \,k_{\rm {B}}}\, 	&\text{the Boltzmann constant and}\\
+        {\displaystyle \,\zeta }\, 	&\text{the Riemann zeta function;}
+    \end{align*}
+    \end{multicols}
+    Using quantum gases made from atoms, it was demonstrated to be possible to create magnetic solitons in a (dipolar) BEC made from atoms with different spins (Farolfi, 2020). These quantum solitons are density waves, meaning they are local waves of particles. Spatial phase distributions can be optically imprinted onto a BEC of atoms and can also be shown to create solitons (Denschlag, 2000). 
+
+    \subsection{Variational Methods in EBMs}
+    An energy function $E$ in an EBM can be thought of as an unnormalized negative log probability. 
+    To convert an energy function to its equivalent probabilistic representation after normalization,
+    % Recall, marginalisation is a method that sums over the possible values of one variable to determine the marginal contribution of another. 
+    $P(y \mid x)$, we apply the Gibbs-Boltzmann formula with latent variables $z$ being marginalized implicitly through integration, i.e. $P(y \mid x) = \int_z P(y,z | x)$. Then,
+    \begin{align*}
+        P(y \mid x) &= \frac{ \int_z \exp(-\beta E(x,y,z)) }{ \int_y \int_z \exp(-\beta E(x, y, z))} 
+    \end{align*}
+    The derivation introduces a $\beta$ term which is the inverse of temperature $T$, so as $\beta \rightarrow \infty$ the temperature goes to zero, and we see that $\check{y} = \text{argmin}_{y} E(x,y)$. This inverse temperature limit appears similar to the critical temperature in BEC. We can redefine our energy function as an equivalent function with free energy $F_\beta$,
+    \begin{align*}
+        F_{\infty} (x,y) &= \text{argmin}_z E(x,y,z)\\
+        F_{\beta} (x,y) &= -\frac{1}{\beta} \log \int_z \exp(-\beta E(x,y,z)).
+    \end{align*}
+    If we have a latent variable model and want to eliminate the latent variable $z$ in a probabilistically correct way, we just need to redefine the energy function in terms of $F_\beta$,
+    \[
+        P(y \mid x) = \frac{ \exp(-\beta F_\beta(x,y,z)) }{ \int_y \exp(-\beta F_\beta(x, y, z))}. \\
+    \]
+    With variational methods, instead of only minimizing the energy function with respect to $z$ we prevent the energy function from being 0 everywhere by constraining the flexibility of the latent variable $z$. The energy function is defined as sampling $z$ randomly according to a distribution whose logarithm is the cost that links it to $z$. This distribution is commonly chosen to be a Gaussian with mean $\bar z$ which results in Gaussian noise being added to $\bar z$. The reparameterization trick is often used to allow for backpropagation during training despite the random sampling.
+
+\newpage
+\begin{comment}
+\section{Exploratory }
+    \subsection{Cobordism}
+        Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. 
+        Additionally, these manifolds demonstrate a cobordism property where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This might provide a natural and gauge invariant method of dimensionality reduction to be applied to the hierarchical encoding and decoding of an upper bounding layer.
+        
+    \subsection{Part-whole Hierarchies}
+    \subsubsection{In Artificial Neural Networks (GLOM)}
+    
+    \url{https://arxiv.org/abs/2102.12627}
+    
+    \subsubsection{In the Brain}
+    \url{https://www.simonsfoundation.org/2021/04/07/geometrical-thinking-offers-a-window-into-computation/}
+    
+    \url{https://www.sciencedirect.com/science/article/abs/pii/S0092867420312289}
+    
+    \url{https://www.sciencedirect.com/science/article/abs/pii/S0896627320303664}
+    
+    
 % \section{Ideas and Experiments}
 %     does cobordism of moduli enable encoding via dimensionality reduction heirarchy. Symmetry/Guage equivarient hierarchical auto encoder. Symmetry of time to symmetry of space in particle and boson, next is approximate/broken symmetry in hierarchy (and lateral).  
     
@@ -185,16 +264,96 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
 
 % \subsection{Dimensionality Reduction}
 % \subsubsection*{Cobordism}
-    
-% \subsection{Ergodic Dynamics}
+
+\subsection{Dynamics}
+
+\subsubsection{Ergodic theory on Moduli Spaces}
+
+\url{https://annals.math.princeton.edu/articles/13160}
+
+ Hyperbolic Dynamics
+
+\url{http://scholarpedia.org/article/Hyperbolic_dynamics#Uniform_hyperbolicity}
+
+
+\subsubsection{Connectome-specific Harmonic Waves}
+
+\url{https://www.pnas.org/content/116/8/2821}
+
+% See: The Hyperbolic Geometry of DMT Experiences
+
+\subsubsection{Harmonic Dynamics of the Abelian Sandpile}
+\url{https://www.pnas.org/content/116/8/2821}
 
 %     Through the process of unfolding, i.e., passing from a polygonal billiard table to a Riemann manifold equipped with a holomorphic 1-form, a billiard trajectory which reflects off the sides of the table unfolds into a straight line or geodesic on the manifold. We define the symmetry group$ SL(X, \omega)$ associated to any translation surface. We extend the notions of ergodically optimal and topologically optimal to general translation surfaces. Finally, we introduce the notion of a lattice surface and compare it to an ergodically optimal surface.
+
+\subsection{Physics}
+    \subsubsection{Condesate of Instantons as Variational EBM}
+    
+    Energies can be thought of as being \textit{unnormalized negative log probabilities}. That is, we may use the Gibbs-Boltzmann distribution to convert an energy function to its equivalent probabilistic representation after normalization, i.e. $P(y \mid x)$. Recall, \textit{marginalisation} is a method that sums over the possible values of one variable to determine the marginal contribution of another. $P(y \mid x)$ is just an application of the Gibbs-Boltzmann formula with latent variables $z$ being marginalized implicitly through integration, i.e. $P(y \mid x) = \int_z P(y,z | x)$. Then,
+    \begin{align*}
+        P(y \mid x) &= \frac{ \int_z \exp(-\beta E(x,y,z)) }{ \int_y \int_z \exp(-\beta E(x, y, z))} \\
+        % &= \frac{
+        %     \exp \bigg [  -\beta (-\frac{1}{\beta} \log  \int_z \exp(-\beta E(x,y,z)) ) \bigg ]
+        % }{
+        %     \int_y \exp \bigg [  -\beta (-\frac{1}{\beta} \log  \int_z \exp(-\beta E(x,y,z)) ) \bigg ]
+        % }
+    \end{align*}
+    The derivation introduces a $\beta$ term which is the inverse of temperature $T$, so as $\beta \rightarrow \infty$ the temperature goes to zero. $\beta$ is a positive constant that needs to be calibrated to fit the model. A larger $\beta$ value produces a more fluctuate model while a smaller $\beta$ gives a smoother model. When $\beta \rightarrow \infty$, we see that $\check{y} = \text{argmin}_{y} E(x,y)$. So we can redefine our energy function as an equivalent function using $F_\beta$,
+    \begin{align*}
+        F_{\infty} (x,y) &= \text{argmin}_z E(x,y,z)\\
+        F_{\beta} (x,y) &= -\frac{1}{\beta} \log \int_z \exp(-\beta E(x,y,z)).
+    \end{align*}
+    
+    In physics, $F_\beta$ is known as the free energy and $E$ is the energy. If we have a latent variable model and want to eliminate the latent variable $z$ in a probabilistically correct way, we just need to redefine the energy function in terms of $F_\beta$,
+    \[
+        P(y \mid x) = \frac{ \exp(-\beta F_\beta(x,y,z)) }{ \int_y \exp(-\beta F_\beta(x, y, z))}. \\
+    \]
+    
+    \subsubsection{Self-Organized Criticality}
+    In physics, instantons are particularly important because the condensation of instantons (and noise-induced anti-instantons) is believed to be the explanation of the noise-induced chaotic phase known as self-organized criticality.
+
+    \subsubsection{Bose-Einstein Condesate and Solitons}
+    
+    Observation of Magnetic Solitons in a Bose-Einstein Condensate
+    \url{https://physics.aps.org/articles/v13/s90}
+    
+    % https://www.researchgate.net/publication/51360828_Generating_Solitons_by_Phase_Engineering_of_a_Bose-Einstein_Condensate
+    
+    
+    Spatial phase distributions were optically imprinted onto a Bose-Einstein condensate (BEC) of atoms and was shown to create solitons.
+    
+    \url{https://science.sciencemag.org/content/287/5450/97}
+    
+    \begin{multicols}{2}
+    \noindent
+    \begin{align*}
+        {\displaystyle \,T_{\rm {c}}} \,  &\text{is the critical temperature,}\\
+        \displaystyle \,n \, 	 &\text{ the particle density,}\\
+        {\displaystyle \,m}	\, &\text{the mass per boson,}\\
+        {\displaystyle \hbar } \, 	&\text{the reduced Planck constant,}\\
+        {\displaystyle \,k_{\rm {B}}}\, 	&\text{the Boltzmann constant and}\\
+        {\displaystyle \,\zeta }\, 	&\text{the Riemann zeta function;}
+    \end{align*}
+    \begin{align*}
+        {\displaystyle T_{\rm {c}}=\left({\frac {n}{\zeta (3/2)}}\right)^{2/3}{\frac {2\pi \hbar ^{2}}{mk_{\rm {B}}}}}
+    \end{align*}
+    \end{multicols}
+    \subsubsection*{Superliminal Solitons from Hyperbolic Shift Vectors}
+    \url{https://arxiv.org/abs/2006.07125}
+
+
+
 
 % \subsection*{Hyperbolic Dynamics}
 
 % \subsubsection{Conformal Invariance}
 
-
+    \subsection{Geometric Unity and Anthropic Principle}
+    
+    \url{https://geometricunity.nyc3.digitaloceanspaces.com/Geometric_Unity-Draft-April-1st-2021.pdf}
+    
+\end{comment} 
 
 \section*{References}
 
@@ -221,6 +380,15 @@ An encoding mechanism using the cobordism property of the Yang-mills moduli spac
 % [3] Paul, Arnab, and Suresh Venkatasubramanian. "Why does deep learning work?-a perspective from group theory." arXiv preprint arXiv:1412.6621 (2014).
 % https://arxiv.org/pdf/1412.6621.pdf
 
+[7] Hinton, Geoffrey. "How to represent part-whole hierarchies in a neural network." arXiv preprint arXiv:2102.12627 (2021).
+
+[8]  Yann LeCun, DS-GA 1008, DEEP LEARNING, NYU CENTER FOR DATA SCIENCE
+
+[9] Russo, Abigail A., et al. "Neural trajectories in the supplementary motor area and motor cortex exhibit distinct geometries, compatible with different classes of computation." Neuron 107.4 (2020): 745-758.
+
+[10] Farolfi, A., et al. "Observation of magnetic solitons in two-component Bose-Einstein condensates." Physical Review Letters 125.3 (2020): 030401.
+
+[11] Denschlag, J., et al. "Generating solitons by phase engineering of a Bose-Einstein condensate." Science 287.5450 (2000): 97-101.
 
 % https://ncatlab.org/nlab/show/principal+bundle
 
