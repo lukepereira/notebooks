@@ -36,7 +36,7 @@ jobs:
           args: "-file-line-error -interaction=nonstopmode"
 
       - name: Compile Markdown and HTML with pandoc documents
-        if: ${{ false }} # Temporarily disable pandoc
+        continue-on-error: true
         uses: ./compilers/pandoc
         with:
           changed_files: changed-tex-files.txt
