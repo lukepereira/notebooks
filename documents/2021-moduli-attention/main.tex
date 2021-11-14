@@ -19,16 +19,17 @@
 \usepackage{wrapfig}
 \usepackage{multicol}
 
-% \newcommand{\stoptocwriting}{%
-%   \addtocontents{toc}{\protect\setcounter{tocdepth}{-5}}}
-% \newcommand{\resumetocwriting}{%
-%   \addtocontents{toc}{\protect\setcounter{tocdepth}{\arabic{tocdepth}}}}
+\newcommand{\stoptocwriting}{%
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{-5}}}
+\newcommand{\resumetocwriting}{%
+  \addtocontents{toc}{\protect\setcounter{tocdepth}{\arabic{tocdepth}}}}
 
 % \title{Harmonic Flows on Guage Equivariant Moduli Space of Connection }
 % \title{Ergodic Flows on Guage Equivariant \\ Space of Connection }
 % \title{Ergodic flow on Moduli\\  Space of Connections }
 % \title{Attention and Energy Minimization \\ on Moduli  Space of Connections }
-\title{Energy Minimizing Flows on \\ Equivariant Space of Connections }
+\title{ Emergent Attention on 
+Yang-Mills \\Space of Connections}
 % \title{Learning Energy Minimization on \\  Moduli Space of Connections }
 
 % The \author macro works with any number of authors. There are two commands
@@ -72,43 +73,67 @@
 \vspace{-2cm}
 \maketitle
 
-
-\vspace{-1.3cm}
+% \vspace{-1.3cm}
 
 % \stoptocwriting
 % gauge Dynamics of moduli spaces
 \renewcommand{\baselinestretch}{1.0}\normalsize
-\section*{Overview}
-In gauge theory, the moduli space of connections results from quotienting the space of principal connections of a fiber or vector bundle by the structure group, generating a gauge equivariant parameter space. A moduli space of connections can be used to cover the activity of a collection of hierarchical or deep neural networks, represented as trajectories on vector bundles. On this upper covering space, a top-down energy-based attention mechanism, referred to as the moduli attention, can be trained from sampled activity of the bottom-up trajectories of underlying networks through a composition of energies. Dynamics of attention are computed by minimizing the energy functional of the connection space. In particular, the Yang-Mills moduli space, a subset of the total connection space, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections (or instantons). These connections minimize curvature between bundles and, from an information geometric perspective, they minimize relative entropy or KL divergence between gauge equivariant manifolds. Allowing these connections to function as sources of variational noise, we train a neural network to minimize total energy of the moduli space. This process can be understood as finding stable solutions of an intrinsic flow on the curvature metric, namely a Ricci Yang-Mills flow (RYM flow) that produces solutions which are real non-volume preserving objects around invariant points, akin to Ricci solitons. Stable solutions represent islands of agreement formed through consensus within a dynamic part-whole hierarchy. 
-% \resumetocwriting
-% \renewcommand{\baselinestretch}{0.75}\normalsize
-% \tableofcontents
-% \renewcommand{\baselinestretch}{1.0}\normalsize
-
+\section*{Abstract}
+In this paper, a process similar to agglomerative clustering and principal component analysis is described using the formal methods of differential geometry and gauge theory which are commonly used in physical theories of electromagnetism and the strong nuclear force.
+It is proposed that information organization and clustering naturally emerges from an a priori gauge symmetry of the action on the space of connections together with the stationary-action principle. In a learning model, this is achieved through pretraining of diffeomorphic mappings of neural network activity onto Lie groups, i.e. manifolds of continuous symmetries, which are further projected onto a differentiable and conformally invariant 4-dimensional manifold of connections. 
+Constructing a Yang-Mills moduli space of connections allows us to cluster the vector activity of an ensemble of neural networks into islands of agreement forming a dynamic and unoriented part-whole hierarchy.
+% It is claimed to be possible to avoid an a priori definition of a measure or metric on a specially organized latent space and moreover, that a lack of a well-defined metric can be used to prevent information redundancy using a conformal invariance property of the space. Instead, 
+We can think of the clustering process on the connection space as an intrinsic geometric flow, namely the Ricci Yang-Mills flow.
+The wedge product of configurations of differential forms located at critical points of the Yang-Mills action functional are comparable to axes of a $p$-dimensional ellipsoid formed in principal component analysis. These volumetric structures similarly cluster and reduce information to its principal components based on covariance and can be used as a generalized attention mechanism when applied to an ensemble of learning models. 
 % The theoretical objects representing solutions of these flows are studied as quasiparticles and can be made physical in quantum materials or gasses. This geometric formulation of general intelligence is a naturally arising and biologically plausible model for quantum AI. 
 % Moreover, fusing physical field theories with neuroscience and ML may justify introspection into the Anthropic Principle and cosmological fine-tuning. 
 
-% Exploratory musings in quantum machine learning describe a quasiparticle in a bose-enstein condesate of the Yang-mills moduli space described earlier. To do so, a control system must train the condesate using boltzman machines to allow the quasiparticle to endure. This quasiparticle represents the state of the Moduli space of connections  after a Wick rotation of the 4-dimensional space into bosons in 3-dimensional space.
-% by minimizing the relative entropy or KL divergence between active bundles.
-% The harmonic model can be applied to these dynamics with behaviour comparable to connectome-specific self-localized critical waves. 
 
+% \resumetocwriting
+% \renewcommand{\baselinestretch}{0.65}\normalsize
+\tableofcontents
+% \renewcommand{\baselinestretch}{1.0}\normalsize
+
+
+
+
+
+\newpage
+\section{Overview}
+These concepts will be described in later sections, this overview serves as a rough outline for those familiar with the relevant areas of mathematics and machine learning.
+The moduli space of connections is constructed by quotienting the space of principal connections by a Lie structure group, generating a gauge equivariant parameter space.  
+In particular, the Yang-Mills moduli space, a subset of the total connection space made of flat and irreducible connections, can be constructed to be a smooth, compact, and oriented manifold in 4 dimensions with critical points known as Yang-Mills connections or instantons. These connections minimize curvature between fibers and, from an information geometric perspective, they minimize relative entropy or KL divergence between open sets of gauge equivariant manifolds. 
+This space can be used to cover the activity of a collection of neural networks, represented as trajectories on vector bundles. 
+% Dynamics of attention are computed by minimizing the energy functional of the connection space.  Using instantons as sources of variational noise, we train an attention mechanism to minimize total energy of the moduli space. This process is comparable to finding stable solutions of an intrinsic flow on an undefined metric, namely a Ricci Yang-Mills flow with solutions akin to Ricci solitons that are real, non-volume preserving objects around invariant points. Stable solutions represent islands of agreement formed through consensus within a dynamic and unoriented part-whole hierarchy. 
+
+
+A top-down energy-based attention mechanism, referred to as the moduli attention, can be trained on this space using sampled activity of the trajectories of underlying networks through a composition of energies. Motivated by the stationary-action principle, dynamics of attention are computed by minimizing the action functional of the connection space. The Yang-Mills action functional serves as a cost function on which inference minimizes the total energy in search of a basis of instanton connections. The connections are described using proejctive measurement given by a weighted sum or integral over differential forms. In comparison to statistical learning, this real, non-volume preserving object in the 3-dimensional space can be compared to a p-dimensional ellipsoid as found in principal component analysis, with axes that are typically formed using eigenvectors of the covariance matrix of a dataset. Thus, the processes of this learning method are as follows: 
+\begin{enumerate}
+    \item Pretrain $model_1$ to learn diffeomorphic projective mappings of arbitrary neural network outputs onto open sets (i.e. sheaves) of appropriate continuous symmetry Lie group manifolds . This will later be used to sample activity of an ensemble of neural networks and project it onto the Yang-Mills moduli space.
+    \item Pretrain $model_2$ to construct diffeomorphic mappings of sheaves of Lie groups onto sheaves of a smooth and continuous 4 dimensional manifold of connections. This will form the Yang mills moduli space of connection on which the output of $model_1$ is projected onto and where attention emerges.
+    \item Train an energy-based model, $model_3$ to find instanton connections with minimized curvature and maximized covariance by minimizing the Yang-Mills action functional given test data of various configurations of vector activity. This will later minimize vector activity projected by $model_2$.
+    \item Periodically, $model_1$ projects the ensemble of neural networks onto the Yang-Mills moduli space constructed by $model_2$ as $model_3$ determines the optimal configuration of instanton connections to minimize total energy. The approximate variational inference of $model_3$ produces a generative effect on the underlying neural networks inputs being sampled.
+\end{enumerate}
+
+% \section{Methods}
+
+% \section{Experiments}
 
 \section{Geometry of Latent Information}
+
 \subsection{Manifolds, Vector Bundles, Connections}
-    A fiber bundle serves as a useful mathematical object to analyse both the recursive construction of artificial and biological neurons and neural networks, as well as providing appropriate descriptions of the geometry of latent information, which uses manifold representations for information processing and statistical learning.
-    % Finer details can be found in my notebooks on differential geometry, Lie groups and algebras, and gauge theory.
-    A fiber bundle formalizes the notion of one topological space (called a fiber) being parameterized by another topological space (called a base). The bundle is equipped with a group action on the fiber that represents different ways the fibers can be viewed as equivalent. Bundles also have a property, known as local trivialization, allowing neighborhoods of the bundle to be computed as simple, oriented product spaces, despite the global space  being unoriented or twisted.
+    A bundle serves as a useful mathematical object to analyse both the recursive construction of biological and artificial neurons and networks. It also provides descriptions of the geometry of latent information as manifolds that  are used for information processing and statistical learning.
+    A fiber bundle formalizes the notion of one topological space (called a fiber) being parameterized by another topological space (called a base). The bundle is equipped with a group action on the fiber that represents different ways the fibers can be viewed as equivalent (Tao 2008). Bundles also have a property, known as local trivialization, allowing neighborhoods of the bundle to be computed as simple, oriented product spaces, despite the global space being unoriented or twisted.
     
-    A family of fibers associated to a base can be described by defining a standard (or template) fiber from which all other fibers are isomporphic to. This is formalized by defining a diffeomorphic or homotopic projection mapping, that connects positional data from the entirety of the space of fibers to a base, and implicitly from one fiber to another. When the template fiber is a vector space, the bundle is called a vector bundle. Similarly, a standard connection between fibers, known as a principal Ehresmann connection, will always exist and can be understood as a covariant directional derivative on the tangent spaces of the manifolds. Intuitively understood, Lie groups have a special recursive nature as a result of the group itself being a differentiable manifold of a continuous symmetry. A useful phenomenon occurs when equipping a bundle with a Lie group action; the bundle structure can be used to represent both the original vector bundle as well as a higher-level collection of mappings of their tangent spaces, in what's known as a bundle of connections. 
-    % To be expanded in the section on moduli spaces, the Yang-Mills or instanton connections within this bundle of connections correspond to those that minimize their curvature. 
-    
-% \newpage
+    A family of fibers associated to a base can be described by defining a template fiber from which all others are diffeomorphic to. This is formalized by defining a diffeomorphic mapping that takes positional data from the entirety of the space of fibers to a base, and implicitly from one fiber to another. When the template fiber is a vector space, we get a vector bundle. 
+    %Similarly, a standard template connection between fibers, known as a principal Ehresmann connection, will also exist and can be understood as a covariant directional derivative on the tangent spaces of the manifolds. 
+    A Lie group has a recursive property that results from the group being a differentiable manifold of a continuous symmetry. A useful phenomenon occurs when equipping a bundle with a Lie group action; the bundle structure can be used to represent both the original vector bundle as well as a higher-level collection of mappings between their tangent spaces, in what's known as a bundle of connections. 
     
 
 \subsection{A Priori Structure Groups}
     
     % Hebbian learning is a form of activity-dependent synaptic plasticity where correlated activation of pre- and postsynaptic neurons leads to the strengthening of the connection between the two neurons. Another central theory of cognitive neuroscience is that different parts or modules of the brain perform different functions, known as functional localization.
-    % We can develop a simple partition scheme by initially assigning a Bernoulli random variable to each synapse. Then, while ``zooming out" we merge random variables together based on their covariance and locality to build a course-grained model. Recall, \textit{covariance} is a measure of the joint variability of two random variables and is increasingly positive when the variables tend to show similar behavior and grow increasingly negative when dissimilar. This conversion of physical synapses into a set of random variables can be described with Markov partitions and Bernoulli Schemes. 
+    % Recall, \textit{covariance} is a measure of the joint variability of two random variables and is increasingly positive when the variables tend to show similar behavior and grow increasingly negative when dissimilar. This conversion of physical synapses into a set of random variables can be described with Markov partitions and Bernoulli Schemes. 
     % At each step, the accuracy of the model naturally decrease as a result of merging imperfectly covariant random variables.
     %     However, some form of a priori covariance is necessary for maintaining information integrity through bilateral and hierarchical dynamics, i.e. to allow a connection to communicate in a general and equivariant way between modules and within their intrinsic substructures. 
     
@@ -122,8 +147,12 @@ In gauge theory, the moduli space of connections results from quotienting the sp
    A biological first principle of covariance arises naturally from analysis of neuronal activity, which favours functional localization and Hebbian learning.
     Moreover, cognitive networks in the brain flow in connectome-specific diffusive waves along gyrification paths, which are theorized to be caused by differential tangential growth. 
     Recall, covariance is a measure of the joint variability of a pair random variables and is increasingly positive when the pair show similar behavior and is negative when dissimilar.
-    Moving from discrete random variables (i.e. synapses) to continuous fields and manifolds (i.e. EM fields), the covariant derivative between fibers of a bundle naturally arises in the principal Ehressmann connection. It proves necessary to impose a generalized a priori covariance principle to achieve holonomy of dynamics on a bundle to maintain integrity of information during parallel transportion in bilateral and hierarchical directions.
-    Yet for a standard learning model, covariance of functionality is an a posteriori feature since the joint variability is unknown until individual modules are fully trained. 
+     We can imagine a simple partition scheme by  assigning a Bernoulli random variable to each synapse. Then, while ``zooming out" we merge random variables together based on their covariance and locality to build a course-grained model.
+    Moving from discrete random variables (i.e. synapses) to continuous fields and manifolds (i.e. EM fields), the covariant derivative between fibers of a bundle arises naturally as the principal Ehressmann connection. 
+    A connection on a fiber bundle is a device that defines a notion of parallel transport on the bundle.
+    % Similar to the template fiber in a bundle, the principal Ehresmann always exists as the standard connection and can be understood as a covariant directional derivative on the tangent spaces of the manifolds.
+    It proves necessary to impose an a priori covariance principle to maintain integrity of information during parallel transportion in bilateral and hierarchical directions.
+    Yet for a standard learning model, covariance of functionality is an a posteriori feature because the joint variability is unknown until individual modules are trained. 
     Covariance of fibers can be achieved by imposing the structure group to be Lie groups, but can also be achieved by imposing restrictions on the projection map of Riemannian manifolds without explicitly defining the structure group beforehand (Gao 2021).
     % \begin{figure}[h]
     %     \centering
@@ -154,48 +183,22 @@ In gauge theory, the moduli space of connections results from quotienting the sp
          {\displaystyle \operatorname {YM} (A)=\int _{X}\|F_{A}\|^{2}\,d\mathrm {vol} _{g}.}
     \end{equation}
     
+    \subsection{Instantons as Principal Components}
+    Principal Component Analysis (PCA) can serve as a motivating reference for the geometric methods proposed in this paper. PCA is commonly used to obtain lower-dimensional data while preserving as much of the data's variation as possible. The principal components of a collection of points in a real coordinate space are a sequence of $p$ unit vectors, where the $i$-th vector is the direction of a line that best fits the data while being orthogonal to the first $i-1$ vectors.  It can be shown that the principal components are eigenvectors of the data's covariance matrix. PCA can be thought of as fitting a $p$-dimensional ellipsoid to the data, where each axis of the ellipsoid represents a principal component. If some axis of the ellipsoid is small, then the variance along that axis is also small.  
+    
+
+    \subsection{Instantons as Islands in Part-Whole Hierarchies}
+    The GLOM model (Hinton 2021) represents part-whole hierarchies using clusters of matching vectors, known as islands of agreement, as nodes in parse tree representations within a neural network. A part-whole hierachy system consists of components that can themselves be further broken down into subcomponents. The model learns analogical reasoning by encoding parts that are not well defined or obscured. An emphasis is given on viewpoint and coordinate invariance, which allows for exchangeability within the network and is used to adapt to and generate novelty in a manner similar to creativity in humans. Comparisons can be drawn between the GLOM model and moduli attention, with vector encodings corresponding to dynamic trajectories on vector bundles, frame invariance corresponding to the gauge equivariant connection space, and islands of agreement corresponding to stable instanton or soliton solutions. Iterative consensus often does not converge in meaningful ways due to the difficulty of encoding prior understandings of desirable representations to be generated through agglomerative clustering. Using a geometric model we find that we are better able to converge to coherent clusters because of the use of an a priori structure group that imposes meaningful symmetry on the clusters and optimizes organization of information throughout the space. 
+    
     
 \section{Dynamics of Latent Information}
 
-\subsection{Variational Methods in Energy-Based Models}
-    
-    As underlying neural networks perform inference, their latent trajectories pass through layers of a neural network in a bottom-up manner. At the same time, a top-down variational noise is produced around the instanton solutions that best minimize energy of the total activity on the moduli space of connections. Using an energy-based model (EBM) we sample the joint distribution as a sum of each latent trajectory, corresponding to a product of experts model. This forms an attention mechanism, which we refer to as the moduli attention, and is learned on the top-down manifold while having a generative effect on underlying networks through approximate inference. This has recently been implemented using Stein Variational Gradient Descent algorithm (Jaini 2021).
-    Recall, variational methods pick a family of distributions over the latent variables with their own variational parameters, $q(z_{1:m} | v)$, then attempt to find settings of the parameters that makes $q$ close to the posterior of interest. Closeness of the two distributions is measured with the KL divergence, $\displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].$
-    % \begin{equation}
-    %      \displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].
-    % \end{equation}
-    
-    % \begin{figure}[H]
-    %     \centering
-    %     \includegraphics[width=13cm]{openai-ebm.png}
-    %     \vspace{-0.87cm}
-    %     \\  (Yilun, 2019)
-    %     % \caption{Fiber tracts that run through the mid-sagittal plane}
-    % \end{figure}
-    
-    
 
-% \newpage    
-   
-
-\subsection{Instantons and Self-Organized Criticality}
-    It is known that biological neural networks are organized based on self-organized criticality (SOC).  Neuronal avalanches are scale-invariant neuronal population activity patterns in the cortex that are proposed to be a mechanism of cortical information processing and storage. Theory and experiments suggest neuronal avalanches allow for the transient and selective formation of local and system-wide spanning neuronal groups. The condensation of instantons can describe the noise-induced chaotic phase of SOC. A generic SOC system can be formulated as a Witten-type topological field theory (W-TFT) with spontaneously broken Becchi-Rouet-Stora-Tyutin (BRST) symmetry. In the parameter space, there must exist regions where the BRST-symmetry is spontaneously broken by instantons, which in the context of SOC are avalanches (Ovchinnikov 2011). Stochastic neural networks models have demonstrated how spontaneously broken BRST symmetry can describe SOC (Jian 2021). 
-    
-
-\subsection{Instantons as Islands in Part-Whole Hierarchies}
-    The GLOM model (Hinton 2021) represents part-whole hierarchies using clusters of matching vectors, known as islands of agreement, as nodes in parse tree representations within a neural network. A part-whole hierachy system consists of components that can themselves be further broken down into subcomponents. The model learns analogical reasoning by encoding parts that are not well defined or obscured. An emphasis is given on viewpoint and coordinate invariance, which allows for exchangeability within the network and is used to adapt to and generate novelty in a manner similar to creativity in humans. Comparisons can be drawn between the GLOM model and moduli attention, with vector encodings corresponding to dynamic trajectories on vector bundles, frame invariance corresponding to the gauge equivariant connection space, and islands of agreement corresponding to stable instanton or soliton solutions. Iterative consensus often does not converge in meaningful ways due to the difficulty of encoding prior understandings of desirable representations to be generated through agglomerative clustering. Using a geometric model we find that we are better able to converge to coherent clusters because of the use of an a priori structure group that imposes meaningful symmetry on the clusters and optimizes organization of information throughout the space. 
-    
-
-% \vspace{-0.3cm}
-% \section{Intrinsic and Extrinsic Variational Flows}
+\subsection{Stationary-Action Principle}
+The stationary-action principle is a variational principle that, when applied to the action of a mechanical system, yields the equations of motion for that system. The principle states that the trajectories (i.e. the solutions of the equations of motion) are stationary points of the system's action functional.
 
 
-    % $ \ \ \displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].
-    % $
-    
-    
 \subsection{Intrinsic Geometric Flows}
-    
     \begin{wrapfigure}{r}{0.4\textwidth}
         \vspace{0.3cm}
         \centering
@@ -208,9 +211,7 @@ In gauge theory, the moduli space of connections results from quotienting the sp
     % The Ricci flow, Calabi flow, and Yamabe flow all arise in similar ways. 
     Curvature flows may not necessarily preserve volume (the Calabi flow does, while the Ricci flow does not), meaning the flow may simply shrink or grow the manifold, rather than regularizing the metric. Instead of normalizing the flow by fixing the volume, we allow dissipative solutions to exist, forming a memory and compression mechanism. 
 
-    % \section{Solitons and Geometric Invariant Theory}
-
-    \subsection{Ricci Yang-Mills Solitons}
+    \subsection{Ricci Yang-Mills Flow}
     
     A Ricci flow is a differential equation on the space of Riemannian metrics on $M, \mathfrak{Met}$. We can picture the Ricci flow as moving a manifold around by internal symmetries (the family of diffeomorphisms) and a uniform-in-space scaling at each time. If one works in the moduli space of $\mathfrak{Met}/ \mathfrak{Diff}$, where $\mathfrak{Diff}$ is the group of diffeomorphisms on $M$, then one allows for a family of fixed points that are metrics that flow by scaling and diffeomorphism. i.e. $g(t) = \sigma (t) \phi (t) ^* g_0$,
     where $\phi(t) :M \rightarrow M$ is a one parameter family of diffeomorphisms. 
@@ -224,67 +225,40 @@ In gauge theory, the moduli space of connections results from quotienting the sp
         \frac{\partial}{\partial t}\mu = -d^*_gF_\mu .
     \end{equation}
     
-    \subsection{Solitons as Invariant Points}
-    Ricci solitons and Ricci Yang-Mills solitons can be naturally associated to invariant points in metric spaces using Geometric Invariant Theory (Jablonski 2013).
+    \subsection{Instantons as Invariant Points}
+    Ricci solitons and Ricci Yang-Mills solitons can be naturally associated to invariant or stationary points in metric spaces using Geometric Invariant Theory (Jablonski 2013).
     % The Ricci Yang-Mills flow is invariant under automorphisms of the principal bundle. The Ricci Yang-Mills flow preserves the set of left-invariant metrics on a Lie group.
     % It can be shown that there exists many families of Lie groups that do not admit invariant Ricci soliton metrics but admit Ricci Yang-Mills solitons, making them more reliable (though weaker) candidates for invariant points.
-    Similarly, the Banach fixed-point theorem guarantees existence of a fixed point in certain metric spaces given a contractive mapping, and can be interpreted as solition solutions of a Ricci de Turck flow.
+    Similarly, the Banach fixed-point theorem guarantees existence of a fixed point in certain metric spaces given a contractive mapping, and can be interpreted as solition solutions of a Ricci de Turck flow. A comparison can be made with the Invariant Point Attention (IPA) mechanism introduced in Alphafold 2 (Jumper 2021). The invariant point attention augments each of the standard attention queries, keys, and values with 3-D points produced in the local frame of each protein residue gas such that the final value is invariant to global rotations and translations. 
+    After each attention operation and element-wise transition block, the module computes an update to the rotation and translation of each backbone frame. 
+    The application of these updates within the local frame of each residue makes the overall attention and update block an equivariant operation on the residue gas.
     
     % The Banach fixed-point theorem (also known as the contraction mapping theorem or contractive mapping theorem) is an important tool in the theory of metric spaces; it guarantees the existence and uniqueness of fixed points of certain self-maps of metric spaces, and provides a constructive method to find those fixed points.
 
-    A comparison can be made with the Invariant Point Attention (IPA) mechanism introduced in Alphafold 2 (Jumper 2021). The invariant point attention augments each of the standard attention queries, keys, and values with 3-D points produced in the local frame of each protein residue gas such that the final value is invariant to global rotations and translations. 
+    
     % The 3-D queries and keys also impose a strong spatial/locality bias on the attention which is well-suited to iterative refinement of the protein structure. 
-    After each attention operation and element-wise transition block, the module computes an update to the rotation and translation of each backbone frame. 
-    The application of these updates within the local frame of each residue makes the overall attention and update block an equivariant operation on the residue gas.
+    
 
-    \section{Topological Quantum Computing (Exploratory)}
 
+\begin{comment}
+
+\subsection{Variational Methods in Energy-Based Models}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=13cm]{openai-ebm.png}
+        \vspace{-0.87cm}
+        \\  (Yilun, 2019)
+        % \caption{Fiber tracts that run through the mid-sagittal plane}
+    \end{figure}
+    As underlying neural networks perform inference, their latent trajectories pass through layers of a neural network in a bottom-up manner. At the same time, a top-down variational noise is produced around the instanton solutions that best minimize energy of the total activity on the moduli space of connections. Using an energy-based model (EBM) we sample the joint distribution as a sum of each latent trajectory, corresponding to a product of experts model. This forms an attention mechanism, which we refer to as the moduli attention, and is learned on the top-down manifold while having a generative effect on underlying networks through approximate inference. This has recently been implemented using Stein Variational Gradient Descent algorithm (Jaini 2021).
+    Recall, variational methods pick a family of distributions over the latent variables with their own variational parameters, $q(z_{1:m} | v)$, then attempt to find settings of the parameters that makes $q$ close to the posterior of interest. Closeness of the two distributions is measured with the KL divergence, 
+    % $\displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].$
+    \begin{equation}
+         \displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].
+    \end{equation}
     
-    \subsection{Quasiparticles}
-    
-    % \begin{comment}
-    % quasiparticles and collective excitations
-    % - Instantons and solitons
-    
-    % - Ricci solitons
-    % https://math.stackexchange.com/questions/802933/ricci-soliton-geometric-meaning
-    
-    % - RICCI YANG-MILLS SOLITONS
-    % https://arxiv.org/pdf/0907.1095.pdf
-    % https://arxiv.org/pdf/2102.09538.pdf
-    
-    % \end{comment}
-    The objects representing solutions of variational flows can be studied as quasiparticles and have been made physical in quantum materials or gasses. This geometric formulation of general intelligence is a naturally arising and biologically plausible model for quantum AI. Aside from providing a computational scheme, it's worth acknowledging the philosophical implications of associating physical unified field theories with neuroscience and machine learning theory. Namely, that it  may justify further introspection into the Anthropic Principle and cosmological fine-tuning.
-    
-    Quasiparticles or collective excitations are emergent phenomena that encapsulate macroscopic portions of a complicated microscopic system such that the behaviour of these encapsulated parts imitate  behaviours of weakly interacting particles in a vacuum. 
-    A soliton is a localized, non-dispersive solution of a nonlinear theory in Euclidean space and is a real object. Conversely, instantons are not real and only exist as solutions to the equations of motion of a quantum field theory after a Wick rotation, in which time is made imaginary. Thus, instantons are not observable, but are used to calculate and explain quantum mechanical effects that can be observed, such as tunneling. In quantum chromodynamics (QCD) instantons tunnel between the topologically different color vacua.
-    
-    \subsection{Bose-Einstein Condesate}
-    
-    A Bose–Einstein condensate (BEC) is a state of matter which is typically formed when a gas of bosons at low densities is cooled to temperatures very close to absolute zero causing a large fraction of the bosons to occupy the lowest quantum state, at which point microscopic quantum mechanical phenomena, particularly wavefunction interference, become macroscopic. The transition to BEC occurs below a critical temperature that is given by:
-    % \vspace{-0.5cm}
-    \begin{multicols}{3}
-    \noindent
-    \begin{align*}
-        \\
-        % \\
-        \displaystyle T_{\rm {c}} &=\left({\frac {n}{\zeta (3/2)}}\right)^{2/3}{\frac {2\pi \hbar ^{2}}{mk_{\rm {B}}}} 
-    \end{align*}
-    \begin{align*}
-        {\displaystyle \,T_{\rm {c}}} \,  &\text{is the critical temperature,}\\
-        \displaystyle \,n \, 	 &\text{ the particle density,}\\
-        {\displaystyle \,m}	\, &\text{the mass per boson,}
-    \end{align*}
-    \begin{align*}
-        {\displaystyle \hbar } \, 	&\text{the reduced Planck constant,}\\
-        {\displaystyle \,k_{\rm {B}}}\, 	&\text{the Boltzmann constant and}\\
-        {\displaystyle \,\zeta }\, 	&\text{the Riemann zeta function;}
-    \end{align*}
-    \end{multicols}
-    It was demonstrated to be possible to create magnetic solitons in a dipolar BEC made from quantum gases of atoms with different spins (Farolfi, 2020). These quantum solitons are density waves, meaning they are local waves of particles. Similarly, spatial phase distributions can be optically imprinted onto a BEC of atoms and have been shown to create solitons (Denschlag, 2000). 
-    
-    \subsection{Energy-Based Models in Particle Systems}
-     An energy function $E$ in an EBM can be thought of as an unnormalized negative log probability (LeCun 2020). 
+
+         An energy function $E$ in an EBM can be thought of as an unnormalized negative log probability (LeCun 2020). 
     To convert an energy function to its equivalent probabilistic representation after normalization,
     % Recall, marginalisation is a method that sums over the possible values of one variable to determine the marginal contribution of another. 
     $P(y \mid x)$, we apply the Gibbs-Boltzmann formula with latent variables $z$ being marginalized implicitly through integration, i.e. $P(y \mid x) = \int_z P(y,z | x)$. Then,
@@ -301,199 +275,52 @@ In gauge theory, the moduli space of connections results from quotienting the sp
          P(y \mid x) = \frac{ \exp(-\beta F_\beta(x,y,z)) }{ \int_y \exp(-\beta F_\beta(x, y, z))}.
     \end{equation}
     With variational methods, instead of only minimizing the energy function with respect to $z$ we must prevent the energy function from being 0 everywhere by constraining the flexibility of the latent variable $z$. The energy function is defined as sampling $z$ randomly according to a distribution whose logarithm is the cost that links it to $z$. This distribution is commonly chosen to be a Gaussian with mean $\bar z$ which results in Gaussian noise being added to $\bar z$. The reparameterization trick is often used to allow for backpropagation during training despite the random sampling.
-    
-    \subsection{Abelian Sandpile Model}
-    The toppling of several vertices during one iteration is referred to as an avalanche. After a finite number of topplings some stable configuration is reached such that the automaton is well defined. Although there will often be many possible choices for the order in which to topple vertices, the final stable configuration does not depend on the chosen order; this is one sense in which the sandpile is abelian.
-    
-    % We find that, provided the divergence of drift coefficients is small and non-constant, the BRST symmetry for the model of stochastic neural networks is spontaneously broken.  That is, if the SOC of brain neural networkssystem can be looked upon as a W-TFT with spontaneously broken BRST symmetry, thenthe general model of stochastic neural networks which be extensively used in neuroscience[7] is enough to describe the SOC.
-    
-    % It has been proposed that neuronal avalanches are a mechanism of cortical information processing and storage.
-    
-    % The abovearguments are robust against moderatevariations of the SDE’s parameters and the criticality is ”self-tuned”.
-    
-    % Similarities between vectors would be the method by which neural networks would employ intuitive analogical reasoning. intuition is able to capture the unique method in which the human brain generates knowledge.
-    
-    
-    % GLOM uses islands of matching vectors, known as islands of agreement, to construct larger part-whole hierarchies which are represented as a parse tree in the neural network. GLOM aims to model intuition for parts that are unconscious, not well defined, or possibly obscured.
-    
-    
-    % \begin{figure}
-    %     \centering
-    %     \includegraphics[width=13cm]{ricci-flow.png}
-    %     \caption{Ricci flow visualization (Rubinstein, 2005)}
-    %     % \label{fig:my_label}
-    % \end{figure}
 
     
-    
-    
-% \section{Exploratory }
-    % Recent research in ML, Neuroscience, and Physics strengthens this direction of research; including the GLOM system for representing part-whole hierarchies in neural networks (Hinton 2021), similar part-whole investigations of biological neural trajectories using geometric analysis (Russo et al, 2020), as well as demonstrations of soliton generation from Bose-Einstein condensate. Examining pure mathematics research in ergodic theory and hyperbolic dynamics on moduli spaces enforces the ergodic free-energy minimizing model described in previous notebooks. An encoding mechanism using the cobordism property of the Yang-mills moduli space is also considered.
-    
-    
-    % \subsection{Part-Whole Hierarchies}
-    % In Artificial Neural Networks (Hinton 2021): \url{https://arxiv.org/abs/2102.12627}.
-    
-    % In the brain, using geometric analysis (Russo et al, 2020):
-    
-    % \url{https://www.sciencedirect.com/science/article/abs/pii/S0896627320303664}.
-    
-    % \url{https://www.sciencedirect.com/science/article/abs/pii/S0092867420312289}
-    
-    % \subsection{Cobordism}
-    % Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. 
-    % Additionally, these manifolds demonstrate a cobordism property where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This might provide a natural and gauge invariant method of dimensionality reduction to be applied to the hierarchical encoding and decoding of an upper bounding layer.
-        
-% \newpage
-\textit{Work in progress}
-% \subsubsection{Self-Organized Criticality}
-%     Condensation of instantons (and noise-induced anti-instantons) are believed to be the explanation of the noise-induced chaotic phase known as self-organized criticality.
+\end{comment}
 
-%     \url{https://arxiv.org/pdf/1102.1791.pdf}
-    
-%     parameterizing SOC by gaussian noise may be useful in drawing statistical comparisons between biological neural networks (via connectome harmonic analysis and the Abelian sandpile group) and quantum phenomena.
+% \newpage    
+   
 
-\begin{comment}
-\section{Exploratory }
-    \subsection{Cobordism}
-        Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. 
-        Additionally, these manifolds demonstrate a cobordism property where in specific circumstances (when the intersection form is definite) the moduli space of ASD instantons on a smooth, compact, oriented, simply-connected four-manifold $X$ gives a cobordism between a copy of the manifold itself, and a disjoint union of copies of the complex projective plane ${\displaystyle \mathbb {CP} ^{2}}$. This might provide a natural and gauge invariant method of dimensionality reduction to be applied to the hierarchical encoding and decoding of an upper bounding layer.
-        
-    \subsection{Part-whole Hierarchies}
-    \subsubsection{In Artificial Neural Networks (GLOM)}
+\subsection{Instantons and Self-Organized Criticality}
+    Neuronal avalanches are scale-invariant neuronal population activity patterns in the cortex that are proposed to be a mechanism of cortical information processing and storage. Theory and experiments suggest neuronal avalanches allow for the formation of local and system-wide spanning neuronal groups. The condensation of instantons can describe the noise-induced chaotic phase of SOC, which maximizes connection distance while minimizing energy. A generic SOC system can be formulated as a Witten-type topological field theory (W-TFT) with spontaneously broken Becchi-Rouet-Stora-Tyutin (BRST) symmetry. There must exist regions where the BRST-symmetry is spontaneously broken by instantons, which in the context of SOC are avalanches (Ovchinnikov 2011). Stochastic neural networks have demonstrated how spontaneously broken BRST symmetry can describe SOC (Jian 2021). 
     
-    \url{https://arxiv.org/abs/2102.12627}
-    
-    \subsubsection{In the Brain}
-    \url{https://www.simonsfoundation.org/2021/04/07/geometrical-thinking-offers-a-window-into-computation/}
-    
-    \url{https://www.sciencedirect.com/science/article/abs/pii/S0092867420312289}
-    
-    \url{https://www.sciencedirect.com/science/article/abs/pii/S0896627320303664}
-    
-    
-% \section{Ideas and Experiments}
-%     does cobordism of moduli enable encoding via dimensionality reduction heirarchy. Symmetry/Guage equivarient hierarchical auto encoder. Symmetry of time to symmetry of space in particle and boson, next is approximate/broken symmetry in hierarchy (and lateral).  
-    
-%     If the brain indeed has ergodic dynamics imitable through a bernoulli scheme, then this architecture and 
-
-%     The Abelian sandpile group describes a manifold that is able to be parameterized by its points of self-localized criticality.   The sandpile model is a rudimentary cellular automaton defined on a rectangular domain of the standard square lattice
-
-%     Conversely, the computation of n a (lattice) gauge theory with unknown parameters can be done using machine learning techniques
-
-    % on which inference can be performed using natural gradient descent where minima are
-% \section{}
-%     % https://arxiv.org/pdf/1705.05582.pdf
-%     Machine Learning of Explicit Order Parameters: From the Ising Model to SU(2) Lattice Gauge Theory
-
-% \subsection{Harmonic Model Interpretation}
-
-% \subsubsection*{Connectome-Specific Harmonics}
-
-% \subsubsection*{Abelian Sandpile Self-Local Criticality}
-%     % https://www.pnas.org/content/116/8/2821
-    
-%     The Abelian sandpile model offers an interesting experimental opportunity for a manifold to be parameterized by its self-localized criticality. 
-    
-%     The sandpile model is a cellular automaton defined on a rectangular domain of the standard square lattice
 
 
 
-
-% \subsection{Dimensionality Reduction}
-% \subsubsection*{Cobordism}
-
-\subsection{Dynamics}
-
-\subsubsection{Ergodic theory on Moduli Spaces}
-
-\url{https://annals.math.princeton.edu/articles/13160}
-
- Hyperbolic Dynamics
-
-\url{http://scholarpedia.org/article/Hyperbolic_dynamics#Uniform_hyperbolicity}
+% \vspace{-0.3cm}
+% \section{Intrinsic and Extrinsic Variational Flows}
 
 
-\subsubsection{Connectome-specific Harmonic Waves}
-
-\url{https://www.pnas.org/content/116/8/2821}
-
-% See: The Hyperbolic Geometry of DMT Experiences
-
-\subsubsection{Harmonic Dynamics of the Abelian Sandpile}
-\url{https://www.pnas.org/content/116/8/2821}
-
-%     Through the process of unfolding, i.e., passing from a polygonal billiard table to a Riemann manifold equipped with a holomorphic 1-form, a billiard trajectory which reflects off the sides of the table unfolds into a straight line or geodesic on the manifold. We define the symmetry group$ SL(X, \omega)$ associated to any translation surface. We extend the notions of ergodically optimal and topologically optimal to general translation surfaces. Finally, we introduce the notion of a lattice surface and compare it to an ergodically optimal surface.
-
-\subsection{Physics}
-    \subsubsection{Condesate of Instantons as Variational EBM}
-    
-    Energies can be thought of as being \textit{unnormalized negative log probabilities}. That is, we may use the Gibbs-Boltzmann distribution to convert an energy function to its equivalent probabilistic representation after normalization, i.e. $P(y \mid x)$. Recall, \textit{marginalisation} is a method that sums over the possible values of one variable to determine the marginal contribution of another. $P(y \mid x)$ is just an application of the Gibbs-Boltzmann formula with latent variables $z$ being marginalized implicitly through integration, i.e. $P(y \mid x) = \int_z P(y,z | x)$. Then,
-    \begin{align*}
-        P(y \mid x) &= \frac{ \int_z \exp(-\beta E(x,y,z)) }{ \int_y \int_z \exp(-\beta E(x, y, z))} \\
-        % &= \frac{
-        %     \exp \bigg [  -\beta (-\frac{1}{\beta} \log  \int_z \exp(-\beta E(x,y,z)) ) \bigg ]
-        % }{
-        %     \int_y \exp \bigg [  -\beta (-\frac{1}{\beta} \log  \int_z \exp(-\beta E(x,y,z)) ) \bigg ]
-        % }
-    \end{align*}
-    The derivation introduces a $\beta$ term which is the inverse of temperature $T$, so as $\beta \rightarrow \infty$ the temperature goes to zero. $\beta$ is a positive constant that needs to be calibrated to fit the model. A larger $\beta$ value produces a more fluctuate model while a smaller $\beta$ gives a smoother model. When $\beta \rightarrow \infty$, we see that $\check{y} = \text{argmin}_{y} E(x,y)$. So we can redefine our energy function as an equivalent function using $F_\beta$,
-    \begin{align*}
-        F_{\infty} (x,y) &= \text{argmin}_z E(x,y,z)\\
-        F_{\beta} (x,y) &= -\frac{1}{\beta} \log \int_z \exp(-\beta E(x,y,z)).
-    \end{align*}
-    
-    In physics, $F_\beta$ is known as the free energy and $E$ is the energy. If we have a latent variable model and want to eliminate the latent variable $z$ in a probabilistically correct way, we just need to redefine the energy function in terms of $F_\beta$,
-    \[
-        P(y \mid x) = \frac{ \exp(-\beta F_\beta(x,y,z)) }{ \int_y \exp(-\beta F_\beta(x, y, z))}. \\
-    \]
-    
-    \subsubsection{Self-Organized Criticality}
-    In physics, instantons are particularly important because the condensation of instantons (and noise-induced anti-instantons) is believed to be the explanation of the noise-induced chaotic phase known as self-organized criticality.
-
-    \subsubsection{Bose-Einstein Condesate and Solitons}
-    
-    Observation of Magnetic Solitons in a Bose-Einstein Condensate
-    \url{https://physics.aps.org/articles/v13/s90}
-    
-    % https://www.researchgate.net/publication/51360828_Generating_Solitons_by_Phase_Engineering_of_a_Bose-Einstein_Condensate
+    % $ \ \ \displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].
+    % $
     
     
-    Spatial phase distributions were optically imprinted onto a Bose-Einstein condensate (BEC) of atoms and was shown to create solitons.
+
+    \subsection{Instantons as Quasiparticles}
     
-    \url{https://science.sciencemag.org/content/287/5450/97}
+    % \begin{comment}
+    % quasiparticles and collective excitations
+    % - Instantons and solitons
     
-    \begin{multicols}{2}
-    \noindent
-    \begin{align*}
-        {\displaystyle \,T_{\rm {c}}} \,  &\text{is the critical temperature,}\\
-        \displaystyle \,n \, 	 &\text{ the particle density,}\\
-        {\displaystyle \,m}	\, &\text{the mass per boson,}\\
-        {\displaystyle \hbar } \, 	&\text{the reduced Planck constant,}\\
-        {\displaystyle \,k_{\rm {B}}}\, 	&\text{the Boltzmann constant and}\\
-        {\displaystyle \,\zeta }\, 	&\text{the Riemann zeta function;}
-    \end{align*}
-    \begin{align*}
-        {\displaystyle T_{\rm {c}}=\left({\frac {n}{\zeta (3/2)}}\right)^{2/3}{\frac {2\pi \hbar ^{2}}{mk_{\rm {B}}}}}
-    \end{align*}
-    \end{multicols}
-    \subsubsection*{Superliminal Solitons from Hyperbolic Shift Vectors}
-    \url{https://arxiv.org/abs/2006.07125}
-
-
-
-
-% \subsection*{Hyperbolic Dynamics}
-
-% \subsubsection{Conformal Invariance}
-
-    \subsection{Geometric Unity and Anthropic Principle}
+    % - Ricci solitons
+    % https://math.stackexchange.com/questions/802933/ricci-soliton-geometric-meaning
     
-    \url{https://geometricunity.nyc3.digitaloceanspaces.com/Geometric_Unity-Draft-April-1st-2021.pdf}
+    % - RICCI YANG-MILLS SOLITONS
+    % https://arxiv.org/pdf/0907.1095.pdf
+    % https://arxiv.org/pdf/2102.09538.pdf
     
-\end{comment} 
+    % \end{comment}
+    
+    
+    The objects representing solutions of variational flows can be studied as quasiparticles and have been made physical in quantum materials or gasses. This geometric formulation of general intelligence is a naturally arising and biologically plausible model for quantum AI. Aside from providing a computational scheme, it's worth acknowledging the philosophical implications of associating physical unified field theories with neuroscience and machine learning theory. Namely, that it  may justify further introspection into the Anthropic Principle and cosmological fine-tuning.
+    
+    Quasiparticles or collective excitations are emergent phenomena that encapsulate macroscopic portions of a complicated microscopic system such that the behaviour of these encapsulated parts imitate  behaviours of weakly interacting particles in a vacuum. 
+    A soliton is a localized, non-dispersive solution of a nonlinear theory in Euclidean space and is a real object. Conversely, instantons are not real and only exist as solutions to the equations of motion of a quantum field theory after a Wick rotation, in which time is made imaginary. Thus, instantons are not observable, but are used to calculate and explain quantum mechanical effects that can be observed, such as tunneling. In quantum chromodynamics (QCD) instantons tunnel between the topologically different color vacua.
+    
+\textit{Work in Progress}
 
-\newpage
+
 \section*{References}
 
 \small
@@ -507,7 +334,7 @@ In gauge theory, the moduli space of connections results from quotienting the sp
 [3] Tao, T. "What is a gauge?" (2008) https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/
 % https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/
 
-[4] Wetzel, Sebastian J., and Manuel Scherzer. "Machine learning of explicit order parameters: From the Ising model to SU (2) lattice gauge theory." Physical Review B 96.18 (2017): 184410.
+[4] Wetzel, Sebastian J., and Manuel Scherzer. "Machine learning of explicit order parameters: From the Ising model to SU(2) lattice gauge theory." Physical Review B 96.18 (2017): 184410.
 % https://arxiv.org/pdf/1705.05582.pdf
 
 
