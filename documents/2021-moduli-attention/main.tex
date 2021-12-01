@@ -79,11 +79,11 @@ Yang-Mills \\Space of Connections}
 % gauge Dynamics of moduli spaces
 \renewcommand{\baselinestretch}{1.0}\normalsize
 \section*{Abstract}
-In this paper, a process similar to agglomerative clustering and principal component analysis is described using the formal methods of differential geometry and gauge theory which are commonly used in physical theories of electromagnetism and the strong nuclear force.
+In this paper, a process similar to hierarchical agglomerative clustering and principal component analysis is described using the formal methods of differential geometry and gauge theory that are commonly used in physical theories of electromagnetism and the strong nuclear force.
 It is proposed that information organization and clustering naturally emerges from an a priori gauge symmetry of the action on the space of connections together with the stationary-action principle. In a learning model, this is achieved through pretraining of diffeomorphic mappings of neural network activity onto Lie groups, i.e. manifolds of continuous symmetries, which are further projected onto a differentiable and conformally invariant 4-dimensional manifold of connections. 
 Constructing a Yang-Mills moduli space of connections allows us to cluster the vector activity of an ensemble of neural networks into islands of agreement forming a dynamic and unoriented part-whole hierarchy.
 % It is claimed to be possible to avoid an a priori definition of a measure or metric on a specially organized latent space and moreover, that a lack of a well-defined metric can be used to prevent information redundancy using a conformal invariance property of the space. Instead, 
-We can think of the clustering process on the connection space as an intrinsic geometric flow, namely the Ricci Yang-Mills flow.
+We can think of the clustering process as an intrinsic geometric flow on the connection space, namely the Ricci Yang-Mills flow.
 The wedge product of configurations of differential forms located at critical points of the Yang-Mills action functional are comparable to axes of a $p$-dimensional ellipsoid formed in principal component analysis. These volumetric structures similarly cluster and reduce information to its principal components based on covariance and can be used as a generalized attention mechanism when applied to an ensemble of learning models. 
 % The theoretical objects representing solutions of these flows are studied as quasiparticles and can be made physical in quantum materials or gasses. This geometric formulation of general intelligence is a naturally arising and biologically plausible model for quantum AI. 
 % Moreover, fusing physical field theories with neuroscience and ML may justify introspection into the Anthropic Principle and cosmological fine-tuning. 
@@ -107,13 +107,14 @@ This space can be used to cover the activity of a collection of neural networks,
 % Dynamics of attention are computed by minimizing the energy functional of the connection space.  Using instantons as sources of variational noise, we train an attention mechanism to minimize total energy of the moduli space. This process is comparable to finding stable solutions of an intrinsic flow on an undefined metric, namely a Ricci Yang-Mills flow with solutions akin to Ricci solitons that are real, non-volume preserving objects around invariant points. Stable solutions represent islands of agreement formed through consensus within a dynamic and unoriented part-whole hierarchy. 
 
 
-A top-down energy-based attention mechanism, referred to as the moduli attention, can be trained on this space using sampled activity of the trajectories of underlying networks through a composition of energies. Motivated by the stationary-action principle, dynamics of attention are computed by minimizing the action functional of the connection space. The Yang-Mills action functional serves as a cost function on which inference minimizes the total energy in search of a basis of instanton connections. The connections are described using proejctive measurement given by a weighted sum or integral over differential forms. In comparison to statistical learning, this real, non-volume preserving object in the 3-dimensional space can be compared to a p-dimensional ellipsoid as found in principal component analysis, with axes that are typically formed using eigenvectors of the covariance matrix of a dataset. Thus, the processes of this learning method are as follows: 
-\begin{enumerate}
-    \item Pretrain $model_1$ to learn diffeomorphic projective mappings of arbitrary neural network outputs onto open sets (i.e. sheaves) of appropriate continuous symmetry Lie group manifolds . This will later be used to sample activity of an ensemble of neural networks and project it onto the Yang-Mills moduli space.
-    \item Pretrain $model_2$ to construct diffeomorphic mappings of sheaves of Lie groups onto sheaves of a smooth and continuous 4 dimensional manifold of connections. This will form the Yang mills moduli space of connection on which the output of $model_1$ is projected onto and where attention emerges.
-    \item Train an energy-based model, $model_3$ to find instanton connections with minimized curvature and maximized covariance by minimizing the Yang-Mills action functional given test data of various configurations of vector activity. This will later minimize vector activity projected by $model_2$.
-    \item Periodically, $model_1$ projects the ensemble of neural networks onto the Yang-Mills moduli space constructed by $model_2$ as $model_3$ determines the optimal configuration of instanton connections to minimize total energy. The approximate variational inference of $model_3$ produces a generative effect on the underlying neural networks inputs being sampled.
-\end{enumerate}
+A top-down energy-based attention mechanism, referred to as the moduli attention, can be trained on this space using sampled activity of the trajectories of underlying networks through a composition of energies. Motivated by the stationary-action principle, dynamics of attention are computed by minimizing the action functional of the connection space. The Yang-Mills action functional serves as a cost function on which inference minimizes the total energy in search of a basis of instanton connections. The connections are described using proejctive measurement given by a weighted sum or integral over differential forms. In comparison to statistical learning, this real, non-volume preserving object in the 3-dimensional space can be compared to a p-dimensional ellipsoid as found in principal component analysis, with axes that are typically formed using eigenvectors of the covariance matrix of a dataset. 
+% Thus, the processes of this learning method are as follows: 
+% \begin{enumerate}
+%     \item Pretrain $model_1$ to learn diffeomorphic projective mappings of arbitrary neural network outputs onto open sets (i.e. sheaves) of continuous symmetry Lie group manifolds. This will later be used to sample activity of an ensemble of neural networks to project onto a Yang-Mills moduli space.
+%     \item Pretrain $model_2$ to construct diffeomorphic mappings of sheaves of Lie groups onto sheaves of a smooth and continuous 4 dimensional manifold of connections. This will form the Yang mills moduli space of connection on which the output of $model_1$ is projected onto and where attention emerges.
+%     \item Train an energy-based model, $model_3$ to find instanton connections with minimized curvature and maximized covariance by minimizing the Yang-Mills action functional given test data of various configurations of vector activity. This will later minimize vector activity projected by $model_2$.
+%     \item Periodically, $model_1$ projects the ensemble of neural networks onto the Yang-Mills moduli space constructed by $model_2$ as $model_3$ determines the optimal configuration of instanton connections to minimize total energy. The approximate variational inference of $model_3$ produces a generative effect on the underlying neural networks inputs being sampled.
+% \end{enumerate}
 
 % \section{Methods}
 
@@ -154,28 +155,18 @@ A top-down energy-based attention mechanism, referred to as the moduli attention
     It proves necessary to impose an a priori covariance principle to maintain integrity of information during parallel transportion in bilateral and hierarchical directions.
     Yet for a standard learning model, covariance of functionality is an a posteriori feature because the joint variability is unknown until individual modules are trained. 
     Covariance of fibers can be achieved by imposing the structure group to be Lie groups, but can also be achieved by imposing restrictions on the projection map of Riemannian manifolds without explicitly defining the structure group beforehand (Gao 2021).
-    % \begin{figure}[h]
-    %     \centering
-    %     \subfloat[\centering Diffusive magnetic and electric fields produced by active neurons]{{\includegraphics[width=6cm]{eeg-meg-neuron.png} }}
-    %     \qquad \qquad \qquad
-    %     \subfloat[\centering Recursive composition of neuronal fiber tracts ]{{\includegraphics[width=4cm]{DTI-sagittal-fibers.jpg} }}
-    %     %
-    %     % \caption{2 Figures side by side}%
-    %     % \label{fig:example}%
-    % \end{figure}
-
 
     % \begin{figure}[h]
     %     \centering
     %     \includegraphics[width=5.5cm]{DTI-sagittal-fibers.jpg}
     %     % \caption{Fiber tracts that run through the mid-sagittal plane}
     % \end{figure}
-    
-    % \begin{figure}[h]
-    %     \centering
-    %     \includegraphics[width=8.5cm]{eeg-meg-neuron.png}
-    %     \\ Diffusive magnetic (left) and electric (right) fields produced by neurons
-    % \end{figure}
+    \vspace{-0.5cm}
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=7.5cm]{eeg-meg-neuron.png}
+        \\ Diffusive magnetic (left) and electric (right) current produced by neurons
+    \end{figure}
     
 \subsection{Moduli Spaces and Instantons}
     With covariance established on connections, it becomes possible to perform inference using higher levels of abstraction on gauge fields. This is done by constructing a gauge equivariant bundle of connections known as a moduli space of connections, which can be further reduced to a finite dimensional manifold known as a Yang-Mills moduli space. This reduced space has local and global minima being connections with minimized energy known as Yang-Mills connections or instantons which serve as a natural choice of connection on principal and vector bundles since they minimize their curvature. From an information geometric perspective, this can be thought of as minimizing relative entropy or KL divergence between sampled trajectories of gauge equivariant manifolds. The infinitesimal form of the the KL divergence is comparable to the Fisher information metric. The gauge field strength is the curvature $F_{A}$ of the connection $A$, and the energy of the gauge field is given by the Yang–Mills action functional $YM$. With the aim of having zero or vanishing curvature, we vary parameters in search of a connection with curvature as small as possible. The Yang–Mills action functional corresponds to the $L^{2}$-norm of the curvature, and its Euler–Lagrange equations describe the critical points of this functional, either the absolute  local minima.   
@@ -184,18 +175,13 @@ A top-down energy-based attention mechanism, referred to as the moduli attention
     \end{equation}
     
     \subsection{Instantons as Principal Components}
-    Principal Component Analysis (PCA) can serve as a motivating reference for the geometric methods proposed in this paper. PCA is commonly used to obtain lower-dimensional data while preserving as much of the data's variation as possible. The principal components of a collection of points in a real coordinate space are a sequence of $p$ unit vectors, where the $i$-th vector is the direction of a line that best fits the data while being orthogonal to the first $i-1$ vectors.  It can be shown that the principal components are eigenvectors of the data's covariance matrix. PCA can be thought of as fitting a $p$-dimensional ellipsoid to the data, where each axis of the ellipsoid represents a principal component. If some axis of the ellipsoid is small, then the variance along that axis is also small.  
+    Principal Component Analysis (PCA) can serve as a motivating reference for the geometric methods proposed in this paper. PCA is commonly used to obtain lower-dimensional data while preserving as much of the data's variation as possible. The principal components of a collection of points in a real coordinate space are a sequence of $p$ unit vectors, where the $i$-th vector is the direction of a line that best fits the data while being orthogonal to the first $i-1$ vectors.  It can be shown that the principal components are eigenvectors of the data's covariance matrix. PCA can be thought of as fitting a $p$-dimensional ellipsoid to the data, where each axis of the ellipsoid represents a principal component. If some axis of the ellipsoid is small, then the variance along that axis is also small.  Similarly, a connection corresponds to the covariant directional derivitive and is considered a self-dual connection or an instanton if the curvature $2$-form is an eigenvector of the Hodge operator with eigenvalue $\pm 1$.
     
 
     \subsection{Instantons as Islands in Part-Whole Hierarchies}
-    The GLOM model (Hinton 2021) represents part-whole hierarchies using clusters of matching vectors, known as islands of agreement, as nodes in parse tree representations within a neural network. A part-whole hierachy system consists of components that can themselves be further broken down into subcomponents. The model learns analogical reasoning by encoding parts that are not well defined or obscured. An emphasis is given on viewpoint and coordinate invariance, which allows for exchangeability within the network and is used to adapt to and generate novelty in a manner similar to creativity in humans. Comparisons can be drawn between the GLOM model and moduli attention, with vector encodings corresponding to dynamic trajectories on vector bundles, frame invariance corresponding to the gauge equivariant connection space, and islands of agreement corresponding to stable instanton or soliton solutions. Iterative consensus often does not converge in meaningful ways due to the difficulty of encoding prior understandings of desirable representations to be generated through agglomerative clustering. Using a geometric model we find that we are better able to converge to coherent clusters because of the use of an a priori structure group that imposes meaningful symmetry on the clusters and optimizes organization of information throughout the space. 
-    
+    The GLOM model (Hinton 2021) represents part-whole hierarchies using clusters of matching vectors, known as islands of agreement, as nodes in parse tree representations within a neural network. A part-whole hierachy system consists of components that can themselves be further broken down into subcomponents. The model learns analogical reasoning by encoding parts that are not well defined or obscured. An emphasis is given on viewpoint and coordinate invariance, which allows for exchangeability within the network and is used to adapt to and generate novelty in a manner similar to creativity in humans. Comparisons can be drawn between the GLOM model and moduli attention, with vector encodings corresponding to dynamic trajectories on vector bundles, frame invariance corresponding to the gauge equivariant connection space, and islands of agreement corresponding to stable instanton solutions. Iterative consensus often does not converge in meaningful ways due to the difficulty of encoding prior understandings of desirable representations to be generated through agglomerative clustering. Using a geometric model we find that we are better able to converge to coherent clusters because of the use of an a priori structure group that imposes meaningful symmetry on the clusters and optimizes organization of information throughout the space. 
     
 \section{Dynamics of Latent Information}
-
-
-\subsection{Stationary-Action Principle}
-The stationary-action principle is a variational principle that, when applied to the action of a mechanical system, yields the equations of motion for that system. The principle states that the trajectories (i.e. the solutions of the equations of motion) are stationary points of the system's action functional.
 
 
 \subsection{Intrinsic Geometric Flows}
@@ -226,6 +212,8 @@ The stationary-action principle is a variational principle that, when applied to
     \end{equation}
     
     \subsection{Instantons as Invariant Points}
+    The stationary-action principle is a variational principle that, when applied to the action of a mechanical system, yields the equations of motion for that system. The principle states that the trajectories (i.e. the solutions of the equations of motion) are stationary points of the system's action functional.
+    
     Ricci solitons and Ricci Yang-Mills solitons can be naturally associated to invariant or stationary points in metric spaces using Geometric Invariant Theory (Jablonski 2013).
     % The Ricci Yang-Mills flow is invariant under automorphisms of the principal bundle. The Ricci Yang-Mills flow preserves the set of left-invariant metrics on a Lie group.
     % It can be shown that there exists many families of Lie groups that do not admit invariant Ricci soliton metrics but admit Ricci Yang-Mills solitons, making them more reliable (though weaker) candidates for invariant points.
@@ -286,8 +274,6 @@ The stationary-action principle is a variational principle that, when applied to
     Neuronal avalanches are scale-invariant neuronal population activity patterns in the cortex that are proposed to be a mechanism of cortical information processing and storage. Theory and experiments suggest neuronal avalanches allow for the formation of local and system-wide spanning neuronal groups. The condensation of instantons can describe the noise-induced chaotic phase of SOC, which maximizes connection distance while minimizing energy. A generic SOC system can be formulated as a Witten-type topological field theory (W-TFT) with spontaneously broken Becchi-Rouet-Stora-Tyutin (BRST) symmetry. There must exist regions where the BRST-symmetry is spontaneously broken by instantons, which in the context of SOC are avalanches (Ovchinnikov 2011). Stochastic neural networks have demonstrated how spontaneously broken BRST symmetry can describe SOC (Jian 2021). 
     
 
-
-
 % \vspace{-0.3cm}
 % \section{Intrinsic and Extrinsic Variational Flows}
 
@@ -295,8 +281,31 @@ The stationary-action principle is a variational principle that, when applied to
     % $ \ \ \displaystyle KL(q||p)=  E_q\bigg[ \log \frac{ q(z)}{p(z | x)} \bigg].
     % $
     
+    \subsection{Instantons and Boundaries}
     
+    \begin{wrapfigure}{r}{0.4\textwidth}
+        \vspace{-1.2cm}
+        \centering
+        \includegraphics[scale=0.2]{Donaldson's_Theorem_cobordism.png}
+        % \caption{Ricci flow visualization (Rubinstein, 2005)}
+        \\ Cobordism given by Yang–Mills moduli space in Donaldson's theorem
+    \end{wrapfigure}
+    
+    % \begin{figure}[h]
+    %     \centering
+    %     \includegraphics[width=6cm]{Donaldson's_Theorem_cobordism.png}
+    %     \\ Cobordism given by Yang–Mills moduli space in Donaldson's theorem
+    % \end{figure}
+    
+    
+    Moduli of Yang–Mills connections have been most studied when the dimension of the base manifold $X$ is four. Here the Yang–Mills equations admit a simplification from a second-order PDE to a first-order PDE, the anti-self-duality equations. 
+    Donaldson's Theorem shows that it is possible to compactify the moduli space by cutting off cones at a reducible singularities and gluing in a copy of ${\displaystyle \mathbb {CP} ^{2}}$. Secondly, glue in a copy of $X$ itself at infinity. The resulting space is a cobordism between $X$ and a disjoint union of ${\displaystyle b_{2}(X)}$ copies of ${\displaystyle \mathbb {CP} ^{2}}$ with its orientation reversed, where $b_{2}(X)$ is the the $2$nd Betti number.
+    
+    \clearpage
+    An instanton can be used to calculate the transition probability for a quantum mechanical particle tunneling through a potential barrier. One example of a system with an instanton effect is a particle in a double-well potential. In contrast to a classical particle, there is non-vanishing probability that it crosses a region of potential energy higher than its own energy.
 
+    
+    
     \subsection{Instantons as Quasiparticles}
     
     % \begin{comment}
@@ -312,8 +321,7 @@ The stationary-action principle is a variational principle that, when applied to
     
     % \end{comment}
     
-    
-    The objects representing solutions of variational flows can be studied as quasiparticles and have been made physical in quantum materials or gasses. This geometric formulation of general intelligence is a naturally arising and biologically plausible model for quantum AI. Aside from providing a computational scheme, it's worth acknowledging the philosophical implications of associating physical unified field theories with neuroscience and machine learning theory. Namely, that it  may justify further introspection into the Anthropic Principle and cosmological fine-tuning.
+    % The objects representing solutions of variational flows can be studied as quasiparticles and have been made physical in quantum materials or gasses. This geometric formulation of general intelligence is a naturally arising and biologically plausible model for quantum AI. Aside from providing a computational scheme, it's worth acknowledging the philosophical implications of associating physical unified field theories with neuroscience and machine learning theory. Namely, that it  may justify further introspection into the Anthropic Principle and cosmological fine-tuning.
     
     Quasiparticles or collective excitations are emergent phenomena that encapsulate macroscopic portions of a complicated microscopic system such that the behaviour of these encapsulated parts imitate  behaviours of weakly interacting particles in a vacuum. 
     A soliton is a localized, non-dispersive solution of a nonlinear theory in Euclidean space and is a real object. Conversely, instantons are not real and only exist as solutions to the equations of motion of a quantum field theory after a Wick rotation, in which time is made imaginary. Thus, instantons are not observable, but are used to calculate and explain quantum mechanical effects that can be observed, such as tunneling. In quantum chromodynamics (QCD) instantons tunnel between the topologically different color vacua.
@@ -334,43 +342,43 @@ The stationary-action principle is a variational principle that, when applied to
 [3] Tao, T. "What is a gauge?" (2008) https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/
 % https://terrytao.wordpress.com/2008/09/27/what-is-a-gauge/
 
-[4] Wetzel, Sebastian J., and Manuel Scherzer. "Machine learning of explicit order parameters: From the Ising model to SU(2) lattice gauge theory." Physical Review B 96.18 (2017): 184410.
-% https://arxiv.org/pdf/1705.05582.pdf
-
-
-[5] Du, Yilun, and Igor Mordatch. "Implicit generation and generalization in energy-based models." arXiv preprint arXiv:1903.08689 (2019).
+[4] Du, Yilun, and Igor Mordatch. "Implicit generation and generalization in energy-based models." arXiv preprint arXiv:1903.08689 (2019).
 % https://arxiv.org/abs/1903.08689
 
-[6] Blei, David M., Alp Kucukelbir, and Jon D. McAuliffe. "Variational inference: A review for statisticians." Journal of the American statistical Association 112.518 (2017): 859-877.
+
+[5] Hinton, Geoffrey. "How to represent part-whole hierarchies in a neural network." arXiv preprint arXiv:2102.12627 (2021).
+
+[6] Hinton, Geoffrey E. "Mapping part-whole hierarchies into connectionist networks." Artificial Intelligence 46.1-2 (1990): 47-75.
+
+[7]  Yann LeCun  and Alfredo Canziani. "DEEP LEARNING". DS-GA 1008, SPRING 2020. NYU CENTER FOR DATA SCIENCE
+
+[8] J. Hyam Rubinstein and Robert Sinclair. "Visualizing Ricci Flow of Manifolds of Revolution", Experimental Mathematics v. 14 n. 3, pp. 257–384
+
+[9] Jaini, Priyank, Lars Holdijk, and Max Welling. "Learning Equivariant Energy Based Models with Equivariant Stein Variational Gradient Descent." arXiv preprint arXiv:2106.07832 (2021).
+
+[10] I.V. Ovchinnikov. Self-organized criticality as Witten-type topological field theory with spontaneously
+broken Becchi-Rouet-Stora-Tyutin symmetry. Physical Review E, 83,051129 (2011).
+
+[11] Zhai, Jian, Chaojun Yu, and You Zhai. "Witten-type topological field theory of self-organized criticality for stochastic neural networks." arXiv preprint arXiv:2106.10851 (2021).
+
+[12] Michael Jablonski and Andrea Young,Ricci Yang-Mills solitons on nilpotent Lie groups, J. Lie Theory23 (2013), no. 1, 177–202. MR 3060772
+
+[13] Jumper, J., Evans, R., Pritzel, A. et al. Highly accurate protein structure prediction with AlphaFold. Nature (2021). https://doi.org/10.1038/s41586-021-03819-2
+
+% [4] Wetzel, Sebastian J., and Manuel Scherzer. "Machine learning of explicit order parameters: From the Ising model to SU(2) lattice gauge theory." Physical Review B 96.18 (2017): 184410.
+% https://arxiv.org/pdf/1705.05582.pdf
+
+% [6] Blei, David M., Alp Kucukelbir, and Jon D. McAuliffe. "Variational inference: A review for statisticians." Journal of the American statistical Association 112.518 (2017): 859-877.
 
 % [3] Paul, Arnab, and Suresh Venkatasubramanian. "Why does deep learning work?-a perspective from group theory." arXiv preprint arXiv:1412.6621 (2014).
 % https://arxiv.org/pdf/1412.6621.pdf
 
-[7] Hinton, Geoffrey. "How to represent part-whole hierarchies in a neural network." arXiv preprint arXiv:2102.12627 (2021).
 
-[8] Hinton, Geoffrey E. "Mapping part-whole hierarchies into connectionist networks." Artificial Intelligence 46.1-2 (1990): 47-75.
+% [10] Russo, Abigail A., et al. "Neural trajectories in the supplementary motor area and motor cortex exhibit distinct geometries, compatible with different classes of computation." Neuron 107.4 (2020): 745-758.
 
-[9]  Yann LeCun  and Alfredo Canziani. "DEEP LEARNING". DS-GA 1008, SPRING 2020. NYU CENTER FOR DATA SCIENCE
+% [11] Farolfi, A., et al. "Observation of magnetic solitons in two-component Bose-Einstein condensates." Physical Review Letters 125.3 (2020): 030401.
 
-[10] Russo, Abigail A., et al. "Neural trajectories in the supplementary motor area and motor cortex exhibit distinct geometries, compatible with different classes of computation." Neuron 107.4 (2020): 745-758.
-
-[11] Farolfi, A., et al. "Observation of magnetic solitons in two-component Bose-Einstein condensates." Physical Review Letters 125.3 (2020): 030401.
-
-[12] Denschlag, J., et al. "Generating solitons by phase engineering of a Bose-Einstein condensate." Science 287.5450 (2000): 97-101.
-
-[13] J. Hyam Rubinstein and Robert Sinclair. "Visualizing Ricci Flow of Manifolds of Revolution", Experimental Mathematics v. 14 n. 3, pp. 257–384
-
-[14] Jaini, Priyank, Lars Holdijk, and Max Welling. "Learning Equivariant Energy Based Models with Equivariant Stein Variational Gradient Descent." arXiv preprint arXiv:2106.07832 (2021).
-
-[15] I.V. Ovchinnikov. Self-organized criticality as Witten-type topological field theory with spontaneously
-broken Becchi-Rouet-Stora-Tyutin symmetry. Physical Review E, 83,051129 (2011).
-
-[16] Zhai, Jian, Chaojun Yu, and You Zhai. "Witten-type topological field theory of self-organized criticality for stochastic neural networks." arXiv preprint arXiv:2106.10851 (2021).
-
-[17] Michael Jablonski and Andrea Young,Ricci Yang-Mills solitons on nilpotent Lie groups, J. Lie Theory23 (2013), no. 1, 177–202. MR 3060772
-
-
-[18] Jumper, J., Evans, R., Pritzel, A. et al. Highly accurate protein structure prediction with AlphaFold. Nature (2021). https://doi.org/10.1038/s41586-021-03819-2
+% [12] Denschlag, J., et al. "Generating solitons by phase engineering of a Bose-Einstein condensate." Science 287.5450 (2000): 97-101.
 
 
 
@@ -378,10 +386,4 @@ broken Becchi-Rouet-Stora-Tyutin symmetry. Physical Review E, 83,051129 (2011).
 
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
-
-
-
-
-
-
 \end{document}
