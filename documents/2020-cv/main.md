@@ -14,7 +14,7 @@
     infrastructure and DevOps.
 
 -   Led a project for managing disruptions and updates to inbound
-    shipments. Created ow-level design and contributed to substantial
+    shipments. Created low-level design and contributed to substantial
     portion of implementation involving integration with existing
     architecture for tendering trucks.
 
@@ -32,8 +32,8 @@
 
 -   Contributed to rewriting the core ElasticSearch API, decreasing some
     response times by upwards of 10x and improving test coverage
-    maintainability. Integrated API with ML and bioinformatics Neo4j DB
-    and pipeline.
+    maintainability. Synchronized ES cluster with ML bioinformatics
+    pipeline and Neo4j DB.
 
 -   Developed SOC2 compliant integrations and performed acceptance
     testing. Implemented SAML SSO, MFA, Ariba procurement checkouts,
@@ -44,8 +44,8 @@
 -   Developed React Native mobile app for mental health focused alpha
     stage startup *(Animi)*.
 
--   Set up infra using GCP compute and Kubernetes deployments for
-    social-network alpha stage startup *(EventReach)*.
+-   Set-up GCP compute and Kubernetes deployments for social-network
+    alpha stage startup *(EventReach)*.
 
 -   Developed C++ software for secure and robust radio frequency
     communication between two Arduino microprocessors used to detect
