@@ -8,14 +8,14 @@
 
 **Amazon** *(Software Development Engineer)*
 
--   Full-stack development to support initiatives related to inbound
-    transportation within Fulfillment by Amazon organization. Worked on
-    Java microservices, React UIs, data warehouse pipelines, and
+-   Full-stack development to support inbound transportation initiatives
+    within the Fulfillment by Amazon organization. Worked on Java
+    microservices, React UIs, data warehouse pipelines, and
     infrastructure and DevOps.
 
--   Led a project for managing disruptions and updates to inbound
-    shipments. Created ow-level design and contributed to substantial
-    portion of implementation involving integration with existing
+-   Led a project for managing disruptions and updates to shipments.
+    Created low-level design and contributed large portion of
+    implementation which involve changes to complex existing
     architecture for tendering trucks.
 
 -   Led projects for migration and launch of two legacy applications
@@ -32,8 +32,8 @@
 
 -   Contributed to rewriting the core ElasticSearch API, decreasing some
     response times by upwards of 10x and improving test coverage
-    maintainability. Integrated API with ML and bioinformatics Neo4j DB
-    and pipeline.
+    maintainability. Synchronized ES cluster with ML bioinformatics
+    pipeline and Neo4j DB.
 
 -   Developed SOC2 compliant integrations and performed acceptance
     testing. Implemented SAML SSO, MFA, Ariba procurement checkouts,
@@ -42,10 +42,10 @@
 **Contract and Freelance**
 
 -   Developed React Native mobile app for mental health focused alpha
-    stage startup (Animi).
+    stage startup *(Animi)*.
 
--   Set up infra using GCP compute and Kubernetes deployments for
-    social-network alpha stage startup (EventReach).
+-   Set-up GCP compute and Kubernetes deployments for social-network
+    alpha stage startup *(EventReach)*.
 
 -   Developed C++ software for secure and robust radio frequency
     communication between two Arduino microprocessors used to detect
@@ -53,7 +53,7 @@
 
 **Education**\
 
-**University of Toronto** *(Honours Bachelor's of Science)*\
+**University of Toronto** *(Honours Bachelor of Science)*\
 Computer Science and Mathematics Double Major
 
 **York University** *(Art Fundamentals Certificate)*
