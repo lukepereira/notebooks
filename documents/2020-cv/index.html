@@ -21,7 +21,7 @@
       padding-top: 50px;
       padding-bottom: 50px;
       hyphens: auto;
-      word-wrap: break-word;
+      overflow-wrap: break-word;
       text-rendering: optimizeLegibility;
       font-kerning: normal;
     }
@@ -29,6 +29,9 @@
       body {
         font-size: 0.9em;
         padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
       }
     }
     @media print {
@@ -92,6 +95,7 @@
     pre code {
       padding: 0;
       overflow: visible;
+      overflow-wrap: normal;
     }
     .sourceCode {
      background-color: transparent;
@@ -133,6 +137,12 @@
     #TOC li {
       list-style: none;
     }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
     #TOC a:not(:hover) {
       text-decoration: none;
     }
@@ -143,63 +153,116 @@
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
 </head>
 <body>
 <div class="center">
-<p>Luke J. Pereira<br />
-Software Engineer<br />
-<a href="https://linkedin.com/in/lukejp" class="uri">https://linkedin.com/in/lukejp</a><br />
-lukejoepereira<code>@</code>gmail.com <span class="math inline">\(\;\)</span> (705) 305-4057<br />
+<p><strong>Luke J. Pereira</strong><br />
+<a href="mailto:lukejoepereira@gmail.com"
+class="email">lukejoepereira@gmail.com</a>, <span
+class="math inline">\(\;\)</span> <a
+href="https://linkedin.com/in/lukejp"
+class="uri">https://linkedin.com/in/lukejp</a><br />
 </p>
 </div>
 <p><strong>Employment</strong><br />
-</p>
-<p><strong>Amazon</strong><br />
-<em>Software Development Engineer</em></p>
-<p><strong>BenchSci</strong><br />
-<em>Full Stack Software Engineer</em> <a href="https://www.benchsci.com" class="uri">https://www.benchsci.com</a></p>
+*[-.8pc]</p>
+<p><strong>Amazon</strong> <em>(Software Development Engineer)</em></p>
 <ul>
-<li><p>Developed a React web app along with Python and Node APIs for a reagent search engine used by thousands of scientists at the top 20 pharmaceutical companies in the world</p></li>
-<li><p>Developed SOC2 compliant integrations and performed acceptance testing with enterprise clients; including SAML SSO, Ariba procurement checkouts, and multi-factor authentication</p></li>
-<li><p>Rewrote the core ElasticSearch API, increasing performance by upwards of 10x, improving test coverage and code maintainability. Integrated API with ML and bioinformatics big data pipeline</p></li>
-<li><p>Developed ecommerce APIs, payment flow UIs, and drop-shipping automation tools via SMTP</p></li>
+<li><p>Full-stack development to support initiatives related to inbound
+transportation within Fulfillment by Amazon organization. Worked on Java
+microservices, React UIs, data warehouse pipelines, and infrastructure
+and DevOps.</p></li>
+<li><p>Led a project for managing disruptions and updates to inbound
+shipments. Created ow-level design and contributed to substantial
+portion of implementation involving integration with existing
+architecture for tendering trucks.</p></li>
+<li><p>Led projects for migration and launch of two legacy applications
+(shipment tracking and seller settings pages) from Perl Mason to new
+React UI and Java REST APIs while improving test coverage and
+maintainability.</p></li>
+</ul>
+<p><strong>BenchSci</strong> <em>(Full Stack Software Engineer)</em></p>
+<ul>
+<li><p>As an early member of the team, I contributed to creation of the
+React web app as well as the Python and NodeJS APIs for the reagent
+search engine used by thousands of scientists at the top pharmaceutical
+companies.</p></li>
+<li><p>Contributed to rewriting the core ElasticSearch API, decreasing
+some response times by upwards of 10x and improving test coverage
+maintainability. Integrated API with ML and bioinformatics Neo4j DB and
+pipeline.</p></li>
+<li><p>Developed SOC2 compliant integrations and performed acceptance
+testing. Implemented SAML SSO, MFA, Ariba procurement checkouts,
+ecommerce APIs, payment flow UIs, BigCommerce automation tools.</p></li>
 </ul>
 <p><strong>Contract and Freelance</strong></p>
 <ul>
-<li><p>Created Kubernetes deployments and GCP compute infrastructure for an alpha stage startup. Used machine-specific auto-scaling &amp; auto-provisioning to remain cost efficient while minimizing latency</p></li>
-<li><p>Developed C++ software for secure and robust radio frequency communication between two Arduino microprocessors. Currently used to detect malfunctions in hydraulic lifts: <a href="https://git.io/Jkmnw" class="uri">https://git.io/Jkmnw</a></p></li>
+<li><p>Developed React Native mobile app for mental health focused alpha
+stage startup (Animi).</p></li>
+<li><p>Set up infra using GCP compute and Kubernetes deployments for
+social-network alpha stage startup (EventReach).</p></li>
+<li><p>Developed C++ software for secure and robust radio frequency
+communication between two Arduino microprocessors used to detect
+malfunctions in hydraulic lifts: <a href="https://git.io/Jkmnw"
+class="uri">https://git.io/Jkmnw</a>.</p></li>
 </ul>
 <p><strong>Education</strong><br />
 </p>
-<p><strong>Honours Bachelor of Science</strong><br />
-Computer Science and Mathematics Double Major<br />
-University of Toronto</p>
-<p><strong>Projects</strong><br />
-</p>
-<p><strong>CloudFund</strong> <a href="https://github.com/lukepereira/cloudfund" class="uri">https://github.com/lukepereira/cloudfund</a><br />
-A React app with a Flask API used for crowdfunding and maintaining cloud resources and deployments. Using Stripe to process funds, Kubernetes to manage clusters and deployments, and the GitHub API for deployment and configuration versioning.</p>
-<p><strong>TF Classify</strong> <a href="https://ply.gl/org.tensorflow.app" class="uri">https://ply.gl/org.tensorflow.app</a><br />
-An Android app that uses Google’s Inception model to classify camera frames in real-time. Built from open-source code, it has accumulated over 12,000 installs in the Google Play Store.</p>
+<p><strong>University of Toronto</strong> <em>(Honours Bachelor’s of
+Science)</em><br />
+Computer Science and Mathematics Double Major</p>
+<p><strong>York University</strong> <em>(Art Fundamentals
+Certificate)</em></p>
+<p><strong>Personal Projects</strong><br />
+*[-.8pc]</p>
+<p><strong>CloudFund</strong> <a
+href="https://github.com/lukepereira/cloudfund"
+class="uri">https://github.com/lukepereira/cloudfund</a><br />
+A React app with a Flask API used for crowdfunding and maintaining cloud
+resources and deployments. Using Stripe to process funds, Kubernetes to
+manage clusters and deployments, and the GitHub API for config
+versioning.</p>
+<p><strong>TF Classify</strong> <a
+href="https://ply.gl/org.tensorflow.app"
+class="uri">https://ply.gl/org.tensorflow.app</a><br />
+An Android app that uses Google’s Inception neural network model to
+classify camera frames in real-time. Built from open-source code, it has
+accumulated over 12,000 installs in the Google Play Store.</p>
 <p><strong>Skills</strong><br />
-</p>
+*[-.8pc]</p>
+<div class="centering">
+<div class="multicols">
 <p>2 <strong>Languages and Frameworks</strong><br />
-Python, Golang, Node, C/C++, LISP<br />
+Python, Java, Golang, NodeJS, C/C++, LISP<br />
 ES6 JS, React, Redux, Sagas, Selectors<br />
 REST, Flask, gRPC, GraphQL<br />
 TensorFlow, Pytorch, scikit-learn, numpy<br />
 <strong>Database Technologies</strong><br />
-SQL/RDBMS, ElasticSearch, Neo4J. MongoDB</p>
+SQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo</p>
 <p><strong>Cloud &amp; Infrastructure</strong><br />
 AWS, GCP, Docker, Kubernetes, Serverless<br />
 Terraform, Ansible, Envoy, OpenCensus</p>
-<p><strong>Notable Courses and Knowledge</strong> LaTeX: <a href="https://git.io/JfwkR" class="uri">https://git.io/JfwkR</a></p>
+</div>
+</div>
+<p><strong>Notable Courses and Knowledge</strong> LaTeX: <a
+href="https://git.io/JfwkR" class="uri">https://git.io/JfwkR</a></p>
 <ul>
-<li><p>Advanced Data Structures &amp; Algorithms, Neural Networks &amp; Machine Learning, SCRUM &amp; other SDLC, Information Security, Distributed Systems, DevOps, Git, Unix, Performance Analysis, Stochastic Networks &amp; Queuing Theory, Databases, OS &amp; Computer Organization</p></li>
-<li><p>Statistics &amp; Probability Theory, Differential Geometry, Combinatorics, Number Theory, Advanced Graph Theory, Multivariable Calculus, Partial Differential Equations, Dynamical Systems, Linear Algebra, Abstract Algebra, Topology, Group Theory</p></li>
+<li><p><strong>Computer Science:</strong> Advanced Data Structures &amp;
+Algorithms, Neural Networks &amp; Machine Learning, SCRUM &amp; other
+SDLC, Information Security, Distributed Systems, DevOps, Git, Unix,
+Performance Analysis, Stochastic Networks &amp; Queuing Theory,
+Databases, OS &amp; Computer Organization</p></li>
+<li><p><strong>Mathematics:</strong> Statistics &amp; Probability
+Theory, Differential Geometry, Gauge Theory, Combinatorics, Number
+Theory, Advanced Graph Theory, Multivariable Calculus, Differential
+Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract
+Algebra, Topology, Group Theory</p></li>
 </ul>
 </body>
 </html>
