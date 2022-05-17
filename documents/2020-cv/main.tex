@@ -3,7 +3,7 @@
 \evensidemargin=.15in
 \textwidth=6.15in
 \textheight=9in
-\usepackage[top=0.5in,bottom=0.5in,left=1.2in,right=1.2in]{geometry}
+\usepackage[top=0.5in,bottom=0in,left=0.75in,right=0.75in]{geometry}
 \usepackage{multicol}
 \setlength\columnsep{10pt}
 \usepackage{amsmath}
@@ -26,88 +26,97 @@
 \begin{document}
 
 \begin{center}
-{\Large Luke J. Pereira} \\[.5pc]
-Software Engineer \\[.2pc]
-\url{https://linkedin.com/in/lukejp} \\[.2pc]
-lukejoepereira\verb|@|gmail.com $\;$ (705) 305-4057\\[3pc]
+{\Large \bf Luke J. Pereira} \\[.5pc]
+% Software Engineer \\[.2pc]
+\href{mailto:lukejoepereira@gmail.com}{lukejoepereira@gmail.com}, $\;$
+% lukejoepereira\verb|@|gmail.com, $\;$
+\href{https://linkedin.com/in/lukejp}{https://linkedin.com/in/lukejp}
+% \url{https://linkedin.com/in/lukejp} $\;$ %\\[.2pc]
+\\[3pc]
 % \url{www.linkedin.com/in/lukejp}\\[5pc]
 \end{center}
 \vspace{-25pt}
 
 {\large \bf Employment} \\*[-.8pc]
-\underline{\hspace{6.1in}}
+\underline{\hspace{7in}}
 
-{\bf Amazon } \hfill {\it March 2021 to present\/} \\
-\textit{Software Development Engineer} \hfill
+{\bf Amazon } \textit{(Software Development Engineer)} \hfill {\bf March 2021 to April 2022\/} 
+\begin{itemize}[leftmargin=*]
+    \itemsep0em
+    \renewcommand\labelitemi{\tiny$\bullet$}
+    \item Full-stack development to support initiatives related to inbound transportation within Fulfillment by Amazon organization. Worked on Java microservices, React UIs, data warehouse pipelines, and infrastructure and DevOps.
+    \item Led a project for managing disruptions and updates to inbound shipments. Created ow-level design and contributed to substantial portion of implementation involving integration with existing architecture for tendering trucks.
+    \item Led projects for migration and launch of two legacy applications (shipment tracking and seller settings pages) from Perl Mason to new React UI and Java REST APIs while improving test coverage and maintainability.
+    % \item Lead early DevOps, InfoSec, and SRE initiatives. Implementing cloud monitoring dashboards (ELK) and CI/CD pipelines. 
+\end{itemize}
 
-{\bf  BenchSci } \hfill {\it July 2017 - December 2019 \/} \\
-\textit{Full Stack Software Engineer} \hfill \url{https://www.benchsci.com}
+{\bf  BenchSci } \textit{(Full Stack Software Engineer)} \hfill {\bf July 2017 - December 2019 \/}
+% \textit{Full Stack Software Engineer} \hfill \url{https://www.benchsci.com}
 % \vspace{-4pt}
 % \begin{multicols}{2}
 \begin{itemize}[leftmargin=*]
     \itemsep0em
     \renewcommand\labelitemi{\tiny$\bullet$}
-    \item Developed a React web app along with Python and Node APIs for a reagent search engine used by thousands of scientists at the top 20 pharmaceutical companies in the world
-    \item Developed SOC2 compliant integrations and performed acceptance testing  with enterprise clients; including SAML SSO, Ariba procurement checkouts, and multi-factor authentication
-    \item Rewrote the core ElasticSearch API, increasing performance by upwards of 10x, improving test coverage and code maintainability. Integrated API with ML and bioinformatics big data pipeline
-    \item Developed ecommerce APIs, payment flow UIs, and drop-shipping automation tools via SMTP
+    \item As an early member of the team, I contributed to creation of the React web app as well as the Python and NodeJS APIs for the reagent search engine used by thousands of scientists at the top pharmaceutical companies.
+    \item Contributed to rewriting the core ElasticSearch API, decreasing some response times by upwards of 10x and improving test coverage maintainability. Integrated API with ML and bioinformatics Neo4j DB and pipeline.
+    \item Developed SOC2 compliant integrations and performed acceptance testing. Implemented SAML SSO, MFA, Ariba procurement checkouts, ecommerce APIs, payment flow UIs, BigCommerce automation tools.
+
+    % \item Developed ecommerce APIs, payment flow UIs, and drop-shipping automation tools via SMTP.
     % \item Lead early DevOps, InfoSec, and SRE initiatives. Implementing cloud monitoring dashboards (ELK) and CI/CD pipelines. 
 \end{itemize}
 % \end{multicols}
 % \vspace{-2pt}
 
 
-{\bf Contract and Freelance} \hfill {\it January 2012 to present\/} 
+{\bf Contract and Freelance} \hfill {\bf January 2012 to present\/} 
 % \vspace{-4pt}
 % \begin{multicols}{2}
 \begin{itemize}[leftmargin=*]
-\itemsep0em
-\renewcommand\labelitemi{\tiny$\bullet$}
-\item Created Kubernetes deployments and GCP compute infrastructure for an alpha stage startup. Used machine-specific auto-scaling \& auto-provisioning to remain cost efficient while minimizing latency
-
-\item Developed C++ software for secure and robust radio frequency communication between two Arduino microprocessors. Currently used to detect malfunctions in hydraulic lifts: \url{https://git.io/Jkmnw}
+    \itemsep0em
+    \renewcommand\labelitemi{\tiny$\bullet$}
+    \item Developed React Native mobile app for mental health focused alpha stage startup (Animi).
+    \item Set up infra using GCP compute and Kubernetes deployments for social-network alpha stage startup (EventReach). 
+    % Used machine-specific auto-scaling \& auto-provisioning to remain cost efficient while minimizing latency.
+    \item Developed C++ software for secure and robust radio frequency communication between two Arduino microprocessors used to detect malfunctions in hydraulic lifts: \url{https://git.io/Jkmnw}.
 \end{itemize}
 % \end{multicols}
 
-\vspace{8pt}
+\vspace{4pt}
 {\large \bf Education} \\[-.8pc]
-\underline{\hspace{6.1in}} 
+\underline{\hspace{7in}} 
 
-{\bf Honours Bachelor of Science} \hfill {\it September 2015 - April 2020} \\
-Computer Science and Mathematics Double Major \hfill {Final Year GPA: 3.75}\\
-University of Toronto
+{\bf University of Toronto} {\textit{(Honours Bachelor's of Science)}} \hfill {\bf September 2015 - April 2020} \\[.2pc]
+Computer Science and Mathematics Double Major  \hfill {Final Year GPA: 3.75}
 
-% {\bf Art Fundamentals Certificate} \hfill {\it January 2012 - August 2013 \/} \\
-% {York University} \hfill {Fine Arts and Animation}
+{\bf York University} {\textit{(Art Fundamentals Certificate)}} \hfill {\bf January 2012 - August 2013 \/} 
+% Fine Arts and Animation
 
-\vspace{8pt}
-{\large \bf Projects} \\*[-.8pc]
-\underline{\hspace{6.1in}}
+\vspace{4pt}
+{\large \bf Personal Projects} \\*[-.8pc]
+\underline{\hspace{7in}}
 
 \textbf{CloudFund} \hfill \url{https://github.com/lukepereira/cloudfund}\\
-A React app with a Flask API used for crowdfunding and maintaining cloud resources and deployments. Using Stripe to process funds, Kubernetes to manage clusters and deployments, and the GitHub API for deployment and configuration versioning.
+A React app with a Flask API used for crowdfunding and maintaining cloud resources and deployments. Using Stripe to process funds, Kubernetes to manage clusters and deployments, and the GitHub API for config versioning.
 
 \textbf{TF Classify} \hfill \url{https://ply.gl/org.tensorflow.app}\\
-An Android app that uses Google’s Inception model to classify camera frames in real-time. Built from open-source code, it has accumulated over 12,000 installs in the Google Play Store.
-
-
+An Android app that uses Google’s Inception neural network model to classify camera frames in real-time. Built from open-source code, it has accumulated over 12,000 installs in the Google Play Store.
 
 \vspace{4pt}
 {\large \bf Skills} \\*[-.8pc]
-\underline{\hspace{6.1in}}
+\underline{\hspace{7in}}
 
 \begin{centering}
 \vspace{-8pt}
 \begin{multicols}{2}
 {\bf Languages and Frameworks}\\
-Python, Golang, Node, C/C++, LISP\\
+Python, Java, Golang, NodeJS, C/C++, LISP\\
 ES6 JS, React, Redux, Sagas, Selectors \\
 REST, Flask, gRPC, GraphQL  \\   
 TensorFlow, Pytorch, scikit-learn, numpy\\
 % \vfill\null
 % \columnbreak
 { \bf Database Technologies}\\
-SQL/RDBMS, ElasticSearch, Neo4J. MongoDB
+SQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo
 
 {\bf Cloud \& Infrastructure }\\
 AWS, GCP, Docker, Kubernetes, Serverless \\
@@ -115,14 +124,14 @@ Terraform, Ansible, Envoy, OpenCensus
 \end{multicols}
 \end{centering}
 % \end{adjustwidth}
-\vspace{-8pt}
+\vspace{-10pt}
 {\bf Notable Courses and Knowledge} \hfill \LaTeX: \url{https://git.io/JfwkR} 
 % \vspace{-pt}
 \begin{itemize}[leftmargin=*]
 \itemsep0em
 \renewcommand\labelitemi{\tiny$\bullet$}
-    \item Advanced Data Structures \& Algorithms, Neural Networks \& Machine Learning, SCRUM \& other SDLC,  Information Security, Distributed Systems, DevOps, Git, Unix, Performance Analysis, Stochastic Networks \& Queuing Theory, Databases, OS \& Computer Organization
-    \item Statistics \& Probability Theory, Differential Geometry, Combinatorics, Number Theory, Advanced Graph Theory, Multivariable Calculus, Partial Differential Equations, Dynamical Systems, Linear Algebra, Abstract Algebra, Topology, Group Theory
+    \item {\bf{Computer Science:}} Advanced Data Structures \& Algorithms, Neural Networks \& Machine Learning, SCRUM \& other SDLC,  Information Security, Distributed Systems, DevOps, Git, Unix, Performance Analysis, Stochastic Networks \& Queuing Theory, Databases, OS \& Computer Organization
+    \item {\bf{Mathematics:}} Statistics \& Probability Theory, Differential Geometry, Gauge Theory, Combinatorics, Number Theory, Advanced Graph Theory, Multivariable Calculus, Differential Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract Algebra, Topology, Group Theory
 \end{itemize}
 % \centerbullet  
 
