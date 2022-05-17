@@ -13,9 +13,9 @@
     microservices, React UIs, data warehouse pipelines, and
     infrastructure and DevOps.
 
--   Led a project for managing disruptions and updates to inbound
-    shipments. Created low-level design and contributed to substantial
-    portion of implementation involving integration with existing
+-   Led a project for managing disruptions and updates to shipments.
+    Created low-level design and contributed large portion of
+    implementation which involve changes to complex existing
     architecture for tendering trucks.
 
 -   Led projects for migration and launch of two legacy applications
