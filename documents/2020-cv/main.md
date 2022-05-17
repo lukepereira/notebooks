@@ -8,9 +8,9 @@
 
 **Amazon** *(Software Development Engineer)*
 
--   Full-stack development to support initiatives related to inbound
-    transportation within Fulfillment by Amazon organization. Worked on
-    Java microservices, React UIs, data warehouse pipelines, and
+-   Full-stack development to support inbound transportation initiatives
+    within the Fulfillment by Amazon organization. Worked on Java
+    microservices, React UIs, data warehouse pipelines, and
     infrastructure and DevOps.
 
 -   Led a project for managing disruptions and updates to inbound
@@ -42,10 +42,10 @@
 **Contract and Freelance**
 
 -   Developed React Native mobile app for mental health focused alpha
-    stage startup (Animi).
+    stage startup *(Animi)*.
 
 -   Set up infra using GCP compute and Kubernetes deployments for
-    social-network alpha stage startup (EventReach).
+    social-network alpha stage startup *(EventReach)*.
 
 -   Developed C++ software for secure and robust radio frequency
     communication between two Arduino microprocessors used to detect
@@ -53,7 +53,7 @@
 
 **Education**\
 
-**University of Toronto** *(Honours Bachelor's of Science)*\
+**University of Toronto** *(Honours Bachelor of Science)*\
 Computer Science and Mathematics Double Major
 
 **York University** *(Art Fundamentals Certificate)*
