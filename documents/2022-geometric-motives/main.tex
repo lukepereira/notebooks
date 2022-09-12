@@ -1,0 +1,174 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[super,square]{natbib}
+\usepackage{tabularx}
+\usepackage{parskip}
+\usepackage[margin=1.4in]{geometry}
+\usepackage{csquotes}
+\usepackage{mathrsfs}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage[hidelinks]{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{mdframed}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{subcaption}
+
+
+% Book headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\rightmark}
+\fancyhead[R]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+
+\definecolor{blueish}{HTML}{CAC8FA}
+
+\newcommand{\comment}[1]{}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{proposition}{Proposition}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{identity}[theorem]{Identity}
+
+\theoremstyle{definition}
+\newtheorem{defn}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newenvironment{definition}
+  {\vspace{8pt}\begin{mdframed}[backgroundcolor=blueish,innertopmargin=4]\begin{defn}}
+  {\end{defn}\end{mdframed}\vspace{4pt}}
+
+
+\title{\vspace{-3cm} Automorphisms, Connections, and Motivic Cohomology}
+\author{}
+\date{}
+
+
+\begin{document}
+\maketitle
+\vspace{-1.5cm}
+\tableofcontents
+\newpage
+
+\section{Compactification and Derived Representations}
+\subsection{Fixed Points and Invariants}
+\subsection{Linearization and Matrix Representations with Lie Groups}
+\subsection{Abelianization and Completions}
+\subsection{Sieves, Filtrations, Spectral Sequences}
+\subsection{Projections, Ramifications, and Cohomology}
+\subsection{Extensions, Closures, and Automorphisms}
+\subsection{Quotients and Reductions}
+\subsection{Diffusion, Gaussian Isotropy Group, Skeleton Category}
+\subsection{Inverse Limits, Profinite Groups, Absolute Galois Groups}
+\subsection{Energy Minimization, Moduli Spaces, and Flat Connections}
+\subsection{Instantons and Poles in Extended Supersymmetry}
+\subsection{Complexification, Embeddings, and Motivic Stabilizations}
+\subsection{Covariant, Geometric, Deformation Quantization (Gluing and Intersections)}
+
+
+% Linearization of abelian categories works
+\section{Linearization of Abelian Categories and Commutative Geometry}
+    \subsection{Zariski Topology, Borel subgroups}
+    \subsection{Fields, Rings, Spectrum of Prime Ideals}
+    \subsection{Adeles and Ideles}
+        \url{https://math.stackexchange.com/questions/25090/whats-the-significance-of-tates-thesis/25125#25125}
+        \url{https://math.stackexchange.com/questions/290847/what-do-ideles-and-adeles-look-like}
+    \subsection{Abelian Categories, Schemes}
+    \subsection{Homotopy Abelianization of Homology}
+    \subsection{Grothendieck Completion and K-Theory}
+
+% Linearization of automorphisms leads to Complexification
+\section{Linearization of Automorphisms Under Complexification}
+    \subsection{Connections as automorphisms}
+    \subsection{Galois Group, Galois Representations}
+    \subsection{Absolute Galois Group}
+    \subsection{Moduli stack of elliptic curves and modular forms}
+    \subsection{Automorphic forms}
+    \subsection{Moduli spaces, Sheaves, Stacks, Cohomology of Shtukas}
+    
+
+% Linearization of Non-Abelian manifolds leads to complexification and extended supersymmetry
+\section{Linearization of Non-Abelian Manifolds Under Extended Supersymmetry}
+    \subsection{Differential Algebras, Lie gauges, Differential Galois Theory}
+    \subsection{Connections as differential forms on tangent bundles}
+    \subsection{Quotient spaces and Moduli Spaces}
+    \subsection{Non-Abelian Yang-Mills theory and Lagrangian Mechanics}
+    \subsection{Irreducible connections, Instantons and Monopoles}
+    \subsection{Torsion, Holonomy, spectral and mass gaps}
+    \subsection{Donaldson Theory and Exotic R4}
+    \subsection{Floer Homology}
+    \subsection{ADHM Monad Construction (Penrose twistor theory)}
+    \subsection{Seiberg-Witten Theory and Invariants}
+
+\section{Symplectic Geometry as weak Abelianization}
+    \subsection{Solder form, cotangent bundle}
+    \subsection{Hamiltonian Mechanics vs Lagrangian Mechanics}
+    \subsection{Symplectification, symplectic reduction}
+    \subsection{Interpreting symplectic reduction with Galois theory}
+    \subsection{Symplectic connection, deformation quantization}
+    \subsection{Covariant phase space}
+
+
+% Linearization using embedded Graphs lead to complexification
+\section{Linearization with Graphs Under Complexification}
+        permutation/symmetry group of roots
+    \subsection{CW complex}
+    \subsection{Chains, Cochains, Cycles, Cocycles}
+    \subsection{Simplicial complex}
+    \subsection{Lefschetz fixed-point theorem}
+    \subsection{Cellular complex}
+    \subsection{Laplacians and spectral theory}
+    \subsection{Triangulated categories} 
+    \subsection{Quivers and Representations}
+    \subsection{Dynkin Diagrams, Gabriel's theorem, Root systems}
+    \subsection{Dessin d'enfant, Belyi's theorem, moduli spaces}
+
+
+% Linearization using cohomology depends on invariants
+\section{Linearization with Cohomology Derived Invariants}
+    \subsection{de Rham Cohomology}
+    \subsection{Betti cohomology}
+    \subsection{Étale Cohomology}
+    \subsection{Weil cohomology}
+    \subsection{Crystalline cohomology}
+    \subsection{Hodge theory}
+    \subsection{Chern–Weil theory}
+
+\section{Grothendieck's Dream - A Universal Cohomology and Derived Invariant}
+    \subsection{Chain-complex}
+    \subsection{Exact and Closed Sequences, Spectral Sequences, Filtrations}
+    \subsection{Stable infinity-category}
+    \subsection{Derived Categories, Coherent Sheaves}
+    \subsection{Projective categories, Pure and Mixed Motives}
+    \subsection{Derived Category of Motives}
+    \subsection{Derived Invariants}
+    
+
+\section{Furthest extent}
+    \subsection{Grothendieck-Teichmüller space}
+    \subsection{Motivic Galois group, cosmic Galois group, renormalization}
+    \subsection{Motivic stablization of Symplectic manifolds}
+    \subsection{Shimura Variety, L-functions, and Zariski closure}
+    \subsection{Nekrasov Instanton Partition Function, Young Diagrams}
+    \subsection{Triangulated categories of mixed motives}
+    \subsection{Motives over simplicial schemes}
+    \subsection{Probability by Homology, Gromov p-widths}
+    \subsection{Weinstein symplectic category}
+    \subsection{Tannakian Formalism}
+    \subsection{Kähler Manifolds, hyperkähler manifold, Calabi–Yau manifold}
+    \subsection{Amplituhedron, poles, factorization, gauge quivers}
+    \subsection{Homological mirror symmetry}
+    \subsection{Topological Recursion}
+    
+% \begin{thebibliography}{}
+
+% \bibitem[]{}
+% \end{thebibliography}
+
+
+\end{document}
