@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Automorphisms, Connections, and Motivic Cohomology</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Automorphisms, Connections, and Motivic
+Cohomology</h1>
+</header>
+<ul>
+<li><a href="#compactification-and-derived-representations"
+id="toc-compactification-and-derived-representations">Compactification
+and Derived Representations</a>
+<ul>
+<li><a href="#fixed-points-and-invariants"
+id="toc-fixed-points-and-invariants">Fixed Points and
+Invariants</a></li>
+<li><a href="#linearization-and-matrix-representations-with-lie-groups"
+id="toc-linearization-and-matrix-representations-with-lie-groups">Linearization
+and Matrix Representations with Lie Groups</a></li>
+<li><a href="#abelianization-and-completions"
+id="toc-abelianization-and-completions">Abelianization and
+Completions</a></li>
+<li><a href="#sieves-filtrations-spectral-sequences"
+id="toc-sieves-filtrations-spectral-sequences">Sieves, Filtrations,
+Spectral Sequences</a></li>
+<li><a href="#projections-ramifications-and-cohomology"
+id="toc-projections-ramifications-and-cohomology">Projections,
+Ramifications, and Cohomology</a></li>
+<li><a href="#extensions-closures-and-automorphisms"
+id="toc-extensions-closures-and-automorphisms">Extensions, Closures, and
+Automorphisms</a></li>
+<li><a href="#quotients-and-reductions"
+id="toc-quotients-and-reductions">Quotients and Reductions</a></li>
+<li><a href="#diffusion-gaussian-isotropy-group-skeleton-category"
+id="toc-diffusion-gaussian-isotropy-group-skeleton-category">Diffusion,
+Gaussian Isotropy Group, Skeleton Category</a></li>
+<li><a href="#inverse-limits-profinite-groups-absolute-galois-groups"
+id="toc-inverse-limits-profinite-groups-absolute-galois-groups">Inverse
+Limits, Profinite Groups, Absolute Galois Groups</a></li>
+<li><a href="#energy-minimization-moduli-spaces-and-flat-connections"
+id="toc-energy-minimization-moduli-spaces-and-flat-connections">Energy
+Minimization, Moduli Spaces, and Flat Connections</a></li>
+<li><a href="#instantons-and-poles-in-extended-supersymmetry"
+id="toc-instantons-and-poles-in-extended-supersymmetry">Instantons and
+Poles in Extended Supersymmetry</a></li>
+<li><a href="#complexification-embeddings-and-motivic-stabilizations"
+id="toc-complexification-embeddings-and-motivic-stabilizations">Complexification,
+Embeddings, and Motivic Stabilizations</a></li>
+<li><a
+href="#covariant-geometric-deformation-quantization-gluing-and-intersections"
+id="toc-covariant-geometric-deformation-quantization-gluing-and-intersections">Covariant,
+Geometric, Deformation Quantization (Gluing and Intersections)</a></li>
+</ul></li>
+<li><a
+href="#linearization-of-abelian-categories-and-commutative-geometry"
+id="toc-linearization-of-abelian-categories-and-commutative-geometry">Linearization
+of Abelian Categories and Commutative Geometry</a>
+<ul>
+<li><a href="#zariski-topology-borel-subgroups"
+id="toc-zariski-topology-borel-subgroups">Zariski Topology, Borel
+subgroups</a></li>
+<li><a href="#fields-rings-spectrum-of-prime-ideals"
+id="toc-fields-rings-spectrum-of-prime-ideals">Fields, Rings, Spectrum
+of Prime Ideals</a></li>
+<li><a href="#adeles-and-ideles" id="toc-adeles-and-ideles">Adeles and
+Ideles</a></li>
+<li><a href="#abelian-categories-schemes"
+id="toc-abelian-categories-schemes">Abelian Categories, Schemes</a></li>
+<li><a href="#homotopy-abelianization-of-homology"
+id="toc-homotopy-abelianization-of-homology">Homotopy Abelianization of
+Homology</a></li>
+<li><a href="#grothendieck-completion-and-k-theory"
+id="toc-grothendieck-completion-and-k-theory">Grothendieck Completion
+and K-Theory</a></li>
+</ul></li>
+<li><a href="#linearization-of-automorphisms-under-complexification"
+id="toc-linearization-of-automorphisms-under-complexification">Linearization
+of Automorphisms Under Complexification</a>
+<ul>
+<li><a href="#connections-as-automorphisms"
+id="toc-connections-as-automorphisms">Connections as
+automorphisms</a></li>
+<li><a href="#galois-group-galois-representations"
+id="toc-galois-group-galois-representations">Galois Group, Galois
+Representations</a></li>
+<li><a href="#absolute-galois-group"
+id="toc-absolute-galois-group">Absolute Galois Group</a></li>
+<li><a href="#moduli-stack-of-elliptic-curves-and-modular-forms"
+id="toc-moduli-stack-of-elliptic-curves-and-modular-forms">Moduli stack
+of elliptic curves and modular forms</a></li>
+<li><a href="#automorphic-forms" id="toc-automorphic-forms">Automorphic
+forms</a></li>
+<li><a href="#moduli-spaces-sheaves-stacks-cohomology-of-shtukas"
+id="toc-moduli-spaces-sheaves-stacks-cohomology-of-shtukas">Moduli
+spaces, Sheaves, Stacks, Cohomology of Shtukas</a></li>
+</ul></li>
+<li><a
+href="#linearization-of-non-abelian-manifolds-under-extended-supersymmetry"
+id="toc-linearization-of-non-abelian-manifolds-under-extended-supersymmetry">Linearization
+of Non-Abelian Manifolds Under Extended Supersymmetry</a>
+<ul>
+<li><a
+href="#differential-algebras-lie-gauges-differential-galois-theory"
+id="toc-differential-algebras-lie-gauges-differential-galois-theory">Differential
+Algebras, Lie gauges, Differential Galois Theory</a></li>
+<li><a href="#connections-as-differential-forms-on-tangent-bundles"
+id="toc-connections-as-differential-forms-on-tangent-bundles">Connections
+as differential forms on tangent bundles</a></li>
+<li><a href="#quotient-spaces-and-moduli-spaces"
+id="toc-quotient-spaces-and-moduli-spaces">Quotient spaces and Moduli
+Spaces</a></li>
+<li><a href="#non-abelian-yang-mills-theory-and-lagrangian-mechanics"
+id="toc-non-abelian-yang-mills-theory-and-lagrangian-mechanics">Non-Abelian
+Yang-Mills theory and Lagrangian Mechanics</a></li>
+<li><a href="#irreducible-connections-instantons-and-monopoles"
+id="toc-irreducible-connections-instantons-and-monopoles">Irreducible
+connections, Instantons and Monopoles</a></li>
+<li><a href="#torsion-holonomy-spectral-and-mass-gaps"
+id="toc-torsion-holonomy-spectral-and-mass-gaps">Torsion, Holonomy,
+spectral and mass gaps</a></li>
+<li><a href="#donaldson-theory-and-exotic-r4"
+id="toc-donaldson-theory-and-exotic-r4">Donaldson Theory and Exotic
+R4</a></li>
+<li><a href="#floer-homology" id="toc-floer-homology">Floer
+Homology</a></li>
+<li><a href="#adhm-monad-construction-penrose-twistor-theory"
+id="toc-adhm-monad-construction-penrose-twistor-theory">ADHM Monad
+Construction (Penrose twistor theory)</a></li>
+<li><a href="#seiberg-witten-theory-and-invariants"
+id="toc-seiberg-witten-theory-and-invariants">Seiberg-Witten Theory and
+Invariants</a></li>
+</ul></li>
+<li><a href="#symplectic-geometry-as-weak-abelianization"
+id="toc-symplectic-geometry-as-weak-abelianization">Symplectic Geometry
+as weak Abelianization</a>
+<ul>
+<li><a href="#solder-form-cotangent-bundle"
+id="toc-solder-form-cotangent-bundle">Solder form, cotangent
+bundle</a></li>
+<li><a href="#hamiltonian-mechanics-vs-lagrangian-mechanics"
+id="toc-hamiltonian-mechanics-vs-lagrangian-mechanics">Hamiltonian
+Mechanics vs Lagrangian Mechanics</a></li>
+<li><a href="#symplectification-symplectic-reduction"
+id="toc-symplectification-symplectic-reduction">Symplectification,
+symplectic reduction</a></li>
+<li><a href="#interpreting-symplectic-reduction-with-galois-theory"
+id="toc-interpreting-symplectic-reduction-with-galois-theory">Interpreting
+symplectic reduction with Galois theory</a></li>
+<li><a href="#symplectic-connection-deformation-quantization"
+id="toc-symplectic-connection-deformation-quantization">Symplectic
+connection, deformation quantization</a></li>
+<li><a href="#covariant-phase-space"
+id="toc-covariant-phase-space">Covariant phase space</a></li>
+</ul></li>
+<li><a href="#linearization-with-graphs-under-complexification"
+id="toc-linearization-with-graphs-under-complexification">Linearization
+with Graphs Under Complexification</a>
+<ul>
+<li><a href="#cw-complex" id="toc-cw-complex">CW complex</a></li>
+<li><a href="#chains-cochains-cycles-cocycles"
+id="toc-chains-cochains-cycles-cocycles">Chains, Cochains, Cycles,
+Cocycles</a></li>
+<li><a href="#simplicial-complex" id="toc-simplicial-complex">Simplicial
+complex</a></li>
+<li><a href="#lefschetz-fixed-point-theorem"
+id="toc-lefschetz-fixed-point-theorem">Lefschetz fixed-point
+theorem</a></li>
+<li><a href="#cellular-complex" id="toc-cellular-complex">Cellular
+complex</a></li>
+<li><a href="#laplacians-and-spectral-theory"
+id="toc-laplacians-and-spectral-theory">Laplacians and spectral
+theory</a></li>
+<li><a href="#triangulated-categories"
+id="toc-triangulated-categories">Triangulated categories</a></li>
+<li><a href="#quivers-and-representations"
+id="toc-quivers-and-representations">Quivers and
+Representations</a></li>
+<li><a href="#dynkin-diagrams-gabriels-theorem-root-systems"
+id="toc-dynkin-diagrams-gabriels-theorem-root-systems">Dynkin Diagrams,
+Gabriel’s theorem, Root systems</a></li>
+<li><a href="#dessin-denfant-belyis-theorem-moduli-spaces"
+id="toc-dessin-denfant-belyis-theorem-moduli-spaces">Dessin d’enfant,
+Belyi’s theorem, moduli spaces</a></li>
+</ul></li>
+<li><a href="#linearization-with-cohomology-derived-invariants"
+id="toc-linearization-with-cohomology-derived-invariants">Linearization
+with Cohomology Derived Invariants</a>
+<ul>
+<li><a href="#de-rham-cohomology" id="toc-de-rham-cohomology">de Rham
+Cohomology</a></li>
+<li><a href="#betti-cohomology" id="toc-betti-cohomology">Betti
+cohomology</a></li>
+<li><a href="#étale-cohomology" id="toc-étale-cohomology">Étale
+Cohomology</a></li>
+<li><a href="#weil-cohomology" id="toc-weil-cohomology">Weil
+cohomology</a></li>
+<li><a href="#crystalline-cohomology"
+id="toc-crystalline-cohomology">Crystalline cohomology</a></li>
+<li><a href="#hodge-theory" id="toc-hodge-theory">Hodge theory</a></li>
+<li><a href="#chernweil-theory" id="toc-chernweil-theory">Chern–Weil
+theory</a></li>
+</ul></li>
+<li><a
+href="#grothendiecks-dream---a-universal-cohomology-and-derived-invariant"
+id="toc-grothendiecks-dream---a-universal-cohomology-and-derived-invariant">Grothendieck’s
+Dream - A Universal Cohomology and Derived Invariant</a>
+<ul>
+<li><a href="#chain-complex"
+id="toc-chain-complex">Chain-complex</a></li>
+<li><a href="#exact-and-closed-sequences-spectral-sequences-filtrations"
+id="toc-exact-and-closed-sequences-spectral-sequences-filtrations">Exact
+and Closed Sequences, Spectral Sequences, Filtrations</a></li>
+<li><a href="#stable-infinity-category"
+id="toc-stable-infinity-category">Stable infinity-category</a></li>
+<li><a href="#derived-categories-coherent-sheaves"
+id="toc-derived-categories-coherent-sheaves">Derived Categories,
+Coherent Sheaves</a></li>
+<li><a href="#projective-categories-pure-and-mixed-motives"
+id="toc-projective-categories-pure-and-mixed-motives">Projective
+categories, Pure and Mixed Motives</a></li>
+<li><a href="#derived-category-of-motives"
+id="toc-derived-category-of-motives">Derived Category of
+Motives</a></li>
+<li><a href="#derived-invariants" id="toc-derived-invariants">Derived
+Invariants</a></li>
+</ul></li>
+<li><a href="#furthest-extent" id="toc-furthest-extent">Furthest
+extent</a>
+<ul>
+<li><a href="#grothendieck-teichmüller-space"
+id="toc-grothendieck-teichmüller-space">Grothendieck-Teichmüller
+space</a></li>
+<li><a href="#motivic-galois-group-cosmic-galois-group-renormalization"
+id="toc-motivic-galois-group-cosmic-galois-group-renormalization">Motivic
+Galois group, cosmic Galois group, renormalization</a></li>
+<li><a href="#motivic-stablization-of-symplectic-manifolds"
+id="toc-motivic-stablization-of-symplectic-manifolds">Motivic
+stablization of Symplectic manifolds</a></li>
+<li><a href="#shimura-variety-l-functions-and-zariski-closure"
+id="toc-shimura-variety-l-functions-and-zariski-closure">Shimura
+Variety, L-functions, and Zariski closure</a></li>
+<li><a href="#nekrasov-instanton-partition-function-young-diagrams"
+id="toc-nekrasov-instanton-partition-function-young-diagrams">Nekrasov
+Instanton Partition Function, Young Diagrams</a></li>
+<li><a href="#triangulated-categories-of-mixed-motives"
+id="toc-triangulated-categories-of-mixed-motives">Triangulated
+categories of mixed motives</a></li>
+<li><a href="#motives-over-simplicial-schemes"
+id="toc-motives-over-simplicial-schemes">Motives over simplicial
+schemes</a></li>
+<li><a href="#probability-by-homology-gromov-p-widths"
+id="toc-probability-by-homology-gromov-p-widths">Probability by
+Homology, Gromov p-widths</a></li>
+<li><a href="#weinstein-symplectic-category"
+id="toc-weinstein-symplectic-category">Weinstein symplectic
+category</a></li>
+<li><a href="#tannakian-formalism"
+id="toc-tannakian-formalism">Tannakian Formalism</a></li>
+<li><a href="#kähler-manifolds-hyperkähler-manifold-calabiyau-manifold"
+id="toc-kähler-manifolds-hyperkähler-manifold-calabiyau-manifold">Kähler
+Manifolds, hyperkähler manifold, Calabi–Yau manifold</a></li>
+<li><a href="#amplituhedron-poles-factorization-gauge-quivers"
+id="toc-amplituhedron-poles-factorization-gauge-quivers">Amplituhedron,
+poles, factorization, gauge quivers</a></li>
+<li><a href="#homological-mirror-symmetry"
+id="toc-homological-mirror-symmetry">Homological mirror
+symmetry</a></li>
+<li><a href="#topological-recursion"
+id="toc-topological-recursion">Topological Recursion</a></li>
+</ul></li>
+</ul>
+<h1 id="compactification-and-derived-representations">Compactification
+and Derived Representations</h1>
+<h2 id="fixed-points-and-invariants">Fixed Points and Invariants</h2>
+<h2
+id="linearization-and-matrix-representations-with-lie-groups">Linearization
+and Matrix Representations with Lie Groups</h2>
+<h2 id="abelianization-and-completions">Abelianization and
+Completions</h2>
+<h2 id="sieves-filtrations-spectral-sequences">Sieves, Filtrations,
+Spectral Sequences</h2>
+<h2 id="projections-ramifications-and-cohomology">Projections,
+Ramifications, and Cohomology</h2>
+<h2 id="extensions-closures-and-automorphisms">Extensions, Closures, and
+Automorphisms</h2>
+<h2 id="quotients-and-reductions">Quotients and Reductions</h2>
+<h2 id="diffusion-gaussian-isotropy-group-skeleton-category">Diffusion,
+Gaussian Isotropy Group, Skeleton Category</h2>
+<h2 id="inverse-limits-profinite-groups-absolute-galois-groups">Inverse
+Limits, Profinite Groups, Absolute Galois Groups</h2>
+<h2 id="energy-minimization-moduli-spaces-and-flat-connections">Energy
+Minimization, Moduli Spaces, and Flat Connections</h2>
+<h2 id="instantons-and-poles-in-extended-supersymmetry">Instantons and
+Poles in Extended Supersymmetry</h2>
+<h2
+id="complexification-embeddings-and-motivic-stabilizations">Complexification,
+Embeddings, and Motivic Stabilizations</h2>
+<h2
+id="covariant-geometric-deformation-quantization-gluing-and-intersections">Covariant,
+Geometric, Deformation Quantization (Gluing and Intersections)</h2>
+<h1
+id="linearization-of-abelian-categories-and-commutative-geometry">Linearization
+of Abelian Categories and Commutative Geometry</h1>
+<h2 id="zariski-topology-borel-subgroups">Zariski Topology, Borel
+subgroups</h2>
+<h2 id="fields-rings-spectrum-of-prime-ideals">Fields, Rings, Spectrum
+of Prime Ideals</h2>
+<h2 id="adeles-and-ideles">Adeles and Ideles</h2>
+<p><a
+href="https://math.stackexchange.com/questions/25090/whats-the-significance-of-tates-thesis/25125#25125"
+class="uri">https://math.stackexchange.com/questions/25090/whats-the-significance-of-tates-thesis/25125#25125</a>
+<a
+href="https://math.stackexchange.com/questions/290847/what-do-ideles-and-adeles-look-like"
+class="uri">https://math.stackexchange.com/questions/290847/what-do-ideles-and-adeles-look-like</a></p>
+<h2 id="abelian-categories-schemes">Abelian Categories, Schemes</h2>
+<h2 id="homotopy-abelianization-of-homology">Homotopy Abelianization of
+Homology</h2>
+<h2 id="grothendieck-completion-and-k-theory">Grothendieck Completion
+and K-Theory</h2>
+<h1
+id="linearization-of-automorphisms-under-complexification">Linearization
+of Automorphisms Under Complexification</h1>
+<h2 id="connections-as-automorphisms">Connections as automorphisms</h2>
+<h2 id="galois-group-galois-representations">Galois Group, Galois
+Representations</h2>
+<h2 id="absolute-galois-group">Absolute Galois Group</h2>
+<h2 id="moduli-stack-of-elliptic-curves-and-modular-forms">Moduli stack
+of elliptic curves and modular forms</h2>
+<h2 id="automorphic-forms">Automorphic forms</h2>
+<h2 id="moduli-spaces-sheaves-stacks-cohomology-of-shtukas">Moduli
+spaces, Sheaves, Stacks, Cohomology of Shtukas</h2>
+<h1
+id="linearization-of-non-abelian-manifolds-under-extended-supersymmetry">Linearization
+of Non-Abelian Manifolds Under Extended Supersymmetry</h1>
+<h2
+id="differential-algebras-lie-gauges-differential-galois-theory">Differential
+Algebras, Lie gauges, Differential Galois Theory</h2>
+<h2
+id="connections-as-differential-forms-on-tangent-bundles">Connections as
+differential forms on tangent bundles</h2>
+<h2 id="quotient-spaces-and-moduli-spaces">Quotient spaces and Moduli
+Spaces</h2>
+<h2
+id="non-abelian-yang-mills-theory-and-lagrangian-mechanics">Non-Abelian
+Yang-Mills theory and Lagrangian Mechanics</h2>
+<h2 id="irreducible-connections-instantons-and-monopoles">Irreducible
+connections, Instantons and Monopoles</h2>
+<h2 id="torsion-holonomy-spectral-and-mass-gaps">Torsion, Holonomy,
+spectral and mass gaps</h2>
+<h2 id="donaldson-theory-and-exotic-r4">Donaldson Theory and Exotic
+R4</h2>
+<h2 id="floer-homology">Floer Homology</h2>
+<h2 id="adhm-monad-construction-penrose-twistor-theory">ADHM Monad
+Construction (Penrose twistor theory)</h2>
+<h2 id="seiberg-witten-theory-and-invariants">Seiberg-Witten Theory and
+Invariants</h2>
+<h1 id="symplectic-geometry-as-weak-abelianization">Symplectic Geometry
+as weak Abelianization</h1>
+<h2 id="solder-form-cotangent-bundle">Solder form, cotangent bundle</h2>
+<h2 id="hamiltonian-mechanics-vs-lagrangian-mechanics">Hamiltonian
+Mechanics vs Lagrangian Mechanics</h2>
+<h2 id="symplectification-symplectic-reduction">Symplectification,
+symplectic reduction</h2>
+<h2
+id="interpreting-symplectic-reduction-with-galois-theory">Interpreting
+symplectic reduction with Galois theory</h2>
+<h2 id="symplectic-connection-deformation-quantization">Symplectic
+connection, deformation quantization</h2>
+<h2 id="covariant-phase-space">Covariant phase space</h2>
+<h1 id="linearization-with-graphs-under-complexification">Linearization
+with Graphs Under Complexification</h1>
+<p>permutation/symmetry group of roots</p>
+<h2 id="cw-complex">CW complex</h2>
+<h2 id="chains-cochains-cycles-cocycles">Chains, Cochains, Cycles,
+Cocycles</h2>
+<h2 id="simplicial-complex">Simplicial complex</h2>
+<h2 id="lefschetz-fixed-point-theorem">Lefschetz fixed-point
+theorem</h2>
+<h2 id="cellular-complex">Cellular complex</h2>
+<h2 id="laplacians-and-spectral-theory">Laplacians and spectral
+theory</h2>
+<h2 id="triangulated-categories">Triangulated categories</h2>
+<h2 id="quivers-and-representations">Quivers and Representations</h2>
+<h2 id="dynkin-diagrams-gabriels-theorem-root-systems">Dynkin Diagrams,
+Gabriel’s theorem, Root systems</h2>
+<h2 id="dessin-denfant-belyis-theorem-moduli-spaces">Dessin d’enfant,
+Belyi’s theorem, moduli spaces</h2>
+<h1 id="linearization-with-cohomology-derived-invariants">Linearization
+with Cohomology Derived Invariants</h1>
+<h2 id="de-rham-cohomology">de Rham Cohomology</h2>
+<h2 id="betti-cohomology">Betti cohomology</h2>
+<h2 id="étale-cohomology">Étale Cohomology</h2>
+<h2 id="weil-cohomology">Weil cohomology</h2>
+<h2 id="crystalline-cohomology">Crystalline cohomology</h2>
+<h2 id="hodge-theory">Hodge theory</h2>
+<h2 id="chernweil-theory">Chern–Weil theory</h2>
+<h1
+id="grothendiecks-dream---a-universal-cohomology-and-derived-invariant">Grothendieck’s
+Dream - A Universal Cohomology and Derived Invariant</h1>
+<h2 id="chain-complex">Chain-complex</h2>
+<h2 id="exact-and-closed-sequences-spectral-sequences-filtrations">Exact
+and Closed Sequences, Spectral Sequences, Filtrations</h2>
+<h2 id="stable-infinity-category">Stable infinity-category</h2>
+<h2 id="derived-categories-coherent-sheaves">Derived Categories,
+Coherent Sheaves</h2>
+<h2 id="projective-categories-pure-and-mixed-motives">Projective
+categories, Pure and Mixed Motives</h2>
+<h2 id="derived-category-of-motives">Derived Category of Motives</h2>
+<h2 id="derived-invariants">Derived Invariants</h2>
+<h1 id="furthest-extent">Furthest extent</h1>
+<h2 id="grothendieck-teichmüller-space">Grothendieck-Teichmüller
+space</h2>
+<h2
+id="motivic-galois-group-cosmic-galois-group-renormalization">Motivic
+Galois group, cosmic Galois group, renormalization</h2>
+<h2 id="motivic-stablization-of-symplectic-manifolds">Motivic
+stablization of Symplectic manifolds</h2>
+<h2 id="shimura-variety-l-functions-and-zariski-closure">Shimura
+Variety, L-functions, and Zariski closure</h2>
+<h2 id="nekrasov-instanton-partition-function-young-diagrams">Nekrasov
+Instanton Partition Function, Young Diagrams</h2>
+<h2 id="triangulated-categories-of-mixed-motives">Triangulated
+categories of mixed motives</h2>
+<h2 id="motives-over-simplicial-schemes">Motives over simplicial
+schemes</h2>
+<h2 id="probability-by-homology-gromov-p-widths">Probability by
+Homology, Gromov p-widths</h2>
+<h2 id="weinstein-symplectic-category">Weinstein symplectic
+category</h2>
+<h2 id="tannakian-formalism">Tannakian Formalism</h2>
+<h2 id="kähler-manifolds-hyperkähler-manifold-calabiyau-manifold">Kähler
+Manifolds, hyperkähler manifold, Calabi–Yau manifold</h2>
+<h2 id="amplituhedron-poles-factorization-gauge-quivers">Amplituhedron,
+poles, factorization, gauge quivers</h2>
+<h2 id="homological-mirror-symmetry">Homological mirror symmetry</h2>
+<h2 id="topological-recursion">Topological Recursion</h2>
+</body>
+</html>
