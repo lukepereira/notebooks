@@ -55,6 +55,7 @@ if [ -n "$root_file" ];
       echo "processing line: ${LINE}"
       cd "$(dirname "${LINE}")";
       "$compiler" $args "$(basename ${LINE})";
+      biber "$(basename -s .tex ${LINE})";
       "$compiler" $args "$(basename ${LINE})"; 
       cd -
     done <  $changed_files
