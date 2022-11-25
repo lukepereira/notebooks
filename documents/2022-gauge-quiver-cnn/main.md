@@ -36,6 +36,7 @@ title: |
         Diffusion](#sec:sheaf-diffusion){#toc-sec:sheaf-diffusion}
     -   [Equivalence of presheaves and quiver
         representations](#sec:sheaf-quiver-equiv){#toc-sec:sheaf-quiver-equiv}
+    -   [Sheafification](#sec:sheafification){#toc-sec:sheafification}
     -   [Graph convolution
         kernel](#sec:graph-kernel){#toc-sec:graph-kernel}
     -   [Magnetic Laplacian and nodal
@@ -48,13 +49,14 @@ title: |
         bounds](#sec:gromov-width){#toc-sec:gromov-width}
 -   [Appendix B: Future
     Research](#appendix-b-future-research){#toc-appendix-b-future-research}
-    -   [Automorphisms](#sec:automorphisms){#toc-sec:automorphisms}
+    -   [Sieves and the Riemann Hypotheses](#sec:sieve){#toc-sec:sieve}
+    -   [Automorphisms of Dynkin
+        Diagrams](#sec:automorphisms){#toc-sec:automorphisms}
     -   [Extensions, Filtrations, and
         Cohomology](#sec:extensions){#toc-sec:extensions}
 
-*Disclaimer: This is a recreational unfinished research notebook, please
-contact me if you are interested in collaborating
-(<lukejoepereira@gmail.com>)*.\
+*Disclaimer: This is a recreational research notebook, please contact me
+if you are interested in collaborating (<lukejoepereira@gmail.com>)*.\
 
 # ADE Gauge Equivariant Convolution
 
@@ -104,14 +106,14 @@ reference="sec:dynkin-diagrams"}). Thus, Gabriel's Theorem enables
 restoring a weaker gluing axiom and a modified diffusion mechanism by
 using tree subgraphs and the nodal surplus of cycles. In this
 alternative setting, the connection Laplacian becomes more akin to a
-graph convolution kernel ([2.8](#sec:graph-kernel){reference-type="ref"
+graph convolution kernel ([2.9](#sec:graph-kernel){reference-type="ref"
 reference="sec:graph-kernel"}). The proposed ADE subgraphs are bipartite
 trees and were originally developed to describe relationships between
 irreducible representations (irreps) and root systems of simply
 connected Lie groups: SL(N+1), SU(2N), E6, E7, E8. Using spectral
 analysis, namely Perron-Frobenius theorem, we may classify subtrees into
 their ADE type using their unique bounded spectral radius
-$\lambda_r \leq 2$ ([2.11](#sec:spectral-corr){reference-type="ref"
+$\lambda_r \leq 2$ ([2.12](#sec:spectral-corr){reference-type="ref"
 reference="sec:spectral-corr"}).
 
 To formulate an alternative to sheaf diffusion, we need information
@@ -120,7 +122,7 @@ captured by its ADE subtrees. A relevant stream of research also applies
 spectral methods through magnetic field perturbations to a graph
 Laplacian in order to compute its nodal surplus, which directly relates
 to a graphs cyclic structure
-([2.9](#sec:magnetic-laplacian){reference-type="ref"
+([2.10](#sec:magnetic-laplacian){reference-type="ref"
 reference="sec:magnetic-laplacian"}). Transitioning from an arbitrary
 graph to a collection of trees requires breaking $\beta$ cycles, where
 $\beta = |E| - |V| + 1$ is the graph's first Betti number, which will be
@@ -137,7 +139,7 @@ of the original graph. The process of diffusion on the connection
 Laplacian and the application of Morse theory on critical points of the
 magnetic Laplacian have close similarities when studying the Hessian of
 each Laplacian as a mediator of covariance
-([2.10](#sec:hessian-corr){reference-type="ref"
+([2.11](#sec:hessian-corr){reference-type="ref"
 reference="sec:hessian-corr"}).
 
 Relating the two findings we aim to develop a graph kernel that captures
@@ -152,15 +154,17 @@ trivial loops (roughly, its ADE trees). This graph kernel made of ADE
 trees and a symplectic monodromy group can be succinctly described as a
 gauge quiver or quiver diagram
 ([2.4](#sec:gauge-quiver){reference-type="ref"
-reference="sec:gauge-quiver"}). Recall that relaxing the strictly
-non-zero constraint on eigenvalues of the connection Laplacian leads us
-to Gabriel's theorem of ADE tree classification, while relaxing the
-constraint on linearity of an eigenvector by considering non-linear
-perturbations of an eigenfunction leads to topological information about
-a graph's nodal surplus and cyclic structure. We may examine the
-nonlinearity and indefiniteness of the spectra in both settings by
-considering a device known as a Gromov width or $p$-width
-([2.12](#sec:gromov-width){reference-type="ref"
+reference="sec:gauge-quiver"}). Training data produces a monodromy group
+of divergences from energy minimizing geodesics between irreps on the
+quiver. Recall that relaxing the strictly non-zero constraint on
+eigenvalues of the connection Laplacian leads us to Gabriel's theorem of
+ADE tree classification, while relaxing the constraint on linearity of
+an eigenvector by considering non-linear perturbations of an
+eigenfunction leads to topological information about a graph's nodal
+surplus and cyclic structure. We may examine the nonlinearity and
+indefiniteness of the spectra in both settings by considering a device
+known as a Gromov width or $p$-width
+([2.13](#sec:gromov-width){reference-type="ref"
 reference="sec:gromov-width"}). This width is proposed to be interpreted
 as *nonlinear spectra* of a Laplacian and can be used to bound volume
 spectrum in an isoperimetric law. In a learning mechanism, this is used
@@ -197,11 +201,12 @@ fundamental while edges $Q_1$ become closer to categorical sets. The
 quiver $Q$ can be perceived as something more akin to a point cloud than
 a graph; though instead of the points being embedded in a topological
 space like $\mathbb{R}^3$, they are embedded in an algebraic field.
-Edges being referred to arrows suggests a categorical parameterization,
-so that they relate sets (or equivalence classes) of what were formerly
-scalar values. An underlying graph $\bar{Q}$ can be recovered by
-indexing into subset of the output of adjacent pairs of surjective
-mappings $s, t$ applied to an arrow $\{s(\alpha), t(\alpha)\}$.
+Edges being referred to as arrows suggests a categorical
+parameterization, so that they relate sets (or equivalence classes) of
+what were formerly scalar values. An underlying graph $\bar{Q}$ can be
+recovered by indexing into subset of the output of adjacent pairs of
+surjective mappings $s, t$ applied to an arrow
+$\{s(\alpha), t(\alpha)\}$.
 
 ::: definition
 **Definition 2**. A quiver representation $M=(M_x, M_\alpha)$ is given
@@ -243,8 +248,7 @@ or by the existence of irreducible maps. The interplay and binding of
 particular irreducible representations can be understood as an algebra
 or even a dynamical system in a differential setting as with Lie Groups.
 Then, the periodic cycles, orbits, or automorphisms are the algebraic
-structures that bind irreducible representations and for a group
-structure.
+structures that bind irreducible representations to a group structure.
 
 Dynkin diagrams first appeared in relation to the classification of
 simple Lie groups where they describe a basis of roots for a path
@@ -262,17 +266,10 @@ $\bar{Q}$ is one of the following simply laced Dynkin diagrams:
 $A_n, D_n, E_6, E_7$ or $E_8$.*
 :::
 
-We can think of the diagrams as a topological group being condensed into
-a graph depicting interactions of its generators, which are its
-irreducible representations or roots. The diagram is an orthogonal sum
-of an irreducible root systems. Dynkin diagrams summarize relative
-orientations and orderings of these roots through a kaleidoscopic
-construction that describe its topology in terms of the group algebra.
-
 ## ADE Classification {#sec:ade}
 
 Dynkin diagrams have the following correspondence with the Lie algebras
-associated to classical groups over the complex numbers, ADE types have
+associated to classical groups over the complex numbers. ADE types have
 additional compact Lie algebras and corresponding simply laced Lie
 groups:
 
@@ -305,14 +302,18 @@ $(2 \pi /3)^k$ that yields equivalences between self or pairs. These
 self or pairwise interactions with exponents of 2 have no edge.
 Interactions with exponents of 3 have labels omitted. Repeated
 reflections resulting in the identity (periodic automorphisms) are shown
-to be equivalent to commutativity between pairs of generators.
-Conjugation invariance (like the reflection periodicity) is also
-equivalent to commutation. The normal subgroup, which is an equivalance
-class of the identity, is also the center of an orbit and can also be
-understood as measure of commutativity. Inner automorphisms measure
-failure/divergence from commutativity, outer automorphisms measures
-non-inner automorphisms and are isomorphic to automorphisms of Dynkin
-diagrams.
+to be equivalent to commutativity between pairs of generators (See
+[3.2](#sec:automorphisms){reference-type="ref"
+reference="sec:automorphisms"}).
+
+We can think of the diagrams as a topological group being condensed or
+encoded into a graph depicting interactions of its generators, which are
+its irreducible representations or roots. Dynkin diagrams summarize
+relative orientations and orderings of these roots through a
+kaleidoscopic construction that describe its topology in terms of the
+graphs path algebra. Omitting certain edges produces a diagram
+corresponding to an orthogonal summation of a groups irreducible root
+systems.
 
 ## Gauge Quivers {#sec:gauge-quiver}
 
@@ -334,8 +335,8 @@ diagrams.
     called a bifundamental representation.
 :::
 
-The quiver is particularly convenient for representing conformal gauge
-theory.
+The gauge quiver is particularly convenient for representing conformal
+gauge theory.
 
 ## Sheaf Neural Networks {#sec:sheaf-nn}
 
@@ -453,21 +454,68 @@ $W^t_1, W^t_2$ are time-dependent, meaning that the underlying
 of the laplacian can be understood as convolution of adjacent nodes in
 which the sheaf serves as a multi-headed attention mechanism.
 
+## Equivalence of presheaves and quiver representations {#sec:sheaf-quiver-equiv}
+
 By relaxing constraints on the sheaf Laplacian being symmetric positive
 semi-definite and omitting constraints on the restriction maps, we can
-construct an equivalence between a pre-sheaf neural network and a quiver
-representation. To maintain the symmetry of the sheaf we only require
-that that its underlying graph be strongly connected.
+construct an equivalence between a pre-sheaf and a finite quiver
+representation. To maintain the symmetry of the presheaf Laplacian we
+need only to require that that its associated underlying Dynkin graph be
+strongly connected and undirected.
 
-## Equivalence of presheaves and quiver representations {#sec:sheaf-quiver-equiv}
+## Sheafification {#sec:sheafification}
+
+We may observe that the sheaves on $X$ form a full subcategory of the
+presheaves on $X$. Implicitly the morphisms of sheaves are nothing more
+than natural transformations of the sheaves considered as functors.
+Therefore, we get an abstract characterisation of sheafification as left
+adjoint to the inclusion.
+
+There are two ways a presheaf can fail to be a sheaf.
+
+1.  It has local sections that should patch together to give a global
+    section, but don't,
+
+2.  It has non-zero sections which are locally zero.
+
+In the classical case of sheaves on a topological space, sheafification
+of the Yoneda embedding preserves colimits by open covers. In the
+general case of categories, one replaces open covers with covering
+sieves to develop a Grothendieck Topology.
 
 ## Graph convolution kernel {#sec:graph-kernel}
 
+Random walk kernel is a direct product of a pair of graphs used to count
+paths from random walks on graph pairs. In the WL kernel, multiple
+rounds of WL algorithm computes similarity as inner product of histogram
+vectors. Kernel collects number of times color occurs in graph on
+iteration Diffusion is continous time limit of random walk, using
+cartesian product instead of kronecker product allows for decomposition.
+Paths are a special kind of subgraphs that work using kronecker
+optimization tricks. Cycles or trees, i.e. anything between arbitrary
+subgraph and simple paths is an unsolved problem for optimization.
+Subgraph isomorphism is known to be np-hard.
+
 ## Magnetic Laplacian and nodal surplus {#sec:magnetic-laplacian}
+
+Pending summary of [@Berkolaiko_2013].
 
 ## Correspondences from Hessian {#sec:hessian-corr}
 
+A matrix is positive definite iff it defines an inner product. Inner
+products induces associated norm, and a norm induces a distance called
+its (norm) induced metric. Positive-definite and positive-semidefinite
+real matrices are at the basis of convex optimization Given a function
+of several real variables that is twice differentiable, then if its
+Hessian matrix (matrix of its second partial derivatives) is
+positive-definite at a point p, then the function is convex near p, and,
+conversely, if the function is convex near p, then the Hessian matrix is
+positive-semidefinite at p.
+
 ## Correspondences from spectral analysis {#sec:spectral-corr}
+
+Pending summary of [@ade-spectra], explicit computation of
+Perron-Frobenius vectors and spectral bounds of the Dynkin graphs.
 
 ::: theorem
 **Theorem 2**. *Perron-Frobenius theorem tells us that if our graph or
@@ -489,20 +537,134 @@ $\Tilde{A}_n, \Tilde{D}_n, \Tilde{E}_6, \Tilde{E}_7, \Tilde{E}_8$*
 
 ## Gromov width and isoperimetric bounds {#sec:gromov-width}
 
+Pending summary of [@10.1007/BFb0081739] and
+[@https://doi.org/10.48550/arxiv.2202.11805].
+
 # Appendix B: Future Research
 
-## Automorphisms {#sec:automorphisms}
+## Sieves and the Riemann Hypotheses {#sec:sieve}
 
-As seen in Gabriel's theorem, any finite representation must have
-underlying ADE graphs. Automorphisms of ADE diagrams are equivalent to
-the outer Automorphism group which composes with the inner automorphism
-group that represents a measure of noncommutativity (non-abelian) of the
-group. Dynkin quivers can't have any indecomposable quiver
-representations nor have automorphisms other than scalars, nor any
-self-extensions. Neural sheafs may be more akin to derived category of
-coherent sheaves (on a smooth algebraic or projective variety and and on
-their noncommutative counterparts). Recall, the cohomology group can be
-defined as a quotient of $p$-cocycles and $p$-coboundaries, i.e.
+The sieve of Eratosthenes is an ancient algorithm for finding all prime
+numbers up to any given limit and provides a useful blueprint for other
+ideas. It works by iteratively marking as composite (i.e., not prime)
+the multiples of each prime, starting with the first prime number, $2$.
+Once all the multiples of each discovered prime have been marked as
+composites, the remaining unmarked numbers are primes. The optimal
+implementation iterates up to the square of the given limit, i.e.
+$n^{\frac{1}{2}}$. It does so because a prime element in a composite
+number could not be larger than the square of the limit. This
+$\frac{1}{2}$ is comparable to the square-root error term of the prime
+number counting function which is equivalent to the $\frac{1}{2}$
+critical strip in the Riemann Hypotheses.
+
+The Hilbert--Pólya conjecture suggests that one way to derive the
+Riemann hypothesis would be to find a self-adjoint operator, from the
+existence of which the statement on the real parts of the zeros of
+$\zeta (s)$ would follow when one applies the criterion on real
+eigenvalues. Some support for this idea comes from several analogues of
+the Riemann zeta functions whose zeros correspond to eigenvalues of some
+operator: the zeros of a zeta function of a variety over a finite field
+correspond to eigenvalues of a Frobenius element on an étale cohomology
+group, the zeros of a Selberg zeta function are eigenvalues of a
+Laplacian operator of a Riemann surface, and the zeros of a p-adic zeta
+function correspond to eigenvectors of a Galois action on ideal class
+groups.
+
+In algebraic geometry, the spectrum $X$ of a commutative ring $R$ is the
+space of prime ideals of $R$ with a natural topology (known as the
+Zariski topology). Grothendieck proposed augmenting it with a sheaf of
+rings: to every open subset $U$ he assigned a commutative ring $O_X(U)$.
+These objects ${\displaystyle \operatorname {Spec} {R}}$ are the affine
+schemes; a general scheme is then obtained by \"gluing together\" affine
+schemes. In the classical case of sheaves on a topology, the gluing
+axiom required for sheafification is phrased in terms of pointwise
+coverings. In the general case of categories, Grothendieck topologies
+replace each open subset with an entire family of open subsets, known as
+covering sieves. This allows binding common elements between stalks in
+order to develop a topology to associate with a potentially discontinous
+category producing sites. Grothendieck topologies were used to implement
+étale or Weil cohomologies which were used for proving parts of the Weil
+conjectures. The Weil conjectures include an analog to Riemann
+Hypotheses but are instead concerning varieties over a finite field.
+
+In representation theory, a spectrum of a matrix is its eigenvalues.
+Spectral bounds can be used to classify Dynkin graphs into their
+isomorphism classes ([2.12](#sec:spectral-corr){reference-type="ref"
+reference="sec:spectral-corr"}). Moreover, Dynkin graphs encode the
+internal categorical structure and the interplay between groups of
+irreps generating a simply connected Lie group. Perhaps the ADE gauge
+quiver to be used as a kernel can be constructed through a sieve-like
+process that identifies irreps that bind and relate Dynkin graphs
+together into a gauge quiver, much in the same way as sheafification of
+categories occurs through sieve coverings and in topologies with the
+left adjoint. This gauge quiver may relate to what Alain Connes
+describes as the "mysterious structure underlying the compactification
+of $\operatorname{Spec} \mathbb{Z}$" in his essay on the Riemann
+Hypothesis in which he also preesents a solution strategy involving the
+development of a suitable Weil cohomology. The category of motives is
+defined to be a category such that every Weil cohomology (viewed as a
+functor) factors through it. Motivic cohomology are iterated extensions
+between two motives. Could there be a motivic cohomology (similar to an
+étale cohomology of a Grothendieck topology), that derives binding
+irreps between Lie groups through iterated extensions of their motives?
+
+As mentioned, the zeros of a Zeta function of a variety over a finite
+field correspond to eigenvalues of a Frobenius element on an étale
+cohomology group. Here, the Frobenius endomorphism can be understood as
+an analog of the exponential, as it maps every element to its $p$-th
+power. In Riemannian geometry, the exponential map is a map from a
+subset of a tangent space $TpM$ of a Riemannian manifold $M$ to $M$
+itself. The "$p$-sweepout recipe" can be used for computing curvature at
+point $p$ by using its exponential map to produce geodesics in the range
+$[0,1]$ that sweepout a tangent submanifold which can then have its
+Gaussian curvature computed using the Theorema Egregium on symmetric
+properties of the Riemannian metric. $\frac{1}{2}$ marks the region of
+flat Gaussian curvature and is the center of the exponential map between
+$[0, 1]$. In Lie theory, the exponential map is a map from the Lie
+algebra ${\mathfrak {g}}$ of a Lie group $G$ to the group, which allows
+one to recapture the local group structure from the Lie algebra. The
+existence of the exponential map is one of the primary reasons that Lie
+algebras are a useful tool for studying Lie groups in representation
+theory. (When a Lie group is not simply connected, representations of
+its Lie group and its Lie algebra are not in one-to-one correspondence,
+this results in distinctions between integer spin and half-integer spin
+in quantum mechanics producing fermions and bosons. For example, the
+rotation group $SO(3)$ is not simply connected There is one irreducible
+representation of the Lie algebra in each dimension, but only the
+odd-dimensional representations of the Lie algebra come from
+representations of the group. There is more that can be said regarding
+Yang-Mills gauge theory, Donaldson Theory, and flat instanton
+connections and singularities.)
+
+From this perspective, perhaps the critical strip of the RH has some
+correlation to an optimal bound of an isoperimetric law. Moreover,
+perhaps it can be described by the ubiquitous Dynkin Diagrams. One can
+imagine how the construction of Gromov p-widths, visualized as touching
+$k$-spheres spanning a $k+1$ dimensional width to produce a volumetric
+bound, can be described with Dynkin Diagrams. Much like how the blow up
+of an ADE or duVal singularity is described as a union of Riemann
+spheres that touch each other to form the shape of the Dynkin diagram.
+Then, perhaps the $\frac{1}{2}$ of the exponential map relates to polar
+points of the sweepout of the projective complex Riemann sphere.
+
+## Automorphisms of Dynkin Diagrams {#sec:automorphisms}
+
+Conjugation invariance (like the reflection periodicity) is also
+equivalent to commutation. The normal subgroup, which is an equivalance
+class of the identity, is the center of an orbit and can also be
+understood as a measure of commutativity. Inner automorphisms measure
+failure/divergence from commutativity, outer automorphisms measure the
+non-inner automorphisms and are isomorphic to automorphisms of Dynkin
+diagrams. As seen in Gabriel's theorem, any finite representation must
+have underlying ADE graphs. Automorphisms of ADE diagrams are equivalent
+to the outer Automorphism group which composes with the inner
+automorphism group that represents a measure of noncommutativity
+(non-abelian) of the group. Dynkin quivers can't have any indecomposable
+quiver representations nor have automorphisms other than scalars, nor
+any self-extensions. Neural sheafs may be more akin to derived category
+of coherent sheaves (on a smooth algebraic or projective variety and and
+on their noncommutative counterparts). Recall, the cohomology group can
+be defined as a quotient of $p$-cocycles and $p$-coboundaries, i.e.
 $H^p = Z^p / B^p$. As seen in sheaf neural networks, this can be related
 to the sheaf Laplacian constructed from coboundaries of cellular or
 simplicial complexes.
@@ -523,6 +685,4 @@ has as vertices the simple modules $S(1),\dots, S(N)$ and an arrow
 $S(i) \to S(j)$ provided $\mathsf{Ext}^1_H(S(i),S(j)) \neq 0$.
 :::
 
-in finite global dimension there cannot be a loop in the Ext-quiver
-
-Relates to Ext functor being 0
+In finite global dimension there cannot be a loop in the Ext-quiver
