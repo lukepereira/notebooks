@@ -6,6 +6,14 @@
 **Employment**\
 \*\[-.8pc\]
 
+**Animi** *(CTO and Cofounder)*
+
+-   Developed React Native mobile and web app for mental health focused
+    startup: <https://www.animiapp.com/>.
+
+-   Owned technical solution from design to launch, including the
+    planning and end-to-end development of the product.
+
 **Amazon** *(Software Development Engineer)*
 
 -   Full-stack development to support inbound transportation initiatives
@@ -14,9 +22,8 @@
     infrastructure and DevOps.
 
 -   Led a project for managing disruptions and updates to shipments.
-    Created low-level design and contributed large portion of
-    implementation which involve changes to complex existing
-    architecture for tendering trucks.
+    Created low-level design and implemented feature changes within
+    complex legacy architecture for tendering and scheduling trucks.
 
 -   Led projects for migration and launch of two legacy applications
     (shipment tracking and seller settings pages) from Perl Mason to new
@@ -31,25 +38,13 @@
     pharmaceutical companies.
 
 -   Contributed to rewriting the core ElasticSearch API, decreasing some
-    response times by upwards of 10x and improving test coverage
+    response times by 10x and improving test coverage and
     maintainability. Synchronized ES cluster with ML bioinformatics
     pipeline and Neo4j DB.
 
 -   Developed SOC2 compliant integrations and performed acceptance
     testing. Implemented SAML SSO, MFA, Ariba procurement checkouts,
     ecommerce APIs, payment flow UIs, BigCommerce automation tools.
-
-**Contract and Freelance**
-
--   Developed React Native mobile app for mental health focused alpha
-    stage startup *(Animi)*.
-
--   Set-up GCP compute and Kubernetes deployments for social-network
-    alpha stage startup *(EventReach)*.
-
--   Developed C++ software for secure and robust radio frequency
-    communication between two Arduino microprocessors used to detect
-    malfunctions in hydraulic lifts: <https://git.io/Jkmnw>.
 
 **Education**\
 
