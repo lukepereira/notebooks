@@ -2,162 +2,197 @@
 title:  Data Structures and Algorithms
 ---
 
--   [Pre-requisite Concepts](#pre-requisite-concepts)
-    -   [Runtime Analysis](#runtime-analysis)
-        -   [Asymptotic Analysis (Big O)](#asymptotic-analysis-big-o)
-        -   [Amortized Analysis](#amortized-analysis)
-        -   [Logarithmic Runtime](#logarithmic-runtime)
+-   [Pre-requisite
+    Concepts](#pre-requisite-concepts){#toc-pre-requisite-concepts}
+    -   [Runtime Analysis](#runtime-analysis){#toc-runtime-analysis}
+        -   [Asymptotic Analysis (Big
+            O)](#asymptotic-analysis-big-o){#toc-asymptotic-analysis-big-o}
+        -   [Amortized
+            Analysis](#amortized-analysis){#toc-amortized-analysis}
+        -   [Logarithmic
+            Runtime](#logarithmic-runtime){#toc-logarithmic-runtime}
     -   [Computational Complexity
-        Theory](#computational-complexity-theory)
-        -   [Complexity Classes](#complexity-classes)
-        -   [NP Problems](#np-problems)
-        -   [Reductions](#reductions)
-    -   [Algorithm Design](#algorithm-design)
-        -   [In-place algorithm](#in-place-algorithm)
-        -   [Time--Space-- tradeoff](#timespace-tradeoff)
-        -   [Heuristics](#heuristics)
-        -   [Hash Functions](#hash-functions)
+        Theory](#computational-complexity-theory){#toc-computational-complexity-theory}
+        -   [Complexity
+            Classes](#complexity-classes){#toc-complexity-classes}
+        -   [NP Problems](#np-problems){#toc-np-problems}
+        -   [Reductions](#reductions){#toc-reductions}
+    -   [Algorithm Design](#algorithm-design){#toc-algorithm-design}
+        -   [In-place
+            algorithm](#in-place-algorithm){#toc-in-place-algorithm}
+        -   [Time--Space--
+            tradeoff](#timespace-tradeoff){#toc-timespace-tradeoff}
+        -   [Heuristics](#heuristics){#toc-heuristics}
+        -   [Hash Functions](#hash-functions){#toc-hash-functions}
         -   [Stack vs. Heap Memory
-            Allocation](#stack-vs.-heap-memory-allocation)
--   [Data Structures and ADTs](#data-structures-and-adts)
-    -   [Lists and Arrays](#lists-and-arrays)
-        -   [List](#list)
-        -   [Arrays](#arrays)
-        -   [Linked Lists](#linked-lists)
-        -   [Skip Lists](#skip-lists)
-    -   [Stacks and Queues](#stacks-and-queues)
-        -   [Stacks](#stacks)
-        -   [Queues](#queues)
-        -   [Priority Queues](#priority-queues)
-        -   [Indexed Priority Queues](#indexed-priority-queues)
-        -   [Monotonic Stacks and Queues](#monotonic-stacks-and-queues)
-    -   [Hash Tables](#hash-tables)
+            Allocation](#stack-vs.-heap-memory-allocation){#toc-stack-vs.-heap-memory-allocation}
+-   [Data Structures and
+    ADTs](#data-structures-and-adts){#toc-data-structures-and-adts}
+    -   [Lists and Arrays](#lists-and-arrays){#toc-lists-and-arrays}
+        -   [List](#list){#toc-list}
+        -   [Arrays](#arrays){#toc-arrays}
+        -   [Linked Lists](#linked-lists){#toc-linked-lists}
+        -   [Skip Lists](#skip-lists){#toc-skip-lists}
+    -   [Stacks and Queues](#stacks-and-queues){#toc-stacks-and-queues}
+        -   [Stacks](#stacks){#toc-stacks}
+        -   [Queues](#queues){#toc-queues}
+        -   [Priority Queues](#priority-queues){#toc-priority-queues}
+        -   [Indexed Priority
+            Queues](#indexed-priority-queues){#toc-indexed-priority-queues}
+        -   [Monotonic Stacks and
+            Queues](#monotonic-stacks-and-queues){#toc-monotonic-stacks-and-queues}
+    -   [Hash Tables](#hash-tables){#toc-hash-tables}
         -   [Dictionaries and Hash
-            Tables](#dictionaries-and-hash-tables)
-        -   [Sets](#sets)
-    -   [Trees](#trees)
-        -   [Binary Trees](#binary-trees)
-        -   [Binary Heaps](#binary-heaps)
-        -   [Tries (Prefix Trees)](#tries-prefix-trees)
-        -   [Suffix Trees/Arrays](#suffix-treesarrays)
-        -   [Merkle Trees](#merkle-trees)
-        -   [Kd-Trees](#kd-trees)
-        -   [Segment Trees](#segment-trees)
-    -   [Self-balancing Trees](#self-balancing-trees)
-        -   [AVL Trees](#avl-trees)
-        -   [Red--black Trees](#redblack-trees)
-        -   [2-3 Trees and B-Trees](#trees-and-b-trees)
-    -   [Graphs](#graphs)
-        -   [Flow Networks](#flow-networks)
-        -   [Union-Find](#union-find)
--   [Algorithms and Techniques](#algorithms-and-techniques)
-    -   [Sequence Search and Sort](#sequence-search-and-sort)
-        -   [Binary Search](#binary-search)
-        -   [Bubble Sort](#bubble-sort)
-        -   [Selection Sort](#selection-sort)
-        -   [Insertion Sort](#insertion-sort)
-        -   [Merge Sort](#merge-sort)
-        -   [QuickSort](#quicksort)
-        -   [Heap Sort](#heap-sort)
-        -   [Counting Sort](#counting-sort)
-        -   [Radix Sort](#radix-sort)
-        -   [Bucket Sort](#bucket-sort)
-        -   [Cycle Sort](#cycle-sort)
-        -   [Timsort](#timsort)
-    -   [Array Analysis Methods](#array-analysis-methods)
-        -   [Two Pointer Technique](#two-pointer-technique)
-        -   [Fast and Slow Pointers](#fast-and-slow-pointers)
-        -   [Sliding Window Technique](#sliding-window-technique)
+            Tables](#dictionaries-and-hash-tables){#toc-dictionaries-and-hash-tables}
+        -   [Sets](#sets){#toc-sets}
+    -   [Trees](#trees){#toc-trees}
+        -   [Binary Trees](#binary-trees){#toc-binary-trees}
+        -   [Binary Heaps](#binary-heaps){#toc-binary-heaps}
+        -   [Tries (Prefix
+            Trees)](#tries-prefix-trees){#toc-tries-prefix-trees}
+        -   [Suffix
+            Trees/Arrays](#suffix-treesarrays){#toc-suffix-treesarrays}
+        -   [Merkle Trees](#merkle-trees){#toc-merkle-trees}
+        -   [Kd-Trees](#kd-trees){#toc-kd-trees}
+        -   [Segment Trees](#segment-trees){#toc-segment-trees}
+    -   [Self-balancing
+        Trees](#self-balancing-trees){#toc-self-balancing-trees}
+        -   [AVL Trees](#avl-trees){#toc-avl-trees}
+        -   [Red--black Trees](#redblack-trees){#toc-redblack-trees}
+        -   [2-3 Trees and
+            B-Trees](#trees-and-b-trees){#toc-trees-and-b-trees}
+    -   [Graphs](#graphs){#toc-graphs}
+        -   [Flow Networks](#flow-networks){#toc-flow-networks}
+        -   [Union-Find](#union-find){#toc-union-find}
+-   [Algorithms and
+    Techniques](#algorithms-and-techniques){#toc-algorithms-and-techniques}
+    -   [Sequence Search and
+        Sort](#sequence-search-and-sort){#toc-sequence-search-and-sort}
+        -   [Binary Search](#binary-search){#toc-binary-search}
+        -   [Bubble Sort](#bubble-sort){#toc-bubble-sort}
+        -   [Selection Sort](#selection-sort){#toc-selection-sort}
+        -   [Insertion Sort](#insertion-sort){#toc-insertion-sort}
+        -   [Merge Sort](#merge-sort){#toc-merge-sort}
+        -   [QuickSort](#quicksort){#toc-quicksort}
+        -   [Heap Sort](#heap-sort){#toc-heap-sort}
+        -   [Counting Sort](#counting-sort){#toc-counting-sort}
+        -   [Radix Sort](#radix-sort){#toc-radix-sort}
+        -   [Bucket Sort](#bucket-sort){#toc-bucket-sort}
+        -   [Cycle Sort](#cycle-sort){#toc-cycle-sort}
+        -   [Timsort](#timsort){#toc-timsort}
+    -   [Array Analysis
+        Methods](#array-analysis-methods){#toc-array-analysis-methods}
+        -   [Two Pointer
+            Technique](#two-pointer-technique){#toc-two-pointer-technique}
+        -   [Fast and Slow
+            Pointers](#fast-and-slow-pointers){#toc-fast-and-slow-pointers}
+        -   [Sliding Window
+            Technique](#sliding-window-technique){#toc-sliding-window-technique}
         -   [Single-pass with Lookup
-            Table](#single-pass-with-lookup-table)
+            Table](#single-pass-with-lookup-table){#toc-single-pass-with-lookup-table}
         -   [Prefix Sums and Kadane's
-            Algorithm](#prefix-sums-and-kadanes-algorithm)
+            Algorithm](#prefix-sums-and-kadanes-algorithm){#toc-prefix-sums-and-kadanes-algorithm}
         -   [Prefix Sums with Binary
-            Search](#prefix-sums-with-binary-search)
-    -   [Intervals](#intervals)
-        -   [Range Operations on Array](#range-operations-on-array)
-        -   [Merge Intervals](#merge-intervals)
-    -   [String Analysis Methods](#string-analysis-methods)
-        -   [KMP Pattern Matching](#kmp-pattern-matching)
-        -   [Rabin--Karp](#rabinkarp)
+            Search](#prefix-sums-with-binary-search){#toc-prefix-sums-with-binary-search}
+    -   [Intervals](#intervals){#toc-intervals}
+        -   [Range Operations on
+            Array](#range-operations-on-array){#toc-range-operations-on-array}
+        -   [Merge Intervals](#merge-intervals){#toc-merge-intervals}
+    -   [String Analysis
+        Methods](#string-analysis-methods){#toc-string-analysis-methods}
+        -   [KMP Pattern
+            Matching](#kmp-pattern-matching){#toc-kmp-pattern-matching}
+        -   [Rabin--Karp](#rabinkarp){#toc-rabinkarp}
         -   [Non-Sequential Analysis with
-            Stack](#non-sequential-analysis-with-stack)
-        -   [Edit Distance](#edit-distance)
-    -   [Heap Use Cases](#heap-use-cases)
+            Stack](#non-sequential-analysis-with-stack){#toc-non-sequential-analysis-with-stack}
+        -   [Edit Distance](#edit-distance){#toc-edit-distance}
+    -   [Heap Use Cases](#heap-use-cases){#toc-heap-use-cases}
         -   [K Largest or Smallest
-            Numbers](#k-largest-or-smallest-numbers)
+            Numbers](#k-largest-or-smallest-numbers){#toc-k-largest-or-smallest-numbers}
         -   [Two Heaps (Median of Data
-            Stream)](#two-heaps-median-of-data-stream)
-    -   [Tree Traversal](#tree-traversal)
-    -   [Graph Traversal](#graph-traversal)
-        -   [Depth-First Search ](#depth-first-search)
-        -   [Breadth-First Search](#breadth-first-search)
-        -   [Bidirectional Search](#bidirectional-search)
+            Stream)](#two-heaps-median-of-data-stream){#toc-two-heaps-median-of-data-stream}
+    -   [Tree Traversal](#tree-traversal){#toc-tree-traversal}
+    -   [Graph Traversal](#graph-traversal){#toc-graph-traversal}
+        -   [Depth-First Search
+            ](#depth-first-search){#toc-depth-first-search}
+        -   [Breadth-First
+            Search](#breadth-first-search){#toc-breadth-first-search}
+        -   [Bidirectional
+            Search](#bidirectional-search){#toc-bidirectional-search}
         -   [Dijkstra's Shortest Path
-            Algorithm](#dijkstras-shortest-path-algorithm)
-        -   [A\*](#a)
+            Algorithm](#dijkstras-shortest-path-algorithm){#toc-dijkstras-shortest-path-algorithm}
+        -   [A\*](#a){#toc-a}
         -   [Bellman-Ford Shortest Path
-            Algorithm](#bellman-ford-shortest-path-algorithm)
+            Algorithm](#bellman-ford-shortest-path-algorithm){#toc-bellman-ford-shortest-path-algorithm}
         -   [Floyd-Warshall All-Pairs Shortest Path
-            Algorithm](#floyd-warshall-all-pairs-shortest-path-algorithm)
-    -   [Graph Analysis Methods](#graph-analysis-methods)
-        -   [Topological Sort](#topological-sort)
+            Algorithm](#floyd-warshall-all-pairs-shortest-path-algorithm){#toc-floyd-warshall-all-pairs-shortest-path-algorithm}
+    -   [Graph Analysis
+        Methods](#graph-analysis-methods){#toc-graph-analysis-methods}
+        -   [Topological Sort](#topological-sort){#toc-topological-sort}
         -   [Tarjan's Strongly Connected Component
-            Algorithm](#tarjans-strongly-connected-component-algorithm)
+            Algorithm](#tarjans-strongly-connected-component-algorithm){#toc-tarjans-strongly-connected-component-algorithm}
         -   [Kruskal's Minimum Spanning Tree
-            Algorithm](#kruskals-minimum-spanning-tree-algorithm)
+            Algorithm](#kruskals-minimum-spanning-tree-algorithm){#toc-kruskals-minimum-spanning-tree-algorithm}
         -   [Prim's Minimum Spanning Tree
-            Algorithm](#prims-minimum-spanning-tree-algorithm)
-    -   [Recursive Problems](#recursive-problems)
+            Algorithm](#prims-minimum-spanning-tree-algorithm){#toc-prims-minimum-spanning-tree-algorithm}
+    -   [Recursive
+        Problems](#recursive-problems){#toc-recursive-problems}
         -   [The Decision Tree (DAG)
-            Model](#the-decision-tree-dag-model)
-        -   [Backtracking](#backtracking)
-        -   [Greedy Algorithms](#greedy-algorithms)
+            Model](#the-decision-tree-dag-model){#toc-the-decision-tree-dag-model}
+        -   [Backtracking](#backtracking){#toc-backtracking}
+        -   [Greedy
+            Algorithms](#greedy-algorithms){#toc-greedy-algorithms}
         -   [Dynamic Programming &
-            Memoization](#dynamic-programming-memoization)
+            Memoization](#dynamic-programming-memoization){#toc-dynamic-programming-memoization}
         -   [Unordered Choices Without Repetitions in
-            1D](#unordered-choices-without-repetitions-in-1d)
+            1D](#unordered-choices-without-repetitions-in-1d){#toc-unordered-choices-without-repetitions-in-1d}
         -   [Unordered Choices With Repetitions in
-            1D](#unordered-choices-with-repetitions-in-1d)
+            1D](#unordered-choices-with-repetitions-in-1d){#toc-unordered-choices-with-repetitions-in-1d}
         -   [Ordered Choices in 1D
-            Sequences](#ordered-choices-in-1d-sequences)
+            Sequences](#ordered-choices-in-1d-sequences){#toc-ordered-choices-in-1d-sequences}
         -   [Ordered Choices in 2D Sequences
-            (Subsequences)](#ordered-choices-in-2d-sequences-subsequences)
+            (Subsequences)](#ordered-choices-in-2d-sequences-subsequences){#toc-ordered-choices-in-2d-sequences-subsequences}
         -   [Ordered Choices in 2D+ Sequences
-            (DFS)](#ordered-choices-in-2d-sequences-dfs)
+            (DFS)](#ordered-choices-in-2d-sequences-dfs){#toc-ordered-choices-in-2d-sequences-dfs}
         -   [Unordered Choices in 2D Sequences (Binary
-            Search)](#unordered-choices-in-2d-sequences-binary-search)
+            Search)](#unordered-choices-in-2d-sequences-binary-search){#toc-unordered-choices-in-2d-sequences-binary-search}
         -   [Turn-Based Games (Double-ended
-            queue)](#turn-based-games-double-ended-queue)
-    -   [Numerical Methods](#numerical-methods)
+            queue)](#turn-based-games-double-ended-queue){#toc-turn-based-games-double-ended-queue}
+    -   [Numerical Methods](#numerical-methods){#toc-numerical-methods}
         -   [Bit Manipulation and Set
-            Operations](#bit-manipulation-and-set-operations)
-    -   [Combinatorial Methods](#combinatorial-methods)
-        -   [Permutations](#permutations)
-        -   [Combinations](#combinations)
-        -   [Cartesian Product](#cartesian-product)
-        -   [n-th Partial Sum](#n-th-partial-sum)
-        -   [Derangement](#derangement)
-        -   [Fibonacci Numbers](#fibonacci-numbers)
-        -   [Lattice Paths](#lattice-paths)
-        -   [Catalan Numbers](#catalan-numbers)
-        -   [Stars and Bars](#stars-and-bars)
-    -   [Geometric Problems](#geometric-problems)
-        -   [K Nearest Neighbors](#k-nearest-neighbors)
-        -   [Convex Hulls](#convex-hulls)
-        -   [Count Rectangles](#count-rectangles)
-        -   [Area of Histograms](#area-of-histograms)
-        -   [Newton's Method](#newtons-method)
--   [Appendix](#appendix)
-    -   [Powers of 2 Table](#powers-of-2-table)
+            Operations](#bit-manipulation-and-set-operations){#toc-bit-manipulation-and-set-operations}
+    -   [Combinatorial
+        Methods](#combinatorial-methods){#toc-combinatorial-methods}
+        -   [Permutations](#permutations){#toc-permutations}
+        -   [Combinations](#combinations){#toc-combinations}
+        -   [Cartesian
+            Product](#cartesian-product){#toc-cartesian-product}
+        -   [n-th Partial Sum](#n-th-partial-sum){#toc-n-th-partial-sum}
+        -   [Derangement](#derangement){#toc-derangement}
+        -   [Fibonacci
+            Numbers](#fibonacci-numbers){#toc-fibonacci-numbers}
+        -   [Lattice Paths](#lattice-paths){#toc-lattice-paths}
+        -   [Catalan Numbers](#catalan-numbers){#toc-catalan-numbers}
+        -   [Stars and Bars](#stars-and-bars){#toc-stars-and-bars}
+    -   [Geometric
+        Problems](#geometric-problems){#toc-geometric-problems}
+        -   [K Nearest
+            Neighbors](#k-nearest-neighbors){#toc-k-nearest-neighbors}
+        -   [Convex Hulls](#convex-hulls){#toc-convex-hulls}
+        -   [Count Rectangles](#count-rectangles){#toc-count-rectangles}
+        -   [Area of
+            Histograms](#area-of-histograms){#toc-area-of-histograms}
+        -   [Newton's Method](#newtons-method){#toc-newtons-method}
+-   [Appendix](#appendix){#toc-appendix}
+    -   [Powers of 2 Table](#powers-of-2-table){#toc-powers-of-2-table}
     -   [Array Sorting Algorithms
-        Table](#array-sorting-algorithms-table)
+        Table](#array-sorting-algorithms-table){#toc-array-sorting-algorithms-table}
     -   [Single-Source Shortest Path
-        Table](#single-source-shortest-path-table)
+        Table](#single-source-shortest-path-table){#toc-single-source-shortest-path-table}
     -   [Algorithm Optimization
-        Checklist](#algorithm-optimization-checklist)
+        Checklist](#algorithm-optimization-checklist){#toc-algorithm-optimization-checklist}
     -   [Whiteboard Interview
-        Checklist](#whiteboard-interview-checklist)
+        Checklist](#whiteboard-interview-checklist){#toc-whiteboard-interview-checklist}
 
 # Pre-requisite Concepts
 
@@ -172,6 +207,7 @@ average case run time. When analysing an algorithm we typically use an
 upper bound on the worst case.
 $$\mathcal{O}(1) \leq \mathcal{O}(\log n) \leq \mathcal{O}(n) \leq \mathcal{O}(n \log n) \leq \mathcal{O}(n^2) \leq  \mathcal{O}(2^n)  \leq \mathcal{O}(n!)$$
 
+::: multicols
 2
 
 -   $\mathcal{O}(1)$ - constant time
@@ -189,6 +225,7 @@ $$\mathcal{O}(1) \leq \mathcal{O}(\log n) \leq \mathcal{O}(n) \leq \mathcal{O}(n
 -   $\mathcal{O}(c^n)$ - exponential time
 
 -   $\mathcal{O}(n!)$ - factorial time
+:::
 
 ### Amortized Analysis
 
@@ -230,7 +267,8 @@ on an input of size $n$, $$\begin{aligned}
         &=  T(n/4)+ \Theta(1) + \Theta(1) \\ 
         &= \Theta(1) + \cdots + \Theta(1) \\
         &= \Theta(\log n ) 
-    \end{aligned}$$
+    
+\end{aligned}$$
 
 ## Computational Complexity Theory
 
@@ -536,11 +574,11 @@ It supports the following operations:
 
 -   **isEmpty()**: Return true if the queue is empty.
 
-One place where queues are often used is in breadth-first search or in
-implementing a cache. In breadth-first search we may use a queue to
-store a list of the nodes that we need to process. Each time we process
-a node, we add its adjacent nodes to the back of the queue. This allows
-us to process nodes in the order in which they are viewed.
+Some common places where queues are often used is in breadth-first
+search or in implementing a cache. In breadth-first search we may use a
+queue to store a list of the nodes that we need to process. Each time we
+process a node, we add its adjacent nodes to the back of the queue. This
+allows us to process nodes in the order in which they are viewed.
 
 A queue can be implemented with a linked list and moreover, they are
 essentially the same thing as long as items are added and removed from
@@ -581,7 +619,7 @@ while len(q):
 ### Priority Queues
 
 A priority queue is an ADT container that retrieves items not by the
-insertion time (as in a stack or queue), nor by a key match (as in a
+insertion order (as in a stack or queue), nor by a key match (as in a
 dictionary), but instead retrieves items with the highest priority
 value. Priority queues provide more flexibility than simple sorting
 because they allow new elements to enter a system at arbitrary
@@ -658,8 +696,8 @@ while not pq.empty():
 # The heapq module for a min-priority queue
 import heapq
 pq = []
-for entry_count, item in enumerate(data):
-    heapq.heappush(pq, (item.priority, entry_count, item))
+for idx, item in enumerate(data):
+    heapq.heappush(pq, (item.priority, idx, item))
     
 while pq:
     next_item = heapq.heappop(pq)
@@ -729,7 +767,7 @@ def trap_water(height):
                 left_border, j = stack[-1]
                 # compute the cumulative water
                 water += min(left_border-right_border, v-right_border)*(i-j-1)
-        stack.append((e, i))
+        stack.append((water, i))
     return water
 
 import collections
@@ -747,12 +785,12 @@ def monotonic_deque(A):
 
 ## Hash Tables
 
-A hash table is a data structure that maps keys to values for highly
-efficient lookup. There are a number of ways of implementing this, but a
-simple and common implementation is known as **separate chaining**. In
-this implementation, we use an array of linked lists and a hash code
-function. To insert a key (which might be a string or essentially any
-other data type) and value, we do the following:
+A hash table is an abstract data type that maps keys to values for
+highly efficient lookup. There are a number of ways of implementing
+this, but a simple and common implementation is known as **separate
+chaining**. In this implementation, we use an array of linked lists and
+a hash code function. To insert a key (which might be a string or
+essentially any other data type) and value, we do the following:
 
 1.  First, compute the key's hash code, which will usually be an *int*
     or *long*. Note that two different keys could have the same hash
@@ -816,12 +854,13 @@ $$H(S, j+1) = (H(S,j) - \alpha^{m-1}char(s_j))\alpha + s_{j+m}$$
 
 ### Dictionaries and Hash Tables
 
-The dictionary data type (a.k.a. hash table or hash map) permits access
-to data items based on its content. You may insert an item into a
-dictionary to retrieve it in constant time later on. To resolve hash
-collisions, Python dicts use open addressing with random probing where
-the next slot is picked in a pseudo random order. The entry is then
-added to the first empty slot.
+The dictionary data structure (implementing the hash table or hash map
+ADT) permits access to data items based on a key derived from its
+content. You may insert an item into a dictionary to retrieve it in
+constant time later on. To resolve hash collisions, Python
+$\mathtt{dicts}$ use open addressing with random probing where the next
+slot is picked in a pseudo random order. The entry is then added to the
+first empty slot.
 
 The primary operations a hash table supports are:
 
@@ -860,9 +899,9 @@ In mathematical terms, a set is an unordered collection of unique
 objects drawn from a fixed universal set. A hash set implements the set
 ADT using a hash table. The core operations that sets support are:
 
-1.  Test whether $u_i \in S_j$.
+1.  Test whether $u_i \in S$.
 
-2.  Compute the union or intersection of $S_i$ and $S_j$.
+2.  Compute the union or intersection of sets $S_i$ and $S_j$.
 
 3.  Insert or delete members of $S$.
 
@@ -883,8 +922,9 @@ Sets are commonly implemented with the following data structures:
 Sorted order turns the problem of finding the union or intersection of
 two subsets into a linear-time operation, just sweep from left to right
 and see what you are missing. It makes element searching possible in
-sublinear time. Though, printing the elements of a set in a canonical
-order reminds us that order doesn't matter.
+sublinear time. Though, it's important to remember that order doesn't
+matter and requirements for accessing elements of the set in any
+canonical order will not be respected.
 
 If each subset contains exactly two elements, they can be thought of as
 edges in a graph whose vertices represent the universal set. A system of
@@ -962,13 +1002,13 @@ class TreeNode:
 
 ### Binary Heaps
 
-The **heap property** states that the key stored in each node is either
-greater than or equal to or less than or equal to the keys in the node's
-children, according to some total order. A **min-heap** is a complete
-binary tree (filled other than the rightmost elements on the last level)
-where each node is smaller than its children. The root, therefore, is
-the minimum element in the tree. The converse ordering holds for a
-**max-heap**. We have two main operations on a heap:
+The **heap property** states that the key stored in each node is more
+extreme (greater or less than) or equal to the keys in the node's
+children. A **min-heap** is a complete binary tree (filled other than
+the rightmost elements on the last level) where each node is smaller
+than its children. The root, therefore, is the minimum element in the
+tree. The converse ordering holds for a **max-heap**. We have two main
+operations on a heap:
 
 -   **insert(x)**: When we insert into a min-heap, we always start by
     inserting the element at the bottom. We insert at the rightmost spot
@@ -994,10 +1034,10 @@ good at basic ordering and keeping track of max and mins.
 Note, heapq creates a min-heap by default. To create a max-heap, you
 will need to invert values before storing and after retrieving them.
 Alternatively, you can define a class to wrap the module and override
-and invert the comparison method. The heapreplace(a, x) method returns
-the smallest value originally in the heap regardless of the value of x.
-Alternatively, heappushpop(a, x) pushes x onto the heap before popping
-the smallest value.
+and invert the comparison method. The $\mathtt{heapreplace(a, x)}$
+method returns the smallest value originally in the heap regardless of
+the value of x. Alternatively, $\mathtt{heappushpop(a, x)}$ pushes x
+onto the heap before popping the smallest value.
 
 *Python Implementation*
 
@@ -1225,7 +1265,8 @@ Some example use cases are as follows:
 
 -   Locating matches for a regular expression pattern
 
--   Finding Longest common substring to a set of strings in linear-time
+-   Finding longest common substring within a set of strings in
+    linear-time
 
 -   Find the longest palindrome in $S$
 
@@ -1402,7 +1443,7 @@ the query point.
 *Python Implementation*
 
 ``` {.python language="Python"}
-# Using heap and distance without square root
+# Using heap (relative distance without square root)
 def KNN_to_origin(points, K):
     def distance_to_origin(p):
         return p[0]**2 + p[1]**2
@@ -1605,8 +1646,9 @@ The **branching factor B** indicates the number of keys and children a
 node may have. $$\begin{aligned}
         B \leq \text{number of children} < 2B \\
         B - 1 \leq \text{number of keys} < 2B - 1
-    \end{aligned}$$ A **2-3 tree** is a B-tree with branching factor of
-2. This means it has at most 2 keys and at most 3 children.
+    
+\end{aligned}$$ A **2-3 tree** is a B-tree with branching factor of 2.
+This means it has at most 2 keys and at most 3 children.
 
 B-trees are constructed in a bottom-up way: values are inserted into a
 node based on binary search. If the node reaches its capacity based on
@@ -1691,26 +1733,26 @@ edges = [['A', 'B'], ['B', 'C'], ['C', 'A']]
 # Directed graph using an adjacency list
 def construct(edges):
     g = collections.defaultdict(list)
-    for from, to in edges:
-        g[from].append(to)
+    for source, target in edges:
+        g[source].append(target)
         
 # Undirected graph using an adjacency list
 def construct(edges):
     g = collections.defaultdict(set)
-    for from, to in edges:
-        g[from].add(to)
-        g[to].add(from)
+    for source, target in edges:
+        g[source].add(target)
+        g[target].add(source)
         
 # Undirected graph using an adjacency matrix
 def construct(edges):
     nodes = set()
     for e in edges:
         nodes.update({e[0], e[1]})
-    n, ordering = len(nodes) list(nodes)
+    n, ordering = len(nodes), list(nodes)
     g = [[0] * n for _ in range(n)]
-    for from, to in edges:
-        i, j = ordering.index(from), ordering.index(to)
-        g[from][to] = 1
+    for source, target in edges:
+        i, j = ordering.index(source), ordering.index(target)
+        g[source][target] = 1
 ```
 
 ### Flow Networks
@@ -1721,13 +1763,13 @@ $flow_i/capacity_i$. A flow must satisfy the restriction that the amount
 of flow into a node equals the amount of flow out of it, unless it is a
 source $s$, which has only outgoing flow, or sink $t$, which has only
 incoming flow. Often we are in search of the max flow of the network
-using which can be found using the **Ford--Fulkerson algorithm**. Or we
-may be in search of a **bottleneck** node,
+which can be found using the **Ford--Fulkerson algorithm**. Or we may be
+in search of a **bottleneck** node,
 $$bottleneck = min(capacity_i - flow_i \ \ \forall i  \text{ in the network}).$$
 
 ### Union-Find
 
-A union--find data structure (a.k.a disjoint-set union (DSU)) stores a
+A union--find data structure (a.k.a disjoint-set union or DSU) stores a
 collection of non-overlapping sets. In a graph, a set can be thought of
 as a tree, i.e. an acyclic and connected subgraph, making union-find a
 quick method for determining if a graph contains cycles. Disjoint-set
@@ -1901,11 +1943,12 @@ def search_rightmost(nums, target):
 Time Complexity: $\mathcal{O}(n^2)$ average and worst case. Space
 Complexity: $\mathcal{O}(1)$
 
-In bubble sort, we start at the beginning of the array and swap the
-first two elements if the first is greater than the second. Then, we go
-to the next pair, and so on, continuously making sweeps of the array
-until it is sorted. In doing so, the smaller items slowly \"bubble\" up
-to the beginning of the list.
+In bubble sort, we repeatedly iterate over adjacent pairs of elements
+starting with the full array and swapping elements if the first is
+greater than the second. In doing so, the smaller items slowly
+\"bubble\" up to the beginning of the list. We repeat the swapping
+process on the unsorted window, continuously making sweeps of the array
+until it is fully sorted.
 
 *Python Implementation*
 
@@ -1995,7 +2038,8 @@ to large amounts of data stored on different nodes. $$\begin{aligned}
             + \underbrace{c  n}_\text{merge}\\
         &= (1 + \log n) \cdot cn\\
         &= \mathcal{O}(n \log n)
-    \end{aligned}$$ *Python Implementation*
+    
+\end{aligned}$$ *Python Implementation*
 
 ``` {.python language="Python"}
 def _merge_lists(left_sublist, right_sublist):
@@ -2016,7 +2060,7 @@ def merge_sort(A):
     if len(A) <= 1:
         return A
     else:
-        midpoint = len(A)//2
+        midpoint = len(A) // 2
         left_sublist = merge_sort(A[:midpoint])
         right_sublist = merge_sort(A[midpoint:])
         return _merge_lists(left_sublist, right_sublist)
@@ -2027,7 +2071,7 @@ def merge_sort(A):
 Time Complexity: $\mathcal{O}(n \log n)$ average, $\mathcal{O}(n^2)$
 worst case. Space Complexity: $\mathcal{O}(\log n )$
 
-In quick sort, we pick an element and partition the array, such that all
+In quick sort, we pick an element and partition the array such that all
 numbers that are less than the partitioning element come before all
 elements that are greater than it. The partitioning can be performed
 efficiently through a series of swaps.
@@ -2271,16 +2315,16 @@ complexity: $\mathcal{O}(n\cdot k)$
 
 1.  Set up an array of initially empty bucket
 
-2.  Scatter: Go over the original array, putting each object in its
+2.  (Scatter) Go over the original array, putting each object in its
     bucket
 
 3.  Sort each non-empty bucket
 
-4.  Gather: Visit the buckets in order and put all elements back into
+4.  (Gather) Visit the buckets in order and put all elements back into
     the original array
 
 Radix and bucket sort are two useful generalizations of counting sort.
-They have a lot in common with counting sort and with each other but
+They have a lot in common with counting sort and with eachother but
 exchange time-space tradeoffs.
 
 -   Counting sort -- Simple buckets, simple processing, memory overhead
@@ -2357,7 +2401,7 @@ Timsort has been Python's standard sorting algorithm since version 2.3.
 Time complexity: $\mathcal{O}(n^2)$, Space Complexity: $\mathcal{O}(1)$
 
 The two pointer technique uses two references to values in a given array
-to check if they satisfy a condition, otherwise the pointers usually
+to check if they satisfy a condition, otherwise the pointers (usually)
 move towards the middle of the array being iterated over.
 
 *Python Implementation*
@@ -2381,8 +2425,8 @@ The fast and slow pointers/runners technique (a.k.a. Floyd's Tortoise
 and Hare Algorithm) is useful when dealing with cyclic linked lists. By
 moving at different rates, the algorithm proves that the two pointers
 are either going to meet eventually or one will reach the end of the
-list. That is, the fast pointer should catch the slow pointer once both
-the pointers are in a cyclic loop.
+list. That is, the fast pointer should catch up to the slow pointer if
+both the pointers are in a cyclic loop.
 
 If the list has $n$ nodes, then in $\leq n$ steps, either the fast
 pointer will find the end of the list, or there is a loop and the slow
@@ -2406,13 +2450,13 @@ are equal.
 
 A variation of this technique can be used to find the intersection of
 two linked lists. Instead of detecting a cycle, we are given a linked
-list with two heads the intersect and want to find the point of
+list with two heads that intersect and want to find the point of
 intersection. We again use two pointers, one at the first head and the
 other at the second, but move both forward at the same rate until they
 are equal. The trick being that when either pointer reaches the end, we
 change the pointers reference to be the head of the opposite starting
 point and traverse a second time. Eventually the two pointers will
-either meet at a single node or both have None reference.
+either meet at a single node or both have $\mathtt{None}$ reference.
 
 *Python Implementation*
 
@@ -2474,15 +2518,15 @@ to track the last seen indices of the elements in the current window.
     window, continuing until the global smallest valid window is found.
 
 A possible variation is to use two sliding windows. This may be
-necessary when a question asks to find the number of valid sub-sequence
+necessary when a problem needs to find the number of valid sub-sequence
 of *exactly* $K$ elements.[^2] Then we want to find
 $exactly(K) = atMost(K) - atMost(K-1)$ and may define two sliding
 windows, one which counts subsequences with length $\leq k$ and another
 with length $\leq k-1$.
 
 Another variation involves finding the maximum value in windows of size
-K for each starting index of a given array. This can be done in
-$\mathcal{O}(Nk)$ time using the standard sliding window technique,
+$K$ for each starting index of a given array. This can be done in
+$\mathcal{O}(NK)$ time using the standard sliding window technique,
 however, we can reduce this to $\mathcal{O}(N)$ by using a double-ended
 queue (deque) that is kept monotonically decreasing. After popping all
 smaller elements from the back of the queue, we append the next smallest
@@ -2510,7 +2554,7 @@ def sliding_window_with_counter(sequence, max_length):
     return ans
     
 # Using monotonic double-ended queue
-def maxSlidingWindow(nums, k):
+def max_sliding_window(nums, k):
     out, dq = [], deque()
     for i in range(len(nums)):
         # Pop all elements at back of queue that are less than current element
@@ -2518,7 +2562,7 @@ def maxSlidingWindow(nums, k):
             dq.pop()
         dq.append((nums[i], i))
         # At least one full window was added to queue
-        if i >= k-1:
+        if i >= k - 1:
             # Pop front while element index is out of window
             while dq and dq[0][1] < i - k + 1:
                 dq.popleft()
@@ -2555,13 +2599,13 @@ the array in $\mathcal{O}(n \log n)$ and use multiple pointers instead.
 *Python Implementation*
 
 ``` {.python language="Python"}
-def single_pass_lookup(nums, target):
+def single_pass_lookup(nums, target_sum):
     lookup = {}
     for i, v in enumerate(nums):
-        if target - v in lookup:
-            return i, lookup[target - v]
+        if target_sum - v in lookup:
+            return i, lookup[target_sum - v]
         lookup[v] = i
-    raise ValueError('Target not in list.')
+    raise ValueError('Target sum not in list.')
 ```
 
 ### Prefix Sums and Kadane's Algorithm
@@ -2569,18 +2613,18 @@ def single_pass_lookup(nums, target):
 Time Complexity: $\mathcal{O}(n)$, Space Complexity: $\mathcal{O}(1)$
 
 The maximum subarray sum problem is the task of finding a contiguous
-subarray with the largest sum within a given one-dimensional array
-$A[1...n]$ of numbers.
+subarray with the largest running sum within a given one-dimensional
+array $A[1...n]$ of numbers.
 
 This problem can be solved using several different techniques, including
 brute force, divide and conquer, dynamic programming, and reduction to
 shortest paths. Kadane's algorithm can be viewed as a trivial example of
 dynamic programming which will be visited in more detail later, and
 makes use of in-place **prefix sums**. For each number in a sequence,
-its corresponding prefix sum, also known as cumulative sum, is the sum
+its corresponding prefix sum, also known as a cumulative sum, is the sum
 of all previous numbers in the sequence plus the number itself.
 
-1.  Use the input array of nums to store the candidate subarrays sum
+1.  Use the input array of numbers to store the candidate subarrays sum
     (i.e. the greatest contiguous sum so far).
 
 2.  Ignore cumulative negatives, as they don't contribute positively to
@@ -2621,7 +2665,7 @@ maintained using binary search ($\mathcal{O}(\log(n))$).
 *Python Implementation*
 
 ``` {.python language="Python"}
-def prefix_sum(self, weights: List[int], target: int) -> int:
+def prefix_sum(self, weights, target):
     cumulative, prefix_sums = 0, []
     for w in weights:
         cumulative += w
@@ -2650,10 +2694,10 @@ $\mathcal{O}(n)$, where $Q$ is the number of operations or queries
 Given an array $A$ of 0's of size $n$, perform $Q$ operations or queries
 by incrementing values in the subarray $A[L: R]$ by 1. A naive solution
 of simulating all the given operations will result in time complexity of
-$\mathcal{O}(Q\cdot n)$. However, using a numerical method we are able
+$\mathcal{O}(Q\cdot n)$. However, using a numerical method, we are able
 to reduce the time complexity to $\mathcal{O}(Q + n)$. This technique
-involves creating a secondary array $B$ and only incrementing the value
-at the left endpoint, $L$ by 1 and decrementing the value at index
+involves creating a secondary array, $B$, and only incrementing the
+value at the left endpoint, $L$ by 1 and decrementing the value at index
 $R + 1$ by -1. After repeating this process for all queries, to find the
 true desired value of $A[i]$ we can find the prefix sum of $B$ from
 $B[0:i]$.
@@ -2684,8 +2728,8 @@ def max_after_operations(n, operations):
     B = [0] * (n + 1)
     for start, end, incr in operations:
         B[start - 1] += incr
-        if stop <= len(B):
-            B[stop] -= incr;
+        if end <= len(B):
+            B[end] -= incr;
     max_value = cur = 0
     for i in B:
         cur = cur + i;
@@ -2693,7 +2737,7 @@ def max_after_operations(n, operations):
     return max_value
 
 import collections
-def minMeetingRooms(intervals):
+def min_meeting_rooms(intervals):
     mp = collections.Counter()
     for item in intervals:
         mp[item.start] += 1
@@ -2714,7 +2758,7 @@ An interval problem has an input of a 2D array in which each nested
 array represents a start and an end value. The interval can also be
 represented as an object with start and end attributes.
 
-Given two intervals A and B, there will be six different ways the two
+Given two intervals A and B, there will be different ways the two
 intervals can relate to each other:
 
 1.  A and B do not overlap, A before B
@@ -2747,7 +2791,7 @@ def merge_intervals(self, intervals):
     for i in range(1, len(intervals)):
         cur_start, cur_end = intervals[i]
         
-        # overlapping intervals, new starts before previous ends
+        # overlapping intervals, current starts before previous ends
         if cur_start <= prev_end: # equivalence implies ranges are inclusive
             prev_end = max(prev_end, cur_end)
         # non-overlapping interval, add the previous interval and update
@@ -2784,9 +2828,9 @@ characters in the text of the next window. Instead of wasting
 computation on previous matches, we use a pre-computed lookup table to
 skip to the first instance of a match of the starting character.
 
-Values in the longest proper suffix (LPS) array record the max length of
+Values in the longest prefix suffix (LPS) array record the max length of
 matching substrings that exists as both a prefix and suffix, where the
-suffix ends at the current index. For example, the LPS array of patter
+suffix ends at the current index. For example, the LPS array of pattern
 "aabaac\" is \[0, 1, 0, 1, 2, 0\].
 
 *Python Implementation*
@@ -2853,7 +2897,7 @@ class RHash():
     def __init__(self, s):
         self.d = 256
         self.q = 101
-        self.h = pow(self.d, len(s)-1, self.q)
+        self.h = pow(self.d, len(s) - 1, self.q)
         self.val = 0
         for c in s:
             self.append(c)
@@ -2892,8 +2936,8 @@ are interpreted recursively in a non-standard left-to-right order. This
 is done in mathematical expressions because of a non-sequential order of
 operations. It can be further complicated with parenthesis, where we
 need to delay processing the main expression until we are done
-evaluating the sub-expressions within parenthesis. To introduce this
-delay, we use a stack.
+evaluating the sub-expressions within parenthesis (BEDMAS). To book-keep
+this delay, we use a stack.
 
 A stack can also be useful for processing structured text that uses
 rules based on special end or beginning delimiters of substrings. If we
@@ -2904,7 +2948,7 @@ number of counter integers.
 *Python Implementation*
 
 ``` {.python language="Python"}
-def basic_calculate(self, s: str) -> int:
+def simple_calculate(self, s):
     num, stack, sign = 0, [], "+"
     for i in range(len(s)):
         if s[i].isdigit():
@@ -2963,7 +3007,7 @@ two things:
 
 This will ensure that we always have top $K$ largest numbers in the
 heap. To easily remove the smallest value we may use a min-heap. Note,
-largest in in terms of ascending order from low to high values.
+largest is in terms of ascending order from low to high values.
 
 Heaps can also be used for maintaining order when selecting the
 largest/smallest elements to be processed first and then possibly
@@ -2977,22 +3021,22 @@ import heapq
 
 # For maintaining a class 
 class KthLargest:
-    def __init__(self, k: int, nums):
+    def __init__(self, k, nums):
         self.pq, self.k = [], k
         for n in nums:
             self.add(n)
 
-    def add(self, val: int) -> int:
+    def add(self, val):
         heapq.heappush(self.pq, val)
         if len(self.pq) > self.k:
             heapq.heappop(self.pq)
         return self.pq[0]
 
 # For one-time calculation
-def findKthLargest(self, nums: List[int], k: int) -> int:
+def findKthLargest(self, nums, k):
     return heapq.nlargest(k, nums)[-1]
     # Use sort for large values of k
-    ## return sorted(nums)[k]
+    return sorted(nums)[k]
 ```
 
 ### Two Heaps (Median of Data Stream)
@@ -3046,14 +3090,14 @@ one of the ancestors or the right child, and the predecessor could be in
 either the ancestors or left child. Many tree analysis problems can be
 reduced to a sequence problem by first performing a traversal and
 storing the values into an auxiliary array, though some care may need to
-be taken to capture the the empty nodes with a special None value.
-Common sequence techniques that apply to tree problems include prefix
-sums and pattern matching.
+be taken to capture the the empty nodes with a special $\mathtt{None}$
+value. Common sequence techniques that apply to tree problems include
+prefix sums and pattern matching.
 
 A tree traversal visiting the root first will provide a valid
-topological ordering, i.e. pre-order, reverse in-order. On general DAGs
-possibly containing converging siblings, reverse post order (LRN) can be
-used to find a topological ordering.
+topological ordering, i.e. pre-order, reverse post-order. On general
+DAGs possibly containing converging siblings, reverse post-order (LRN)
+can be used to find a topological ordering.
 
 *Python Implementation*
 
@@ -3088,7 +3132,7 @@ def postorder(root):
         postorder(root.right) 
         print(root.val)
 
-def levelorder(root):
+def level_order(root):
     q, level = collections.deque(root), 0
     while q:
         level += 1
@@ -3101,16 +3145,16 @@ def levelorder(root):
                 q.append(node.right)
     return level
     
-def verticalorder(root):
-    columnTable = defaultdict(list)
+def vertical_order(root):
+    col_table = defaultdict(list)
     queue = deque([(root, 0)])
     while queue:
         node, column = queue.popleft()
         if node is not None:
-            columnTable[column].append(node.val)
+            col_table[column].append(node.val)
             queue.append((node.left, column - 1))
             queue.append((node.right, column + 1))
-    return [columnTable[x] for x in sorted(columnTable.keys())]
+    return [col_table[x] for x in sorted(col_table.keys())]
 ```
 
 ## Graph Traversal
@@ -3132,11 +3176,11 @@ stuck in an infinite loop. This is because graphs may not be acyclic and
 do not make distinctions between parent and child edges. We may also be
 able to reduce space by marking nodes in a graph as visited.
 
-When a graph is implemented with an Adjacency List, the time complexity
+When a graph is implemented with an adjacency list, the time complexity
 of DFS will be $\mathcal{O}(|V| + |E|)$, but when implemented with an
-Adjacency Matrix or if the graph is dense, it will be
+adjacency matrix or if the graph is dense, it will be
 $\mathcal{O}(|V|^2)$. The complexity difference occurs due to the fact
-that in an Adjacency Matrix we must iterate through all possible
+that in an adjacency matrix we must iterate through all possible
 adjacent edges to find existing outgoing edges, which takes $O(|V|)$
 time summed over $|V|$ vertices. So
 $\mathcal{O}(|V| + |E|) = \mathcal{O}(|V| + |V|^2) = \mathcal{O}(|V|^2)$.
@@ -3203,9 +3247,9 @@ target node. In general, BFS often has similar function to DFS, but only
 BFS is optimal as a **single-source shortest path** algorithm in an
 unweighted graph.
 
-Again, we find that when implemented with an Adjacency List, the time
+Again, we find that when implemented with an adjacency list, the time
 complexity of DFS will be $\mathcal{O}(|V| + |E|)$, but when implemented
-with an Adjacency Matrix or if the graph is dense, it will be
+with an adjacency matrix or if the graph is dense, it will be
 $\mathcal{O}(|V|^2)$.
 
 *Python Implementation*
@@ -3226,7 +3270,7 @@ def bfs(adj_matrix):
             curr_i, curr_j = queue.popleft() #alt: pop(0)
             if (curr_i, curr_j) not in visited:
                 visited.add((curr_i, curr_j))
-                # Traverse neighbors.
+                # Traverse neighbors
                 for direction in directions:
                     next_i, next_j = curr_i + \
                         direction[0], curr_j + direction[1]
@@ -3304,7 +3348,7 @@ for storing the minimum distances.
 
     Create an empty set to track visited nodes.
 
-2.  **Enter top level while loop** --
+2.  **Enter outer while loop** --
 
     While the unvisited priority queue is non-empty, pop and unpack the
     vertex with the smallest distance and set it to the current node.
@@ -3751,7 +3795,7 @@ We can interpret recursive solutions using the following categories:
 
 -   The **half-and-half** approach: in addition to top-down and
     bottom-up approaches, it's often effective to divide the data set in
-    half. For example, binary search works with a \"half-and-half\"
+    half. For example, binary search works with a "half-and-half\"
     approach. When we look for an element in a sorted array, we first
     figure out which half of the array contains the value. Then we
     recurse and search for it in that half.
@@ -3784,10 +3828,10 @@ Many problems involve finding a solution by processing the state space,
 i.e. the space of all possible results, in a search for a solution that
 is both correct and optimal. An algorithm processes the state space by
 making a series of decisions and completes when it knows it has found
-the best resulting set of decisions. We can think of this decision space
-in terms of a graph structure in which each node being traversed is an
-inclusion to our resulting decision sequence which is represented by a
-path. Then, each of the outgoing edges in the graph indicates a
+the best result from a set of decisions. We can think of this decision
+space in terms of a graph structure in which each node being traversed
+is an inclusion to our resulting decision sequence which is represented
+by a path. Then, each of the outgoing edges in the graph indicates a
 reachable link from one state to another.
 
 Recall that a **directed acyclic graph (DAG)** is a directed graph that
@@ -3812,7 +3856,7 @@ again or included multiple times, i.e. there are no infinite loops.
     are mostly blindly searching the unvisted state space.
 
 2.  **Backtracking** -- Similar to DFS, this approach can be used when
-    there are overlapping subproblems and no optimal substructure
+    there are overlapping subproblems but no optimal substructure
     exists, i.e. we can not derive optimal solutions to subproblems even
     when given a global optimal solution. Additionally, any local cost
     analysis will not be enough to help us determine which path to
@@ -3944,7 +3988,7 @@ NP-Complete, a greedy algorithm is likely the best approximation
 function.
 
 A common aspect of greedy algorithms is to sort the choices and then
-selecting them in the appropriate order. This will often be the
+select them in the appropriate order. Sorting will often be the
 bottleneck step, bounding the algorithm to $\mathcal{O}(n \log n)$. In
 the unweighted interval/job scheduling problem, we first sort intervals
 by their end times in ascending order i.e. we schedule them based on
@@ -4024,7 +4068,7 @@ follows:
 
 4.  Construct an algorithm by recursion and memoization (need acyclic
     DAG) or building a DP table bottom up (need topological order).
-    Note: The topological order, i.e. the order in which subproblems are
+    Note, the topological order, i.e. the order in which subproblems are
     executed, should be from smallest to largest.
 
 5.  Solve original problem. The runtime will be the number of
@@ -4036,16 +4080,16 @@ Given a set of choices, we are tasked with including or excluding
 members of this set in any order, typically with the aim of maximizing,
 minimizing, or exactly matching a specific target, cumulative sum, or
 product of these choices under some constraint. Although the choices can
-be sorted, the constraint prevents a greedy algorithm from being
-correct. In general, our actual choices are unimportant and only their
+be sorted, the global constraint prevents a greedy algorithm from
+working. In general, our actual choices are unimportant and only their
 cumulative value matters and needs to be tracked.
 
-Thus the features of the recursive states are the current choice being
-considered and the remaining constraint which produce the ideal
-cumulative value for a given state. The state transitions generally
-iterate over the different elements taking a max or min of their
-inclusion or exclusion. Subproblems are either prefixes or suffixes of
-the given choices since ordering is irrelevant.
+Thus the features of a recursive state are (1) the current choice being
+considered and (2) the remaining constraint needed to produce the ideal
+cumulative value. The state transitions generally iterate over the
+different elements taking a max or min of their inclusion or exclusion.
+Subproblems are either prefixes or suffixes of the given choices since
+ordering is irrelevant.
 
 Notable Problems: 0/1 Knapsack, Partition Equal Subset Sum
 
@@ -4059,11 +4103,11 @@ def knapsack_recursive(capacity, weights, values):
     def dp(capacity, idx):
         if idx == 0 or capacity == 0:
             return 0
-        if (weights[i-1] > capacity):
-            return dp(capacity, idx-1)
+        if (weights[idx - 1] > capacity):
+            return dp(capacity, idx - 1)
         else:
             return max(
-                values[idx-1] + dp(capacity - weights[i-1], idx - 1),
+                values[idx - 1] + dp(capacity - weights[i - 1], idx - 1),
                 dp(capacity, idx - 1)
             )
     return dp(capacity, len(values))
@@ -4151,7 +4195,7 @@ def climb_stairs(n): ## Fibonacci
     dp = [1, 2]
     for i in range(3, n+1):
         curr = dp[0] + dp[1]
-        dp[0], dp[1] = dp[1], curr
+        dp[0], dp[1] = dp[1], curr ## replace values in table
     return dp[1]
 
 # House Robbers II: Max profit without robbing two adjacent houses in a circular street
@@ -4170,7 +4214,7 @@ def rob_II(nums):
     return max(rob_I(nums[:-1]), rob_I(nums[1:]))
 
 # Best Time to Buy and Sell Stock III (K=2 transactions only)
-def maxProfit(prices: List[int]) -> int:
+def max_profit(prices):
     @functools.lru_cache(None)
     def recursive(idx, k, holding):
         if k == 0 and not holding or idx == len(prices):
@@ -4218,14 +4262,14 @@ def lis(nums):
 
 # Given two strings text1 and text2, return the length of their longest common subsequence.
 import functools
-def lcs_recursive(text1: str, text2: str) -> int:
+def lcs_recursive(text1, text2):
     @functools.lru_cache(None)
-    def helper(i,j):
+    def helper(i, j):
         if i < 0 or j < 0:
             return 0
         if text1[i] == text2[j]:
-            return helper(i-1, j-1) + 1
-        return max(helper(i-1, j), helper(i, j-1))
+            return helper(i - 1, j - 1) + 1
+        return max(helper(i - 1, j), helper(i, j - 1))
     return helper(len(text1) - 1, len(text2) - 1)
 
 def lcs_bottom_up(X, Y): 
@@ -4249,7 +4293,7 @@ grid and can use DFS with memoization to exhastively search for paths.
 DP becomes valid when constraints are given on the directions we're
 allowed to traverse in, i.e. only moving up and right, creating optimal
 substructure and allowing us to build up a solution from subproblems.
-Sometimes we can reduce our DP table to single array by cumulatively
+Sometimes we can reduce our DP table to a single array by cumulatively
 storing row and column information. We may also be able to reduce space
 by using the grid to overwrite memoized values in-place. DFS can
 generalize to larger dimensions as long as the constraints on traversal
@@ -4282,7 +4326,7 @@ def unique_paths_1d_memo(self, m, n):
     return dp[-1]
     
 # Minimum path sum
-def minPathSum(self, grid):
+def min_path_sum(self, grid):
     m, n = len(grid), len(grid[0])
     for i in range(1, n):
         grid[0][i] += grid[0][i-1]
@@ -4317,16 +4361,16 @@ loss) scenario. This is generally in the form of determining the minimum
 number of guesses or the minimum cost required to perform a binary
 search.
 
-Super egg drop, Guessing game with cost
+Notable Problems: Super egg drop, Guessing game with cost
 
 *Python Implementation*
 
 ``` {.python language="Python"}
 # Weighted Interval Scheduling
 import bisect
-def weightedJobScheduling(startTime, endTime, profit):
+def weighted_job_scheduling(start_time, end_time, profit):
     # Similar to unweighted greedy approach, we sort on earliest finish time
-    jobs = sorted(zip(startTime, endTime, profit), key=lambda v: v[1])
+    jobs = sorted(zip(start_time, end_time, profit), key=lambda v: v[1])
     dp = [[0, 0]]
     for s, e, p in jobs:
         i = bisect.bisect(dp, [s + 1]) - 1
@@ -4345,13 +4389,13 @@ def length_of_LIS(nums):
     return len(dp)
 
 # Russian Doll Envelopes
-def maxEnvelopes(arr):
+def max_envelopes(arr):
     # sort increasing in first dimension and decreasing in second
     arr.sort(key=lambda x: (x[0], -x[1]))
     return length_of_LIS([i[1] for i in arr])
     
 # Given K eggs and N floors find the min number of moves needed to guarantee you find the lowest floor needed to break the egg
-def superEggDrop(self, K: int, N: int) -> int:
+def super_egg_drop(self, K: int, N: int) -> int:
         @lru_cache(None)
         def dfs(eggs, floors):
             if eggs == 1 or floors in [0, 1]: 
@@ -4386,7 +4430,7 @@ Coloring Game, Maximum Points You Can Obtain from Cards
 *Python Implementation*
 
 ``` {.python language="Python"}
-def stoneGame(piles: List[int]) -> bool:
+def stone_game(piles):
     n = len(piles)
     dp = [[0] * n for i in range(n)]
     for i in range(n):
@@ -4399,25 +4443,25 @@ def stoneGame(piles: List[int]) -> bool:
             )
     return dp[0][-1] > 0
 
-def maxScore_dp(cardPoints, limit):
-        if limit <= len(cardPoints): return sum(cardPoints)
+def max_score_dp(card_points, limit):
+        if limit <= len(card_points): return sum(card_points)
         @lru_cache(None)
         def dfs(i, j, limit):
             if limit == 0: return 0
             res = max(
-                cardPoints[i] + dfs(i + 1, j, limit - 1), 
-                cardPoints[j] + dfs(i, j - 1, limit - 1),
+                card_points[i] + dfs(i + 1, j, limit - 1), 
+                card_points[j] + dfs(i, j - 1, limit - 1),
             )
             return res
-        return dfs(0, len(cardPoints) - 1, limit)
+        return dfs(0, len(card_points) - 1, limit)
         
-def maxScore_sw(cardPoints, limit):
+def max_score_sw(card_points, limit):
         ans = win = 0
-        L = len(cardPoints)
+        L = len(card_points)
         for i in range(L - limit, L + limit):
-            win += cardPoints[i % L]
+            win += card_points[i % L]
             if i >= L:
-                win -= cardPoints[(i - limit) % L]
+                win -= card_points[(i - limit) % L]
             ans = max(win, ans)    
         return ans
 ```
@@ -4501,7 +4545,7 @@ subset with a bit, which can be either 0 or 1, we can use a bit array to
 denote whether a corresponding element belongs to this given subset or
 not. Then, each bit pattern will represent a possible subset and set
 operations can be performed with bit operations. Basic operations are
-outlined below,
+outlined below:
 
 -   **Set union** -- $A \vert B$
 
@@ -4509,7 +4553,7 @@ outlined below,
 
 -   **Set subtraction** -- $A \And \sim B$
 
--   **Set negation** -- $\text{ALL BITS } \wedge A$ or $\sim A$
+-   **Set compliment** -- $\text{ALL BITS } \wedge A$ or $\sim A$
 
 Basic use cases of bit manipulations are given below,
 
@@ -4570,11 +4614,11 @@ c = set(['a', 'c'])
 print(a | b)
 print(a.union(["foo", "bar"]))
 
-## Intersection
+## Intersection 
 print(a & b)
 print(a.intersection(["b"]))
 
-## Difference
+## Difference 
 print(a - b)
 print(a.difference(["foo"]))
 
@@ -4593,7 +4637,7 @@ print(a)
 
 # Given an array containing n distinct numbers taken from [0, n], find the one that is missing from the array.
 import operator
-def missingNumber(self, nums):
+def missing_number(nums):
     return reduce(operator.xor, nums + range(len(nums)+1))
 
 # Use a 26-bit bitmask to indicate which lower case latin characters are inside the string.
@@ -4674,11 +4718,11 @@ comb = combinations_with_replacement([1, 2, 3])
 import math
 
 # Count n choose k combinations (Python v3.8)
-n, k  = 10, 3
+n, k = 10, 3
 math.comb(n, k)
 
 # < Python v3.8
-math.factorial(n) / (math.factorial(k) * math.factorial(n-k)
+math.factorial(n) / (math.factorial(k) * math.factorial(n - k)
 ```
 
 ### Cartesian Product
@@ -4717,7 +4761,7 @@ n = 10
 nth_partial_sum = (n * (n + 1)) / 2 
 iterative_sum_count = sum([i for i in range(1, n + 1)])
 contiguous_sublists = lambda arr: [
-    arr[m: n + 1] 
+    arr[m : n + 1] 
     for m in range(len(arr)) 
     for n in range(m, len(arr))
 ]
@@ -4790,7 +4834,7 @@ from its previous coordinate, i.e.:
 The construction of lattice paths forms a bijection with $X$-strings
 where $X = \{ H, V\}$ with $H,V$ encoding horizontal or vertical moves
 on a grid. The number of lattice paths from $(m_1, n_1)$ to $(m_2,n_2)$
-is, $$\binom{m_2 - m_1 + m_2 - m_1}{m_2-m_1}.$$
+is, $$\binom{m_2 - m_1 + n_2 - n_1}{m_2-m_1}.$$
 
 *Python Implementation*
 
@@ -4830,7 +4874,7 @@ counting problems,
     triangles by connecting vertices.
 
 Catalan number from binomial coefficients,
-$$C(n) = \frac{1}{n+1}\binom{2n}{n}.$$
+$$C_n = \frac{1}{n+1}\binom{2n}{n}.$$
 
 Catalan number from recursive definition,
 $$C_0 = 1,\ \ C_{n+1} = \frac{2(2n+1)}{n+2} \cdot C_n.$$
@@ -4849,14 +4893,14 @@ import math
 def catalan_direct(n):
     first_term = 1 / (n + 1)
     second_term = math.comb(2*n, n) # in python 3.8 and above
-    second_term = math.factorial(2*n) / (math.factorial(n) * math.factorial(2*n-n))
+    # second_term = math.factorial(2*n) / (math.factorial(n) * math.factorial(2*n-n))
     return int(first_term * second_term)
 
 def catalan_recursive(n):
-    C = 1
+    c = 1
     for i in range(0, n):
-        C = C * 2*(2*i+1)/(i+2)
-    return int(C)
+        c = c * 2*(2*i+1)/(i+2)
+    return int(c)
 
 def catalan_dp(n):
     if n <= 1: return 1
@@ -4970,7 +5014,7 @@ def stars_and_bars(n, k):
 
     3.  If you don't have any immediate ideas for an optimized solution,
         spend time elaborating on the brute force algorithm, otherwise
-        mention that we can do better and can move on.
+        we can do better and can move on.
 
 3.  **Optimize previous approach or introduce new, better approach**
 
@@ -5034,6 +5078,7 @@ def stars_and_bars(n, k):
     4.  Consider further optimizations if time complexity is not BCR and
         space complexity is not constant.
 
+::: thebibliography
 Steven S. Skiena. 2008. The Algorithm Design Manual (2nd. ed.). Springer
 Publishing Company, Incorporated.
 
@@ -5055,6 +5100,7 @@ Keller, M.T. and Trotter, W.T., Applied Combinatorics, Open Textbook
 Library,
 
 ISBN9781534878655
+:::
 
 [^1]: http://norvig.com/spell-correct.html
 
