@@ -55,8 +55,13 @@ if [ -n "$root_file" ];
       echo "processing line: ${LINE}"
       cd "$(dirname "${LINE}")";
       "$compiler" $args "$(basename ${LINE})";
-      biber "$(basename -s .tex ${LINE})";
-      "$compiler" $args "$(basename ${LINE})"; 
+      ## Handle Bibliography
+      bib=`ls -1 *.bib 2>/dev/null | wc -l`
+      if [ $bib != 0 ]; then 
+        echo "Recompiling with bibliography"
+        biber "$(basename -s .tex ${LINE})";
+        "$compiler" $args "$(basename ${LINE})"; 
+      fi
       cd -
     done <  $changed_files
 fi
