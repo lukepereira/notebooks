@@ -6,15 +6,15 @@
 **Employment**\
 \*\[-.8pc\]
 
-**Animi** *(CTO and Cofounder)*
+**[Animi]{.underline}** *(CTO and Cofounder)*
 
 -   Developed React Native mobile and web app for mental health focused
     startup: <https://www.animiapp.com/>.
 
 -   Owned technical solution from design to launch, including the
-    planning and end-to-end development of the product.
+    planning and end-to-end development of the app.
 
-**Amazon** *(Software Development Engineer)*
+**[Amazon]{.underline}** *(Software Development Engineer)*
 
 -   Full-stack development to support inbound transportation initiatives
     within the Fulfillment by Amazon organization. Worked on Java
@@ -30,12 +30,12 @@
     React UI and Java REST APIs while improving test coverage and
     maintainability.
 
-**BenchSci** *(Full Stack Software Engineer)*
+**[BenchSci]{.underline}** *(Full Stack Software Engineer)*
 
 -   As an early member of the team, I contributed to creation of the
-    React web app as well as the Python and NodeJS APIs for the reagent
-    search engine used by thousands of scientists at the top
-    pharmaceutical companies.
+    React web app as well as the Python and NodeJS APIs for the
+    ML-powered reagent search engine used by thousands of scientists at
+    top pharmaceutical companies.
 
 -   Contributed to rewriting the core ElasticSearch API, decreasing some
     response times by 10x and improving test coverage and
@@ -62,7 +62,7 @@ resources and deployments. Using Stripe to process funds, Kubernetes to
 manage clusters and deployments, and the GitHub API for config
 versioning.
 
-**TF Classify** <https://ply.gl/org.tensorflow.app>\
+**TF Classify** <https://bit.ly/3FVZwoA>\
 An Android app that uses Google's Inception neural network model to
 classify camera frames in real-time. Built from open-source code, it has
 accumulated over 12,000 installs in the Google Play Store.
@@ -94,8 +94,12 @@ Terraform, Ansible, Envoy, OpenCensus
     Analysis, Stochastic Networks & Queuing Theory, Databases, OS &
     Computer Organization
 
+-   **AI and ML:** Machine Learning Specialization (Andrew NG -
+    Coursera), Practical Deep Learning for Coders (fast.ai), Neural
+    Networks for Machine Learning (Geoffrey Hinton - UofT)
+
 -   **Mathematics:** Statistics & Probability Theory, Differential
-    Geometry, Gauge Theory, Combinatorics, Number Theory, Advanced Graph
-    Theory, Multivariable Calculus, Differential Equations (ODE, PDE),
-    Dynamical Systems, Linear Algebra, Abstract Algebra, Topology, Group
-    Theory
+    Geometry, Gauge Theory, Algebraic Geometry, Combinatorics, Number
+    Theory, Advanced Graph Theory, Multivariable Calculus, Differential
+    Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract
+    Algebra, Topology, Group Theory
