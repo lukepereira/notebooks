@@ -5068,7 +5068,7 @@ def stars_and_bars(n, k):
 
 6.  **Validate and test with code walkthrough**
 
-    1.  Scan over code and double check for any syntax errors.
+    1.  Scan code and double check for any syntax errors.
 
     2.  Walk through code for correctness using sufficiently complex
         test cases. Ensure boundary conditions don't cause errors.
