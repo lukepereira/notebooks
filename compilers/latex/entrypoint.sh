@@ -58,10 +58,10 @@ if [ -n "$root_file" ];
       ## Handle Bibliography
       bib=`ls -1 *.bib 2>/dev/null | wc -l`
       if [ $bib != 0 ]; then 
-        echo "Recompiling with bibliography"
+        echo "Processing bibliography"
         biber "$(basename -s .tex ${LINE})";
-        "$compiler" $args "$(basename ${LINE})"; 
       fi
+      "$compiler" $args "$(basename ${LINE})"; 
       cd -
     done <  $changed_files
 fi
