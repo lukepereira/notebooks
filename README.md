@@ -52,10 +52,15 @@ To add a new row to table, copy/update and prettify:
 | _Unifying Inference in Ergodic World Models_              | 2020 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2020-ergodic-world-models/main.pdf)                                                                                                                                                                |
 | _Intro Machine Learning Essay_                            | 2017 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/main.pdf) [\[md\]](documents/2017-machine-learning-essay/main.md) [\[html\]](https://lukepereira.github.io/notebooks/documents/2017-machine-learning-essay/index.html) |
 
-| Spirituality                        |      |                                                                                        |
-| ----------------------------------- | ---- | -------------------------------------------------------------------------------------- |
-| _Notes on awakening_                | 2023 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2023-buddhism/main.pdf)    |
-| _Geometrization of the Subtle Body_ | 2023 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2023-subtle-body/main.pdf) |
+<br />
+
+| Misc / Interdisciplinary                        |      |                                                                                        |
+| ----------------------------------------------- | ---- | -------------------------------------------------------------------------------------- |
+| _Notes on awakening_                            | 2023 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2023-buddhism/main.pdf)    |
+| _Geometrization of the Subtle Body_             | 2023 | [\[pdf\]](https://lukepereira.github.io/notebooks/documents/2023-subtle-body/main.pdf) |
+| _Evolution and Crystallization of Lie Algebras_ | 2023 | [\[html\]](https://lukepereira.github.io/notebooks/documents/2023-lie-evol/main.html)  |
+
+<br />
 
 ---
 
