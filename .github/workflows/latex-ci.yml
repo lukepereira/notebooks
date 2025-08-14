@@ -23,7 +23,7 @@ jobs:
       #   with:
       #     token: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload changed-tex-files artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: changed-tex-files
           path: changed-tex-files.txt
@@ -42,7 +42,7 @@ jobs:
           changed_files: changed-tex-files.txt
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
 
       - name: Commit files
         run: |

@@ -22,9 +22,7 @@
 \usepackage[colorlinks=true,linkcolor=black,anchorcolor=black,citecolor=black,filecolor=black,menucolor=black,runcolor=black,urlcolor=black]{hyperref}
 
 \newcommand{\centerbullet}{$\vcenter{\hbox{\tiny$\bullet$}} \ $}
-
 \begin{document}
-
 \begin{center}
 {\Large \bf Luke J. Pereira} \\[.5pc]
 % Software Engineer \\[.2pc]
@@ -40,22 +38,23 @@
 {\large \bf Employment} \\*[-.8pc]
 \underline{\hspace{7in}}
 
-{\bf{\underline{Animi}} } \textit{(CTO and Cofounder)} \hfill {\bf July 2022 - Present\/} 
+{\bf{\underline{The RNAlab - UofT MoGen}} } \textit{(Research Software Engineer, ML Engineer)} \hfill {\bf Mar 2023 - Jan 2025\/} 
 \begin{itemize}[leftmargin=*]
     \itemsep0em
     \renewcommand\labelitemi{\tiny$\bullet$}
-    \item Developed React Native mobile and web app for mental health focused startup: \url{https://www.animiapp.com/}.
-    \item Owned technical solution from design to launch, including the planning and end-to-end development of the app.
-    % \item Lead early DevOps, InfoSec, and SRE initiatives. Implementing cloud monitoring dashboards (ELK) and CI/CD pipelines. 
+    \item Contributed to largest genomic k-mer search engine: Project involved assembling \& indexing $>50$ petabases of sequences in the Sequence Read Archive (SRA) and mining metadata for queries. \url{https://logan-search.org/}
+    \item AI4Science: LLM research agent workflows, graph machine learning, GraphRAG, MCP, \& AI safety using motifs and metadata over entire SRA to accelerate human-cancer-virus scientific discoveries: \url{https://openvirome.com/}
+    \item Contributed to open-source app for publicly sharing and citing critical microbial genomes: \url{https://loculus.org/}
+    % \item Maintained web app, database, API, and infrastructure related to the Serratus project: \url{https://serratus.io/}.
 \end{itemize}
 
 {\bf{\underline{Amazon}} } \textit{(Software Development Engineer)} \hfill {\bf March 2021 - April 2022\/} 
 \begin{itemize}[leftmargin=*]
     \itemsep0em
     \renewcommand\labelitemi{\tiny$\bullet$}
-    \item Full-stack development to support inbound transportation initiatives within the Fulfillment by Amazon organization. Worked on Java microservices, React UIs, data warehouse pipelines, and infrastructure and DevOps.
-    \item Led a project for managing disruptions and updates to shipments. Created low-level design and implemented feature changes within complex legacy architecture for tendering and scheduling trucks.
-    \item Led projects for migration and launch of two legacy applications (shipment tracking and seller settings pages) from Perl Mason to new React UI and Java REST APIs while improving test coverage and maintainability.
+    \item Full-stack development to support inbound transportation initiatives within the Fulfillment by Amazon organization. Worked on Java microservices, React UIs, data warehouse pipelines, infrastructure and DevOps.
+    \item Led project for managing disruptions and updates to in-progress shipments. Created low-level design and implemented feature changes within complex legacy architecture for tendering and scheduling truck deliveries.
+    \item Led projects for the migration and launch of two applications (shipment tracking and seller settings pages) from legacy Perl Mason to new React UI and Java REST APIs while improving test coverage and code maintainability.
     % \item Lead early DevOps, InfoSec, and SRE initiatives. Implementing cloud monitoring dashboards (ELK) and CI/CD pipelines. 
 \end{itemize}
 
@@ -66,16 +65,14 @@
 \begin{itemize}[leftmargin=*]
     \itemsep0em
     \renewcommand\labelitemi{\tiny$\bullet$}
-    \item As an early member of the team, I contributed to creation of the React web app as well as the Python and NodeJS APIs for the ML-powered reagent search engine used by thousands of scientists at top pharmaceutical companies.
-    \item Contributed to rewriting the core ElasticSearch API, decreasing some response times by 10x and improving test coverage and  maintainability. Synchronized ES cluster with ML bioinformatics pipeline and Neo4j DB.
-    \item Developed SOC2 compliant integrations and performed acceptance testing. Implemented SAML SSO, MFA, Ariba procurement checkouts, ecommerce APIs, payment flow UIs, BigCommerce automation tools.
-
+    \item Early member and core contributor to ML reagent search engine used by scientists at top pharmaceutical companies.
+    \item Contributed to web app, rewriting ElasticSearch API, decreasing some response times by 10x and improving test coverage and  maintainability. DevOps related to ML bioinformatics pipeline and Neo4j Graph DB.
+    % \item Developed SOC2 compliant integrations and performed acceptance testing. Implemented SAML SSO, MFA, Ariba procurement checkouts, ecommerce APIs, payment flow UIs, BigCommerce automation tools.
     % \item Developed ecommerce APIs, payment flow UIs, and drop-shipping automation tools via SMTP.
     % \item Lead early DevOps, InfoSec, and SRE initiatives. Implementing cloud monitoring dashboards (ELK) and CI/CD pipelines. 
 \end{itemize}
 % \end{multicols}
 % \vspace{-2pt}
-
 
 % Alt:
 
@@ -102,11 +99,15 @@ Computer Science and Mathematics Double Major  \hfill {Final Year GPA: 3.75}
 {\large \bf Personal Projects} \\*[-.8pc]
 \underline{\hspace{7in}}
 
-\textbf{CloudFund} \hfill \url{https://github.com/lukepereira/cloudfund}\\
-A React app with a Flask API used for crowdfunding and maintaining cloud resources and deployments. Using Stripe to process funds, Kubernetes to manage clusters and deployments, and the GitHub API for config versioning.
 
-\textbf{TF Classify} \hfill \url{https://bit.ly/3FVZwoA}\\
-An Android app that uses Google’s Inception neural network model to classify camera frames in real-time. Built from open-source code, it has accumulated over 12,000 installs in the Google Play Store.
+\textbf{Animi} \hfill \url{https://www.animiapp.com/}\\
+Technical cofounder, developed mobile and web app for mental health focused non-profit with over 35k users.
+
+\textbf{CloudFund} \hfill \url{http://bit.ly/3U0T32A}\\
+Crowdfund cloud resources and manage deployments using React, Flask, Stripe, Kubernetes, and the GitHub API.
+
+% \textbf{TF Classify} \hfill \url{https://bit.ly/3FVZwoA}\\
+% On-device Convolutional Neural Network classifies camera frames in real-time. $>12,000$ installs on the Play Store.
 
 \vspace{4pt}
 {\large \bf Skills} \\*[-.8pc]
@@ -119,27 +120,27 @@ An Android app that uses Google’s Inception neural network model to classify c
 Python, Java, Golang, NodeJS, C/C++, LISP\\
 ES6 JS, React, Redux, Sagas, Selectors \\
 REST, Flask, gRPC, GraphQL  \\   
-TensorFlow, Pytorch, scikit-learn, numpy\\
+TensorFlow, Pytorch, sklearn, numpy, R\\
 % \vfill\null
 % \columnbreak
 { \bf Database Technologies}\\
-SQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo
+PSQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo
 
 {\bf Cloud \& Infrastructure }\\
-AWS, GCP, Docker, Kubernetes, Serverless \\
+AWS, GCP, Azure, Docker, Kubernetes, Serverless \\
 Terraform, Ansible, Envoy, OpenCensus
 \end{multicols}
 \end{centering}
 % \end{adjustwidth}
-\vspace{-10pt}
-{\bf Notable Courses and Knowledge} \hfill \LaTeX: \url{https://git.io/JfwkR} 
-% \vspace{-pt}
+\vspace{-3pt}
+% \vspace{1pt}
+{\bf Other Notable Courses and Knowledge} \hfill \LaTeX \hspace{1pt} notebooks: \url{https://git.io/JfwkR} 
 \begin{itemize}[leftmargin=*]
 \itemsep0em
 \renewcommand\labelitemi{\tiny$\bullet$}
-    \item {\bf{Computer Science:}} Advanced Data Structures \& Algorithms, Neural Networks \& Machine Learning, SCRUM \& other SDLC,  Information Security, Distributed Systems, DevOps, Git, Unix, Performance Analysis, Stochastic Networks \& Queuing Theory, Databases, OS \& Computer Organization 
-    \item \textbf{AI and ML:} Machine Learning Specialization (Andrew NG - Coursera),  Practical Deep Learning for Coders (fast.ai),  Neural Networks for Machine Learning (Geoffrey Hinton - UofT)
-    \item {\bf{Mathematics:}} Statistics \& Probability Theory, Differential Geometry, Gauge Theory, Algebraic Geometry, Combinatorics, Number Theory, Advanced Graph Theory, Multivariable Calculus, Differential Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract Algebra, Topology, Group Theory 
+    \item {\footnotesize {\bf{Computer Science:}} Advanced Data Structures \& Algorithms, SCRUM \& other SDLC, Information Security, Distributed Systems, DevOps, Git, Unix, Performance Analysis, Stochastic Networks \& Queuing Theory, Databases, OS \& Computer Organization}
+    \item {\footnotesize  \textbf{AI and ML:} Machine Learning Specialization (Coursera), Practical Deep Learning for Coders (fast.ai), Neural Networks for Machine Learning (G. Hinton - UofT), Geometric Deep Learning (M. Bronstein - Pescara), AI Alignment (R. Grosse), Mech Interp (Misc)}
+    \item {\footnotesize  {\bf{Mathematics:}} Statistics \& Probability Theory, Differential Geometry, Gauge Theory, Algebraic Geometry, Combinatorics, Number Theory, Advanced Graph Theory, Multivariable Calculus, Differential Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract Algebra, Topology, Group Theory, Category Theory}
 \end{itemize}
 % \centerbullet  
 

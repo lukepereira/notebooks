@@ -7,9 +7,6 @@
   <title>main</title>
   <style>
     html {
-      line-height: 1.5;
-      font-family: Georgia, serif;
-      font-size: 20px;
       color: #1a1a1a;
       background-color: #fdfdfd;
     }
@@ -28,13 +25,16 @@
     @media (max-width: 600px) {
       body {
         font-size: 0.9em;
-        padding: 1em;
+        padding: 12px;
       }
       h1 {
         font-size: 1.8em;
       }
     }
     @media print {
+      html {
+        background-color: white;
+      }
       body {
         background-color: transparent;
         color: black;
@@ -58,6 +58,10 @@
       color: #1a1a1a;
     }
     img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
       max-width: 100%;
     }
     h1, h2, h3, h4, h5, h6 {
@@ -84,9 +88,10 @@
       color: #606060;
     }
     code {
-      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
       font-size: 85%;
       margin: 0;
+      hyphens: manual;
     }
     pre {
       margin: 1em 0;
@@ -102,8 +107,8 @@
      overflow: visible;
     }
     hr {
-      background-color: #1a1a1a;
       border: none;
+      border-top: 1px solid #1a1a1a;
       height: 1px;
       margin: 1em 0;
     }
@@ -151,8 +156,11 @@
     div.columns{display: flex; gap: min(4vw, 1.5em);}
     div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
     ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
@@ -161,9 +169,6 @@
   <script
   src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
   type="text/javascript"></script>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <div class="center">
@@ -177,65 +182,68 @@ class="uri">https://linkedin.com/in/lukejp</a><br />
 </div>
 <p><strong>Employment</strong><br />
 *[-.8pc]</p>
-<p><strong><u>Animi</u></strong> <em>(CTO and Cofounder)</em></p>
+<p><strong><u>The RNAlab - UofT MoGen</u></strong> <em>(Research
+Software Engineer, ML Engineer)</em> <strong>Mar 2023 - Jan
+2025</strong></p>
 <ul>
-<li><p>Developed React Native mobile and web app for mental health
-focused startup: <a href="https://www.animiapp.com/"
-class="uri">https://www.animiapp.com/</a>.</p></li>
-<li><p>Owned technical solution from design to launch, including the
-planning and end-to-end development of the app.</p></li>
+<li><p>Contributed to largest genomic k-mer search engine: Project
+involved assembling &amp; indexing <span
+class="math inline">\(&gt;50\)</span> petabases of sequences in the
+Sequence Read Archive (SRA) and mining metadata for queries. <a
+href="https://logan-search.org/"
+class="uri">https://logan-search.org/</a></p></li>
+<li><p>AI4Science: LLM research agent workflows, graph machine learning,
+GraphRAG, MCP, &amp; AI safety using motifs and metadata over entire SRA
+to accelerate human-cancer-virus scientific discoveries: <a
+href="https://openvirome.com/"
+class="uri">https://openvirome.com/</a></p></li>
+<li><p>Contributed to open-source app for publicly sharing and citing
+critical microbial genomes: <a href="https://loculus.org/"
+class="uri">https://loculus.org/</a></p></li>
 </ul>
 <p><strong><u>Amazon</u></strong> <em>(Software Development
-Engineer)</em></p>
+Engineer)</em> <strong>March 2021 - April 2022</strong></p>
 <ul>
 <li><p>Full-stack development to support inbound transportation
 initiatives within the Fulfillment by Amazon organization. Worked on
-Java microservices, React UIs, data warehouse pipelines, and
-infrastructure and DevOps.</p></li>
-<li><p>Led a project for managing disruptions and updates to shipments.
-Created low-level design and implemented feature changes within complex
-legacy architecture for tendering and scheduling trucks.</p></li>
-<li><p>Led projects for migration and launch of two legacy applications
-(shipment tracking and seller settings pages) from Perl Mason to new
-React UI and Java REST APIs while improving test coverage and
+Java microservices, React UIs, data warehouse pipelines, infrastructure
+and DevOps.</p></li>
+<li><p>Led project for managing disruptions and updates to in-progress
+shipments. Created low-level design and implemented feature changes
+within complex legacy architecture for tendering and scheduling truck
+deliveries.</p></li>
+<li><p>Led projects for the migration and launch of two applications
+(shipment tracking and seller settings pages) from legacy Perl Mason to
+new React UI and Java REST APIs while improving test coverage and code
 maintainability.</p></li>
 </ul>
 <p><strong><u>BenchSci</u></strong> <em>(Full Stack Software
-Engineer)</em></p>
+Engineer)</em> <strong>July 2017 - December 2019</strong></p>
 <ul>
-<li><p>As an early member of the team, I contributed to creation of the
-React web app as well as the Python and NodeJS APIs for the ML-powered
-reagent search engine used by thousands of scientists at top
-pharmaceutical companies.</p></li>
-<li><p>Contributed to rewriting the core ElasticSearch API, decreasing
+<li><p>Early member and core contributor to ML reagent search engine
+used by scientists at top pharmaceutical companies.</p></li>
+<li><p>Contributed to web app, rewriting ElasticSearch API, decreasing
 some response times by 10x and improving test coverage and
-maintainability. Synchronized ES cluster with ML bioinformatics pipeline
-and Neo4j DB.</p></li>
-<li><p>Developed SOC2 compliant integrations and performed acceptance
-testing. Implemented SAML SSO, MFA, Ariba procurement checkouts,
-ecommerce APIs, payment flow UIs, BigCommerce automation tools.</p></li>
+maintainability. DevOps related to ML bioinformatics pipeline and Neo4j
+Graph DB.</p></li>
 </ul>
 <p><strong>Education</strong><br />
 </p>
 <p><strong>University of Toronto</strong> <em>(Honours Bachelor of
-Science)</em><br />
-Computer Science and Mathematics Double Major</p>
+Science)</em> <strong>September 2015 - April 2020</strong><br />
+Computer Science and Mathematics Double Major Final Year GPA: 3.75</p>
 <p><strong>York University</strong> <em>(Art Fundamentals
-Certificate)</em></p>
+Certificate)</em> <strong>January 2012 - August 2013</strong></p>
 <p><strong>Personal Projects</strong><br />
 *[-.8pc]</p>
-<p><strong>CloudFund</strong> <a
-href="https://github.com/lukepereira/cloudfund"
-class="uri">https://github.com/lukepereira/cloudfund</a><br />
-A React app with a Flask API used for crowdfunding and maintaining cloud
-resources and deployments. Using Stripe to process funds, Kubernetes to
-manage clusters and deployments, and the GitHub API for config
-versioning.</p>
-<p><strong>TF Classify</strong> <a href="https://bit.ly/3FVZwoA"
-class="uri">https://bit.ly/3FVZwoA</a><br />
-An Android app that uses Google’s Inception neural network model to
-classify camera frames in real-time. Built from open-source code, it has
-accumulated over 12,000 installs in the Google Play Store.</p>
+<p><strong>Animi</strong> <a href="https://www.animiapp.com/"
+class="uri">https://www.animiapp.com/</a><br />
+Technical cofounder, developed mobile and web app for mental health
+focused non-profit with over 35k users.</p>
+<p><strong>CloudFund</strong> <a href="http://bit.ly/3U0T32A"
+class="uri">http://bit.ly/3U0T32A</a><br />
+Crowdfund cloud resources and manage deployments using React, Flask,
+Stripe, Kubernetes, and the GitHub API.</p>
 <p><strong>Skills</strong><br />
 *[-.8pc]</p>
 <div class="centering">
@@ -244,30 +252,32 @@ accumulated over 12,000 installs in the Google Play Store.</p>
 Python, Java, Golang, NodeJS, C/C++, LISP<br />
 ES6 JS, React, Redux, Sagas, Selectors<br />
 REST, Flask, gRPC, GraphQL<br />
-TensorFlow, Pytorch, scikit-learn, numpy<br />
+TensorFlow, Pytorch, sklearn, numpy, R<br />
 <strong>Database Technologies</strong><br />
-SQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo</p>
+PSQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo</p>
 <p><strong>Cloud &amp; Infrastructure</strong><br />
-AWS, GCP, Docker, Kubernetes, Serverless<br />
+AWS, GCP, Azure, Docker, Kubernetes, Serverless<br />
 Terraform, Ansible, Envoy, OpenCensus</p>
 </div>
 </div>
-<p><strong>Notable Courses and Knowledge</strong> LaTeX: <a
-href="https://git.io/JfwkR" class="uri">https://git.io/JfwkR</a></p>
+<p><strong>Other Notable Courses and Knowledge</strong> LaTeX notebooks:
+<a href="https://git.io/JfwkR" class="uri">https://git.io/JfwkR</a></p>
 <ul>
 <li><p><strong>Computer Science:</strong> Advanced Data Structures &amp;
-Algorithms, Neural Networks &amp; Machine Learning, SCRUM &amp; other
-SDLC, Information Security, Distributed Systems, DevOps, Git, Unix,
-Performance Analysis, Stochastic Networks &amp; Queuing Theory,
-Databases, OS &amp; Computer Organization</p></li>
+Algorithms, SCRUM &amp; other SDLC, Information Security, Distributed
+Systems, DevOps, Git, Unix, Performance Analysis, Stochastic Networks
+&amp; Queuing Theory, Databases, OS &amp; Computer Organization</p></li>
 <li><p><strong>AI and ML:</strong> Machine Learning Specialization
-(Andrew NG - Coursera), Practical Deep Learning for Coders (fast.ai),
-Neural Networks for Machine Learning (Geoffrey Hinton - UofT)</p></li>
+(Coursera), Practical Deep Learning for Coders (fast.ai), Neural
+Networks for Machine Learning (G. Hinton - UofT), Geometric Deep
+Learning (M. Bronstein - Pescara), AI Alignment (R. Grosse), Mech Interp
+(Misc)</p></li>
 <li><p><strong>Mathematics:</strong> Statistics &amp; Probability
 Theory, Differential Geometry, Gauge Theory, Algebraic Geometry,
 Combinatorics, Number Theory, Advanced Graph Theory, Multivariable
 Calculus, Differential Equations (ODE, PDE), Dynamical Systems, Linear
-Algebra, Abstract Algebra, Topology, Group Theory</p></li>
+Algebra, Abstract Algebra, Topology, Group Theory, Category
+Theory</p></li>
 </ul>
 </body>
 </html>
