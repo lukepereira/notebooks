@@ -6,100 +6,104 @@
 **Employment**\
 \*\[-.8pc\]
 
-**[Animi]{.underline}** *(CTO and Cofounder)*
+**[The RNAlab - UofT MoGen]{.underline}** *(Research Software Engineer,
+ML Engineer)* **Mar 2023 - Jan 2025**
 
--   Developed React Native mobile and web app for mental health focused
-    startup: <https://www.animiapp.com/>.
+- Contributed to largest genomic k-mer search engine: Project involved
+  assembling & indexing $>50$ petabases of sequences in the Sequence
+  Read Archive (SRA) and mining metadata for queries.
+  <https://logan-search.org/>
 
--   Owned technical solution from design to launch, including the
-    planning and end-to-end development of the app.
+- AI4Science: LLM research agent workflows, graph machine learning,
+  GraphRAG, MCP, & AI safety using motifs and metadata over entire SRA
+  to accelerate human-cancer-virus scientific discoveries:
+  <https://openvirome.com/>
 
-**[Amazon]{.underline}** *(Software Development Engineer)*
+- Contributed to open-source app for publicly sharing and citing
+  critical microbial genomes: <https://loculus.org/>
 
--   Full-stack development to support inbound transportation initiatives
-    within the Fulfillment by Amazon organization. Worked on Java
-    microservices, React UIs, data warehouse pipelines, and
-    infrastructure and DevOps.
+**[Amazon]{.underline}** *(Software Development Engineer)* **March
+2021 - April 2022**
 
--   Led a project for managing disruptions and updates to shipments.
-    Created low-level design and implemented feature changes within
-    complex legacy architecture for tendering and scheduling trucks.
+- Full-stack development to support inbound transportation initiatives
+  within the Fulfillment by Amazon organization. Worked on Java
+  microservices, React UIs, data warehouse pipelines, infrastructure and
+  DevOps.
 
--   Led projects for migration and launch of two legacy applications
-    (shipment tracking and seller settings pages) from Perl Mason to new
-    React UI and Java REST APIs while improving test coverage and
-    maintainability.
+- Led project for managing disruptions and updates to in-progress
+  shipments. Created low-level design and implemented feature changes
+  within complex legacy architecture for tendering and scheduling truck
+  deliveries.
 
-**[BenchSci]{.underline}** *(Full Stack Software Engineer)*
+- Led projects for the migration and launch of two applications
+  (shipment tracking and seller settings pages) from legacy Perl Mason
+  to new React UI and Java REST APIs while improving test coverage and
+  code maintainability.
 
--   As an early member of the team, I contributed to creation of the
-    React web app as well as the Python and NodeJS APIs for the
-    ML-powered reagent search engine used by thousands of scientists at
-    top pharmaceutical companies.
+**[BenchSci]{.underline}** *(Full Stack Software Engineer)* **July
+2017 - December 2019**
 
--   Contributed to rewriting the core ElasticSearch API, decreasing some
-    response times by 10x and improving test coverage and
-    maintainability. Synchronized ES cluster with ML bioinformatics
-    pipeline and Neo4j DB.
+- Early member and core contributor to ML reagent search engine used by
+  scientists at top pharmaceutical companies.
 
--   Developed SOC2 compliant integrations and performed acceptance
-    testing. Implemented SAML SSO, MFA, Ariba procurement checkouts,
-    ecommerce APIs, payment flow UIs, BigCommerce automation tools.
+- Contributed to web app, rewriting ElasticSearch API, decreasing some
+  response times by 10x and improving test coverage and maintainability.
+  DevOps related to ML bioinformatics pipeline and Neo4j Graph DB.
 
 **Education**\
 
-**University of Toronto** *(Honours Bachelor of Science)*\
-Computer Science and Mathematics Double Major
+**University of Toronto** *(Honours Bachelor of Science)* **September
+2015 - April 2020**\
+Computer Science and Mathematics Double Major Final Year GPA: 3.75
 
-**York University** *(Art Fundamentals Certificate)*
+**York University** *(Art Fundamentals Certificate)* **January 2012 -
+August 2013**
 
 **Personal Projects**\
 \*\[-.8pc\]
 
-**CloudFund** <https://github.com/lukepereira/cloudfund>\
-A React app with a Flask API used for crowdfunding and maintaining cloud
-resources and deployments. Using Stripe to process funds, Kubernetes to
-manage clusters and deployments, and the GitHub API for config
-versioning.
+**Animi** <https://www.animiapp.com/>\
+Technical cofounder, developed mobile and web app for mental health
+focused non-profit with over 35k users.
 
-**TF Classify** <https://bit.ly/3FVZwoA>\
-An Android app that uses Google's Inception neural network model to
-classify camera frames in real-time. Built from open-source code, it has
-accumulated over 12,000 installs in the Google Play Store.
+**CloudFund** <http://bit.ly/3U0T32A>\
+Crowdfund cloud resources and manage deployments using React, Flask,
+Stripe, Kubernetes, and the GitHub API.
 
 **Skills**\
 \*\[-.8pc\]
 
-::: centering
+:::: centering
 ::: multicols
 2 **Languages and Frameworks**\
 Python, Java, Golang, NodeJS, C/C++, LISP\
 ES6 JS, React, Redux, Sagas, Selectors\
 REST, Flask, gRPC, GraphQL\
-TensorFlow, Pytorch, scikit-learn, numpy\
+TensorFlow, Pytorch, sklearn, numpy, R\
 **Database Technologies**\
-SQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo
+PSQL, Dynamo, RDS, ElasticSearch, Neo4J, Mongo
 
 **Cloud & Infrastructure** \
-AWS, GCP, Docker, Kubernetes, Serverless\
+AWS, GCP, Azure, Docker, Kubernetes, Serverless\
 Terraform, Ansible, Envoy, OpenCensus
 :::
-:::
+::::
 
-**Notable Courses and Knowledge** LaTeX: <https://git.io/JfwkR>
+**Other Notable Courses and Knowledge** LaTeX notebooks:
+<https://git.io/JfwkR>
 
--   **Computer Science:** Advanced Data Structures & Algorithms, Neural
-    Networks & Machine Learning, SCRUM & other SDLC, Information
-    Security, Distributed Systems, DevOps, Git, Unix, Performance
-    Analysis, Stochastic Networks & Queuing Theory, Databases, OS &
-    Computer Organization
+- **Computer Science:** Advanced Data Structures & Algorithms, SCRUM &
+  other SDLC, Information Security, Distributed Systems, DevOps, Git,
+  Unix, Performance Analysis, Stochastic Networks & Queuing Theory,
+  Databases, OS & Computer Organization
 
--   **AI and ML:** Machine Learning Specialization (Andrew NG -
-    Coursera), Practical Deep Learning for Coders (fast.ai), Neural
-    Networks for Machine Learning (Geoffrey Hinton - UofT)
+- **AI and ML:** Machine Learning Specialization (Coursera), Practical
+  Deep Learning for Coders (fast.ai), Neural Networks for Machine
+  Learning (G. Hinton - UofT), Geometric Deep Learning (M. Bronstein -
+  Pescara), AI Alignment (R. Grosse), Mech Interp (Misc)
 
--   **Mathematics:** Statistics & Probability Theory, Differential
-    Geometry, Gauge Theory, Algebraic Geometry, Combinatorics, Number
-    Theory, Advanced Graph Theory, Multivariable Calculus, Differential
-    Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract
-    Algebra, Topology, Group Theory
+- **Mathematics:** Statistics & Probability Theory, Differential
+  Geometry, Gauge Theory, Algebraic Geometry, Combinatorics, Number
+  Theory, Advanced Graph Theory, Multivariable Calculus, Differential
+  Equations (ODE, PDE), Dynamical Systems, Linear Algebra, Abstract
+  Algebra, Topology, Group Theory, Category Theory
